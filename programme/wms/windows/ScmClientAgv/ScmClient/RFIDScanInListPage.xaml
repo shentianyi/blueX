@@ -1,0 +1,88 @@
+﻿<Page x:Class="ScmClient.RFIDScanInListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+     
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="790"
+      Title="RFIDScanInListPage"
+      Name="RFIDScanInListPageName" Loaded="RFIDScanInListPageName_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        
+        
+        <DockPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Name="briefDP">
+            
+            <DockPanel DockPanel.Dock="Top">
+                <StackPanel Orientation="Horizontal">
+                    <Label DockPanel.Dock="Top" FontFamily="Solomo_Sans_Bold" FontSize="25" Foreground="White"  Content="料车:"/>
+                    <Label FontFamily="Solomo_Sans_Bold" FontSize="25" Foreground="White"  Name="OrderCarLabel"
+                          Content="" />
+                </StackPanel>
+            </DockPanel>
+            <DockPanel>
+            <Label DockPanel.Dock="Top" Name="QtyLabel" FontFamily="Solomon_Sans_Light" 
+                   FontSize="200" Foreground="White" Content="0"/>
+                <Label DockPanel.Dock="Bottom" FontFamily="Solomon_Sans_SemiBold" FontSize="15" Foreground="White" 
+                   HorizontalAlignment="Center"  Margin="0 -35 0 0">料盒数量</Label>
+            </DockPanel>
+           
+        </DockPanel>
+        <DockPanel  VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,50,90,0" Name="detailDP" Visibility="Hidden">
+            <StackPanel>          
+                <StackPanel>
+                <Label Content="扫描:" Name="label3"  FontSize="20" Foreground="White" />
+                    <StackPanel Orientation="Horizontal">
+                <TextBox  Name="ScanTB" BorderBrush="#0e80b0" MinWidth="150" Margin="5" KeyUp="ScanTB_KeyUp" Height="40" />
+                        <Button Name="clearBtn" Height="40" Click="clearBtn_Click">清除</Button>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Left" Height="280">
+                    <DataGrid  Name="PreviewDG" AutoGenerateColumns="False"
+                               IsReadOnly="True" Height="260" 
+                       Width="200" VerticalScrollBarVisibility="Auto">
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="FontSize" Value="12" />
+                                <Setter Property="Padding" Value="20,10,20,10"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn/>
+                            <DataGridTextColumn Header="料盒" Binding="{Binding Path=nr}"/>
+                           </DataGrid.Columns>
+                    </DataGrid>
+
+                </StackPanel>
+            </StackPanel>
+
+        </DockPanel>
+        <DockPanel>
+            
+        </DockPanel>
+
+        <DockPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Height="60" Width="130" FontFamily="Solomon_Sans_Bold" Margin="-50 0 0 0 " Name="OpenDoorBtn"  Click="OpenDoorBtn_Click">
+                <DockPanel>
+                    <Image Height="18" Width="24"  Source="/images/confirm icon.png"/>
+                    <Label FontFamily="Solomon_Sans_Bold" FontSize="20" Margin="10 0 0 0">开门</Label>
+                </DockPanel>
+            </Button>
+            <Button Height="60" Width="140" FontFamily="Solomon_Sans_Bold" Margin="10 0 0 0 " Name="previewBtn" Click="previewBtn_Click">
+                <DockPanel>
+                    <Image Height="18" Width="24"  Source="/images/review icon.png"/>
+                    <Label FontFamily="Solomon_Sans_Bold" FontSize="20" Margin="10 0 0 0" Name="previewBtnLabel">预览</Label>
+                </DockPanel>
+            </Button>
+        </DockPanel>
+    </Grid>
+
+
+</Page>

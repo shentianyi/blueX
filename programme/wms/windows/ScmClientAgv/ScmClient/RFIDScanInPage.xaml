@@ -1,0 +1,22 @@
+﻿<Page x:Class="ScmClient.RFIDScanInPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ScmClient"
+      mc:Ignorable="d" 
+      d:DesignHeight="490" d:DesignWidth="800"
+      Title="RFIDScanInPage"
+      Name="RFIDScanInPageName" Loaded="RFIDScanInPageName_Loaded">
+
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <DockPanel>
+            <Image DockPanel.Dock="Top" Height="172" Width="212" Source="/images/forklift two.png"></Image>
+            <Label Foreground="white" x:Name="contentLabel" Margin="0 10 0 0" FontFamily="Solomon_Sans_SemiBold" FontSize="18" >Waiting for a new cart...</Label>
+        </DockPanel>
+    </Grid>
+    
+    <!--<Grid>
+        <Label x:Name="contentLabel"  FontFamily="宋体 Arial Comic Sans MS" Content="入口RFID已就绪, 请等待领料车..." HorizontalAlignment="Left" Margin="74,111,0,0" VerticalAlignment="Top" FontSize="22"/>
+    </Grid>-->
+</Page>

@@ -1,0 +1,15 @@
+﻿<Window x:Class="DemoServer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DemoServer"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="386.346" Width="817.115">
+    <Grid Loaded="MainWindow_Load">
+        <TextBlock x:Name="TbkContent" HorizontalAlignment="Left" Margin="86,91,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="223" Width="491"/>
+        <Label x:Name="label" Content="通讯记录" Margin="86,40,10,2" Width="153" Height="46" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" RenderTransformOrigin="0,0" VerticalContentAlignment="Center"/>
+        <Button x:Name="ServerBtn" Content="开启服务" HorizontalAlignment="Left" Margin="644,148,0,0" VerticalAlignment="Top" Width="121" Height="111" Click="ServerBtn_Click"/>
+
+    </Grid>
+</Window>
