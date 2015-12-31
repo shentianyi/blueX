@@ -61,6 +61,9 @@
     <Compile Include="RFIDScanInWindow.xaml.cs">
       <DependentUpon>RFIDScanInWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RFIDScanListPage.xaml.cs">
+      <DependentUpon>RFIDScanListPage.xaml</DependentUpon>
+    </Compile>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -85,6 +88,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RFIDScanInWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RFIDScanListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

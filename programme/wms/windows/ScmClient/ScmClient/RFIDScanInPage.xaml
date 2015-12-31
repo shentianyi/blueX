@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ScmClient"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="300" d:DesignWidth="453"
       Title="RFIDScanPage" >
 
     <Grid ContextMenuOpening="Grid_ContextMenuOpening" ContextMenuClosing="Grid_ContextMenuClosing">

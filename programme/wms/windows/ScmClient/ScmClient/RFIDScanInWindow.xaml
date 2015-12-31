@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ScmClient"
         mc:Ignorable="d"
-        Title="RFIDScanInWindow" Height="310.976" Width="328.659" Loaded="Window_Loaded"  WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="RFIDScanInWindow" Height="312" Width="900" Loaded="Window_Loaded"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid Grid.Row="2">
         <Grid.RowDefinitions>
             <RowDefinition Height="90*"/>
