@@ -15,23 +15,14 @@ using System.Windows.Shapes;
 namespace ScmClient
 {
     /// <summary>
-    /// RFIDScanPage.xaml 的交互逻辑
+    /// RFIDScanInPage.xaml 的交互逻辑
     /// </summary>
     public partial class RFIDScanInPage : Page
-    {
+    { 
         public RFIDScanInPage()
         {
-            InitializeComponent();
+            InitializeComponent(); 
         }
-
-        private void Grid_ContextMenuOpening(object sender, ContextMenuEventArgs e)
-        {
-            MessageBox.Show("Open");
-        }
-
-        private void Grid_ContextMenuClosing(object sender, ContextMenuEventArgs e)
-        {
-            MessageBox.Show("Close");
-        }
+      
     }
 }

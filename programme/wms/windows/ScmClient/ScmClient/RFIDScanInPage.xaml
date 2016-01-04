@@ -6,9 +6,10 @@
       xmlns:local="clr-namespace:ScmClient"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="453"
-      Title="RFIDScanPage" >
+      Title="RFIDScanInPage"
+      Name="RFIDScanInPageName">
 
-    <Grid ContextMenuOpening="Grid_ContextMenuOpening" ContextMenuClosing="Grid_ContextMenuClosing">
-        <Label x:Name="label" Content="RFID已就绪, 请等待领料车..." HorizontalAlignment="Left" Margin="55,130,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+    <Grid>
+        <Label x:Name="label" Content="RFID已就绪, 请等待领料车..." HorizontalAlignment="Left" Margin="95,114,0,0" VerticalAlignment="Top" FontSize="22"/>
     </Grid>
 </Page>

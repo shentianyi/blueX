@@ -1,0 +1,60 @@
+﻿<Page x:Class="ScmClient.RFIDScanInListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ScmClient"
+      mc:Ignorable="d" 
+      d:DesignHeight="406" d:DesignWidth="643"
+      Title="RFIDScanInListPage"
+      Name="RFIDScanInListPageName">
+
+    <Page.Resources>
+        <Style x:Key="contentCenterStyle"
+               TargetType="{x:Type TextBlock}">
+            <Setter Property="HorizontalAlignment"
+                    Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="10,5,10,10"/>
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontFamily" Value="Times New Roman" />
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Label Content="料车：" Height="28" HorizontalAlignment="Left" Margin="26,40,0,0" Name="label1" VerticalAlignment="Top" />
+        <TextBox Height="27" HorizontalAlignment="Left" Margin="72,40,0,0" Name="DeliveryCarTB" VerticalAlignment="Top" Width="198" />
+        <Label Content="数量：" Height="28" Margin="26,74,571,0" Name="label2" VerticalAlignment="Top" />
+        <Label Content="0" Name="QtyLabel" Height="28" HorizontalAlignment="Left" Margin="72,74,0,0"  VerticalAlignment="Top" Width="86" />
+        <Label Content="扫描条码：" Height="28" HorizontalAlignment="Left" Margin="358,38,0,0" Name="label3" VerticalAlignment="Top" />
+        <TextBox Height="26" HorizontalAlignment="Left" Margin="424,40,0,0" Name="textBox1" VerticalAlignment="Top" Width="190" />
+        <DataGrid  Name="PreviewDG" AutoGenerateColumns="False" Height="286" HorizontalAlignment="Left"
+                  Margin="26,108,0,0" VerticalAlignment="Top" Width="605">
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF269EF1"/>
+                                <GradientStop Color="#FF052841" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="FontSize" Value="10" />
+                    <Setter Property="Padding" Value="20,10,20,10"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="No." Binding="{Binding Path=No}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="料盒号" Binding="{Binding Path=BoxNr}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="部门" Binding="{Binding Path=WarehouseNr}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="零件号" Binding="{Binding Path=PartNr}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="数量" Binding="{Binding Path=Qty}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="库存" Binding="{Binding Path=Stock}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="超量" Binding="{Binding Path=OverStock}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="库位" Binding="{Binding Path=Positions}" ElementStyle="{StaticResource contentCenterStyle}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>
