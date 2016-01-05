@@ -5,9 +5,8 @@
     <Grid>
         <Label x:Name="label" Content="工号：" HorizontalAlignment="Left" Margin="118,79,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label1" Content="密码：" HorizontalAlignment="Left" Margin="118,124,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="NrTB" HorizontalAlignment="Left" Height="24" Margin="169,79,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="173" RenderTransformOrigin="0.488,0.769"/>
-        <TextBox x:Name="PwdTB" HorizontalAlignment="Left" Height="24" Margin="169,124,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="173" RenderTransformOrigin="0.488,0.769"/>
+        <TextBox x:Name="NrTB" HorizontalAlignment="Left" Height="24" Margin="169,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="173" RenderTransformOrigin="0.488,0.769" AcceptsReturn="False" AcceptsTab="False" />
+        <PasswordBox Height="23" HorizontalAlignment="Left" Margin="171,124,0,0" Name="PwdTB" VerticalAlignment="Top" Width="171" KeyUp="PwdTB_KeyUp" />
         <Button x:Name="LoginBtn" Content="登录" HorizontalAlignment="Left" Margin="202,225,0,0" VerticalAlignment="Top" Width="89" Click="LoginBtn_Click" Height="36"/>
-
     </Grid>
 </Window>

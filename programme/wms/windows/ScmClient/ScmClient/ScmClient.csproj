@@ -143,7 +143,12 @@
       <Project>{9b5f850a-5136-4095-8955-6c4f7747c48a}</Project>
       <Name>Brilliantech.Framwork</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ScmWcfService\ScmWcfService.csproj">
+      <Project>{C93C0D82-867E-441C-9F9D-E39285F97D4A}</Project>
+      <Name>ScmWcfService</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

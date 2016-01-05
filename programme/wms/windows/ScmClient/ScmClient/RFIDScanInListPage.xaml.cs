@@ -23,12 +23,13 @@ namespace ScmClient
     /// RFIDScanInListPage.xaml 的交互逻辑
     /// </summary>
     public partial class RFIDScanInListPage : Page
-    {
+    { 
 
         RFIDScanInWindow parentWindow;
+        bool showMultiCarFlag = false;
 
-        List<RFIDMessage> carList = new List<RFIDMessage>();
-        List<RFIDMessage> boxList = new List<RFIDMessage>();
+        List<RFIDMessage> carMsgList = new List<RFIDMessage>();
+        List<RFIDMessage> boxMsgList = new List<RFIDMessage>();
 
         public RFIDScanInListPage()
         {
@@ -44,47 +45,81 @@ namespace ScmClient
         public void ReceiveData(string data)
         {
             List<RFIDMessage> messages = Parser.StringToList(data);
-            List<RFIDMessage> cars = (from msg in messages where msg.Type == MessageType.CAR select msg).ToList();
-            List<RFIDMessage> boxes = (from msg in messages where msg.Type == MessageType.BOX select msg).ToList();
- 
-            foreach(RFIDMessage car in cars)
-            {
-                if ((from c in carList where c.Nr.Equals(car.Nr) select c).Count() == 0)
-                {
-                    carList.Add(car);
-                }
-            }
+            List<RFIDMessage> carMsgs = (from msg in messages where msg.Type == MessageType.CAR select msg).ToList();
+            List<RFIDMessage> boxMsgs = (from msg in messages where msg.Type == MessageType.BOX select msg).ToList();
 
-            foreach (RFIDMessage box in boxes)
-            {
-                if ((from b in boxList where b.Nr.Equals(box.Nr) select b).Count() == 0)
-                {
-                    boxList.Add(box);
-                }
-            }
-
-            handleMessage();
+            addCarMessages(carMsgs);
+            addBoxMessages(boxMsgs);
         }
 
-        private void handleMessage() {
+        private void addCarMessages(List<RFIDMessage> msgs) { 
+         foreach(RFIDMessage msg in msgs){
+             addCarMessage(msg);
+         }
+        }
 
-            if (carList.Count > 1) {
+        private void addCarMessage(RFIDMessage msg) {
+            if ((from c in carMsgList where c.Nr.Equals(msg.Nr) select c).Count() == 0)
+            {
+                carMsgList.Add(msg);
+            }
+        }
+
+        private void addBoxMessages(List<RFIDMessage> msgs)
+        {
+            foreach (RFIDMessage msg in msgs)
+            {
+                addBoxMessage(msg);
+            }
+            handleCarMessages();
+        }
+
+        private void addBoxMessage(RFIDMessage msg)
+        {
+            if ((from b in boxMsgList where b.Nr.Equals(msg.Nr) select b).Count() == 0)
+            {
+                boxMsgList.Add(msg);
+            }
+            handleBoxMessages();
+        }
+
+        private void handleCarMessages()
+        {
+            if (carMsgList.Count == 1)
+            {
+                DeliveryCarTB.Text = carMsgList.First().Nr;
+            }
+            else if (carMsgList.Count > 1)
+            {
                 this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate()
                 {
                     parentWindow.StopTimer();
                 });
-
-                System.Windows.Forms.MessageBox.Show("信号干扰！同时扫描到多辆料车，请重新扫描！");
-                return;
+                if (!showMultiCarFlag)
+                {
+                    showMultiCarFlag = true;
+                    System.Windows.Forms.MessageBox.Show("信号干扰！同时扫描到多辆料车，请重新扫描！");
+                }
             }
-            if (carList.Count == 1)
-            {
-                DeliveryCarTB.Text = carList.First().Nr;
-            }
-
-            QtyLabel.Content = boxList.Count();
-
         }
 
+        private void handleBoxMessages() {
+            QtyLabel.Content = boxMsgList.Count;
+        }
+
+        private void ScanTB_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && ScanTB.Text.Trim().Length>0) {
+                RFIDMessage msg = Parser.StringToMessage(ScanTB.Text.Trim());
+                if (msg!=null) {
+                    if (msg.Type == MessageType.CAR) {
+                        addCarMessage(msg);
+                    }
+                    else if (msg.Type == MessageType.BOX) {
+                        addBoxMessage(msg);
+                    }
+                }
+            }
+        }
     }
 }

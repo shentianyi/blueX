@@ -10,6 +10,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ScmWcfService;
+using ScmWcfService.Model;
+using ScmWcfService.Model.Message;
 
 namespace ScmClient
 {
@@ -21,22 +24,55 @@ namespace ScmClient
         public LoginWindow()
         {
             InitializeComponent();
+            initControl();
         }
 
+        /// <summary>
+        /// 点击登录按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Login())
+            login();
+        }
+
+        /// <summary>
+        /// 登录方法
+        /// </summary>
+        private void login() {
+            var service = new UserService();
+            ResponseMessage<UserSession> msg = service.Login(NrTB.Text, PwdTB.Password);
+            if (msg.Success)
             {
                 new MenuWindow().Show();
                 this.Close();
             }
-            else {
-                MessageBox.Show("登陆信息错误，请重新输入！");
+            else
+            {
+                MessageBox.Show(msg.Message);
+                initControl();
             }
         }
 
-        private bool Login() {
-            return true;
+        /// <summary>
+        /// 密码框回车
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PwdTB_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && PwdTB.Password.Trim().Length > 0) {
+                login();
+            }
+        }
+
+        /// <summary>
+        /// 初始化控件显示
+        /// </summary>
+        private void initControl() {
+            PwdTB.Password = string.Empty;
+            NrTB.Focus();
         }
     }
 }
