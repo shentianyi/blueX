@@ -11,7 +11,15 @@ info:
 
 
 
+
+
+
+
      ### The Envelope
+
+
+
+
 
 
 
@@ -19,7 +27,15 @@ info:
 
 
 
+
+
+
+
      predictable set of keys with which you can expect to interact:
+
+
+
+
 
 
 
@@ -27,7 +43,15 @@ info:
 
 
 
+
+
+
+
      {
+
+
+
+
 
 
 
@@ -35,7 +59,15 @@ info:
 
 
 
+
+
+
+
              "code": 200
+
+
+
+
 
 
 
@@ -43,7 +75,15 @@ info:
 
 
 
+
+
+
+
          "data": {
+
+
+
+
 
 
 
@@ -51,11 +91,23 @@ info:
 
 
 
+
+
+
+
          }
 
 
 
+
+
+
+
      }
+
+
+
+
 
 
 
@@ -67,7 +119,19 @@ info:
 
 
 
+
+
+
+
+
+
+
+
      #### META
+
+
+
+
 
 
 
@@ -75,7 +139,15 @@ info:
 
 
 
+
+
+
+
      the developer. If all goes well, you'll only ever see a code key with value
+
+
+
+
 
 
 
@@ -83,7 +155,15 @@ info:
 
 
 
+
+
+
+
      response like:
+
+
+
+
 
 
 
@@ -91,7 +171,15 @@ info:
 
 
 
+
+
+
+
      {
+
+
+
+
 
 
 
@@ -99,7 +187,15 @@ info:
 
 
 
+
+
+
+
              "error_type": "OAuthException",
+
+
+
+
 
 
 
@@ -107,7 +203,15 @@ info:
 
 
 
+
+
+
+
              "error_message": "..."
+
+
+
+
 
 
 
@@ -115,7 +219,15 @@ info:
 
 
 
+
+
+
+
      }
+
+
+
+
 
 
 
@@ -145,11 +257,22 @@ definitions:
         description: warehouse id
         type: integer
       nr:
-        description: order car nr
+        description: warehouse nr
         type: string
-      warehouse_id:
-        description: order car warehouse id
+      name:
+        description: warehouse name
+        type: string
+        
+  
+  part:   
+    type: object
+    properties:
+      id:
+        description: part id
         type: integer
+      nr:
+        description: part nr
+        type: string
         
   order_car:
     type: object
@@ -160,10 +283,26 @@ definitions:
       nr:
         description: order car nr
         type: string
-      warehouse_id:
-        description: order car warehouse id
+      rfid_nr:
+        description: order car rfid nr
+        type: string
+      status:
         type: integer
-  order_box_on_order:
+      warehouse:
+        description: order car warehouse
+        $ref: '#/definitions/warehouse'
+        
+  order_box_type:   
+    type: object
+    properties:
+      id:
+        description: id
+        type: integer
+      name:
+        description: name
+        type: string  
+        
+  order_box:
     type: object
     properties:
       id:
@@ -172,12 +311,119 @@ definitions:
       nr:
         description: order box nr
         type: string
-      warehouse:
-        description: order box warehouse id
+      rfid_nr:
+        description: order box rfid nr
+        type: string
+      status:
         type: integer
-      
-      
-      
+      order_box_type:
+        description: order box type
+        $ref: '#/definitions/order_box_type'
+      warehouse:
+        description:  warehouse
+        $ref: '#/definitions/warehouse'
+      source_warehouse:
+        description: source warehouse
+        $ref: '#/definitions/warehouse'
+      part:
+        description: order box part id
+        $ref: '#/definitions/part'
+      quantity:
+        description: order box order part quantity
+        type: number
+      stock:
+        description: part in this warehouse current stock
+        type: number
+      positions:
+        description: part in the warehouse positions nrs
+        type: array
+        
+  order:
+    type: object
+    properties:
+      id:
+        description: order id
+        type: integer
+      nr:
+        description: order nr
+        type: string
+      status:
+        type: integer
+      created_at:
+        description: created at, utc
+        type: datetime
+      orderable_id:
+        type: int
+      orderable_type:
+        type: string
+      order_items:
+        type: array
+        items:
+          $ref: '#/definitions/order_items'
+  
+  order_items:
+    type: object
+    properties:
+      id:
+        description: order item id
+        type: integer
+      status:
+        type: integer
+      part:
+        description:  part
+        $ref: '#/definitions/part'
+      quantity:
+        description: part quantity
+        type: number
+      warehouse:
+        description:  warehouse
+        $ref: '#/definitions/warehouse'
+      created_at:
+        description: created at, utc
+        type: datetime
+      orderable_id:
+        type: int
+      orderable_type:
+        type: string
+        
+  pick:
+    type: object
+    properties:
+      id:
+        description: pick id
+        type: integer
+      nr:
+        description: pick nr
+        type: string
+      status:
+        type: integer
+      created_at:
+        description: created at, utc
+        type: datetime
+      pick_items:
+        type: array
+        items:
+          $ref: '#/definitions/pick_items'
+          
+  pick_items:
+    type: object
+    properties:
+      id:
+        description: pick item id
+        type: integer
+      part:
+        description:  part
+        $ref: '#/definitions/part'
+      quantity:
+        description: part quantity
+        type: number
+      warehouse:
+        description:  warehouse
+        $ref: '#/definitions/warehouse'
+      created_at:
+        description: created at, utc
+        type: datetime
+        
         
 paths:
   /user_sessions:
@@ -222,16 +468,41 @@ paths:
         '200':
           description: Successful response
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/order_car'
+            $ref: '#/definitions/order_car'
         '403':
           description: indicate the token or user session has expired
-  
-            
-  /order_boxs/by_nr:
+          
+  /order_cars:
+    put:
+      description: update order car 
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'the oauth token from the server, type is beare'
+          required: true
+          type: string
+        - name: id
+          in: body
+          type: interger
+          description: order car id
+        - name: status
+          in: body
+          type: interger
+          description: order car status
+      responses:
+        '200':
+          description: Successful response
+        '403':
+          description: indicate the token or user session has expired
+
+  /order_boxes/by_nr:
     get:
-      description: get user list
+      description: get order box by nr
       parameters:
         - name: Accept-Language
           in: header
@@ -251,9 +522,115 @@ paths:
         '200':
           description: Successful response
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/order_box'
+            $ref: '#/definitions/order_box'
         '403':
-          description: indicate the token or user session has expired        
+          description: indicate the token or user session has expired
+          
+  /order_boxes:
+    put:
+      description: update order box 
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'the oauth token from the server, type is beare'
+          required: true
+          type: string
+        - name: id
+          in: body
+          type: integer
+          description: order box id
+        - name: status
+          in: body
+          type: int
+          description: order box status
+      responses:
+        '200':
+          description: Successful response
+        '403':
+          description: indicate the token or user session has expired
+          
+  /order_boxes/updates:
+    put:
+      description: update order boxes
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'the oauth token from the server, type is beare'
+          required: true
+          type: string
+        - name: ids
+          in: body
+          type: array
+          description: order box ids
+        - name: status
+          in: body
+          type: int
+          description: order box status
+      responses:
+        '200':
+          description: Successful response
+        '403':
+          description: indicate the token or user session has expired
+          
+  /orders/create_by_car:
+    post:
+      description: create order by order car id and order box ids
+      parameters:
+        - name: order_car_id
+          in: body
+          description: id of order car
+          required: true
+          type: integer
+        - name: order_box_ids
+          in: body
+          description: id of order boxes
+          required: true
+          type: array
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/order'
+            
+  /picks/create_by_order_id:
+    post:
+      description: create pick by order id
+      parameters:
+        - name: order_id
+          in: body
+          description: id of order
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/pick'
   
+  /picks/items:
+    get:
+      description: get pick items by pick id
+      parameters:
+        - name: pick_id
+          in: body
+          description: id of pick
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/pick'          
+    
+  
+            
