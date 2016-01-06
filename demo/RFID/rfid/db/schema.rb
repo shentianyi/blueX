@@ -296,6 +296,8 @@ ActiveRecord::Schema.define(version: 20160105091634) do
     t.string   "nr",                     limit: 255
     t.string   "name",                   limit: 255
     t.integer  "role_id",                limit: 4
+    t.boolean  "can_delete"
+    t.boolean  "can_edit"
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
     t.string   "email",                  limit: 255, default: "", null: false
