@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Order:</strong>
+  <%= @order_item.order %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @order_item.user %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @order_item.status %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @order_item.quantity %>
+</p>
+
+<p>
+  <strong>Part:</strong>
+  <%= @order_item.part_id %>
+</p>
+
+<p>
+  <strong>Orderable:</strong>
+  <%= @order_item.orderable_id %>
+</p>
+
+<p>
+  <strong>Orderable type:</strong>
+  <%= @order_item.orderable_type %>
+</p>
+
+<p>
+  <strong>Is emergency:</strong>
+  <%= @order_item.is_emergency %>
+</p>
+
+<p>
+  <strong>Remarks:</strong>
+  <%= @order_item.remarks %>
+</p>
+
+<%= link_to 'Edit', edit_order_item_path(@order_item) %> |
+<%= link_to 'Back', order_items_path %>

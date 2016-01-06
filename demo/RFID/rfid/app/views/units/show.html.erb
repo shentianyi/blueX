@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nr:</strong>
+  <%= @unit.nr %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @unit.name %>
+</p>
+
+<p>
+  <strong>Short name:</strong>
+  <%= @unit.short_name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @unit.description %>
+</p>
+
+<p>
+  <strong>Unit group:</strong>
+  <%= @unit.unit_group_id %>
+</p>
+
+<%= link_to 'Edit', edit_unit_path(@unit) %> |
+<%= link_to 'Back', units_path %>

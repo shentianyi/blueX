@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @order_box_type.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @order_box_type.description %>
+</p>
+
+<%= link_to 'Edit', edit_order_box_type_path(@order_box_type) %> |
+<%= link_to 'Back', order_box_types_path %>

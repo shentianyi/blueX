@@ -1,0 +1,25 @@
+<%= form_for(@move_type) do |f| %>
+  <% if @move_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@move_type.errors.count, "error") %> prohibited this move_type from being saved:</h2>
+
+      <ul>
+      <% @move_type.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nr %><br>
+    <%= f.text_field :nr %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

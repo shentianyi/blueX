@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Part:</strong>
+  <%= @part_position.part %>
+</p>
+
+<p>
+  <strong>Position:</strong>
+  <%= @part_position.position %>
+</p>
+
+<p>
+  <strong>Safe stock:</strong>
+  <%= @part_position.safe_stock %>
+</p>
+
+<p>
+  <strong>From warehouse:</strong>
+  <%= @part_position.from_warehouse_id %>
+</p>
+
+<p>
+  <strong>From position:</strong>
+  <%= @part_position.from_position_id %>
+</p>
+
+<%= link_to 'Edit', edit_part_position_path(@part_position) %> |
+<%= link_to 'Back', part_positions_path %>

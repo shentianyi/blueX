@@ -1,0 +1,88 @@
+<style type="text/css">
+    p>label {
+        margin-left: 20px;
+        width: 120px;
+        font-size: 1.2em;
+    }
+
+    input[type="checkbox"] {
+        width: 20px;
+    }
+
+    input {
+        width: 150px;
+    }
+</style>
+<%= form_for(@user, html: {class: 'form-line'}) do |f| %>
+    <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@user.errors.count, "error") %> prohibited this location from being saved:</h2>
+
+          <ul>
+            <% @user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <fieldset style="border: 2px solid#000;width:40%;margin: 50px 0 0 30%">
+      <legend style="width: 130px;">员工信息新增</legend>
+      <div>
+        <p>
+          <%= f.label :nr, '员工号' %>
+          <% if current_user.admin? || current_user.manager? %>
+              <%= f.text_field :nr %>
+          <% else %>
+              <input type="text" name="nr" readonly="" value="<%= current_user.nr %>">
+          <% end %>
+        </p>
+
+        <p>
+          <%= f.label :name, '用户名' %>
+          <% if current_user.admin? || current_user.manager? %>
+              <%= f.text_field :name %>
+          <% else %>
+              <input type="text" name="id" readonly="" value="<%= current_user.name %>">
+          <% end %>
+        </p>
+
+        <p>
+          <%= f.label :password, '密 码' %>
+          <%= f.password_field :password %>
+        </p>
+
+        <p>
+          <%= f.label :password_confirmation, '确认密码' %>
+          <%= f.password_field :password_confirmation %>
+        </p>
+
+        <p>
+          <%= f.label :role_id, '角 色' %>
+
+          <% if current_user.admin? || current_user.manager? %>
+              <%= f.select(:role_id, Role.menu, {include_blank: false}) %>
+          <% else %>
+              <input type="text" name="id" readonly="" value="<%= Role.display(current_user.role_id) %>">
+          <% end %>
+        </p>
+
+        <p>
+          <%= f.label :email, '邮 箱' %>
+          <%= f.email_field :email %>
+        </p>
+
+        <!-- checkbox 被点击  value=1-->
+        <p>
+          <%= f.check_box :can_edit, :style => 'margin-left:20px;margin-top: 20px;' %><b>修改</b>
+          <%= f.check_box :can_delete, :style => 'margin-left:100px;margin-top: 20px;' %><b>删除</b>
+        </p>
+      </div>
+
+      <hr style="border: 1px solid #000;"/>
+
+      <div class="actions">
+        <%= f.submit value: '提 交', class: 'btn btn-primary', :style => 'margin:0;' %>
+      </div>
+<% end %>
+</fieldset>

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  status: 1
+  orderable_id: 1
+  orderable_type: MyString
+  remarks: MyString
+
+two:
+  user_id: 
+  status: 1
+  orderable_id: 1
+  orderable_type: MyString
+  remarks: MyString

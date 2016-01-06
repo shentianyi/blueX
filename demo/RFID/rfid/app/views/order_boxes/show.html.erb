@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nr:</strong>
+  <%= @order_box.nr %>
+</p>
+
+<p>
+  <strong>Rfid nr:</strong>
+  <%= @order_box.rfid_nr %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @order_box.status %>
+</p>
+
+<p>
+  <strong>Part:</strong>
+  <%= @order_box.part_id %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @order_box.quantity %>
+</p>
+
+<p>
+  <strong>Warehouse:</strong>
+  <%= @order_box.warehouse %>
+</p>
+
+<p>
+  <strong>Source warehouse:</strong>
+  <%= @order_box.source_warehouse_id %>
+</p>
+
+<p>
+  <strong>Order box type:</strong>
+  <%= @order_box.order_box_type_id %>
+</p>
+
+<%= link_to 'Edit', edit_order_box_path(@order_box) %> |
+<%= link_to 'Back', order_boxes_path %>

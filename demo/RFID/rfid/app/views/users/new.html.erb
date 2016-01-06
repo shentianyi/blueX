@@ -1,0 +1,19 @@
+<style type="text/css">
+    .btn {
+        width: 100px;
+        height: 40px;
+    }
+
+    hr {
+        border: 1px solid #000;
+    }
+
+</style>
+
+<div style="display: inline-flex;margin-top: 10px;">
+  <%= link_to "返回", users_path, :class => 'btn btn-primary', :style => 'color:#000; margin-left:5%;' %>
+  <h1 style="position: absolute;right: 20px;">员工信息<em>新增</em></h1>
+</div>
+<hr/>
+
+<%= render 'form' %>

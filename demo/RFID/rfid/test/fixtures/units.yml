@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nr: MyString
+  name: MyString
+  short_name: MyString
+  description: MyString
+  unit_group_id: 1
+
+two:
+  nr: MyString
+  name: MyString
+  short_name: MyString
+  description: MyString
+  unit_group_id: 1

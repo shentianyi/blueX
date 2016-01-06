@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Unit Groups</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nr</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @unit_groups.each do |unit_group| %>
+      <tr>
+        <td><%= unit_group.nr %></td>
+        <td><%= unit_group.name %></td>
+        <td><%= unit_group.description %></td>
+        <td><%= link_to 'Show', unit_group %></td>
+        <td><%= link_to 'Edit', edit_unit_group_path(unit_group) %></td>
+        <td><%= link_to 'Destroy', unit_group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Unit group', new_unit_group_path %>

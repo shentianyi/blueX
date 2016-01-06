@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Pick Items</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Pick</th>
+      <th>Status</th>
+      <th>Warehouse</th>
+      <th>Position</th>
+      <th>Quantity</th>
+      <th>Part</th>
+      <th>Is emergency</th>
+      <th>Order item</th>
+      <th>Remarks</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pick_items.each do |pick_item| %>
+      <tr>
+        <td><%= pick_item.pick %></td>
+        <td><%= pick_item.status %></td>
+        <td><%= pick_item.warehouse_id %></td>
+        <td><%= pick_item.position_id %></td>
+        <td><%= pick_item.quantity %></td>
+        <td><%= pick_item.part_id %></td>
+        <td><%= pick_item.is_emergency %></td>
+        <td><%= pick_item.order_item_id %></td>
+        <td><%= pick_item.remarks %></td>
+        <td><%= link_to 'Show', pick_item %></td>
+        <td><%= link_to 'Edit', edit_pick_item_path(pick_item) %></td>
+        <td><%= link_to 'Destroy', pick_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pick item', new_pick_item_path %>

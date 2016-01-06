@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nr: MyString
+  rfid_nr: MyString
+  status: 1
+  part_id: 1
+  quantity: 1.5
+  warehouse_id: 
+  source_warehouse_id: 1
+  order_box_type_id: 1
+
+two:
+  nr: MyString
+  rfid_nr: MyString
+  status: 1
+  part_id: 1
+  quantity: 1.5
+  warehouse_id: 
+  source_warehouse_id: 1
+  order_box_type_id: 1

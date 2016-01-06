@@ -1,0 +1,33 @@
+<%= form_for(@order_car) do |f| %>
+  <% if @order_car.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@order_car.errors.count, "error") %> prohibited this order_car from being saved:</h2>
+
+      <ul>
+      <% @order_car.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nr %><br>
+    <%= f.text_field :nr %>
+  </div>
+  <div class="field">
+    <%= f.label :rfid_nr %><br>
+    <%= f.text_field :rfid_nr %>
+  </div>
+  <div class="field">
+    <%= f.label :warehouse_id %><br>
+    <%= f.number_field :warehouse_id %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.number_field :status %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

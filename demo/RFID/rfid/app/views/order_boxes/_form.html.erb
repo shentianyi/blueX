@@ -1,0 +1,49 @@
+<%= form_for(@order_box) do |f| %>
+  <% if @order_box.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@order_box.errors.count, "error") %> prohibited this order_box from being saved:</h2>
+
+      <ul>
+      <% @order_box.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nr %><br>
+    <%= f.text_field :nr %>
+  </div>
+  <div class="field">
+    <%= f.label :rfid_nr %><br>
+    <%= f.text_field :rfid_nr %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.number_field :status %>
+  </div>
+  <div class="field">
+    <%= f.label :part_id %><br>
+    <%= f.number_field :part_id %>
+  </div>
+  <div class="field">
+    <%= f.label :quantity %><br>
+    <%= f.text_field :quantity %>
+  </div>
+  <div class="field">
+    <%= f.label :warehouse_id %><br>
+    <%= f.text_field :warehouse_id %>
+  </div>
+  <div class="field">
+    <%= f.label :source_warehouse_id %><br>
+    <%= f.number_field :source_warehouse_id %>
+  </div>
+  <div class="field">
+    <%= f.label :order_box_type_id %><br>
+    <%= f.number_field :order_box_type_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
