@@ -12,6 +12,7 @@ namespace ScmWcfService.Model.Message
         public ResponseMessage()
         {
             this.meta = new ResponseMeta();
+            this.http_error = false;
         }
 
         [DataMember]
@@ -19,6 +20,9 @@ namespace ScmWcfService.Model.Message
 
         [DataMember]
         public T data { get; set; }
+
+        [DataMember]
+        public bool http_error { get; set; }
 
         public bool Success
         {

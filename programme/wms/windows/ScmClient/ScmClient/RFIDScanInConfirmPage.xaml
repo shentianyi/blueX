@@ -1,4 +1,4 @@
-﻿<Page x:Class="ScmClient.RFIDScanInListPage"
+﻿<Page x:Class="ScmClient.RFIDScanInConfirmPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,8 +6,8 @@
       xmlns:local="clr-namespace:ScmClient"
       mc:Ignorable="d" 
       d:DesignHeight="406" d:DesignWidth="643"
-      Title="RFIDScanInListPage"
-      Name="RFIDScanInListPageName">
+      Title="RFIDScanInConfirmPage"
+      Name="RFIDScanInConfirmPageName">
 
     <Page.Resources>
         <Style x:Key="contentCenterStyle"
@@ -43,7 +43,7 @@
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <DataGrid  Name="PreviewDG" AutoGenerateColumns="False" Height="309"  Width="644" VerticalScrollBarVisibility="Auto">
+            <DataGrid  Name="PreviewDG" AutoGenerateColumns="False" Height="323"  Width="642">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
                     <Setter Property="Background">
@@ -61,16 +61,15 @@
                 </Style>
             </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
-                <!--<DataGridTextColumn Header="No." Binding="{Binding Path=no}" ElementStyle="{StaticResource contentCenterStyle}"/>-->
-                <DataGridTextColumn Header="料盒号" Binding="{Binding Path=nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                <DataGridTextColumn Header="料盒类型" Binding="{Binding Path=box_type_name}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                    <DataGridTextColumn Header="从属部门" Binding="{Binding Path=warehouse_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                    <DataGridTextColumn Header=" 取料仓库" Binding="{Binding Path=source_warehouse_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                    <DataGridTextColumn Header="零件号" Binding="{Binding Path=part_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                <DataGridTextColumn Header="数量" Binding="{Binding Path=quantity}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                <DataGridTextColumn Header="库存" Binding="{Binding Path=stock}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                <DataGridTextColumn Header="超量" Binding="{Binding Path=over_stock}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                <DataGridTextColumn Header="库位" Binding="{Binding Path=positions_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="No." Binding="{Binding Path=No}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="料盒号" Binding="{Binding Path=BoxNr}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="料盒类型" Binding="{Binding Path=BoxType}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="部门" Binding="{Binding Path=WarehouseNr}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="零件号" Binding="{Binding Path=PartNr}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="数量" Binding="{Binding Path=Qty}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="库存" Binding="{Binding Path=Stock}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="超量" Binding="{Binding Path=OverStock}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="库位" Binding="{Binding Path=Positions}" ElementStyle="{StaticResource contentCenterStyle}"/>
             </DataGrid.Columns>
         </DataGrid>
         </StackPanel>

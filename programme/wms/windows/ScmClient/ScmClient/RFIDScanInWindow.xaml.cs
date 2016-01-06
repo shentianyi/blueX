@@ -95,11 +95,16 @@ namespace ScmClient
         {
             if (this.currentPage.Name == "RFIDScanInPageName")
             {
-                this.currentPage = new RFIDScanInListPage();
+                this.currentPage = new RFIDScanInListPage(this);
                 NaviFrame.NavigationService.Navigate(this.currentPage);
             }
-            else if (this.currentPage.Name == "RFIDScanInListPageName") { 
-               
+            else if (this.currentPage.Name == "RFIDScanInListPageName") {
+
+                NextBtn.Content = "完成扫描";
+                this.currentPage = new RFIDScanInConfirmPage();
+                this.StopTimer();
+
+                NaviFrame.NavigationService.Navigate(this.currentPage);
             }
         }
 
@@ -150,7 +155,9 @@ namespace ScmClient
             }
         }
 
-        public void StopTimer() {
+        public void StopTimer()
+        {
+            LogUtil.Logger.Info("Stop Timer Scan");
             timer.Stop();
             timer.Enabled = false;
         }
