@@ -23,15 +23,13 @@ using ScmWcfService.Model.Message;
 namespace ScmClient
 {
     /// <summary>
-    /// RFIDScanInListPage.xaml 的交互逻辑
+    /// RFIDScanInConfirmPage.xaml 的交互逻辑
     /// </summary>
-    public partial class RFIDScanInListPage : Page
+    public partial class RFIDScanInConfirmPage : Page
     {
         RFIDScanInWindow parentWindow;
         bool showMultiCarFlag = false;
-        public bool carValid = true;
-        public bool carValidated = false;
-        public bool boxValid = true;
+        public bool valid = true;
 
         List<RFIDMessage> carMsgList = new List<RFIDMessage>();
         List<RFIDMessage> boxMsgList = new List<RFIDMessage>();
@@ -39,12 +37,12 @@ namespace ScmClient
         OrderCar orderCar = null;
         List<OrderBox> orderBoxes = new List<OrderBox>();
 
-        public RFIDScanInListPage()
+        public RFIDScanInConfirmPage()
         {
             InitializeComponent();
         }
 
-        public RFIDScanInListPage(RFIDScanInWindow parentWindow)
+        public RFIDScanInConfirmPage(RFIDScanInWindow parentWindow)
         {
             InitializeComponent();
             OrderCarMsgLabel.Visibility = Visibility.Hidden;
@@ -76,7 +74,6 @@ namespace ScmClient
             {
                 carMsgList.Add(msg);
             }
-            handleCarMessages();
         }
 
         private void addBoxMessages(List<RFIDMessage> msgs)
@@ -85,6 +82,7 @@ namespace ScmClient
             {
                 addBoxMessage(msg);
             }
+            handleCarMessages();
         }
 
         private void addBoxMessage(RFIDMessage msg)
@@ -92,7 +90,7 @@ namespace ScmClient
             if ((from b in boxMsgList where b.Nr.Equals(msg.Nr) select b).Count() == 0)
             {
                 boxMsgList.Add(msg);
-                validateOrderBoxNr(msg.Nr);
+              //  validateOrderBoxNr(msg.Nr);
             }
             handleBoxMessages();
         }
@@ -105,10 +103,7 @@ namespace ScmClient
             if (carMsgList.Count == 1)
             {
                 OrderCarTB.Text = carMsgList.First().Nr;
-                if (carValidated)
-                {
-                    validateOrderCarNr();
-                }
+                validateOrderCarNr();
             }
             else if (carMsgList.Count > 1)
             {
@@ -117,6 +112,7 @@ namespace ScmClient
                 if (!showMultiCarFlag)
                 {
                     showMultiCarFlag = true;
+                    valid = false;
                     System.Windows.Forms.MessageBox.Show("信号干扰！同时扫描到多辆料车，请重新扫描！");
                 }
             }
@@ -137,11 +133,9 @@ namespace ScmClient
             else if (!msg.Success)
             {
                 OrderCarMsgLabel.Visibility = Visibility.Visible;
-                this.carValid = false;
             }
             else
             {
-                carValidated = true;
                 this.orderCar = msg.data;
             }
         }
@@ -168,42 +162,12 @@ namespace ScmClient
             }
             else if (!msg.Success)
             {
-                boxValid = false;
-                refreshOrderBox(new OrderBox() { nr = boxNr });
-               // PreviewDG.ItemsSource = orderBoxes;
+                orderBoxes.Add(new OrderBox() { nr = boxNr });
             }
             else
             {
-                refreshOrderBox(msg.data);
-
-              //  PreviewDG.ItemsSource = orderBoxes;
+                orderBoxes.Add(msg.data);
             }
-        }
-
-        private void refreshOrderBox(OrderBox orderBox)
-        {
-            OrderBox ob = (from b in this.orderBoxes where b.nr.Equals(orderBox.nr) select b).FirstOrDefault();
-            if (ob != null)
-            {
-                if (orderBox.id == 0)
-                {
-                    // 如果未查询到数据库数据则不处理
-                }
-                else
-                {
-                    if (ob.id == 0) { 
-                     // 移除这个空的，这个情况应该不存在，因为已经过滤了
-                    } 
-                }
-            }
-            else
-            {
-                this.orderBoxes.Add(orderBox);
-            }
-
-            // 设置datagrid的数据
-            PreviewDG.ItemsSource = this.orderBoxes;
-            PreviewDG.Items.Refresh();
         }
 
         private void ScanTB_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
@@ -233,10 +197,10 @@ namespace ScmClient
 
         private void stopScan()
         {
-            //this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate()
-            //{
+            this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate()
+            {
                 parentWindow.StopTimer();
-           // });
+            });
         }
     }
 }

@@ -55,6 +55,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="OrderService.svc" />
+    <Content Include="PickService.svc" />
     <Content Include="UserService.svc" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -66,6 +68,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\ApiConfig.cs" />
+    <Compile Include="IOrderService.cs" />
+    <Compile Include="IPickService.cs" />
+    <Compile Include="Model\Enum\OrderCarStatus.cs" />
+    <Compile Include="Model\Enum\OrderBoxStatus.cs" />
+    <Compile Include="Model\Enum\OrderStatus.cs" />
+    <Compile Include="Model\Enum\PickStatus.cs" />
+    <Compile Include="Model\Warehouse.cs" />
+    <Compile Include="Model\Part.cs" />
+    <Compile Include="Model\OrderBoxType.cs" />
+    <Compile Include="OrderService.svc.cs">
+      <DependentUpon>OrderService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="PickService.svc.cs">
+      <DependentUpon>PickService.svc</DependentUpon>
+    </Compile>
     <Compile Include="Provider\ApiClient.cs" />
     <Compile Include="Model\Message\ResponseMeta.cs" />
     <Compile Include="Model\Order.cs" />
