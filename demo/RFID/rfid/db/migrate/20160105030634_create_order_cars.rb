@@ -4,7 +4,7 @@ class CreateOrderCars < ActiveRecord::Migration
       t.string :nr
       t.string :rfid_nr
       t.references :warehouse, index: true, foreign_key: true
-      t.integer :status, default: 0
+      t.integer :status, default: 100
 
       t.timestamps null: false
     end

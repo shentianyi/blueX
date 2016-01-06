@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160106200042) do
+ActiveRecord::Schema.define(version: 20160106221042) do
 
   create_table "colors", force: :cascade do |t|
     t.string   "nr",          limit: 255
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20160106200042) do
     t.string   "fifo",              limit: 255
     t.float    "quantity",          limit: 24
     t.string   "package_nr",        limit: 255
-    t.string   "uniq",              limit: 255
+    t.string   "uniq_nr",           limit: 255
     t.integer  "from_position_id",  limit: 4
     t.integer  "from_warehouse_id", limit: 4
     t.integer  "to_position_id",    limit: 4
@@ -282,7 +282,7 @@ ActiveRecord::Schema.define(version: 20160106200042) do
     t.datetime "fifo"
     t.float    "quantity",     limit: 24
     t.string   "package_nr",   limit: 255
-    t.string   "uniq",         limit: 255
+    t.string   "uniq_nr",      limit: 255
     t.integer  "position_id",  limit: 4
     t.integer  "warehouse_id", limit: 4
     t.string   "remarks",      limit: 255

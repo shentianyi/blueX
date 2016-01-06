@@ -10,8 +10,10 @@ class PickService
         order.warehouse=car.warehouse
 
         order.orderable=car
+        car.update_attributes(status:OrderCarStatus::PICKING)
         car.orders<<order
         boxs.each do |box|
+          box.update_attributes(status:OrderBoxStatus::PICKING)
           order_item=OrderItem.new({
                                        quantity: box.quantity,
                                        part_id: box.part_id,
@@ -60,7 +62,7 @@ class PickService
   end
 
 
-  private
+
   def self.validable_car_and_box params
     if car=OrderCar.find_by_id(params[:order_car_id])
       err_infos=[]

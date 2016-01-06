@@ -2,7 +2,7 @@ class CreatePickItems < ActiveRecord::Migration
   def change
     create_table :pick_items do |t|
       t.references :pick, index: true, foreign_key: true
-      t.integer :status, default: 0
+      t.integer :status, default: 100
 
       t.references :warehouse, index: true, foreign_key: true
       # t.integer :warehouse_id

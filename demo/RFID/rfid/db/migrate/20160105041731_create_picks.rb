@@ -2,7 +2,7 @@ class CreatePicks < ActiveRecord::Migration
   def change
     create_table :picks do |t|
       t.references :user, index: true, foreign_key: true
-      t.integer :status, default: 0
+      t.integer :status, default: 100
       t.references :warehouse, index: true, foreign_key: true
       t.string :remarks
 
