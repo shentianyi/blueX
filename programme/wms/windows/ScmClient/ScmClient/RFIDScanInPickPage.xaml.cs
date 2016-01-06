@@ -6,28 +6,28 @@ using ScmWcfService.Model;
 namespace ScmClient
 {
     /// <summary>
-    /// RFIDScanInConfirmPage.xaml 的交互逻辑
+    /// RFIDScanInPickPage.xaml 的交互逻辑
     /// </summary>
-    public partial class RFIDScanInConfirmPage : Page
+    public partial class RFIDScanInPickPage : Page
     {
         RFIDScanInWindow parentWindow;
 
         public OrderCar orderCar { get; set; }
         public List<OrderBox> orderBoxes { get; set; }
 
-        public RFIDScanInConfirmPage()
+        public RFIDScanInPickPage()
         {
             InitializeComponent();
         }
 
-        public RFIDScanInConfirmPage(RFIDScanInWindow parentWindow)
+        public RFIDScanInPickPage(RFIDScanInWindow parentWindow)
         {
             InitializeComponent();
             this.parentWindow = parentWindow;
         }
 
 
-        public RFIDScanInConfirmPage(RFIDScanInWindow parentWindow,OrderCar orderCar,List<OrderBox> orderBoxes)
+        public RFIDScanInPickPage(RFIDScanInWindow parentWindow, OrderCar orderCar, List<OrderBox> orderBoxes)
         {
             InitializeComponent();
             this.parentWindow = parentWindow;
@@ -62,7 +62,7 @@ namespace ScmClient
         }
 
         public Pick GenereatePick() {
-            Pick pick = new Pick();
+            Pick pick = null;
             return pick;
         }
     }

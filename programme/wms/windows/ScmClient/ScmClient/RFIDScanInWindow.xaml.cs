@@ -18,6 +18,7 @@ using System.Collections;
 using System.Windows.Forms;
 using System.Windows.Threading;
 using System.Windows.Navigation;
+using ScmWcfService.Model;
 
 namespace ScmClient
 {
@@ -63,6 +64,32 @@ namespace ScmClient
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (this.currentPage.Name == "RFIDScanInPickPageName")
+            {
+                this.NextBtn.Visibility = Visibility.Visible;
+                this.NextBtn.Content = "下一步";
+                this.BackBtn.Content = "放弃";
+                this.timer.Enabled = true;
+                this.timer.Start();
+                this.currentPage = new RFIDScanInPage();
+                NaviFrame.NavigationService.Navigate(this.currentPage);
+            }
+            else {
+                closeWindow();
+            }
+        }
+
+        private void closeWindow() {
+            closeCOM();
+
+            this.Close();
+            if (this.menuWindow != null && !this.menuWindow.IsActive)
+            {
+                this.menuWindow.Activate();
+                this.menuWindow.Show();
+            }
+        }
+        private void closeCOM() {
             int stopReadFlag = RFIDDll.ComStopReadMultiTag(g_selectCom);
             if (stopReadFlag == RFIDDll.STOP_READ_MULITTAG_SUCCESS)
             {
@@ -81,31 +108,56 @@ namespace ScmClient
                 g_selectCom = IntPtr.Zero;
                 LogUtil.Logger.Info("Close COM Success");
             }
-            this.Close();
-
-
-            if (this.menuWindow != null && !this.menuWindow.IsActive)
-            {
-                this.menuWindow.Activate();
-                this.menuWindow.Show();
-            }
+        
         }
 
         private void NextBtn_Click(object sender, RoutedEventArgs e)
         {
+            this.GoToNextPage();
+        }
+
+        public void GoToNextPage() {
+
+            BackBtn.Content = "放弃";
+            NextBtn.Visibility = Visibility.Visible;
+
             if (this.currentPage.Name == "RFIDScanInPageName")
             {
+                NextBtn.Content = "完成扫描";
                 this.currentPage = new RFIDScanInListPage(this);
                 NaviFrame.NavigationService.Navigate(this.currentPage);
             }
-            else if (this.currentPage.Name == "RFIDScanInListPageName") {
-
-                NextBtn.Content = "完成扫描";
-                this.currentPage = new RFIDScanInConfirmPage();
-                this.StopTimer();
-
-                NaviFrame.NavigationService.Navigate(this.currentPage);
+            else if (this.currentPage.Name == "RFIDScanInListPageName")
+            {
+                RFIDScanInListPage listPage = (RFIDScanInListPage)currentPage;
+                if (listPage.Validate())
+                {
+                    NextBtn.Content = "生成择货单";
+                    this.currentPage = new RFIDScanInConfirmPage(this, listPage.orderCar, listPage.orderBoxes);
+                    this.StopTimer();
+                    NaviFrame.NavigationService.Navigate(this.currentPage);
+                }
+                else
+                {
+                    showMessageBox("存在未通过验证料车或料盒，请初始化数据并重新扫描！");
+                }
             }
+            else if (this.currentPage.Name == "RFIDScanInConfirmPageName")
+            {
+                RFIDScanInConfirmPage confirmPage = (RFIDScanInConfirmPage)currentPage;
+                Pick pick = confirmPage.GenereatePick();
+                if (pick != null) {
+                    BackBtn.Content = "返回";
+                    NextBtn.Visibility = Visibility.Hidden;
+                    this.currentPage = new RFIDScanInPickPage(this,confirmPage.orderCar,confirmPage.orderBoxes);
+                    NaviFrame.NavigationService.Navigate(this.currentPage);
+                }
+            }
+        }
+
+        public void showMessageBox(string message)
+        {
+            System.Windows.Forms.MessageBox.Show(message);
         }
 
         private void openCom()
@@ -195,6 +247,16 @@ namespace ScmClient
                });
             }
         }
+
+        //private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        //{
+        //    if (System.Windows.MessageBox.Show("确定关闭?", "确认提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+        //    {
+        //        closeCOM();
+
+        //        System.Windows.Application.Current.Shutdown();
+        //    }
+        //}
 
     }
 }
