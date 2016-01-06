@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  order_id: 
+  user_id: 
+  status: 1
+  quantity: 1.5
+  part_id: 1
+  orderable_id: 1
+  orderable_type: MyString
+  is_emergency: false
+  remarks: MyString
+
+two:
+  order_id: 
+  user_id: 
+  status: 1
+  quantity: 1.5
+  part_id: 1
+  orderable_id: 1
+  orderable_type: MyString
+  is_emergency: false
+  remarks: MyString

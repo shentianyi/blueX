@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Pick Orders</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Pick</th>
+      <th>Order</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pick_orders.each do |pick_order| %>
+      <tr>
+        <td><%= pick_order.pick %></td>
+        <td><%= pick_order.order %></td>
+        <td><%= link_to 'Show', pick_order %></td>
+        <td><%= link_to 'Edit', edit_pick_order_path(pick_order) %></td>
+        <td><%= link_to 'Destroy', pick_order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pick order', new_pick_order_path %>

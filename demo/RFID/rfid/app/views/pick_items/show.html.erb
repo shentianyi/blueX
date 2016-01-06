@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Pick:</strong>
+  <%= @pick_item.pick %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @pick_item.status %>
+</p>
+
+<p>
+  <strong>Warehouse:</strong>
+  <%= @pick_item.warehouse_id %>
+</p>
+
+<p>
+  <strong>Position:</strong>
+  <%= @pick_item.position_id %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @pick_item.quantity %>
+</p>
+
+<p>
+  <strong>Part:</strong>
+  <%= @pick_item.part_id %>
+</p>
+
+<p>
+  <strong>Is emergency:</strong>
+  <%= @pick_item.is_emergency %>
+</p>
+
+<p>
+  <strong>Order item:</strong>
+  <%= @pick_item.order_item_id %>
+</p>
+
+<p>
+  <strong>Remarks:</strong>
+  <%= @pick_item.remarks %>
+</p>
+
+<%= link_to 'Edit', edit_pick_item_path(@pick_item) %> |
+<%= link_to 'Back', pick_items_path %>

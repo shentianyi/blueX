@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nr:</strong>
+  <%= @move_type.nr %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @move_type.description %>
+</p>
+
+<%= link_to 'Edit', edit_move_type_path(@move_type) %> |
+<%= link_to 'Back', move_types_path %>

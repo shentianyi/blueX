@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nr: MyString
+  name: MyString
+  description: MyString
+  short_description: MyString
+  part_id: 
+  color_id: 
+  measure_unit_id: 1
+  purchase_unit_id: 1
+  custom_nr: MyString
+  cross_section: 1.5
+  weight: 1.5
+
+two:
+  nr: MyString
+  name: MyString
+  description: MyString
+  short_description: MyString
+  part_id: 
+  color_id: 
+  measure_unit_id: 1
+  purchase_unit_id: 1
+  custom_nr: MyString
+  cross_section: 1.5
+  weight: 1.5

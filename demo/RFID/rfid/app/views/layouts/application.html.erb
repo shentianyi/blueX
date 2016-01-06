@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>神秘小车系统</title>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+
+  <style type="text/css">
+      .title {
+          margin-top: 2px;
+          margin-left: 10px;
+          width: 150px;
+          height: 40px;
+          font-size: 1.2em;
+          text-align: center;
+          padding-top: 10px;
+          border: 2px solid #999;
+          margin-bottom: 0;
+          border-bottom-color: transparent;
+          border-top-right-radius: 8px;
+          cursor: pointer;
+      }
+
+      span {
+          color: #000;
+      }
+
+      #notice {
+          color: #000;
+          font-size: 1.2em;
+      }
+
+      /*用于增大字体*/
+      tr, td, b, label, .digg_pagination {
+          font-size: 1.05em;
+      }
+
+      #table_div {
+          position: absolute;
+          width: 85%;
+          height: 600px;
+          margin-bottom: 0;
+          overflow: auto;
+          /*border: 2px solid #000;*/
+          border-radius: 8px;
+      }
+
+      .table {
+          width: 100%;
+          white-space: nowrap;
+      }
+  </style>
+
+</head>
+
+
+<body style="overflow-y:auto;width: 100%;">
+<div style="overflow: auto;">
+  <%= render 'shares/head' %>
+</div>
+
+
+<div style="display: inline-flex; width: 100%;height: 900px;">
+  <div style="float: left;width: 12%;background-color: #424A5D;">
+    <%= render 'shares/left' %>
+  </div>
+  <div style="float:right; width: 100%;background-color: #F2F2F2;">
+    <%= yield %>
+  </div>
+</div>
+
+<!--处理中信息-->
+<%= render partial: 'shares/handling_msg_box', locals: {handle_message: '处理中...'} %>
+</body>
+</html>
+
+<script>
+    $(function () {
+        $(".datetime-picker").datetimepicker({
+            lang: 'ch',
+            format: 'Y-m-d H:i'
+        });
+    });
+
+    $(function () {
+        $(".date-picker").datepicker({
+            dateFormat: 'yy-mm-dd'
+        });
+    });
+
+
+    $(".title").click(function () {
+        $(".slide").slideToggle("fast");
+    });
+
+    $(function () {
+        $("#main-menu li").removeClass('active');
+        $('#' + $('#active_li').val()).addClass('active');
+        jQuery(".best_in_place").best_in_place();
+        $('.best_in_place').bind("ajax:success", function () {
+            $(this).closest('tr').effect('highlight');
+        });
+    });
+</script>
+

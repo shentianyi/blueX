@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Pick:</strong>
+  <%= @pick_order.pick %>
+</p>
+
+<p>
+  <strong>Order:</strong>
+  <%= @pick_order.order %>
+</p>
+
+<%= link_to 'Edit', edit_pick_order_path(@pick_order) %> |
+<%= link_to 'Back', pick_orders_path %>

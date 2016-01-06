@@ -1,0 +1,357 @@
+zh:
+  date:
+    abbr_day_names:
+    - 日
+    - 一
+    - 二
+    - 三
+    - 四
+    - 五
+    - 六
+    abbr_month_names:
+    -
+    - 1月
+    - 2月
+    - 3月
+    - 4月
+    - 5月
+    - 6月
+    - 7月
+    - 8月
+    - 9月
+    - 10月
+    - 11月
+    - 12月
+    day_names:
+    - 星期日
+    - 星期一
+    - 星期二
+    - 星期三
+    - 星期四
+    - 星期五
+    - 星期六
+    formats:
+      default: ! '%Y-%m-%d'
+      long: ! '%Y年%b%d日'
+      short: ! '%b%d日'
+    month_names:
+    -
+    - 一月
+    - 二月
+    - 三月
+    - 四月
+    - 五月
+    - 六月
+    - 七月
+    - 八月
+    - 九月
+    - 十月
+    - 十一月
+    - 十二月
+    order:
+    - :year
+    - :month
+    - :day
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: 大约一小时
+        other: 大约 %{count} 小时
+      about_x_months:
+        one: 大约一个月
+        other: 大约 %{count} 个月
+      about_x_years:
+        one: 大约一年
+        other: 大约 %{count} 年
+      almost_x_years:
+        one: 接近一年
+        other: 接近 %{count} 年
+      half_a_minute: 半分钟
+      less_than_x_minutes:
+        one: 不到一分钟
+        other: 不到 %{count} 分钟
+      less_than_x_seconds:
+        one: 不到一秒
+        other: 不到 %{count} 秒
+      over_x_years:
+        one: 一年多
+        other: ! '%{count} 年多'
+      x_days:
+        one: 一天
+        other: ! '%{count} 天'
+      x_minutes:
+        one: 一分钟
+        other: ! '%{count} 分钟'
+      x_months:
+        one: 一个月
+        other: ! '%{count} 个月'
+      x_seconds:
+        one: 一秒
+        other: ! '%{count} 秒'
+    prompts:
+      day: 日
+      hour: 时
+      minute: 分
+      month: 月
+      second: 秒
+      year: 年
+  errors: &errors
+    format: ! '%{attribute} %{message}'
+    messages:
+      accepted: 必须是可被接受的
+      blank: 不能为空字符
+      confirmation: 与确认值不匹配
+      empty: 不能留空
+      equal_to: 必须等于 %{count}
+      even: 必须为双数
+      exclusion: 是保留关键字
+      greater_than: 必须大于 %{count}
+      greater_than_or_equal_to: 必须大于或等于 %{count}
+      inclusion: 不包含于列表中
+      invalid: 是无效的
+      less_than: 必须小于 %{count}
+      less_than_or_equal_to: 必须小于或等于 %{count}
+      not_a_number: 不是数字
+      not_an_integer: 必须是整数
+      odd: 必须为单数
+      record_invalid: ! '验证失败: %{errors}'
+      taken: 已经被使用
+      too_long: 过长（最长为 %{count} 个字符）
+      too_short: 过短（最短为 %{count} 个字符）
+      wrong_length: 长度非法（必须为 %{count} 个字符）
+      carrierwave_processing_error: "Cannot resize image."
+      carrierwave_integrity_error: "Not an image."
+      carrierwave_download_error: "Couldn't download image."
+      extension_white_list_error: "You are not allowed to upload %{extension} files, allowed types: %{allowed_types}"
+      extension_black_list_error: "You are not allowed to upload %{extension} files, prohibited types: %{prohibited_types}"
+    template:
+      body: 如下字段出现错误：
+      header:
+        one: 有 1 个错误发生导致「%{model}」无法被保存。
+        other: 有 %{count} 个错误发生导致「%{model}」无法被保存。
+  helpers:
+    select:
+      prompt: 请选择
+    submit:
+      create: 新增%{model}
+      submit: 储存%{model}
+      update: 更新%{model}
+  number:
+    currency:
+      format:
+        delimiter: ! ','
+        format: ! '%u %n'
+        precision: 2
+        separator: .
+        significant: false
+        strip_insignificant_zeros: false
+        unit: CN¥
+    format:
+      delimiter: ! ','
+      precision: 3
+      separator: .
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: ! '%n %u'
+        units:
+          billion: 十亿
+          million: 百万
+          quadrillion: 千兆
+          thousand: 千
+          trillion: 兆
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 1
+        significant: false
+        strip_insignificant_zeros: false
+      storage_units:
+        format: ! '%n %u'
+        units:
+          byte:
+            one: Byte
+            other: Bytes
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+    percentage:
+      format:
+        delimiter: ''
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: ! ', 和 '
+      two_words_connector: ! ' 和 '
+      words_connector: ! ', '
+  time:
+    am: 上午
+    formats:
+      default: ! '%Y年%b%d日 %A %H:%M:%S %Z'
+      long: ! '%Y年%b%d日 %H:%M'
+      short: ! '%b%d日 %H:%M'
+    pm: 下午
+  # remove these aliases after 'activemodel' and 'activerecord' namespaces are removed from Rails repository
+  activemodel:
+    errors:
+      <<: *errors
+  activerecord:
+    errors:
+      <<: *errors
+  devise:
+      confirmations:
+        confirmed: "您的帐号已经确认，您现在已登录。"
+        send_instructions: "几分钟后，您将收到确认帐号的电子邮件。"
+        send_paranoid_instructions: "如果您的邮箱存在于我们的数据库中，您将收到一封确认账号的邮件。"
+      failure:
+        already_authenticated: "您已经登录。"
+        inactive: "您还没有激活帐户。"
+        invalid: "邮箱或密码错误。"
+        invalid_email: "邮箱错误"
+        invalid_password: "密码错误"
+        locked: "您的帐号已被锁定。"
+        last_attempt: "您还有最后一次尝试机会，再次失败您的账号将被锁定。"
+        not_found_in_database: "邮箱或密码错误。"
+        timeout: "您已登录超时，请重新登录。"
+        unauthenticated: "继续操作前请注册或者登录。"
+        unconfirmed: "继续操作前请先确认您的帐号。"
+      sessions:
+        signed_in: "登录成功."
+        signed_out: "退出成功."
+  doorkeeper:
+      errors:
+        messages:
+          # Common error messages
+          invalid_request: 'The request is missing a required parameter, includes an unsupported parameter value, or is otherwise malformed.'
+          invalid_redirect_uri: 'The redirect uri included is not valid.'
+          unauthorized_client: 'The client is not authorized to perform this request using this method.'
+          access_denied: 'The resource owner or authorization server denied the request.'
+          invalid_scope: 'The requested scope is invalid, unknown, or malformed.'
+          server_error: 'The authorization server encountered an unexpected condition which prevented it from fulfilling the request.'
+          temporarily_unavailable: 'The authorization server is currently unable to handle the request due to a temporary overloading or maintenance of the server.'
+
+          #configuration error messages
+          credential_flow_not_configured: 'Resource Owner Password Credentials flow failed due to Doorkeeper.configure.resource_owner_from_credentials being unconfigured.'
+          resource_owner_authenticator_not_configured: 'Resource Owner find failed due to Doorkeeper.configure.resource_owner_authenticator being unconfiged.'
+
+          # Access grant errors
+          unsupported_response_type: 'The authorization server does not support this response type.'
+
+          # Access token errors
+          invalid_client: 'Client authentication failed due to unknown client, no client authentication included, or unsupported authentication method.'
+          invalid_grant: 'The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client.'
+          unsupported_grant_type: 'The authorization grant type is not supported by the authorization server.'
+
+          # Password Access token errors
+          invalid_resource_owner: 'The provided resource owner credentials are not valid, or resource owner cannot be found'
+
+          invalid_token:
+            revoked: "The access token was revoked"
+            expired: "The access token expired"
+            unknown: "The access token is invalid"
+
+      flash:
+        applications:
+          create:
+            notice: 'Application created.'
+          destroy:
+            notice: 'Application deleted.'
+          update:
+            notice: 'Application updated.'
+        authorized_applications:
+          destroy:
+            notice: 'Application revoked.'
+  # brilliantech project
+  #authlogic:
+   # error_messages:
+   #   email_invalid: should look like an email address.
+   #   password_blank: 密码不可为空
+   #  password_invalid: 密码最短长度为4
+  welcome:
+    title: 欢迎
+    sub_title: 欢迎使用ClearInsight
+    entrys:
+      title: 针对您角色的入口
+      kpi_entry: 输入KPI
+      analyse: 分析
+      dashboard: 仪表盘
+      manage_kpi: 管理KPI
+    statistics:
+      title: 当前数据统计
+      staff: 人员结构
+      table: 数据统计
+      item:
+        kpi: KPI
+        entity: 输入点
+        user: 用户
+        view: 视图
+
+  authlogic:
+    error_messages:
+      login_blank: 不能为空
+      login_not_found: 是无效的
+      login_invalid: 只能包含字符，数字，空格和 .-_@
+      consecutive_failed_logins_limit_exceeded: Consecutive failed logins limit exceeded, account is disabled.
+      email_invalid: 无效的邮箱格式.
+      password_blank: 不能为空
+      password_invalid: 是无效的
+  auth:
+    view:
+      login_title: 登 录
+      login_btn: 登 录
+      sign_title: 现 在 注 册
+      sign_btn: 注 册
+      signout_btn: 注销
+      submit_btn: 提 交
+      email: 邮箱
+      pwd: 密码
+      confirm: 确认
+      con_pwd: 确认密码
+      company: 公司
+      old_pwd: 旧密码
+      new_pwd: 新密码
+      new_pwd_cfm: 确认新密码
+      cfm_change: 确认修改
+    msg:
+      login_success: 登录成功
+      login_fail: 登陆失败,请核实登陆信息
+      login_require: 请先登录
+      logout_success: 注销成功
+      logout_require: 请先注册
+      email_token: 邮箱已被注册
+      sign_success: 注册成功
+      sign_close: 我们还没有开放注册
+      sign_fail: 注册失败
+      lock_account: 您的账户已经过期或被锁定，请联系网站管理员
+      pwd_changed: 密码修改成功
+      old_pwd_error: 原始密码错误
+      fill_blank: 请输入所有信息
+  menu:
+      start: 开始
+      dashboard: 仪表盘
+      analytics: 分析
+      reports: 报表
+      manage: 管理
+      kpi: KPI
+      user: 用户
+      view: 视图
+      my_view: 我的视图
+      my_kpi: 我的KPI
+      billing: 账户
+      entry_kpi: KPI输入
+      department: 输入点
+      entity: 部门
+      story_set: 我的讨论组
+      subscription: 我的订阅
+  #manage
+  manage:
+      user:
+        role:
+          admin: 系统管理员
+          director: 管理员
+          manager: 经理
+          user: 普通用户

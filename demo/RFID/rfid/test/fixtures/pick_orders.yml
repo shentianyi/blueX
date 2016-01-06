@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pick_id: 
+  order_id: 
+
+two:
+  pick_id: 
+  order_id: 

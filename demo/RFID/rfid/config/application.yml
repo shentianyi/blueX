@@ -1,0 +1,24 @@
+development:
+   oauth:
+      application:
+         name: ClearInsight
+         uid: bdae4504bd3fc97d0690b6b57a7cc5b7399a5c91c3a126731c0da4b26f606991
+         redirect_uri: 'http://www.cz-tek.com'
+         owner: leoni@warehouse.com
+      secret_key: 7381a978f7dd7f9a1117
+   application:
+       id: wms-client
+
+
+
+
+production:
+   oauth:
+      application:
+         name: ClearInsight
+         uid: bdae4504bd3fc97d0690b6b57a7cc5b7399a5c91c3a126731c0da4b26f606991
+         redirect_uri: 'https://www.cz-tek.com'
+         owner: leoni@warehouse.com
+      secret_key: 7381a978f7dd7f9a1117
+   application:
+       id: wms-client

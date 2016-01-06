@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pick_id: 
+  status: 1
+  warehouse_id: 1
+  position_id: 1
+  quantity: 1.5
+  part_id: 1
+  is_emergency: false
+  order_item_id: 1
+  remarks: MyString
+
+two:
+  pick_id: 
+  status: 1
+  warehouse_id: 1
+  position_id: 1
+  quantity: 1.5
+  part_id: 1
+  is_emergency: false
+  order_item_id: 1
+  remarks: MyString

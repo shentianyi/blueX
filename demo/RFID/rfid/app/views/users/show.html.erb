@@ -1,0 +1,87 @@
+<style type="text/css">
+    p {
+        width: 150px;
+        font-size: 1.2em;
+    }
+
+    hr {
+        border: 1px solid #999;
+    }
+
+    small {
+        font-size: 1.2em;
+    }
+</style>
+
+<div style="display: inline-flex;width: 100%;">
+  <h1>员工信息<em>详情</em></h1>
+  <span class="label label-primary" style="margin-top:20px;;width: 30px;height: 20px;"><%= @user.id %></span>
+</div>
+<hr style="border: 1px solid #000;height: 0;margin-top: 0;"/>
+
+<div style="margin-top: 50px;margin-left: 30%;">
+  <fieldset style="width: 60%;">
+    <legend style="width: 100px;">员工信息</legend>
+    <div style="display: inline-flex;" class="col-sm-12">
+      <p>用户名：</p>
+      <small><%= @user.nr %></small>
+    </div>
+    <hr/>
+    <div style="display: inline-flex;" class="col-sm-12">
+      <p>姓名：</p>
+      <small><%= @user.name %></small>
+    </div>
+    <hr/>
+
+    <div style="display: inline-flex;" class="col-sm-12">
+      <p>角色：</p>
+      <small><%= Role.display(@user.role_id) %></small>
+    </div>
+    <hr/>
+
+    <div style="display: inline-flex;" class="col-sm-12">
+      <p>邮箱：</p>
+      <small><%= @user.email %></small>
+    </div>
+    <hr/>
+
+    <div style="display: inline-flex;" class="col-sm-12">
+      <p>是否可编辑：</p>
+      <small id="can_edit"><%= @user.can_edit %></small>
+    </div>
+    <hr/>
+
+    <div style="display: inline-flex;" class="col-sm-12">
+      <p>是否可删除：</p>
+      <small id="can_delete"><%= @user.can_delete %></small>
+    </div>
+
+    <hr style="border: 1px solid #000"/>
+    <% if current_user.can_edit %>
+        <%= link_to '编辑', edit_user_path(@user), :class => 'btn btn-primary',
+                    :style => 'margin-top:10px;color:#fff;' %>
+    <% end %>
+    <%= link_to '返回', users_path, :class => 'btn btn-primary',
+                :style => 'margin-top:10px;color:#fff;' %>
+  </fieldset>
+</div>
+
+<script type="text/javascript">
+    var value_edit = document.getElementById("can_edit").textContent;
+    var content_edit = document.getElementById("can_edit");
+    if (value_edit == "true") {
+        content_edit.innerHTML = "是";
+    } else {
+        content_edit.innerHTML = "否";
+    }
+
+    var value_delete = document.getElementById("can_delete").textContent;
+    var content_delete = document.getElementById("can_delete");
+    if (value_delete == "true") {
+        content_delete.innerHTML = "是";
+    } else {
+        content_delete.innerHTML = "否";
+    }
+</script>
+
+

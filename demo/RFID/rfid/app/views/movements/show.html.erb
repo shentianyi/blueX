@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Part:</strong>
+  <%= @movement.part_id %>
+</p>
+
+<p>
+  <strong>Fifo:</strong>
+  <%= @movement.fifo %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @movement.quantity %>
+</p>
+
+<p>
+  <strong>Package nr:</strong>
+  <%= @movement.package_nr %>
+</p>
+
+<p>
+  <strong>Uniq:</strong>
+  <%= @movement.uniq %>
+</p>
+
+<p>
+  <strong>From position:</strong>
+  <%= @movement.from_position_id %>
+</p>
+
+<p>
+  <strong>From warehouse:</strong>
+  <%= @movement.from_warehouse_id %>
+</p>
+
+<p>
+  <strong>To position:</strong>
+  <%= @movement.to_position_id %>
+</p>
+
+<p>
+  <strong>To warehouse:</strong>
+  <%= @movement.to_warehouse_id %>
+</p>
+
+<p>
+  <strong>Move type:</strong>
+  <%= @movement.move_type_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @movement.user_id %>
+</p>
+
+<p>
+  <strong>Remarks:</strong>
+  <%= @movement.remarks %>
+</p>
+
+<%= link_to 'Edit', edit_movement_path(@movement) %> |
+<%= link_to 'Back', movements_path %>

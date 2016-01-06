@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  part_id: 1
+  fifo: MyString
+  quantity: 1.5
+  package_nr: MyString
+  uniq: MyString
+  from_position_id: 1
+  from_warehouse_id: 1
+  to_position_id: 1
+  to_warehouse_id: 1
+  move_type_id: 1
+  user_id: 1
+  remarks: MyString
+
+two:
+  part_id: 1
+  fifo: MyString
+  quantity: 1.5
+  package_nr: MyString
+  uniq: MyString
+  from_position_id: 1
+  from_warehouse_id: 1
+  to_position_id: 1
+  to_warehouse_id: 1
+  move_type_id: 1
+  user_id: 1
+  remarks: MyString

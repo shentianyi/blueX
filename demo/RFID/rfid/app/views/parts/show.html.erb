@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nr:</strong>
+  <%= @part.nr %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @part.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @part.description %>
+</p>
+
+<p>
+  <strong>Short description:</strong>
+  <%= @part.short_description %>
+</p>
+
+<p>
+  <strong>Part:</strong>
+  <%= @part.part %>
+</p>
+
+<p>
+  <strong>Color:</strong>
+  <%= @part.color %>
+</p>
+
+<p>
+  <strong>Measure unit:</strong>
+  <%= @part.measure_unit_id %>
+</p>
+
+<p>
+  <strong>Purchase unit:</strong>
+  <%= @part.purchase_unit_id %>
+</p>
+
+<p>
+  <strong>Custom nr:</strong>
+  <%= @part.custom_nr %>
+</p>
+
+<p>
+  <strong>Cross section:</strong>
+  <%= @part.cross_section %>
+</p>
+
+<p>
+  <strong>Weight:</strong>
+  <%= @part.weight %>
+</p>
+
+<%= link_to 'Edit', edit_part_path(@part) %> |
+<%= link_to 'Back', parts_path %>

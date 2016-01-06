@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Order Boxes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nr</th>
+      <th>Rfid nr</th>
+      <th>Status</th>
+      <th>Part</th>
+      <th>Quantity</th>
+      <th>Warehouse</th>
+      <th>Source warehouse</th>
+      <th>Order box type</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @order_boxes.each do |order_box| %>
+      <tr>
+        <td><%= order_box.nr %></td>
+        <td><%= order_box.rfid_nr %></td>
+        <td><%= order_box.status %></td>
+        <td><%= order_box.part_id %></td>
+        <td><%= order_box.quantity %></td>
+        <td><%= order_box.warehouse %></td>
+        <td><%= order_box.source_warehouse_id %></td>
+        <td><%= order_box.order_box_type_id %></td>
+        <td><%= link_to 'Show', order_box %></td>
+        <td><%= link_to 'Edit', edit_order_box_path(order_box) %></td>
+        <td><%= link_to 'Destroy', order_box, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Order box', new_order_box_path %>

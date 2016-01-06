@@ -1,0 +1,34 @@
+<style type="text/css">
+    body {
+        background-color: #F2F2F2;
+        overflow: hidden;
+    }
+
+    .btn {
+        height: 40px;
+        width: 100px;
+        margin-top: 7%;
+    }
+
+    h2 {
+
+        color: #000;
+        margin-left: 2%;
+    }
+
+    .col-sm-2 {
+        text-align: center;
+        vertical-align: middle;
+        padding: 0;
+    }
+</style>
+
+<div style="display: inline-flex;width: 100%; background-color: #424A5D">
+  <div class="col-sm-2">
+    <h2>BRILLIANTECH</h2>
+  </div>
+  <div class="col-sm-8"></div>
+  <div class="col-sm-2">
+    <%= link_to "注 销", destroy_user_session_path, :method => :delete, :class => 'btn btn-danger', :style => 'color:#fff;' %>
+  </div>
+</div>

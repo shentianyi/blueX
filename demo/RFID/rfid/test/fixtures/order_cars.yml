@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nr: MyString
+  rfid_nr: MyString
+  warehouse_id: 1
+  status: 1
+
+two:
+  nr: MyString
+  rfid_nr: MyString
+  warehouse_id: 1
+  status: 1

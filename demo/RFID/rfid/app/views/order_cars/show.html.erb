@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nr:</strong>
+  <%= @order_car.nr %>
+</p>
+
+<p>
+  <strong>Rfid nr:</strong>
+  <%= @order_car.rfid_nr %>
+</p>
+
+<p>
+  <strong>Warehouse:</strong>
+  <%= @order_car.warehouse_id %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @order_car.status %>
+</p>
+
+<%= link_to 'Edit', edit_order_car_path(@order_car) %> |
+<%= link_to 'Back', order_cars_path %>

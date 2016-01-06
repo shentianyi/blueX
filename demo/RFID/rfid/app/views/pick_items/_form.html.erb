@@ -1,0 +1,53 @@
+<%= form_for(@pick_item) do |f| %>
+  <% if @pick_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pick_item.errors.count, "error") %> prohibited this pick_item from being saved:</h2>
+
+      <ul>
+      <% @pick_item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :pick_id %><br>
+    <%= f.text_field :pick_id %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.number_field :status %>
+  </div>
+  <div class="field">
+    <%= f.label :warehouse_id %><br>
+    <%= f.number_field :warehouse_id %>
+  </div>
+  <div class="field">
+    <%= f.label :position_id %><br>
+    <%= f.number_field :position_id %>
+  </div>
+  <div class="field">
+    <%= f.label :quantity %><br>
+    <%= f.text_field :quantity %>
+  </div>
+  <div class="field">
+    <%= f.label :part_id %><br>
+    <%= f.number_field :part_id %>
+  </div>
+  <div class="field">
+    <%= f.label :is_emergency %><br>
+    <%= f.check_box :is_emergency %>
+  </div>
+  <div class="field">
+    <%= f.label :order_item_id %><br>
+    <%= f.number_field :order_item_id %>
+  </div>
+  <div class="field">
+    <%= f.label :remarks %><br>
+    <%= f.text_field :remarks %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

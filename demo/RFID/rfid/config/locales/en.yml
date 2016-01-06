@@ -1,0 +1,339 @@
+en:
+  date:
+    abbr_day_names:
+    - Sun
+    - Mon
+    - Tue
+    - Wed
+    - Thu
+    - Fri
+    - Sat
+    abbr_month_names:
+    -
+    - Jan
+    - Feb
+    - Mar
+    - Apr
+    - May
+    - Jun
+    - Jul
+    - Aug
+    - Sep
+    - Oct
+    - Nov
+    - Dec
+    day_names:
+    - Sunday
+    - Monday
+    - Tuesday
+    - Wednesday
+    - Thursday
+    - Friday
+    - Saturday
+    formats:
+      default: ! '%Y-%m-%d'
+      long: ! '%B %d, %Y'
+      short: ! '%b %d'
+    month_names:
+    -
+    - January
+    - February
+    - March
+    - April
+    - May
+    - June
+    - July
+    - August
+    - September
+    - October
+    - November
+    - December
+    order:
+    - :year
+    - :month
+    - :day
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: about 1 hour
+        other: about %{count} hours
+      about_x_months:
+        one: about 1 month
+        other: about %{count} months
+      about_x_years:
+        one: about 1 year
+        other: about %{count} years
+      almost_x_years:
+        one: almost 1 year
+        other: almost %{count} years
+      half_a_minute: half a minute
+      less_than_x_minutes:
+        one: less than a minute
+        other: less than %{count} minutes
+      less_than_x_seconds:
+        one: less than 1 second
+        other: less than %{count} seconds
+      over_x_years:
+        one: over 1 year
+        other: over %{count} years
+      x_days:
+        one: 1 day
+        other: ! '%{count} days'
+      x_minutes:
+        one: 1 minute
+        other: ! '%{count} minutes'
+      x_months:
+        one: 1 month
+        other: ! '%{count} months'
+      x_seconds:
+        one: 1 second
+        other: ! '%{count} seconds'
+    prompts:
+      day: Day
+      hour: Hour
+      minute: Minute
+      month: Month
+      second: Seconds
+      year: Year
+  errors: &errors
+    format: ! '%{attribute} %{message}'
+    messages:
+      accepted: must be accepted
+      blank: can't be blank
+      present: must be blank
+      confirmation: ! "doesn't match %{attribute}"
+      empty: can't be empty
+      equal_to: must be equal to %{count}
+      even: must be even
+      exclusion: is reserved
+      greater_than: must be greater than %{count}
+      greater_than_or_equal_to: must be greater than or equal to %{count}
+      inclusion: is not included in the list
+      invalid: is invalid
+      less_than: must be less than %{count}
+      less_than_or_equal_to: must be less than or equal to %{count}
+      not_a_number: is not a number
+      not_an_integer: must be an integer
+      odd: must be odd
+      record_invalid: ! 'Validation failed: %{errors}'
+      restrict_dependent_destroy:
+        one: "Cannot delete record because a dependent %{record} exists"
+        many: "Cannot delete record because dependent %{record} exist"
+      taken: has already been taken
+      too_long:
+        one: is too long (maximum is 1 character)
+        other: is too long (maximum is %{count} characters)
+      too_short:
+        one: is too short (minimum is 1 character)
+        other: is too short (minimum is %{count} characters)
+      wrong_length:
+        one: is the wrong length (should be 1 character)
+        other: is the wrong length (should be %{count} characters)
+      other_than: "must be other than %{count}"
+      carrierwave_processing_error: "Cannot resize image."
+      carrierwave_integrity_error: "Not an image."
+      carrierwave_download_error: "Couldn't download image."
+      extension_white_list_error: "You are not allowed to upload %{extension} files, allowed types: %{allowed_types}"
+      extension_black_list_error: "You are not allowed to upload %{extension} files, prohibited types: %{prohibited_types}"
+    template:
+      body: ! 'There were problems with the following fields:'
+      header:
+        one: 1 error prohibited this %{model} from being saved
+        other: ! '%{count} errors prohibited this %{model} from being saved'
+  helpers:
+    select:
+      prompt: Please select
+    submit:
+      create: Create %{model}
+      submit: Save %{model}
+      update: Update %{model}
+  number:
+    currency:
+      format:
+        delimiter: ! ','
+        format: ! '%u%n'
+        precision: 2
+        separator: .
+        significant: false
+        strip_insignificant_zeros: false
+        unit: $
+    format:
+      delimiter: ! ','
+      precision: 3
+      separator: .
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: ! '%n %u'
+        units:
+          billion: Billion
+          million: Million
+          quadrillion: Quadrillion
+          thousand: Thousand
+          trillion: Trillion
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: ! '%n %u'
+        units:
+          byte:
+            one: Byte
+            other: Bytes
+          gb: GB
+          kb: KB
+          mb: MBsessions
+          tb: TB
+    percentage:
+      format:
+        delimiter: ''
+        format: "%n%"
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: ! ', and '
+      two_words_connector: ! ' and '
+      words_connector: ! ', '
+  time:
+    am: am
+    formats:
+      default: ! '%a, %d %b %Y %H:%M:%S %z'
+      long: ! '%B %d, %Y %H:%M'
+      short: ! '%d %b %H:%M'
+    pm: pm
+  # remove these aliases after 'activemodel' and 'activerecord' namespaces are removed from Rails repository
+  activemodel:
+    errors:
+      <<: *errors
+  activerecord:
+    errors:
+      <<: *errors
+  devise:
+      confirmations:
+        confirmed: "Your account was successfully confirmed."
+        send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
+        send_paranoid_instructions: "If your email address exists in our database, you will receive an email with instructions about how to confirm your account in a few minutes."
+      failure:
+        already_authenticated: "You are already signed in."
+        inactive: "Your account is not activated yet."
+        invalid: "Invalid email or password."
+        invalid_email: "Invalid email"
+        invalid_password: "Invalid password"
+        locked: "Your account is locked."
+        last_attempt: "You have one more attempt before your account will be locked."
+        not_found_in_database: "Invalid email or password."
+        timeout: "Your session expired. Please sign in again to continue."
+        unauthenticated: "You need to sign in or sign up before continuing."
+        unconfirmed: "You have to confirm your account before continuing."
+      sessions:
+        signed_in: "Signed in successfully."
+        signed_out: "Signed out successfully."
+  doorkeeper:
+      errors:
+        messages:
+          # Common error messages
+          invalid_request: 'The request is missing a required parameter, includes an unsupported parameter value, or is otherwise malformed.'
+          invalid_redirect_uri: 'The redirect uri included is not valid.'
+          unauthorized_client: 'The client is not authorized to perform this request using this method.'
+          access_denied: 'The resource owner or authorization server denied the request.'
+          invalid_scope: 'The requested scope is invalid, unknown, or malformed.'
+          server_error: 'The authorization server encountered an unexpected condition which prevented it from fulfilling the request.'
+          temporarily_unavailable: 'The authorization server is currently unable to handle the request due to a temporary overloading or maintenance of the server.'
+
+          #configuration error messages
+          credential_flow_not_configured: 'Resource Owner Password Credentials flow failed due to Doorkeeper.configure.resource_owner_from_credentials being unconfigured.'
+          resource_owner_authenticator_not_configured: 'Resource Owner find failed due to Doorkeeper.configure.resource_owner_authenticator being unconfiged.'
+
+          # Access grant errors
+          unsupported_response_type: 'The authorization server does not support this response type.'
+
+          # Access token errors
+          invalid_client: 'Client authentication failed due to unknown client, no client authentication included, or unsupported authentication method.'
+          invalid_grant: 'The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client.'
+          unsupported_grant_type: 'The authorization grant type is not supported by the authorization server.'
+
+          # Password Access token errors
+          invalid_resource_owner: 'The provided resource owner credentials are not valid, or resource owner cannot be found'
+
+          invalid_token:
+            revoked: "The access token was revoked"
+            expired: "The access token expired"
+            unknown: "The access token is invalid"
+
+      flash:
+        applications:
+          create:
+            notice: 'Application created.'
+          destroy:
+            notice: 'Application deleted.'
+          update:
+            notice: 'Application updated.'
+        authorized_applications:
+          destroy:
+            notice: 'Application revoked.'
+  # brilliantech project
+  welcome:
+    title: Welcome
+    sub_title: Welcome ClearInsight
+  auth:
+    view:
+      login_title: Sign In
+      login_btn: Sign in
+      sign_title: Sign up Now
+      sign_btn: Sign up
+      signout_btn: Logout
+      submit_btn: Ok
+      email: Email
+      pwd: Password
+      confirm: Ok
+      con_pwd: Password Confirmation
+      company: Company Name
+      old_pwd: Old password
+      new_pwd: New password
+      new_pwd_cfm: Confirm new password
+      cfm_change: Change
+    msg:
+      login_success: Login successfully!
+      login_fail: Error Login Info!
+      login_require: Please Login!
+      logout_success: Logout successfully!
+      logout_require: Please Sign up!
+      email_token: Email has been Signed up!
+      sign_success: Sign up successfully!
+      sign_close: Registration is not open!
+      sign_fail: Sign up failed!
+      local_account: We're sorry, but we could not locate your account.If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process.
+      pwd_changed: Password changed!
+      old_pwd_error: Original password error!
+      fill_blank: Please fill in all the blank!
+  menu:
+    start: Start
+    dashboard: Dashboard
+    analytics: Analytics
+    reports: Report
+    manage: Manage
+    kpi: KPI
+    user: User
+    view: View
+    my_view: My View
+    my_kpi: My KPI
+    billing: Account
+    entry_kpi: KPI Entry
+    department: Data Point
+    entity: Department
+    story_set: My Discussion
+    subscription: My Subscription
+  #manage
+  manage:
+    user:
+      role:
+        admin: System Admin
+        director: Director
+        manager: Manager
+        user: User

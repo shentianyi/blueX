@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Part:</strong>
+  <%= @storage.part_id %>
+</p>
+
+<p>
+  <strong>Fifo:</strong>
+  <%= @storage.fifo %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @storage.quantity %>
+</p>
+
+<p>
+  <strong>Package nr:</strong>
+  <%= @storage.package_nr %>
+</p>
+
+<p>
+  <strong>Uniq:</strong>
+  <%= @storage.uniq %>
+</p>
+
+<p>
+  <strong>Position:</strong>
+  <%= @storage.position_id %>
+</p>
+
+<p>
+  <strong>Warehouse:</strong>
+  <%= @storage.warehouse_id %>
+</p>
+
+<%= link_to 'Edit', edit_storage_path(@storage) %> |
+<%= link_to 'Back', storages_path %>
