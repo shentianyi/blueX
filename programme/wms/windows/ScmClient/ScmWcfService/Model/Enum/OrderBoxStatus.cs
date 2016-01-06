@@ -7,7 +7,7 @@ namespace ScmWcfService.Model.Enum
 {
     public enum OrderBoxStatus
     {
-        FREE,
-        IN_PICK
+        FREE=100,
+        IN_PICK=200
     }
 }

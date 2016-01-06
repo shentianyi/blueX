@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using ScmWcfService.Model;
+using ScmWcfService;
+using ScmWcfService.Model.Message;
 
 namespace ScmClient
 {
@@ -14,6 +16,8 @@ namespace ScmClient
 
         public OrderCar orderCar { get; set; }
         public List<OrderBox> orderBoxes { get; set; }
+        public Pick pick { get; set; }
+        public bool canNext { get; set; }
 
         public RFIDScanInConfirmPage()
         {
@@ -36,6 +40,7 @@ namespace ScmClient
             this.OrderCarLabel.Content = orderCar.nr;
             this.QtyLabel.Content = this.orderBoxes.Count;
             this.PreviewDG.ItemsSource = this.orderBoxes;
+            this.canNext = false;
         }
 
       
@@ -61,9 +66,29 @@ namespace ScmClient
             }
         }
 
-        public Pick GenereatePick() {
-            Pick pick = new Pick();
-            return pick;
+        public void GenereatePick() {
+            if (this.orderBoxes.Count > 0)
+            {
+                PickService service = new PickService();
+                List<int> ids = new List<int>();
+                foreach (OrderBox box in this.orderBoxes)
+                {
+                    ids.Add(box.id);
+                }
+                ResponseMessage<Pick> msg = service.CreatePickByOrderCar(this.orderCar.id, ids);
+                if (!msg.Success)
+                {
+                    showMessageBox(msg.Message);
+                }
+                else
+                {
+                    this.pick = msg.data;
+                    this.canNext = true;
+                }
+            }
+            else {
+                showMessageBox("无料盒，不可生成择货单！");
+            }
         }
     }
 }

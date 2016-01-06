@@ -14,6 +14,7 @@ namespace ScmClient
 
         public OrderCar orderCar { get; set; }
         public List<OrderBox> orderBoxes { get; set; }
+        public Pick pick { get; set; }
 
         public RFIDScanInPickPage()
         {
@@ -27,14 +28,18 @@ namespace ScmClient
         }
 
 
-        public RFIDScanInPickPage(RFIDScanInWindow parentWindow, OrderCar orderCar, List<OrderBox> orderBoxes)
+        public RFIDScanInPickPage(RFIDScanInWindow parentWindow, OrderCar orderCar, List<OrderBox> orderBoxes,Pick pick)
         {
             InitializeComponent();
             this.parentWindow = parentWindow;
             this.orderCar = orderCar;
             this.orderBoxes = orderBoxes;
+            this.pick = pick;
+            this.PickNrLabel.Content = this.pick.nr;
+            this.PickStatusLabel.Content = this.pick.status_display;
             this.OrderCarLabel.Content = orderCar.nr;
             this.QtyLabel.Content = this.orderBoxes.Count;
+
             this.PreviewDG.ItemsSource = this.orderBoxes;
         }
 
@@ -45,25 +50,6 @@ namespace ScmClient
         }
 
 
-        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (PreviewDG.SelectedIndex > -1)
-            {
-                if (MessageBox.Show("删除后将无法恢复，请确认是否删除！", "确认提示", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
-                {
-                    OrderBox box = PreviewDG.SelectedItem as OrderBox;
-                    this.orderBoxes.Remove(box);
-                    PreviewDG.ItemsSource = null;
-                    PreviewDG.ItemsSource = this.orderBoxes;
-
-                    this.QtyLabel.Content = this.orderBoxes.Count;
-                }
-            }
-        }
-
-        public Pick GenereatePick() {
-            Pick pick = null;
-            return pick;
-        }
+       
     }
 }

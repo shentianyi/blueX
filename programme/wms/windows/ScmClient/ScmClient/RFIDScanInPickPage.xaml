@@ -28,9 +28,15 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top"  Orientation="Horizontal">
             <StackPanel Orientation="Vertical">
-                <StackPanel  Orientation="Horizontal">
-                    <Label Content="料车：" Height="28"    Name="label1" />
+                <StackPanel  Orientation="Vertical">
+                    <StackPanel  Orientation="Horizontal">
+                        <Label Content="择货单号：" Height="28"    Name="label11" />
+                    <Label Height="27"     Name="PickNrLabel" Width="198" />
+                    </StackPanel>
+                    <StackPanel  Orientation="Horizontal">
+                    <Label Content="料      车：" Height="28"    Name="label1" />
                     <Label Height="27"     Name="OrderCarLabel" Width="198" />
+                        </StackPanel>
                 </StackPanel>
                 <StackPanel  Orientation="Horizontal">
                     <Label Content="扫描料盒数量：" Height="28" Name="label2"  />
@@ -39,8 +45,9 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
 
-                <Button Content="删除" Height="37" HorizontalAlignment="Left" Margin="290,15,0,0"
-                Name="DeleteBtn" VerticalAlignment="Top" Width="87" Click="DeleteBtn_Click" />
+                <Label Content="状态：" Height="28" Name="label21"  />
+
+                <Label Content="" Height="28" Name="PickStatusLabel" FontWeight="Bold" Width="100" />
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">

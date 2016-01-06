@@ -14,6 +14,8 @@ namespace ScmWcfService
     [ServiceContract]
     public interface IPickService
     {
+        [OperationContract]
+        ResponseMessage<Pick> CreatePickByOrderCar(int order_car_id, List<int> order_box_ids);
 
         [OperationContract]
         ResponseMessage<Pick> CreatePickByOrderId(int order_id);

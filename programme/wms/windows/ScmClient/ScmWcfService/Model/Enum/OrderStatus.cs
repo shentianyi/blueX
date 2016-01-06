@@ -7,10 +7,10 @@ namespace ScmWcfService.Model.Enum
 {
     public enum OrderStatus
     {
-        INIT,
-        ABORTED,
-        PICKING,
-        PICKED,
-        DELIVERYED
+        INIT=100,
+        PICKING=200,
+        PICKED=300,
+        DELIVERED=400,
+        ABORTED=500
     }
 }
