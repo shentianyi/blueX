@@ -10,6 +10,6 @@
       Name="RFIDScanInPageName">
 
     <Grid>
-        <Label x:Name="label" Content="RFID已就绪, 请等待领料车..." HorizontalAlignment="Left" Margin="95,114,0,0" VerticalAlignment="Top" FontSize="22"/>
+        <Label x:Name="label" Content="入口RFID已就绪, 请等待领料车..." HorizontalAlignment="Left" Margin="74,111,0,0" VerticalAlignment="Top" FontSize="22"/>
     </Grid>
 </Page>

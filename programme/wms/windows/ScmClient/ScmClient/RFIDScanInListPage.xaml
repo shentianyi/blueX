@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ScmClient"
       mc:Ignorable="d" 
-      d:DesignHeight="406" d:DesignWidth="643"
+      d:DesignHeight="406" d:DesignWidth="790"
       Title="RFIDScanInListPage"
       Name="RFIDScanInListPageName">
 
@@ -29,11 +29,11 @@
             <StackPanel Orientation="Vertical">
                 <StackPanel  Orientation="Horizontal">
                     <Label Content="料车：" Height="28"    Name="label1" />
-                <TextBox Height="27"     Name="OrderCarTB" Width="198" />
+                <TextBox Height="27"     Name="OrderCarTB" Width="198" IsEnabled="False" />
                     <Label Content="*料车不存在" Height="28" Name="OrderCarMsgLabel" Width="100" FontWeight="Bold" Foreground="Red" />
                 </StackPanel>
                 <StackPanel  Orientation="Horizontal">
-                    <Label Content="扫描数量：" Height="28" Name="label2"  />
+                    <Label Content="扫描料盒数量：" Height="28" Name="label2"  />
                     <Label Content="0" Name="QtyLabel" Height="28"  Width="86" />
                 </StackPanel>
             </StackPanel>
@@ -43,7 +43,8 @@
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <DataGrid  Name="PreviewDG" AutoGenerateColumns="False" Height="309"  Width="644" VerticalScrollBarVisibility="Auto">
+            <DataGrid  Name="PreviewDG" AutoGenerateColumns="False" IsReadOnly="True"
+                       Height="309" Margin="5,0,0,0" Width="780" VerticalScrollBarVisibility="Auto">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
                     <Setter Property="Background">

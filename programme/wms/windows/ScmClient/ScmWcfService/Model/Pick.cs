@@ -24,5 +24,8 @@ namespace ScmWcfService.Model
 
         [DataMember]
         public List<PickItem> pick_items { get; set; }
+        
+
+        public string status_display { get { return PickStatusDisplay.GetStatusOfPick(this.status); } }
     }
 }

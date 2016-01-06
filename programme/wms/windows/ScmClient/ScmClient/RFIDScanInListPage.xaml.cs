@@ -36,8 +36,9 @@ namespace ScmClient
         List<RFIDMessage> carMsgList = new List<RFIDMessage>();
         List<RFIDMessage> boxMsgList = new List<RFIDMessage>();
 
-        OrderCar orderCar = null;
-        List<OrderBox> orderBoxes = new List<OrderBox>();
+        public OrderCar orderCar { get; set; }
+        public List<OrderBox> orderBoxes { get; set; }
+
 
         public RFIDScanInListPage()
         {
@@ -49,6 +50,7 @@ namespace ScmClient
             InitializeComponent();
             OrderCarMsgLabel.Visibility = Visibility.Hidden;
             this.parentWindow = parentWindow;
+            this.orderBoxes = new List<OrderBox>();
         }
 
 
@@ -105,7 +107,7 @@ namespace ScmClient
             if (carMsgList.Count == 1)
             {
                 OrderCarTB.Text = carMsgList.First().Nr;
-                if (carValidated)
+                if (!carValidated)
                 {
                     validateOrderCarNr();
                 }
@@ -221,6 +223,7 @@ namespace ScmClient
                     {
                         addBoxMessage(msg);
                     }
+                    ScanTB.Text = string.Empty;
                 }
             }
         }
@@ -237,6 +240,13 @@ namespace ScmClient
             //{
                 parentWindow.StopTimer();
            // });
+        }
+
+        public bool Validate() {
+            if (this.carValid == true && this.boxValid == true) {
+                return true;
+            }
+           return false;
         }
     }
 }

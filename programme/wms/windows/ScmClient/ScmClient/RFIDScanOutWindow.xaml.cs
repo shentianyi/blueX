@@ -23,9 +23,9 @@ using ScmWcfService.Model;
 namespace ScmClient
 {
     /// <summary>
-    /// RFIDScanInWindow.xaml 的交互逻辑
+    /// RFIDScanOutWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class RFIDScanInWindow : Window
+    public partial class RFIDScanOutWindow : Window
     {
         private MenuWindow menuWindow; 
         private Page currentPage;
@@ -33,11 +33,11 @@ namespace ScmClient
         private System.Timers.Timer timer;
         IntPtr g_selectCom = IntPtr.Zero;       //选择操作的串口句柄
 
-        public RFIDScanInWindow()
+        public RFIDScanOutWindow()
         {
             InitializeComponent();
         }
-        public RFIDScanInWindow(MenuWindow menuWindow)
+        public RFIDScanOutWindow(MenuWindow menuWindow)
         {
             InitializeComponent();
             this.menuWindow = menuWindow;

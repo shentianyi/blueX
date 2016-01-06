@@ -29,5 +29,11 @@ namespace ScmClient
             new RFIDScanInWindow(this).Show();
             this.Hide();
         }
+
+        private void RFIDScanOutNaviBtn_Click(object sender, RoutedEventArgs e)
+        {
+            new RFIDScanOutWindow(this).Show();
+            this.Hide();
+        }
     }
 }
