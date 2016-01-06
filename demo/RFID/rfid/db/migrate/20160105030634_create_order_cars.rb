@@ -4,7 +4,7 @@ class CreateOrderCars < ActiveRecord::Migration
       t.string :nr
       t.string :rfid_nr
       t.integer :warehouse_id
-      t.integer :status
+      t.integer :status, default: 0
 
       t.timestamps null: false
     end

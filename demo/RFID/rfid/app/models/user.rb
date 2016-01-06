@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
 
+  has_many :orders
   has_many :access_tokens, class_name: 'Doorkeeper::AccessToken', foreign_key: :resource_owner_id
 
   # Include default devise modules. Others available are:

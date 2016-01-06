@@ -52,6 +52,11 @@ gem 'settingslogic'
 # For Paging
 gem 'will_paginate', '3.0.7'
 
+# gem for backgroud jobs based on redis
+gem 'redis'
+gem 'redis-namespace'
+
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

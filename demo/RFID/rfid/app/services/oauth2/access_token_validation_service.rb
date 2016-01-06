@@ -9,13 +9,10 @@ module Oauth2::AccessTokenValidationService
     def validate(token, scopes= [])
       if token.expired?
         return EXPIRED
-
       elsif token.revoked?
         return REVOKED
-
       elsif !self.sufficent_scope?(token, scopes)
         return INSUFFICIENT_SCOPE
-
       else
         return VALID
       end

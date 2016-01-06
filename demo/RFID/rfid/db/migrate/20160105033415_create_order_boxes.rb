@@ -3,7 +3,7 @@ class CreateOrderBoxes < ActiveRecord::Migration
     create_table :order_boxes do |t|
       t.string :nr
       t.string :rfid_nr
-      t.integer :status
+      t.integer :status, default: 0
       t.integer :part_id
       t.float :quantity
       t.references :warehouse, index: true, foreign_key: true

@@ -8,6 +8,16 @@ class UserPresenter<Presenter
     self.delegators =Delegators
   end
 
+  def as_basic_info
+    if @user.nil?
+      nil
+    else
+      {
+          id: @user.id,
+          nr: @user.nr
+      }
+    end
+  end
 
   def as_basic_feedback(messages=nil, result_code=nil)
     if @user.nil?
