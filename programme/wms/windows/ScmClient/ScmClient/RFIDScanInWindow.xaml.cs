@@ -63,11 +63,11 @@ namespace ScmClient
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
-
             int stopReadFlag = RFIDDll.ComStopReadMultiTag(g_selectCom);
-
-            timer.Stop();
-            timer.Close();
+            if (stopReadFlag == RFIDDll.STOP_READ_MULITTAG_SUCCESS)
+            {
+                timer.Stop();
+            }
 
             int restFlag = RFIDDll.ComResetReader(g_selectCom);
 
@@ -93,8 +93,14 @@ namespace ScmClient
 
         private void NextBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.currentPage = new RFIDScanInListPage();
-            NaviFrame.NavigationService.Navigate(this.currentPage);
+            if (this.currentPage.Name == "RFIDScanInPageName")
+            {
+                this.currentPage = new RFIDScanInListPage();
+                NaviFrame.NavigationService.Navigate(this.currentPage);
+            }
+            else if (this.currentPage.Name == "RFIDScanInListPageName") { 
+               
+            }
         }
 
         private void openCom()
@@ -140,8 +146,7 @@ namespace ScmClient
             }
             else {
                 LogUtil.Logger.Error("Open Com Error");
-
-                System.Windows.MessageBox.Show("RFID启动失败，请重启程序！");
+                System.Windows.MessageBox.Show("RFID启动失败，请点击返回，重启程序！");
             }
         }
 
@@ -182,7 +187,6 @@ namespace ScmClient
                    }
                });
             }
-
         }
 
     }

@@ -1,0 +1,259 @@
+swagger: '2.0'
+info:
+  version: 0.0.1
+  title: WMS API
+  description: >
+    ## Structure
+
+
+
+
+
+
+
+     ### The Envelope
+
+
+
+     Every response is contained by an envelope. That is, each response has a
+
+
+
+     predictable set of keys with which you can expect to interact:
+
+
+
+     ```json
+
+
+
+     {
+
+
+
+         "meta": {
+
+
+
+             "code": 200
+
+
+
+         },
+
+
+
+         "data": {
+
+
+
+             ...
+
+
+
+         }
+
+
+
+     }
+
+
+
+     ```
+
+
+
+
+
+
+
+     #### META
+
+
+
+     The meta key is used to communicate extra information about the response to
+
+
+
+     the developer. If all goes well, you'll only ever see a code key with value
+
+
+
+     200. However, sometimes things go wrong, and in that case you might see a
+
+
+
+     response like:
+
+
+
+     ```json
+
+
+
+     {
+
+
+
+         "meta": {
+
+
+
+             "error_type": "OAuthException",
+
+
+
+             "code": 400,
+
+
+
+             "error_message": "..."
+
+
+
+         }
+
+
+
+     }
+
+
+
+     ```
+basePath: /api/v1
+definitions:
+  user_session:
+    type: object
+    properties:
+      id:
+        description: user id
+        type: integer
+      name:
+        description: user name
+        type: string
+      nr:
+        description: user nr
+        type: string
+      token:
+        description: OAuth token getting from the server. May expire based on the web service settings. Need to attach the token to the http head each time invoking the api
+        type: string
+        
+  warehouse:
+    type: object
+    properties:
+      id:
+        description: warehouse id
+        type: integer
+      nr:
+        description: order car nr
+        type: string
+      warehouse_id:
+        description: order car warehouse id
+        type: integer
+        
+  order_car:
+    type: object
+    properties:
+      id:
+        description: order car id
+        type: integer
+      nr:
+        description: order car nr
+        type: string
+      warehouse_id:
+        description: order car warehouse id
+        type: integer
+  order_box_on_order:
+    type: object
+    properties:
+      id:
+        description: order box id
+        type: integer
+      nr:
+        description: order box nr
+        type: string
+      warehouse:
+        description: order box warehouse id
+        type: integer
+      
+      
+      
+        
+paths:
+  /user_sessions:
+    post:
+      description: user login
+      parameters:
+        - name: nr
+          in: body
+          description: nr of user
+          required: true
+          type: string
+        - name: password
+          in: body
+          description: password of user
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/user_session'
+            
+  /order_cars/by_nr:
+    get:
+      description: get user list
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'the oauth token from the server, type is beare'
+          required: true
+          type: string
+        - name: nr
+          in: query
+          type: string
+          description: order car nr
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/order_car'
+        '403':
+          description: indicate the token or user session has expired
+  
+            
+  /order_boxs/by_nr:
+    get:
+      description: get user list
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: the language code of the current user environment
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'the oauth token from the server, type is beare'
+          required: true
+          type: string
+        - name: nr
+          in: query
+          type: string
+          description: order box nr
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/order_box'
+        '403':
+          description: indicate the token or user session has expired        
+  
