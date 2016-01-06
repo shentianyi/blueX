@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using ScmWcfService;
 using ScmWcfService.Model;
 using ScmWcfService.Model.Message;
+using ScmWcfService.Config;
 
 namespace ScmClient
 {
@@ -45,6 +46,7 @@ namespace ScmClient
             ResponseMessage<UserSession> msg = service.Login(NrTB.Text, PwdTB.Password);
             if (msg.Success)
             {
+                ApiConfig.Token = msg.data.token;
                 new MenuWindow().Show();
                 this.Close();
             }

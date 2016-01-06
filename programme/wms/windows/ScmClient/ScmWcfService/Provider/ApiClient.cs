@@ -15,7 +15,8 @@ namespace ScmWcfService.Provider
         public ApiClient() { }
         public ApiClient(string token) { this.token = token; }
 
-        public IRestRequest GenRequest(string url,Method method=Method.GET, DataFormat format=DataFormat.Json) {
+        public IRestRequest GenRequest(string url, Method method = Method.GET, DataFormat format = DataFormat.Json)
+        {
             var req = new RestRequest(url, method);
             req.RequestFormat = format;
             return req;
@@ -37,23 +38,44 @@ namespace ScmWcfService.Provider
         private RestClient genClient()
         {
             var client = new RestClient();
+            client.Timeout = 10000;
             client.BaseUrl = ApiConfig.BaseUri;
             if (this.token != null)
             {
                 client.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(this.token, "Bearer");
+            }
+
+            if (ApiConfig.Token != null && !string.IsNullOrEmpty(ApiConfig.Token))
+            {
+                client.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(ApiConfig.Token, "Bearer");
             }
             return client;
         }
 
         private IRestResponse responseHandler(IRestResponse res)
         {
-            if (res.StatusCode != HttpStatusCode.OK && res.StatusCode != HttpStatusCode.Created)
+            try
             {
-                WebOperationContext.Current.OutgoingResponse.StatusCode = res.StatusCode;
-                WebOperationContext.Current.OutgoingResponse.StatusDescription = res.StatusDescription;
-                throw new WebFaultException<string>(res.StatusDescription, res.StatusCode);
+                if (res.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    throw new WebFaultException<string>("无权限访问系统，请重新登陆", HttpStatusCode.Unauthorized);
+                }
+                else if (res.StatusCode != HttpStatusCode.OK && res.StatusCode != HttpStatusCode.Created)
+                {
+                    WebOperationContext.Current.OutgoingResponse.StatusCode = res.StatusCode;
+                    WebOperationContext.Current.OutgoingResponse.StatusDescription = res.StatusDescription;
+                    throw new WebFaultException<string>(res.StatusDescription, res.StatusCode);
+                }
+                return res;
             }
-            return res;
+            catch (WebFaultException<string> we)
+            {
+                throw new WebFaultException<string>(we.Detail, we.StatusCode);
+            }
+            catch (Exception ex)
+            {
+                throw new WebFaultException<string>("网络错误，请检查网络连接", HttpStatusCode.GatewayTimeout);
+            }
         }
     }
 

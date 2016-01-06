@@ -29,9 +29,10 @@ namespace ScmWcfService
                 var res = client.Execute(req);
                 msg = JsonUtil.parse<ResponseMessage<UserSession>>(res.Content);
             }
-            catch (WebFaultException e)
+            catch (WebFaultException<string> e)
             {
-                msg.meta.error_message = e.Message;
+                msg.http_error = true;
+                msg.meta.error_message = e.Detail;
             }
             return msg;
         }

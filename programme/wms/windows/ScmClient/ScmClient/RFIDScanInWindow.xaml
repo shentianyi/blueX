@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ScmClient"
         mc:Ignorable="d"
-        Title="RFIDScanInWindow" Height="312" Width="600" Loaded="Window_Loaded"
+        Title="RFIDScanInWindow" Height="312" Width="650" Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid Grid.Row="2">
         <Grid.RowDefinitions>
@@ -13,7 +13,7 @@
             <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
         <Frame x:Name="NaviFrame" Grid.Row="0" NavigationUIVisibility="Hidden" Cursor="Hand"/>
-        <Button x:Name="BackBtn" Content="返回" HorizontalAlignment="Left" Margin="10,2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="46" Height="23" Click="BackBtn_Click"/>
+        <Button x:Name="BackBtn" Content="放 弃" HorizontalAlignment="Left" Margin="10,2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="46" Height="23" Click="BackBtn_Click"/>
         <Button x:Name="NextBtn" Content="下一步" HorizontalAlignment="Left" Margin="509,2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="NextBtn_Click"/>
     </Grid>
 </Window>

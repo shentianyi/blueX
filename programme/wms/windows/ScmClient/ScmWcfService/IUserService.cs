@@ -15,6 +15,6 @@ namespace ScmWcfService
     public interface IUserService
     {
         [OperationContract]
-       ResponseMessage<UserSession> Login(string nr, string pwd);
+        ResponseMessage<UserSession> Login(string nr, string pwd);
     }
 }
