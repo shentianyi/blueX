@@ -5,7 +5,7 @@ class CreateUnits < ActiveRecord::Migration
       t.string :name
       t.string :short_name
       t.string :description
-      t.integer :unit_group_id
+      t.references :unit_group,index: true, foreign_key: true
 
       t.timestamps null: false
     end

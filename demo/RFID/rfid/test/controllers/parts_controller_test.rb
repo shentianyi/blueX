@@ -18,7 +18,7 @@ class PartsControllerTest < ActionController::TestCase
 
   test "should create part" do
     assert_difference('Part.count') do
-      post :create, part: { color_id: @part.color_id, cross_section: @part.cross_section, custom_nr: @part.custom_nr, description: @part.description, measure_unit_id: @part.measure_unit_id, name: @part.name, nr: @part.nr, part_id: @part.part_id, purchase_unit_id: @part.purchase_unit_id, short_description: @part.short_description, weight: @part.weight }
+      post :create, part: { color_id: @part.color_id, cross_section: @part.cross_section, custom_nr: @part.custom_nr, description: @part.description, measure_unit_id: @part.measure_unit_id, name: @part.name, nr: @part.nr, part_type_id: @part.part_type_id, purchase_unit_id: @part.purchase_unit_id, short_description: @part.short_description, weight: @part.weight }
     end
 
     assert_redirected_to part_path(assigns(:part))
@@ -35,7 +35,7 @@ class PartsControllerTest < ActionController::TestCase
   end
 
   test "should update part" do
-    patch :update, id: @part, part: { color_id: @part.color_id, cross_section: @part.cross_section, custom_nr: @part.custom_nr, description: @part.description, measure_unit_id: @part.measure_unit_id, name: @part.name, nr: @part.nr, part_id: @part.part_id, purchase_unit_id: @part.purchase_unit_id, short_description: @part.short_description, weight: @part.weight }
+    patch :update, id: @part, part: { color_id: @part.color_id, cross_section: @part.cross_section, custom_nr: @part.custom_nr, description: @part.description, measure_unit_id: @part.measure_unit_id, name: @part.name, nr: @part.nr, part_type_id: @part.part_type_id, purchase_unit_id: @part.purchase_unit_id, short_description: @part.short_description, weight: @part.weight }
     assert_redirected_to part_path(assigns(:part))
   end
 
