@@ -181,7 +181,6 @@ namespace ScmClient
             {
                 refreshOrderBox(msg.data);
                 this.boxValid = true;
-              //  PreviewDG.ItemsSource = orderBoxes;
             }
         }
 
