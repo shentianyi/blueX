@@ -72,13 +72,13 @@ namespace ScmClient
             }
         }
 
-        private void addCarMessage(RFIDMessage msg,bool scan=false)
+        private void addCarMessage(RFIDMessage msg)
         {
             if ((from c in carMsgList where c.Nr.Equals(msg.Nr) select c).Count() == 0)
             {
                 carMsgList.Add(msg);
             }
-            handleCarMessages(scan);
+            handleCarMessages();
         }
 
         private void addBoxMessages(List<RFIDMessage> msgs)
@@ -89,12 +89,12 @@ namespace ScmClient
             }
         }
 
-        private void addBoxMessage(RFIDMessage msg, bool scan = false)
+        private void addBoxMessage(RFIDMessage msg)
         {
             if ((from b in boxMsgList where b.Nr.Equals(msg.Nr) select b).Count() == 0)
             {
                 boxMsgList.Add(msg);
-                validateOrderBoxNr(msg.Nr,scan);
+                validateOrderBoxNr(msg.Nr);
             }
             handleBoxMessages();
         }
@@ -102,19 +102,19 @@ namespace ScmClient
         /// <summary>
         /// 处理扫描的料车号
         /// </summary>
-        private void handleCarMessages(bool scan = false)
+        private void handleCarMessages()
         {
             if (carMsgList.Count == 1)
             {
                 OrderCarTB.Text = carMsgList.First().Nr;
                 if (!carValidated || !carValid)
                 {
-                    validateOrderCarNr(scan);
+                    validateOrderCarNr();
                 }
             }
             else if (carMsgList.Count > 1)
             {
-                stopRFIDScan();
+                stopScan();
 
                 if (!showMultiCarFlag)
                 {
@@ -127,13 +127,13 @@ namespace ScmClient
         /// <summary>
         /// 检查料车号是否存在
         /// </summary>
-        private void validateOrderCarNr(bool scan=false)
+        private void validateOrderCarNr()
         {
             OrderService service = new OrderService();
             ResponseMessage<OrderCar> msg = service.GetOrderCarByNr(OrderCarTB.Text);
             if (msg.http_error)
             {
-                stopRFIDScan();
+                stopScan();
                 showMessageBox(msg.Message);
             }
             else if (!msg.Success)
@@ -162,18 +162,13 @@ namespace ScmClient
         /// <summary>
         /// 检查料盒号是否存在
         /// </summary>
-        private void validateOrderBoxNr(string boxNr, bool scan = false)
+        private void validateOrderBoxNr(string boxNr)
         {
             OrderService service = new OrderService();
             ResponseMessage<OrderBox> msg = service.GetOrderBoxByNr(boxNr);
             if (msg.http_error)
             {
-                if (!scan)
-                {
-                    boxValid = false;
-                    refreshOrderBox(new OrderBox() { nr = boxNr });
-                }
-                stopRFIDScan();
+                stopScan();
                 showMessageBox(msg.Message);
             }
             else if (!msg.Success)
@@ -186,7 +181,6 @@ namespace ScmClient
             {
                 refreshOrderBox(msg.data);
                 this.boxValid = true;
-              //  PreviewDG.ItemsSource = orderBoxes;
             }
         }
 
@@ -225,11 +219,11 @@ namespace ScmClient
                 {
                     if (msg.Type == MessageType.CAR)
                     {
-                        addCarMessage(msg,true);
+                        addCarMessage(msg);
                     }
                     else if (msg.Type == MessageType.BOX)
                     {
-                        addBoxMessage(msg,true);
+                        addBoxMessage(msg);
                     }
                     ScanTB.Text = string.Empty;
                 }
@@ -242,7 +236,7 @@ namespace ScmClient
             System.Windows.Forms.MessageBox.Show(message);
         }
 
-        private void stopRFIDScan()
+        private void stopScan()
         {
             //this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate()
             //{
