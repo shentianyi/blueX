@@ -145,8 +145,8 @@ namespace ScmClient
             else if (this.currentPage.Name == "RFIDScanInConfirmPageName")
             {
                 RFIDScanInConfirmPage confirmPage = (RFIDScanInConfirmPage)currentPage;
-                 confirmPage.GenereatePick();
-                if (confirmPage.pick != null)
+                confirmPage.GenereatePick();
+                if (confirmPage.pick != null && confirmPage.canNext)
                 {
                     BackBtn.Content = "返回";
                     NextBtn.Visibility = Visibility.Hidden;

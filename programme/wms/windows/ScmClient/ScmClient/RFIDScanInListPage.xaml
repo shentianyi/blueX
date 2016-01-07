@@ -64,14 +64,15 @@
             <DataGrid.Columns>
                 <!--<DataGridTextColumn Header="No." Binding="{Binding Path=no}" ElementStyle="{StaticResource contentCenterStyle}"/>-->
                 <DataGridTextColumn Header="料盒号" Binding="{Binding Path=nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                <DataGridTextColumn Header="料盒类型" Binding="{Binding Path=box_type_name}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                    <DataGridTextColumn Header="状态" Binding="{Binding Path=status_display}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                    <DataGridTextColumn Header="料盒类型" Binding="{Binding Path=box_type_name}" ElementStyle="{StaticResource contentCenterStyle}"/>
                     <DataGridTextColumn Header="从属部门" Binding="{Binding Path=warehouse_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                    <DataGridTextColumn Header=" 取料仓库" Binding="{Binding Path=source_warehouse_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                    <DataGridTextColumn Header="取料仓库" Binding="{Binding Path=source_warehouse_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
                     <DataGridTextColumn Header="零件号" Binding="{Binding Path=part_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
                 <DataGridTextColumn Header="数量" Binding="{Binding Path=quantity}" ElementStyle="{StaticResource contentCenterStyle}"/>
                 <DataGridTextColumn Header="库存" Binding="{Binding Path=stock}" ElementStyle="{StaticResource contentCenterStyle}"/>
                 <DataGridTextColumn Header="超量" Binding="{Binding Path=over_stock}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                <DataGridTextColumn Header="库位" Binding="{Binding Path=positions_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                    <DataGridTextColumn Header="取料库位" Binding="{Binding Path=positions_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
             </DataGrid.Columns>
         </DataGrid>
         </StackPanel>

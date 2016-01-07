@@ -28,6 +28,10 @@ namespace ScmWcfService.Model
         [DataMember]
         public Warehouse warehouse { get; set; }
 
+
+        [DataMember]
+        public Position position { get; set; }
+
         [DataMember]
         public Warehouse source_warehouse { get; set; }
 
@@ -47,10 +51,11 @@ namespace ScmWcfService.Model
         // partial for view
         public string box_type_name { get { return  this.order_box_type==null ? "" : this.order_box_type.name; } }
         public string warehouse_nr { get { return this.warehouse == null ? "" : this.warehouse.nr; } }
+        public string position_nr { get { return this.position == null ? "" : this.position.nr; } }
         public string part_nr { get { return this.part == null ? "" : this.part.nr; } }
         public string source_warehouse_nr { get { return this.source_warehouse == null ? "" : this.source_warehouse.nr; } }
         public bool over_stock { get { return this.quantity > stock; } }
         public string positions_nr { get { return this.positions == null ? "" : string.Join(",", this.positions); } }
-
+        public string status_display { get { return OrderBoxStatusDisplay.GetStatusOfOrderBox(this.status); } }
     }
 }

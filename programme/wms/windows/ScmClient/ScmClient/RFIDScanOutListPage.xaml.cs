@@ -23,11 +23,11 @@ using ScmWcfService.Model.Message;
 namespace ScmClient
 {
     /// <summary>
-    /// RFIDScanInListPage.xaml 的交互逻辑
+    /// RFIDScanOutListPage.xaml 的交互逻辑
     /// </summary>
-    public partial class RFIDScanInListPage : Page
+    public partial class RFIDScanOutListPage : Page
     {
-        RFIDScanInWindow parentWindow;
+        RFIDScanOutWindow parentWindow;
         bool showMultiCarFlag = false;
         public bool carValid = false;
         public bool carValidated = false;
@@ -40,12 +40,12 @@ namespace ScmClient
         public List<OrderBox> orderBoxes { get; set; }
 
 
-        public RFIDScanInListPage()
+        public RFIDScanOutListPage()
         {
             InitializeComponent();
         }
 
-        public RFIDScanInListPage(RFIDScanInWindow parentWindow)
+        public RFIDScanOutListPage(RFIDScanOutWindow parentWindow)
         {
             InitializeComponent();
             OrderCarMsgLabel.Visibility = Visibility.Hidden;
@@ -94,7 +94,7 @@ namespace ScmClient
             if ((from b in boxMsgList where b.Nr.Equals(msg.Nr) select b).Count() == 0)
             {
                 boxMsgList.Add(msg);
-                validateOrderBoxNr(msg.Nr);
+                validateOrderBoxNr(msg);
             }
             handleBoxMessages();
         }
@@ -104,15 +104,8 @@ namespace ScmClient
         /// </summary>
         private void handleCarMessages()
         {
-            if (carMsgList.Count == 1)
-            {
-                OrderCarTB.Text = carMsgList.First().Nr;
-                if (!carValidated || !carValid)
-                {
-                    validateOrderCarNr();
-                }
-            }
-            else if (carMsgList.Count > 1)
+           
+            if (carMsgList.Count > 1)
             {
                 stopScan();
 
@@ -122,18 +115,27 @@ namespace ScmClient
                     System.Windows.Forms.MessageBox.Show("信号干扰！同时扫描到多辆料车，请重新扫描！");
                 }
             }
+            else if (carMsgList.Count == 1)
+            {
+                OrderCarTB.Text = carMsgList.First().Nr;
+                if (!carValidated || !carValid)
+                {
+                    validateOrderCarNr(carMsgList.First());
+                }
+            }
         }
 
         /// <summary>
         /// 检查料车号是否存在
         /// </summary>
-        private void validateOrderCarNr()
+        private void validateOrderCarNr(RFIDMessage carMsg)
         {
             OrderService service = new OrderService();
             ResponseMessage<OrderCar> msg = service.GetOrderCarByNr(OrderCarTB.Text);
             if (msg.http_error)
             {
-                stopScan();
+
+               // stopScan();
                 showMessageBox(msg.Message);
             }
             else if (!msg.Success)
@@ -162,25 +164,29 @@ namespace ScmClient
         /// <summary>
         /// 检查料盒号是否存在
         /// </summary>
-        private void validateOrderBoxNr(string boxNr)
+        private void validateOrderBoxNr(RFIDMessage boxMsg)
         {
             OrderService service = new OrderService();
-            ResponseMessage<OrderBox> msg = service.GetOrderBoxByNr(boxNr);
+            ResponseMessage<OrderBox> msg = service.GetOrderBoxByNr(boxMsg.Nr);
             if (msg.http_error)
             {
-                stopScan();
+                boxValid = false;
+                refreshOrderBox(new OrderBox() { nr = boxMsg.Nr });
+
+               // stopScan();
                 showMessageBox(msg.Message);
             }
             else if (!msg.Success)
             {
                 boxValid = false;
-                refreshOrderBox(new OrderBox() { nr = boxNr });
+                refreshOrderBox(new OrderBox() { nr = boxMsg.Nr });
                // PreviewDG.ItemsSource = orderBoxes;
             }
             else
             {
                 refreshOrderBox(msg.data);
-                this.boxValid = true;
+                boxValid = true;
+              //  PreviewDG.ItemsSource = orderBoxes;
             }
         }
 

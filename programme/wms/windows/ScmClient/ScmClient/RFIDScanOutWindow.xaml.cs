@@ -45,7 +45,7 @@ namespace ScmClient
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.currentPage = new RFIDScanInPage();
+            this.currentPage = new RFIDScanOutPage();
             NaviFrame.NavigationService.Navigate(this.currentPage);
             initTimer();
             openCom();
@@ -64,14 +64,14 @@ namespace ScmClient
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (this.currentPage.Name == "RFIDScanInPickPageName")
+            if (this.currentPage.Name == "RFIDScanOutPickPageName")
             {
                 this.NextBtn.Visibility = Visibility.Visible;
                 this.NextBtn.Content = "下一步";
                 this.BackBtn.Content = "放弃";
                 this.timer.Enabled = true;
                 this.timer.Start();
-                this.currentPage = new RFIDScanInPage();
+                this.currentPage = new RFIDScanOutPage();
                 NaviFrame.NavigationService.Navigate(this.currentPage);
             }
             else {
@@ -116,24 +116,25 @@ namespace ScmClient
             this.GoToNextPage();
         }
 
-        public void GoToNextPage() {
+        public void GoToNextPage()
+        {
 
             BackBtn.Content = "放弃";
             NextBtn.Visibility = Visibility.Visible;
 
-            if (this.currentPage.Name == "RFIDScanInPageName")
+            if (this.currentPage.Name == "RFIDScanOutPageName")
             {
                 NextBtn.Content = "完成扫描";
-                this.currentPage = new RFIDScanInListPage(this);
+                this.currentPage = new RFIDScanOutListPage(this);
                 NaviFrame.NavigationService.Navigate(this.currentPage);
             }
-            else if (this.currentPage.Name == "RFIDScanInListPageName")
+            else if (this.currentPage.Name == "RFIDScanOutListPageName")
             {
-                RFIDScanInListPage listPage = (RFIDScanInListPage)currentPage;
+                RFIDScanOutListPage listPage = (RFIDScanOutListPage)currentPage;
                 if (listPage.Validate())
                 {
-                    NextBtn.Content = "生成择货单";
-                    this.currentPage = new RFIDScanInConfirmPage(this, listPage.orderCar, listPage.orderBoxes);
+                    NextBtn.Content = "完成出库";
+                    this.currentPage = new RFIDScanOutConfirmPage(this, listPage.orderCar, listPage.orderBoxes);
                     this.StopTimer();
                     NaviFrame.NavigationService.Navigate(this.currentPage);
                 }
@@ -142,16 +143,19 @@ namespace ScmClient
                     showMessageBox("存在未通过验证料车或料盒，请初始化数据并重新扫描！");
                 }
             }
-            else if (this.currentPage.Name == "RFIDScanInConfirmPageName")
+            else if (this.currentPage.Name == "RFIDScanOutConfirmPageName")
             {
-                RFIDScanInConfirmPage confirmPage = (RFIDScanInConfirmPage)currentPage;
-                 confirmPage.GenereatePick();
-                if (confirmPage.pick != null)
+                RFIDScanOutConfirmPage confirmPage = (RFIDScanOutConfirmPage)currentPage;
+                confirmPage.MoveStroage();
+                if (confirmPage.canNext)
                 {
-                    BackBtn.Content = "返回";
-                    NextBtn.Visibility = Visibility.Hidden;
-                    this.currentPage = new RFIDScanInPickPage(this,confirmPage.orderCar,confirmPage.orderBoxes,confirmPage.pick);
+                    BackBtn.Content = "放弃"; 
+                    this.NextBtn.Visibility = Visibility.Visible;
+                    this.NextBtn.Content = "下一步";
+                    this.currentPage = new RFIDScanOutPage();
                     NaviFrame.NavigationService.Navigate(this.currentPage);
+                    this.timer.Enabled = true;
+                    this.timer.Start();
                 }
             }
         }
@@ -233,31 +237,21 @@ namespace ScmClient
                 this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate()
                 {
                     LogUtil.Logger.Info(this.currentPage.Name);
-                    if (this.currentPage.Name == "RFIDScanInPageName")
+                    if (this.currentPage.Name == "RFIDScanOutPageName")
                     {
-                        this.currentPage = new RFIDScanInListPage(this);
+                        this.currentPage = new RFIDScanOutListPage(this);
                         NaviFrame.NavigationService.Navigate(this.currentPage);
                     }
                 });
                 this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate()
                {
-                   if (this.currentPage.Name == "RFIDScanInListPageName")
+                   if (this.currentPage.Name == "RFIDScanOutListPageName")
                    {
-                       ((RFIDScanInListPage)this.currentPage).ReceiveData(data);
+                       ((RFIDScanOutListPage)this.currentPage).ReceiveData(data);
                    }
                });
             }
         }
-
-        //private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    if (System.Windows.MessageBox.Show("确定关闭?", "确认提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-        //    {
-        //        closeCOM();
-
-        //        System.Windows.Application.Current.Shutdown();
-        //    }
-        //}
 
     }
 }
