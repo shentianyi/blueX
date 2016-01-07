@@ -36,13 +36,77 @@ namespace ScmClient
             this.parentWindow = parentWindow;
             this.orderCar = orderCar;
             this.orderBoxes = orderBoxes;
-            this.OrderCarLabel.Content = orderCar.nr;
-            this.QtyLabel.Content = this.orderBoxes.Count;
-            this.PreviewDG.ItemsSource = this.orderBoxes;
+            
             this.canNext = false;
         }
 
-      
+        private void RFIDScanOutConfirmPageName_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.OrderCarLabel.Content = orderCar.nr;
+            this.PreviewDG.ItemsSource = this.orderBoxes;
+            setQtyLabel();
+            validate();
+        }
+
+        public void validate()
+        {
+            validateOrderCarNr();
+            validateOrderBoxNr();
+        }
+
+        /// <summary>
+        /// 检查料车号是否存在
+        /// </summary>
+        private void validateOrderCarNr()
+        {
+            OrderService service = new OrderService();
+            ResponseMessage<OrderCar> msg = service.GetOrderCarByNr(this.orderCar.nr);
+            if (msg.http_error)
+            {
+                showMessageBox(msg.Message);
+            }
+            else if (!msg.Success)
+            {
+                OrderCarMsgLabel.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.orderCar = msg.data;
+                OrderCarMsgLabel.Visibility = Visibility.Visible;
+                OrderCarMsgLabel.Content = orderCar.status_display;
+            }
+        }
+
+
+        /// <summary>
+        /// 检查料盒号是否存在
+        /// </summary>
+        private void validateOrderBoxNr()
+        {
+            OrderService service = new OrderService();
+            ResponseMessage<List<OrderBox>> msg = service.GetOrderBoxByNrs(OrderBox.GetAllNrs(this.orderBoxes));
+            if (msg.http_error)
+            {
+                showMessageBox(msg.Message);
+            }
+            else if (!msg.Success)
+            {
+
+            }
+            else
+            {
+                List<OrderBox> ob = msg.data;
+                if (ob.Count > 0)
+                {
+                    OrderBox.Updates(this.orderBoxes, ob);
+                }
+                setQtyLabel();
+                this.PreviewDG.ItemsSource = null;
+                this.PreviewDG.ItemsSource = this.orderBoxes;
+            }
+        }
+
+
         public void showMessageBox(string message)
         {
             System.Windows.Forms.MessageBox.Show(message);
@@ -59,22 +123,17 @@ namespace ScmClient
                     this.orderBoxes.Remove(box);
                     PreviewDG.ItemsSource = null;
                     PreviewDG.ItemsSource = this.orderBoxes;
-
-                    this.QtyLabel.Content = this.orderBoxes.Count;
+                    setQtyLabel();
                 }
             }
         }
 
+
         public void MoveStroage() {
-            if (this.orderBoxes.Count > 0)
+            if (this.orderCar != null && OrderBox.GetNotNullCount(this.orderBoxes) == this.orderBoxes.Count)
             {
                 WarehouseService service = new WarehouseService();
-                List<int> ids = new List<int>();
-                foreach (OrderBox box in this.orderBoxes)
-                {
-                    ids.Add(box.id);
-                }
-                ResponseMessage<object> msg = service.MoveStorageByCar(this.orderCar.id, ids);
+                ResponseMessage<object> msg = service.MoveStorageByCar(this.orderCar.id, OrderBox.GetAllIds(this.orderBoxes));
                 if (!msg.Success)
                 {
                     showMessageBox(msg.Message);
@@ -86,8 +145,20 @@ namespace ScmClient
                 }
             }
             else {
-                showMessageBox("无料盒，不可出库！");
+                showMessageBox("料车或料盒不存在，不可生成择货单！");
             }
         }
+
+        private void setQtyLabel()
+        {
+            this.QtyLabel.Content = this.orderBoxes.Count;
+            this.QtyValidLabel.Content = OrderBox.GetNotNullCount(this.orderBoxes);
+        }
+
+        private void ValidateBtn_Click(object sender, RoutedEventArgs e)
+        {
+            validate();
+        }
+
     }
 }

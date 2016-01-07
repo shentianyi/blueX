@@ -8,7 +8,7 @@
       
       d:DesignHeight="406" d:DesignWidth="790"
       Title="RFIDScanOutConfirmPage"
-      Name="RFIDScanOutConfirmPageName">
+      Name="RFIDScanOutConfirmPageName" Loaded="RFIDScanOutConfirmPageName_Loaded">
 
     <Page.Resources>
         <Style x:Key="contentCenterStyle"
@@ -34,13 +34,19 @@
                     <Label Content="*料车不存在" Height="28" Name="OrderCarMsgLabel" Width="100" FontWeight="Bold" Foreground="Red" Visibility="Hidden"  />
                 </StackPanel>
                 <StackPanel  Orientation="Horizontal">
-                    <Label Content="扫描料盒数量：" Height="28" Name="label2"  />
+                    <Label Content="扫描料盒总数量：" Height="28" Name="label2"  />
                     <Label Content="0" Name="QtyLabel" Height="28"  Width="86" />
+                </StackPanel>
+                <StackPanel  Orientation="Horizontal">
+                    <Label Content="料盒通过验证数量：" Height="28" Name="label12"  />
+                    <Label Content="0" Name="QtyValidLabel" Height="28"  Width="86" />
                 </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
+                <Button Content="重新验证" Height="37" HorizontalAlignment="Left" Margin="250,15,0,0"
+                Name="ValidateBtn" VerticalAlignment="Top" Width="87" Click="ValidateBtn_Click" />
 
-                <Button Content="删除" Height="37" HorizontalAlignment="Left" Margin="290,15,0,0"
+                <Button Content="删除" Height="37" HorizontalAlignment="Left" Margin="10,15,0,0"
                 Name="DeleteBtn" VerticalAlignment="Top" Width="87" Click="DeleteBtn_Click" />
             </StackPanel>
         </StackPanel>
