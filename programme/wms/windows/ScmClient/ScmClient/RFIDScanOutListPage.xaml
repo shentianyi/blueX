@@ -20,30 +20,44 @@
             <Setter Property="FontFamily" Value="Times New Roman" />
         </Style>
     </Page.Resources>
-    <Grid>
+
+
+
+
+    <Grid Margin="0 5 0 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="20*"/>
             <RowDefinition Height="80*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top"  Orientation="Horizontal">
-            <StackPanel Orientation="Vertical">
-                <StackPanel  Orientation="Horizontal">
-                    <Label Content="料车：" Height="28"    Name="label1" />
-                <TextBox Height="27"     Name="OrderCarTB" Width="198" IsEnabled="False" />
-                    <Label Content="*料车不存在" Height="28" Name="OrderCarMsgLabel" Width="100" FontWeight="Bold" Foreground="Red" />
-                </StackPanel>
-                <StackPanel  Orientation="Horizontal">
-                    <Label Content="扫描料盒数量：" Height="28" Name="label2"  />
-                    <Label Content="0" Name="QtyLabel" Height="28"  Width="86" />
-                </StackPanel>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="扫描条码：" Height="28" HorizontalAlignment="Right"   Name="label3"   />
-                <TextBox Height="26"  Name="ScanTB"  Width="190" KeyUp="ScanTB_KeyUp" />
-            </StackPanel>
-        </StackPanel>
-        <StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <DataGrid  Name="PreviewDG" AutoGenerateColumns="False" IsReadOnly="True"
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <DockPanel LastChildFill="False">
+                <Label DockPanel.Dock="Left" Content="料车：" Margin="10 6 0 0" Name="label1" />
+                <TextBox Name="OrderCarTB" BorderBrush="#0e80b0" MinWidth="200" Margin="5" IsEnabled="False" />
+                <!--<Label DockPanel.Dock="Right" Content="*料车不存在" Margin="0 6 0 0" Name="OrderCarMsgLabel" FontWeight="Bold" Foreground="Red" />-->
+            </DockPanel>
+
+            <DockPanel Grid.Column="1" LastChildFill="False">
+                <Label Content="扫描条码：" Margin="10 6 0 0" Name="label3"   />
+                <TextBox DockPanel.Dock="Left" Name="ScanTB"  MinWidth="200" Margin="5" BorderBrush="#0e80b0" KeyUp="ScanTB_KeyUp" />
+            </DockPanel>
+
+            <DockPanel Grid.Row="1">
+                <Label Content="扫描料盒数量：" Margin="10 10 0 0" Name="label2"  />
+                <Label Content="0" Name="QtyLabel"  Margin="10 10 0 0" />
+            </DockPanel>
+        </Grid>
+
+    <StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <DataGrid  Name="PreviewDG" AutoGenerateColumns="False" IsReadOnly="True"
                        Height="309" Margin="5,0,0,0" Width="780" VerticalScrollBarVisibility="Auto">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
@@ -64,7 +78,7 @@
             <DataGrid.Columns>
                 <!--<DataGridTextColumn Header="No." Binding="{Binding Path=no}" ElementStyle="{StaticResource contentCenterStyle}"/>-->
                 <DataGridTextColumn Header="料盒号" Binding="{Binding Path=nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                    <DataGridTextColumn Header="状态" Binding="{Binding Path=status_display}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <!--<DataGridTextColumn Header="状态" Binding="{Binding Path=status_display}" ElementStyle="{StaticResource contentCenterStyle}"/>
                     <DataGridTextColumn Header="料盒类型" Binding="{Binding Path=box_type_name}" ElementStyle="{StaticResource contentCenterStyle}"/>
                     <DataGridTextColumn Header="从属部门" Binding="{Binding Path=warehouse_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
                     <DataGridTextColumn Header="从属库位" Binding="{Binding Path=position_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
@@ -73,9 +87,9 @@
                 <DataGridTextColumn Header="数量" Binding="{Binding Path=quantity}" ElementStyle="{StaticResource contentCenterStyle}"/>
                 <DataGridTextColumn Header="库存" Binding="{Binding Path=stock}" ElementStyle="{StaticResource contentCenterStyle}"/>
                 <DataGridTextColumn Header="超量" Binding="{Binding Path=over_stock}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                    <DataGridTextColumn Header="取料库位" Binding="{Binding Path=positions_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                    <DataGridTextColumn Header="取料库位" Binding="{Binding Path=positions_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>-->
             </DataGrid.Columns>
         </DataGrid>
-        </StackPanel>
+    </StackPanel>
     </Grid>
 </Page>

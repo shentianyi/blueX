@@ -29,10 +29,7 @@ namespace ScmClient
     {
         RFIDScanOutWindow parentWindow;
         bool showMultiCarFlag = false;
-        public bool carValid = false;
-        public bool carValidated = false;
-        public bool boxValid = false;
-
+       
         List<RFIDMessage> carMsgList = new List<RFIDMessage>();
         List<RFIDMessage> boxMsgList = new List<RFIDMessage>();
 
@@ -48,7 +45,7 @@ namespace ScmClient
         public RFIDScanOutListPage(RFIDScanOutWindow parentWindow)
         {
             InitializeComponent();
-            OrderCarMsgLabel.Visibility = Visibility.Hidden;
+            
             this.parentWindow = parentWindow;
             this.orderBoxes = new List<OrderBox>();
         }
@@ -94,9 +91,9 @@ namespace ScmClient
             if ((from b in boxMsgList where b.Nr.Equals(msg.Nr) select b).Count() == 0)
             {
                 boxMsgList.Add(msg);
-                validateOrderBoxNr(msg);
+                refreshOrderBox(new OrderBox() { nr = msg.Nr });
+                handleBoxMessages();
             }
-            handleBoxMessages();
         }
 
         /// <summary>
@@ -104,9 +101,9 @@ namespace ScmClient
         /// </summary>
         private void handleCarMessages()
         {
-           
             if (carMsgList.Count > 1)
             {
+                this.orderCar = null;
                 stopScan();
 
                 if (!showMultiCarFlag)
@@ -117,41 +114,11 @@ namespace ScmClient
             }
             else if (carMsgList.Count == 1)
             {
+                this.orderCar = new OrderCar() { nr = carMsgList.First().Nr };
                 OrderCarTB.Text = carMsgList.First().Nr;
-                if (!carValidated || !carValid)
-                {
-                    validateOrderCarNr(carMsgList.First());
-                }
             }
         }
 
-        /// <summary>
-        /// 检查料车号是否存在
-        /// </summary>
-        private void validateOrderCarNr(RFIDMessage carMsg)
-        {
-            OrderService service = new OrderService();
-            ResponseMessage<OrderCar> msg = service.GetOrderCarByNr(OrderCarTB.Text);
-            if (msg.http_error)
-            {
-
-               // stopScan();
-                showMessageBox(msg.Message);
-            }
-            else if (!msg.Success)
-            {
-                OrderCarMsgLabel.Visibility = Visibility.Visible;
-                this.carValid = false;
-            }
-            else
-            {
-                this.orderCar = msg.data;
-                OrderCarMsgLabel.Visibility = Visibility.Visible;
-                OrderCarMsgLabel.Content = orderCar.status_display;
-                carValidated = true;
-                this.carValid = true;
-            }
-        }
 
         /// <summary>
         /// 处理扫描的料盒号
@@ -161,57 +128,12 @@ namespace ScmClient
             QtyLabel.Content = boxMsgList.Count;
         }
 
-        /// <summary>
-        /// 检查料盒号是否存在
-        /// </summary>
-        private void validateOrderBoxNr(RFIDMessage boxMsg)
-        {
-            OrderService service = new OrderService();
-            ResponseMessage<OrderBox> msg = service.GetOrderBoxByNr(boxMsg.Nr);
-            if (msg.http_error)
-            {
-                boxValid = false;
-                refreshOrderBox(new OrderBox() { nr = boxMsg.Nr });
 
-               // stopScan();
-                showMessageBox(msg.Message);
-            }
-            else if (!msg.Success)
-            {
-                boxValid = false;
-                refreshOrderBox(new OrderBox() { nr = boxMsg.Nr });
-               // PreviewDG.ItemsSource = orderBoxes;
-            }
-            else
-            {
-                refreshOrderBox(msg.data);
-                boxValid = true;
-              //  PreviewDG.ItemsSource = orderBoxes;
-            }
-        }
 
         private void refreshOrderBox(OrderBox orderBox)
         {
-            OrderBox ob = (from b in this.orderBoxes where b.nr.Equals(orderBox.nr) select b).FirstOrDefault();
-            if (ob != null)
-            {
-                if (orderBox.id == 0)
-                {
-                    // 如果未查询到数据库数据则不处理
-                }
-                else
-                {
-                    if (ob.id == 0) { 
-                     // 移除这个空的，这个情况应该不存在，因为已经过滤了
-                    } 
-                }
-            }
-            else
-            {
-                this.orderBoxes.Add(orderBox);
-            }
+            this.orderBoxes.Add(orderBox);
 
-            // 设置datagrid的数据
             PreviewDG.ItemsSource = this.orderBoxes;
             PreviewDG.Items.Refresh();
         }
@@ -225,6 +147,7 @@ namespace ScmClient
                 {
                     if (msg.Type == MessageType.CAR)
                     {
+                        this.carMsgList.Clear();
                         addCarMessage(msg);
                     }
                     else if (msg.Type == MessageType.BOX)
@@ -251,10 +174,11 @@ namespace ScmClient
         }
 
         public bool Validate() {
-            if (this.carValid == true && this.boxValid == true) {
+            if (this.orderCar != null && this.orderBoxes.Count > 0)
+            {
                 return true;
             }
-           return false;
+            return false;
         }
     }
 }
