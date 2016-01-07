@@ -26,7 +26,6 @@
             <RowDefinition Height="20*"/>
             <RowDefinition Height="80*"/>
         </Grid.RowDefinitions>
-
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -37,10 +36,10 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <DockPanel>
+            <DockPanel LastChildFill="False">
                 <Label DockPanel.Dock="Left" Content="料车：" Margin="10 6 0 0" Name="label1" />
                 <TextBox BorderBrush="#0e80b0" Name="OrderCarTB" IsEnabled="False" MinWidth="200" Margin="5"/>
-                <Label DockPanel.Dock="Right" Content="*料车不存在" Margin="0 6 0 0" Name="OrderCarMsgLabel" FontWeight="Bold" Foreground="Red" />
+                <!--<Label DockPanel.Dock="Right" Content="*料车不存在" Margin="0 6 0 0" Name="OrderCarMsgLabel" FontWeight="Bold" Foreground="Red" />-->
             </DockPanel>
 
             <DockPanel Grid.Column="1" LastChildFill="False">
@@ -53,41 +52,35 @@
                 <Label Content="0" Name="QtyLabel" Margin="10 10 0 0"/>
             </DockPanel>
         </Grid>
-        <Grid Grid.Row="1">
-            <StackPanel  HorizontalAlignment="Left" VerticalAlignment="Top">
-                <DataGrid  Name="PreviewDG" AutoGenerateColumns="False" IsReadOnly="True"
+        <StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <DataGrid  Name="PreviewDG" AutoGenerateColumns="False" IsReadOnly="True"
                        Height="309" Margin="5,0,0,0" Width="780" VerticalScrollBarVisibility="Auto">
-                    <DataGrid.ColumnHeaderStyle>
-                        <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="Background">
-                                <Setter.Value>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="#FF269EF1"/>
-                                        <GradientStop Color="#FF052841" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="Foreground" Value="White"/>
-                            <Setter Property="FontSize" Value="10" />
-                            <Setter Property="Padding" Value="20,10,20,10"/>
-                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                        </Style>
-                    </DataGrid.ColumnHeaderStyle>
-                    <DataGrid.Columns>
-                        <!--<DataGridTextColumn Header="No." Binding="{Binding Path=no}" ElementStyle="{StaticResource contentCenterStyle}"/>-->
-                        <DataGridTextColumn Header="料盒号" Binding="{Binding Path=nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                        <DataGridTextColumn Header="状态" Binding="{Binding Path=status_display}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                        <DataGridTextColumn Header="料盒类型" Binding="{Binding Path=box_type_name}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                        <DataGridTextColumn Header="从属部门" Binding="{Binding Path=warehouse_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                        <DataGridTextColumn Header="取料仓库" Binding="{Binding Path=source_warehouse_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                        <DataGridTextColumn Header="零件号" Binding="{Binding Path=part_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                        <DataGridTextColumn Header="数量" Binding="{Binding Path=quantity}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                        <DataGridTextColumn Header="库存" Binding="{Binding Path=stock}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                        <DataGridTextColumn Header="超量" Binding="{Binding Path=over_stock}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                        <DataGridTextColumn Header="取料库位" Binding="{Binding Path=positions_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </StackPanel>
-        </Grid>
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF269EF1"/>
+                                    <GradientStop Color="#FF052841" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="FontSize" Value="10" />
+                        <Setter Property="Padding" Value="20,10,20,10"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="料盒号" Binding="{Binding Path=nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                    <!--<DataGridTextColumn Header="状态" Binding="{Binding Path=status_display}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                    <DataGridTextColumn Header="料盒类型" Binding="{Binding Path=box_type_name}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                    <DataGridTextColumn Header="从属部门" Binding="{Binding Path=warehouse_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                    <DataGridTextColumn Header="取料仓库" Binding="{Binding Path=source_warehouse_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                    <DataGridTextColumn Header="零件号" Binding="{Binding Path=part_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="数量" Binding="{Binding Path=quantity}" ElementStyle="{StaticResource contentCenterStyle}"/>-->
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
     </Grid>
 </Page>

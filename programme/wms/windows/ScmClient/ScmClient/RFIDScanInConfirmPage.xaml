@@ -8,7 +8,7 @@
       
       d:DesignHeight="406" d:DesignWidth="790"
       Title="RFIDScanInConfirmPage"
-      Name="RFIDScanInConfirmPageName">
+      Name="RFIDScanInConfirmPageName" Loaded="RFIDScanInConfirmPageName_Loaded">
 
     <Page.Resources>
         <Style x:Key="contentCenterStyle"
@@ -36,20 +36,28 @@
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            
-            <DockPanel>
+
+            <DockPanel LastChildFill="False">
                 <Label DockPanel.Dock="Left" FontFamily="宋体 Arial Comic Sans MS" FontSize="15" Margin="10 10 0 0" Content="料车：" Name="label1" />
-                <Label Name="OrderCarLabel" FontFamily="宋体 Arial Comic Sans MS" FontSize="15" Margin="0 10 0 0"/>
-            </DockPanel>
-            
-            <DockPanel Grid.Row="1">
-                <Label DockPanel.Dock="Left" FontFamily="宋体 Arial Comic Sans MS" FontSize="15" Margin="10 0 0 0" Content="扫描料盒数量："  Name="label2"  />
-                <Label Content="0" FontFamily="宋体 Arial Comic Sans MS" FontSize="15" Name="QtyLabel"  />
+                <Label Name="OrderCarLabel" FontFamily="宋体 Arial Comic Sans MS" FontSize="15" Width="200" Margin="0 10 0 0"/>
+                <Label DockPanel.Dock="Right" Content="*料车不存在"  Name="OrderCarMsgLabel" FontWeight="Bold" Foreground="Red" Margin="0 10 0 0" Visibility="Hidden"/>
             </DockPanel>
 
-            <Button Grid.Column="1" Grid.RowSpan="2" Width="150" Height="50" HorizontalAlignment="Center"
+            <DockPanel Grid.Row="1">
+                <Label DockPanel.Dock="Left" FontFamily="宋体 Arial Comic Sans MS" FontSize="15" Margin="10 10 0 0" Content="扫描料盒总数量："  Name="label2"  />
+                <Label Content="0" Width="50" FontFamily="宋体 Arial Comic Sans MS" FontSize="15" Margin="0 10 0 0" Name="QtyLabel"  />
+
+                <Label DockPanel.Dock="Left" FontFamily="宋体 Arial Comic Sans MS" FontSize="15" Margin="10 10 0 0" Content="料盒通过验证数量：" Name="label12"  />
+                <Label DockPanel.Dock="Right" Content="0" Name="QtyValidLabel" FontFamily="宋体 Arial Comic Sans MS" FontSize="15" Margin="0 10 0 0" />
+            </DockPanel>
+            <DockPanel Grid.Column="1" Grid.RowSpan="2">
+                <Button Width="150" Height="50" HorizontalAlignment="Center" Content="重新验证" FontSize="20" FontFamily="宋体 Arial Comic Sans MS"
+                Margin="30 0 0 0" Name="ValidateBtn"  Click="ValidateBtn_Click" />
+                <Button  Width="150" Height="50" HorizontalAlignment="Center"
                     Content="删除" FontSize="20" FontFamily="宋体 Arial Comic Sans MS" Name="DeleteBtn" Click="DeleteBtn_Click" />
+            </DockPanel>
         </Grid>
+
         <StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
             <DataGrid  Name="PreviewDG" AutoGenerateColumns="False" IsReadOnly="True"
                        Height="309" Margin="5,0,0,0" Width="780" VerticalScrollBarVisibility="Auto">

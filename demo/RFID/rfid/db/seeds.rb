@@ -29,6 +29,10 @@
       position=Position.create(nr: "POSI#{i}", warehouse: warehouse_store)
     end
 
+    unless position_produce=Position.find_by_nr("PRO_POSI#{i}")
+      position_produce=Position.create(nr: "PRO_POSI#{i}", warehouse: warehouse_produce)
+    end
+
     unless part=Part.find_by_nr("PART#{i}")
       part=Part.create(nr: "PART#{i}")
     end
@@ -41,8 +45,13 @@
     unless order_box=OrderBox.find_by_nr(nr)
       order_box=OrderBox.create(nr:nr,rfid_nr:nr,quantity:i,part:part,
                                 warehouse:warehouse_produce,
+                                position:position_produce,
                                 source_warehouse:warehouse_store,
                                 order_box_type:order_box_type)
+    else
+      if order_box.position.blank?
+        order_box.update_attributes(position:position_produce)
+      end
     end
   end
 

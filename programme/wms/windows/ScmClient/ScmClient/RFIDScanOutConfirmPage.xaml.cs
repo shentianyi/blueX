@@ -89,5 +89,10 @@ namespace ScmClient
                 showMessageBox("无料盒，不可出库！");
             }
         }
+
+        private void ValidateBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

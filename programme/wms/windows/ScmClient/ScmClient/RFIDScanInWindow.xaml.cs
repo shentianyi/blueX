@@ -132,14 +132,14 @@ namespace ScmClient
                 RFIDScanInListPage listPage = (RFIDScanInListPage)currentPage;
                 if (listPage.Validate())
                 {
+                    this.StopTimer();
                     NextBtn.Content = "生成择货单";
                     this.currentPage = new RFIDScanInConfirmPage(this, listPage.orderCar, listPage.orderBoxes);
-                    this.StopTimer();
                     NaviFrame.NavigationService.Navigate(this.currentPage);
                 }
                 else
                 {
-                    showMessageBox("存在未通过验证料车或料盒，请初始化数据并重新扫描！");
+                    showMessageBox("料车或料盒未扫描完整，请继续或重新扫描！");
                 }
             }
             else if (this.currentPage.Name == "RFIDScanInConfirmPageName")
