@@ -33,13 +33,14 @@ class OrderBoxPresenter<Presenter
 
               #要货仓库
               warehouse: WarehousePresenter.new(Warehouse.find_by_id(@order_box.warehouse_id)).as_basic_info,
+              position:PositionPresenter.new(@order_box.position).as_basic_info,
               #出货仓库
               source_warehouse: WarehousePresenter.new(Warehouse.find_by_id(@order_box.source_warehouse_id)).as_basic_info,
 
               part: PartPresenter.new(Part.find_by_id(@order_box.part_id)).as_basic_info,
               quantity: @order_box.quantity,
-              stock: StorageService.stock(@order_box.warehouse_id, @order_box.part_id),
-              positions: StorageService.positions(@order_box.source_warehouse_id, @order_box.part_id)
+              stock: StorageService.stock(@order_box.source_warehouse_id, @order_box.part_id),
+              positions: StorageService.positions(@order_box.source_warehouse_id, @order_box.part_id).uniq.pluck(:nr)
           }
       }
     end

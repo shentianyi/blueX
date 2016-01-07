@@ -20,11 +20,11 @@ class System
     # init first system user access token
     user.generate_access_token
 
-    unless MoveType.find_by_nr(nr:'MOVE')
+    unless MoveType.find_by_nr('MOVE')
       MoveType.create(nr:'MOVE')
     end
 
-    unless MoveType.find_by_nr(nr:'ENTRY')
+    unless MoveType.find_by_nr('ENTRY')
       MoveType.create(nr:'ENTRY')
     end
 

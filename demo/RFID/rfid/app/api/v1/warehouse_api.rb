@@ -1,5 +1,7 @@
 module V1
   class WarehouseAPI<Base
+    guard_all!
+
     namespace :warehouses do
       params do
         requires :order_car_id, type: Integer, desc: 'order car id'
@@ -10,7 +12,7 @@ module V1
         Rails.logger.debug params[:order_box_ids]
         Rails.logger.debug '-----------------------'
         params[:order_box_ids]=params[:order_box_ids].split(',')
-
+        WarehouseService.move_by_car(current_user,params)
       end
 
     end
