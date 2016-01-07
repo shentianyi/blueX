@@ -20,9 +20,13 @@ class System
     # init first system user access token
     user.generate_access_token
 
-    # update nick name
-    # User.where(name: ['', nil]).each { |u| u.update_attributes(name: u.name) }
+    unless MoveType.find_by_nr('MOVE')
+      MoveType.create(nr:'MOVE')
+    end
 
+    unless MoveType.find_by_nr('ENTRY')
+      MoveType.create(nr:'ENTRY')
+    end
 
   end
 

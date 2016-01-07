@@ -10,8 +10,11 @@ class StorageService
     end
   end
 
-  def self.positions warehouse, part
-    Position.joins('RIGHT OUTER JOIN storages ON positions.id = storages.position_id').where(storages: {warehouse_id: warehouse, part_id: part}).select(:nr).pluck(:nr).uniq
+
+  def self.positions warehouse_id, part_id
+    Position.joins(:part_positions)
+        .where(part_positions:{part_id:part_id},warehouse_id:warehouse_id)
+    #Position.joins('RIGHT OUTER JOIN storages ON positions.id = storages.position_id').where(storages: {warehouse_id: warehouse, part_id: part}).select(:nr).pluck(:nr).uniq
   end
 
 end
