@@ -23,6 +23,10 @@ namespace ScmWcfService.Model
         public OrderCarStatus status { get; set; } 
 
         [DataMember]
-        public Warehouse warehouse { get; set; } 
+        public Warehouse warehouse { get; set; }
+
+
+
+        public string status_display { get { return OrderCarStatusDisplay.GetStatusOfOrderCar(this.status); } }
     }
 }

@@ -51,6 +51,6 @@ namespace ScmWcfService.Model
         public string source_warehouse_nr { get { return this.source_warehouse == null ? "" : this.source_warehouse.nr; } }
         public bool over_stock { get { return this.quantity > stock; } }
         public string positions_nr { get { return this.positions == null ? "" : string.Join(",", this.positions); } }
-
+        public string status_display { get { return OrderBoxStatusDisplay.GetStatusOfOrderBox(this.status); } }
     }
 }

@@ -1,4 +1,4 @@
-﻿<Page x:Class="ScmClient.RFIDScanInListPage"
+﻿<Page x:Class="ScmClient.RFIDScanOutListPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,8 +6,8 @@
       xmlns:local="clr-namespace:ScmClient"
       mc:Ignorable="d" 
       d:DesignHeight="406" d:DesignWidth="790"
-      Title="RFIDScanInListPage"
-      Name="RFIDScanInListPageName">
+      Title="RFIDScanOutListPage"
+      Name="RFIDScanOutListPageName">
 
     <Page.Resources>
         <Style x:Key="contentCenterStyle"

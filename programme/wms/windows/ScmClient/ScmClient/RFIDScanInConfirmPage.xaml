@@ -65,6 +65,7 @@
                 <DataGrid.Columns>
                     <!--<DataGridTextColumn Header="No." Binding="{Binding Path=no}" ElementStyle="{StaticResource contentCenterStyle}"/>-->
                     <DataGridTextColumn Header="料盒号" Binding="{Binding Path=nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                    <DataGridTextColumn Header="状态" Binding="{Binding Path=status_display}" ElementStyle="{StaticResource contentCenterStyle}"/>
                     <DataGridTextColumn Header="料盒类型" Binding="{Binding Path=box_type_name}" ElementStyle="{StaticResource contentCenterStyle}"/>
                     <DataGridTextColumn Header="从属部门" Binding="{Binding Path=warehouse_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
                     <DataGridTextColumn Header=" 取料仓库" Binding="{Binding Path=source_warehouse_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>

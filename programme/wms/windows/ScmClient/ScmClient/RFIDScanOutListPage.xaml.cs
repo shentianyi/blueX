@@ -23,11 +23,11 @@ using ScmWcfService.Model.Message;
 namespace ScmClient
 {
     /// <summary>
-    /// RFIDScanInListPage.xaml 的交互逻辑
+    /// RFIDScanOutListPage.xaml 的交互逻辑
     /// </summary>
-    public partial class RFIDScanInListPage : Page
+    public partial class RFIDScanOutListPage : Page
     {
-        RFIDScanInWindow parentWindow;
+        RFIDScanOutWindow parentWindow;
         bool showMultiCarFlag = false;
         public bool carValid = false;
         public bool carValidated = false;
@@ -40,12 +40,12 @@ namespace ScmClient
         public List<OrderBox> orderBoxes { get; set; }
 
 
-        public RFIDScanInListPage()
+        public RFIDScanOutListPage()
         {
             InitializeComponent();
         }
 
-        public RFIDScanInListPage(RFIDScanInWindow parentWindow)
+        public RFIDScanOutListPage(RFIDScanOutWindow parentWindow)
         {
             InitializeComponent();
             OrderCarMsgLabel.Visibility = Visibility.Hidden;
@@ -180,7 +180,7 @@ namespace ScmClient
             else
             {
                 refreshOrderBox(msg.data);
-                this.boxValid = true;
+                boxValid = true;
               //  PreviewDG.ItemsSource = orderBoxes;
             }
         }
