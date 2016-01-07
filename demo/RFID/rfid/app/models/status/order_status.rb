@@ -1,0 +1,7 @@
+class OrderStatus
+  INIT = 100
+  PICKING = 200
+  PICKED = 300
+  DELIVERED=400
+  ABORTED = 500
+end

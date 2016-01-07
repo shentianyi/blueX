@@ -35,7 +35,7 @@ Rails.application.routes.draw do
   resources :users do
     collection do
       get :search
-      match :import, to: :import, via: [:get, :post]
+      match :import, action: :import, via: [:get, :post]
     end
   end
 

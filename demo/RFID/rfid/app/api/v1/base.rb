@@ -7,5 +7,6 @@ module V1
     mount OrderBoxAPI
     mount UserAPI
     mount OrderAPI
+    mount PickAPI
   end
 end

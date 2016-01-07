@@ -1,5 +1,5 @@
 module V1
-  class OrderAPI < Base
+class OrderAPI < Base
     guard_all!
 
     namespace :orders do
@@ -8,6 +8,7 @@ module V1
         requires :order_box_ids, type: Array, desc: 'order box ids'
       end
       post :create_by_car do
+        ## TODO not in use, replaced by /picks/create_by_car
         OrderService.create_by_car(current_user, params)
       end
 
