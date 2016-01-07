@@ -26,7 +26,10 @@ namespace ScmWcfService.Model
         public Warehouse warehouse { get; set; }
 
 
-
+        // for view
         public string status_display { get { return OrderCarStatusDisplay.GetStatusOfOrderCar(this.status); } }
+
+
+
     }
 }

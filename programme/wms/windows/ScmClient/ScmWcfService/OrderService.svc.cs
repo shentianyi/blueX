@@ -72,6 +72,32 @@ namespace ScmWcfService
             }
             
             return msg;
+        } 
+
+        public ResponseMessage<List<OrderBox>> GetOrderBoxByNrs(List<string> nrs)
+        {
+            var msg = new ResponseMessage<List<OrderBox>>();
+            try
+            {
+                var client = new ApiClient();
+                var req = client.GenRequest(ApiConfig.GetOrderBoxByNrsAction);
+                req.AddParameter("nrs", string.Join(",",nrs.ToArray()));
+                var res = client.Execute(req);
+                Debug.WriteLine(res.Content);
+                msg = JsonUtil.parse<ResponseMessage<List<OrderBox>>>(res.Content);
+            }
+            catch (WebFaultException<string> e)
+            {
+                msg.http_error = true;
+                msg.meta.error_message = e.Detail;
+            }
+            catch (Exception e)
+            {
+                msg.http_error = true;
+                msg.meta.error_message = "系统服务错误，请联系管理员";
+            }
+
+            return msg;
         }
 
         public ResponseMessage<object> UpdateOrderBoxById(int id, Model.Enum.OrderCarStatus status)

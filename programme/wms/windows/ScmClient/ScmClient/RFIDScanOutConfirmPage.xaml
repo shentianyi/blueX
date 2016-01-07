@@ -31,6 +31,7 @@
                 <StackPanel  Orientation="Horizontal">
                     <Label Content="料车：" Height="28"    Name="label1" />
                     <Label Height="27"     Name="OrderCarLabel" Width="198" />
+                    <Label Content="*料车不存在" Height="28" Name="OrderCarMsgLabel" Width="100" FontWeight="Bold" Foreground="Red" Visibility="Hidden"  />
                 </StackPanel>
                 <StackPanel  Orientation="Horizontal">
                     <Label Content="扫描料盒数量：" Height="28" Name="label2"  />
