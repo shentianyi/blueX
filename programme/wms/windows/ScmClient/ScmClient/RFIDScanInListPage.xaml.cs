@@ -29,9 +29,6 @@ namespace ScmClient
     {
         RFIDScanInWindow parentWindow;
         bool showMultiCarFlag = false;
-        //public bool carValid = false;
-        //public bool carValidated = false;
-        //public bool boxValid = false;
 
         List<RFIDMessage> carMsgList = new List<RFIDMessage>();
         List<RFIDMessage> boxMsgList = new List<RFIDMessage>();
@@ -48,7 +45,6 @@ namespace ScmClient
         public RFIDScanInListPage(RFIDScanInWindow parentWindow)
         {
             InitializeComponent();
-            // OrderCarMsgLabel.Visibility = Visibility.Hidden;
             this.parentWindow = parentWindow;
             this.orderBoxes = new List<OrderBox>();
         }
@@ -93,11 +89,9 @@ namespace ScmClient
         {
             if ((from b in boxMsgList where b.Nr.Equals(msg.Nr) select b).Count() == 0)
             {
-                // if (validateOrderBoxNr(msg)) {
                 boxMsgList.Add(msg);
                 refreshOrderBox(new OrderBox() { nr = msg.Nr });
                 handleBoxMessages();
-                // }
             }
         }
 
@@ -110,7 +104,6 @@ namespace ScmClient
             {
                 this.orderCar = new OrderCar() { nr = carMsgList.First().Nr };
                 OrderCarTB.Text = carMsgList.First().Nr;
-                // validateOrderCarNr();
             }
             else if (carMsgList.Count > 1)
             {
@@ -125,33 +118,6 @@ namespace ScmClient
             }
         }
 
-        ///// <summary>
-        ///// 检查料车号是否存在
-        ///// </summary>
-        //private void validateOrderCarNr()
-        //{
-        //    OrderService service = new OrderService();
-        //    ResponseMessage<OrderCar> msg = service.GetOrderCarByNr(OrderCarTB.Text);
-        //    if (msg.http_error)
-        //    {
-        //        stopScan();
-        //        showMessageBox(msg.Message);
-        //    }
-        //    else if (!msg.Success)
-        //    {
-        //      //  OrderCarMsgLabel.Visibility = Visibility.Visible;
-        //        this.carValid = false;
-        //    }
-        //    else
-        //    {
-        //        this.orderCar = msg.data;
-        //        //OrderCarMsgLabel.Visibility = Visibility.Visible;
-        //        //OrderCarMsgLabel.Content = orderCar.status_display;
-        //        carValidated = true;
-        //        this.carValid = true;
-        //    }
-        //}
-
         /// <summary>
         /// 处理扫描的料盒号
         /// </summary>
@@ -160,58 +126,10 @@ namespace ScmClient
             QtyLabel.Content = boxMsgList.Count;
         }
 
-        ///// <summary>
-        ///// 检查料盒号是否存在
-        ///// </summary>
-        //private bool validateOrderBoxNr(RFIDMessage boxMsg)
-        //{
-        //    bool result = true;
-        //    OrderService service = new OrderService();
-        //    ResponseMessage<OrderBox> msg = service.GetOrderBoxByNr(boxMsg.Nr);
-        //    if (msg.http_error)
-        //    {
-        //        result = false;
-        //       // removeBoxMessage(boxMsg);
-        //       // stopScan();
-        //        showMessageBox(msg.Message);
-        //    }
-        //    else if (!msg.Success)
-        //    {
-        //        boxValid = false;
-        //        refreshOrderBox(new OrderBox() { nr = boxMsg.Nr });
-        //    }
-        //    else
-        //    {
-        //        refreshOrderBox(msg.data);
-        //        this.boxValid = true;
-        //    }
-        //    return result;
-        //}
+ 
 
         private void refreshOrderBox(OrderBox orderBox = null)
         {
-            //if (orderBox != null)
-            //{
-            //    OrderBox ob = (from b in this.orderBoxes where b.nr.Equals(orderBox.nr) select b).FirstOrDefault();
-            //    if (ob != null)
-            //    {
-            //        if (orderBox.id == 0)
-            //        {
-            //            // 如果未查询到数据库数据则不处理
-            //        }
-            //        else
-            //        {
-            //            if (ob.id == 0)
-            //            {
-            //                // 移除这个空的，这个情况应该不存在，因为已经过滤了
-            //            }
-            //        }
-            //    }
-            //    else
-            //    {
-            //        this.orderBoxes.Add(orderBox);
-            //    }
-            //}
             this.orderBoxes.Add(orderBox);
             // 设置datagrid的数据
             PreviewDG.ItemsSource = this.orderBoxes;
@@ -232,7 +150,6 @@ namespace ScmClient
                     }
                     else if (msg.Type == MessageType.BOX)
                     {
-                        // removeBoxMessage(msg);
                         addBoxMessage(msg);
                     }
                     ScanTB.Text = string.Empty;
@@ -240,26 +157,7 @@ namespace ScmClient
             }
         }
 
-        //private void removeBoxMessage(RFIDMessage boxMsg)
-        //{
-
-        //    OrderBox ob = (from b in this.orderBoxes where b.nr.Equals(boxMsg.Nr) select b).FirstOrDefault();
-        //    if (ob !=null)
-        //    {
-        //        this.orderBoxes.Remove(ob);
-        //    }
-
-        //    foreach (RFIDMessage msg in this.boxMsgList) {
-        //        if (msg.Nr.Equals(boxMsg.Nr))
-        //        {
-        //            this.boxMsgList.Remove(msg);
-        //            break;
-        //        }
-        //    }
-        //    handleBoxMessages();
-        //    //(from b in this.boxMsgList where b.Nr.Equals(boxMsg.Nr) select b).ToList().Clear();
-
-        //}
+      
 
 
         public void showMessageBox(string message)
