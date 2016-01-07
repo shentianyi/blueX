@@ -72,13 +72,13 @@ namespace ScmClient
             }
         }
 
-        private void addCarMessage(RFIDMessage msg)
+        private void addCarMessage(RFIDMessage msg,bool scan=false)
         {
             if ((from c in carMsgList where c.Nr.Equals(msg.Nr) select c).Count() == 0)
             {
                 carMsgList.Add(msg);
             }
-            handleCarMessages();
+            handleCarMessages(scan);
         }
 
         private void addBoxMessages(List<RFIDMessage> msgs)
@@ -89,12 +89,12 @@ namespace ScmClient
             }
         }
 
-        private void addBoxMessage(RFIDMessage msg)
+        private void addBoxMessage(RFIDMessage msg, bool scan = false)
         {
             if ((from b in boxMsgList where b.Nr.Equals(msg.Nr) select b).Count() == 0)
             {
                 boxMsgList.Add(msg);
-                validateOrderBoxNr(msg.Nr);
+                validateOrderBoxNr(msg.Nr,scan);
             }
             handleBoxMessages();
         }
@@ -102,19 +102,19 @@ namespace ScmClient
         /// <summary>
         /// 处理扫描的料车号
         /// </summary>
-        private void handleCarMessages()
+        private void handleCarMessages(bool scan = false)
         {
             if (carMsgList.Count == 1)
             {
                 OrderCarTB.Text = carMsgList.First().Nr;
                 if (!carValidated || !carValid)
                 {
-                    validateOrderCarNr();
+                    validateOrderCarNr(scan);
                 }
             }
             else if (carMsgList.Count > 1)
             {
-                stopScan();
+                stopRFIDScan();
 
                 if (!showMultiCarFlag)
                 {
@@ -127,13 +127,13 @@ namespace ScmClient
         /// <summary>
         /// 检查料车号是否存在
         /// </summary>
-        private void validateOrderCarNr()
+        private void validateOrderCarNr(bool scan=false)
         {
             OrderService service = new OrderService();
             ResponseMessage<OrderCar> msg = service.GetOrderCarByNr(OrderCarTB.Text);
             if (msg.http_error)
             {
-                stopScan();
+                stopRFIDScan();
                 showMessageBox(msg.Message);
             }
             else if (!msg.Success)
@@ -162,13 +162,18 @@ namespace ScmClient
         /// <summary>
         /// 检查料盒号是否存在
         /// </summary>
-        private void validateOrderBoxNr(string boxNr)
+        private void validateOrderBoxNr(string boxNr, bool scan = false)
         {
             OrderService service = new OrderService();
             ResponseMessage<OrderBox> msg = service.GetOrderBoxByNr(boxNr);
             if (msg.http_error)
             {
-                stopScan();
+                if (!scan)
+                {
+                    boxValid = false;
+                    refreshOrderBox(new OrderBox() { nr = boxNr });
+                }
+                stopRFIDScan();
                 showMessageBox(msg.Message);
             }
             else if (!msg.Success)
@@ -220,11 +225,11 @@ namespace ScmClient
                 {
                     if (msg.Type == MessageType.CAR)
                     {
-                        addCarMessage(msg);
+                        addCarMessage(msg,true);
                     }
                     else if (msg.Type == MessageType.BOX)
                     {
-                        addBoxMessage(msg);
+                        addBoxMessage(msg,true);
                     }
                     ScanTB.Text = string.Empty;
                 }
@@ -237,7 +242,7 @@ namespace ScmClient
             System.Windows.Forms.MessageBox.Show(message);
         }
 
-        private void stopScan()
+        private void stopRFIDScan()
         {
             //this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate()
             //{

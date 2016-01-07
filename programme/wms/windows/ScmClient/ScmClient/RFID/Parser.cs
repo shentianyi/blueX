@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using ScmWcfService.Config;
 
 namespace ScmClient.RFID
 {
     public class Parser
     {
-        static Regex messageRegex = new Regex(@"[A-Z0-9]{24}");
-        static Regex labelRegex = new Regex(@"[A-Z0-9]{4}");
-        static Regex carRegex = new Regex(@"^[A-E](\w{3})");
-        static Regex boxRegex = new Regex(@"^[F-Z0-9](\w{3})");
+        static Regex messageRegex = new Regex(RFIDConfig.MessageRegex);
+        static Regex labelRegex = new Regex(RFIDConfig.LabelRegex);
+        static Regex carRegex = new Regex(RFIDConfig.OrderCarLabelRegex);
+        static Regex boxRegex = new Regex(RFIDConfig.OrderBoxLabelRegex);
 
         public static List<RFIDMessage> StringToList(string data)
         {

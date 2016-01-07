@@ -168,6 +168,9 @@ namespace ScmClient
             ResponseMessage<OrderBox> msg = service.GetOrderBoxByNr(boxNr);
             if (msg.http_error)
             {
+                boxValid = false;
+                refreshOrderBox(new OrderBox() { nr = boxNr });
+
                 stopScan();
                 showMessageBox(msg.Message);
             }

@@ -16,7 +16,6 @@ namespace ScmClient
 
         public OrderCar orderCar { get; set; }
         public List<OrderBox> orderBoxes { get; set; }
-        public Pick pick { get; set; }
         public bool canNext { get; set; }
 
         public RFIDScanOutConfirmPage()
@@ -66,28 +65,28 @@ namespace ScmClient
             }
         }
 
-        public void GenereatePick() {
+        public void MoveStroage() {
             if (this.orderBoxes.Count > 0)
             {
-                PickService service = new PickService();
+                WarehouseService service = new WarehouseService();
                 List<int> ids = new List<int>();
                 foreach (OrderBox box in this.orderBoxes)
                 {
                     ids.Add(box.id);
                 }
-                ResponseMessage<Pick> msg = service.CreatePickByOrderCar(this.orderCar.id, ids);
+                ResponseMessage<object> msg = service.MoveStorageByCar(this.orderCar.id, ids);
                 if (!msg.Success)
                 {
                     showMessageBox(msg.Message);
                 }
                 else
                 {
-                    this.pick = msg.data;
+                    showMessageBox("出库成功！");
                     this.canNext = true;
                 }
             }
             else {
-                showMessageBox("无料盒，不可生成择货单！");
+                showMessageBox("无料盒，不可出库！");
             }
         }
     }

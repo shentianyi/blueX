@@ -116,7 +116,8 @@ namespace ScmClient
             this.GoToNextPage();
         }
 
-        public void GoToNextPage() {
+        public void GoToNextPage()
+        {
 
             BackBtn.Content = "放弃";
             NextBtn.Visibility = Visibility.Visible;
@@ -145,13 +146,16 @@ namespace ScmClient
             else if (this.currentPage.Name == "RFIDScanOutConfirmPageName")
             {
                 RFIDScanOutConfirmPage confirmPage = (RFIDScanOutConfirmPage)currentPage;
-                 confirmPage.GenereatePick();
-                if (confirmPage.pick != null)
+                confirmPage.MoveStroage();
+                if (confirmPage.canNext)
                 {
-                    BackBtn.Content = "返回";
-                    NextBtn.Visibility = Visibility.Hidden;
-                    this.currentPage = new RFIDScanOutPickPage(this,confirmPage.orderCar,confirmPage.orderBoxes,confirmPage.pick);
+                    BackBtn.Content = "放弃"; 
+                    this.NextBtn.Visibility = Visibility.Visible;
+                    this.NextBtn.Content = "下一步";
+                    this.currentPage = new RFIDScanOutPage();
                     NaviFrame.NavigationService.Navigate(this.currentPage);
+                    this.timer.Enabled = true;
+                    this.timer.Start();
                 }
             }
         }
