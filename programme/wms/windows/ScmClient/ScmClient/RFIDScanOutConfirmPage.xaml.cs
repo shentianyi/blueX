@@ -149,6 +149,7 @@ namespace ScmClient
             }
         }
 
+
         private void setQtyLabel()
         {
             this.QtyLabel.Content = this.orderBoxes.Count;
@@ -159,6 +160,5 @@ namespace ScmClient
         {
             validate();
         }
-
     }
 }

@@ -8,7 +8,7 @@
       
       d:DesignHeight="406" d:DesignWidth="790"
       Title="RFIDScanOutConfirmPage"
-      Name="RFIDScanOutConfirmPageName" Loaded="RFIDScanOutConfirmPageName_Loaded">
+      Name="RFIDScanOutConfirmPageName">
 
     <Page.Resources>
         <Style x:Key="contentCenterStyle"
@@ -26,30 +26,41 @@
             <RowDefinition Height="20*"/>
             <RowDefinition Height="80*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top"  Orientation="Horizontal">
-            <StackPanel Orientation="Vertical">
-                <StackPanel  Orientation="Horizontal">
-                    <Label Content="料车：" Height="28"    Name="label1" />
-                    <Label Height="27"     Name="OrderCarLabel" Width="198" />
-                    <Label Content="*料车不存在" Height="28" Name="OrderCarMsgLabel" Width="100" FontWeight="Bold" Foreground="Red" Visibility="Hidden"  />
-                </StackPanel>
-                <StackPanel  Orientation="Horizontal">
-                    <Label Content="扫描料盒总数量：" Height="28" Name="label2"  />
-                    <Label Content="0" Name="QtyLabel" Height="28"  Width="86" />
-                </StackPanel>
-                <StackPanel  Orientation="Horizontal">
-                    <Label Content="料盒通过验证数量：" Height="28" Name="label12"  />
-                    <Label Content="0" Name="QtyValidLabel" Height="28"  Width="86" />
-                </StackPanel>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="重新验证" Height="37" HorizontalAlignment="Left" Margin="250,15,0,0"
-                Name="ValidateBtn" VerticalAlignment="Top" Width="87" Click="ValidateBtn_Click" />
+        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
 
-                <Button Content="删除" Height="37" HorizontalAlignment="Left" Margin="10,15,0,0"
-                Name="DeleteBtn" VerticalAlignment="Top" Width="87" Click="DeleteBtn_Click" />
-            </StackPanel>
-        </StackPanel>
+            <DockPanel>
+                <Label DockPanel.Dock="Left" FontFamily="宋体 Arial Comic Sans MS" FontSize="15" Margin="10 10 0 0" Content="料车："  Name="label1" />
+                <Label Name="OrderCarLabel" FontFamily="宋体 Arial Comic Sans MS" FontSize="15" Width="50" Margin="0 10 0 0"/>
+                <Label Content="*料车不存在" Height="28" Name="OrderCarMsgLabel" FontWeight="Bold" Foreground="Red" Margin="0 10 0 0" Visibility="Hidden"
+                       />
+            </DockPanel>
+
+            <DockPanel Grid.Row="1">
+                <Label Content="扫描料盒总数量：" DockPanel.Dock="Left" FontFamily="宋体 Arial Comic Sans MS" FontSize="15" Margin="10 10 0 0" Name="label2"  />
+                <Label Content="0" Name="QtyLabel" Width="50"  FontFamily="宋体 Arial Comic Sans MS" Margin="0 10 0 0" FontSize="15"/>
+                
+                <Label DockPanel.Dock="Left" FontFamily="宋体 Arial Comic Sans MS" FontSize="15" Margin="10 10 0 0" Content="料盒通过验证数量：" Name="label12"  />
+                <Label DockPanel.Dock="Right" Content="0" Name="QtyValidLabel" FontFamily="宋体 Arial Comic Sans MS" FontSize="15" Margin="0 10 0 0" />
+            </DockPanel>
+
+            <DockPanel Grid.Column="1" Grid.RowSpan="2">
+                <Button Width="150" Height="50" HorizontalAlignment="Center" Content="重新验证" FontSize="20" FontFamily="宋体 Arial Comic Sans MS"
+                Margin="30 0 0 0" Name="ValidateBtn"  Click="ValidateBtn_Click" />
+                
+                <Button Content="删除" Width="150" Height="50" HorizontalAlignment="Center"
+                    FontSize="20" FontFamily="宋体 Arial Comic Sans MS" Name="DeleteBtn" Click="DeleteBtn_Click" />
+            </DockPanel>
+        </Grid>
+        
         <StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
             <DataGrid  Name="PreviewDG" AutoGenerateColumns="False" IsReadOnly="True"
                        Height="309" Margin="5,0,0,0" Width="780" VerticalScrollBarVisibility="Auto">

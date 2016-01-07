@@ -6,14 +6,30 @@
         xmlns:local="clr-namespace:ScmClient"
         mc:Ignorable="d"
         Title="RFIDScanInWindow" Height="500" Width="800" Loaded="Window_Loaded"
-        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-    <Grid Grid.Row="2">
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="90*"/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Frame x:Name="NaviFrame" Grid.Row="0" NavigationUIVisibility="Hidden" Cursor="Hand"/>
-        <Button x:Name="BackBtn" Content="放弃" HorizontalAlignment="Left" Margin="10,2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="68" Height="32" Click="BackBtn_Click"/>
-        <Button x:Name="NextBtn" Content="下一步" HorizontalAlignment="Left" Margin="509,2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="78" Click="NextBtn_Click" Height="32" />
+        <Grid Background="#0e80b0" MouseDown="Window_MouseMove">
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left"
+                       FontSize="30" Margin="10 0 0 0" Foreground="White" FontFamily="宋体 Arial Comic Sans MS">RFIDScanInWindow</TextBlock>
+            
+            <!--This Close Button Can Remove-->
+            <Button Style="{DynamicResource MetroCircleButtonStyle}" Background="#0e80b0" BorderBrush="#0e80b0" Width="50" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right" Click="Close">
+                <Rectangle Width="15" Height="15" Fill="WhiteSmoke">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Visual="{StaticResource appbar_close}" Stretch="Fill" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+        </Grid>
+        <Frame x:Name="NaviFrame" Grid.Row="1" NavigationUIVisibility="Hidden" Cursor="Hand"/>
+        <Grid Grid.Row="2">
+            <Button x:Name="BackBtn" Content="放弃" Margin="50 0 0 0" Width="150" Height="40" HorizontalAlignment="Left"  VerticalAlignment="Center" Click="BackBtn_Click"/>
+            <Button x:Name="NextBtn" Content="下一步" Margin="0 0 50 0" Width="150" Height="40" HorizontalAlignment="Right"  VerticalAlignment="Center"  Click="NextBtn_Click"/>
+        </Grid>
     </Grid>
 </Window>

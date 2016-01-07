@@ -289,5 +289,20 @@ namespace ScmClient
         //    }
         //}
 
+        //Drog and Drop
+        private void Window_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
+        }
+        //Close function
+        private void Close(object sender,RoutedEventArgs e)
+        {
+            this.Close();
+            Environment.Exit(0);
+        }
+
     }
 }

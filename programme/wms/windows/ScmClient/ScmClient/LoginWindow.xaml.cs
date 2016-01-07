@@ -41,7 +41,8 @@ namespace ScmClient
         /// <summary>
         /// 登录方法
         /// </summary>
-        private void login() {
+        private void login()
+        {
             var service = new UserService();
             ResponseMessage<UserSession> msg = service.Login(NrTB.Text, PwdTB.Password);
             if (msg.Success)
@@ -64,7 +65,8 @@ namespace ScmClient
         /// <param name="e"></param>
         private void PwdTB_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter && PwdTB.Password.Trim().Length > 0) {
+            if (e.Key == Key.Enter && PwdTB.Password.Trim().Length > 0)
+            {
                 login();
             }
         }
@@ -72,9 +74,23 @@ namespace ScmClient
         /// <summary>
         /// 初始化控件显示
         /// </summary>
-        private void initControl() {
+        private void initControl()
+        {
             PwdTB.Password = string.Empty;
             NrTB.Focus();
+        }
+
+        private void Close(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
         }
     }
 }

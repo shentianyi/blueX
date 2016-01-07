@@ -27,7 +27,7 @@ namespace ScmClient
     /// </summary>
     public partial class RFIDScanOutWindow : Window
     {
-        private MenuWindow menuWindow; 
+        private MenuWindow menuWindow;
         private Page currentPage;
 
         private System.Timers.Timer timer;
@@ -79,7 +79,8 @@ namespace ScmClient
             }
         }
 
-        private void closeWindow() {
+        private void closeWindow()
+        {
             closeCOM();
 
             this.Close();
@@ -89,7 +90,8 @@ namespace ScmClient
                 this.menuWindow.Show();
             }
         }
-        private void closeCOM() {
+        private void closeCOM()
+        {
             int stopReadFlag = RFIDDll.ComStopReadMultiTag(g_selectCom);
             if (stopReadFlag == RFIDDll.STOP_READ_MULITTAG_SUCCESS)
             {
@@ -108,7 +110,7 @@ namespace ScmClient
                 g_selectCom = IntPtr.Zero;
                 LogUtil.Logger.Info("Close COM Success");
             }
-        
+
         }
 
         private void NextBtn_Click(object sender, RoutedEventArgs e)
@@ -149,7 +151,7 @@ namespace ScmClient
                 confirmPage.MoveStroage();
                 if (confirmPage.canNext)
                 {
-                    BackBtn.Content = "放弃"; 
+                    BackBtn.Content = "放弃";
                     this.NextBtn.Visibility = Visibility.Visible;
                     this.NextBtn.Content = "下一步";
                     this.currentPage = new RFIDScanOutPage();
@@ -223,18 +225,18 @@ namespace ScmClient
         {
             //按显示的每条数据长度为50个字节计算的话，该数组最多可存储约40960/50 = 819张不同标签
             Byte[] recvbuf = new Byte[40960];
-             
+
             int flag = 0;
-              
+
             flag = RFIDDll.ComGetMultiTagBuf_Ex(recvbuf);
-            
+
             if (flag == RFIDDll.GET_TAG_DATA_SUCCESS)
             {
                 string data = System.Text.Encoding.Default.GetString(recvbuf);
 
-                LogUtil.Logger.Info("[接收到]"+data);
+                LogUtil.Logger.Info("[接收到]" + data);
 
-                this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate()
+                this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate ()
                 {
                     LogUtil.Logger.Info(this.currentPage.Name);
                     if (this.currentPage.Name == "RFIDScanOutPageName")
@@ -243,7 +245,7 @@ namespace ScmClient
                         NaviFrame.NavigationService.Navigate(this.currentPage);
                     }
                 });
-                this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate()
+                this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate ()
                {
                    if (this.currentPage.Name == "RFIDScanOutListPageName")
                    {
@@ -253,5 +255,19 @@ namespace ScmClient
             }
         }
 
+        //Drog and Drop
+        private void Window_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
+        }
+        //Close function
+        private void Close(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            Environment.Exit(0);
+        }
     }
 }

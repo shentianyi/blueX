@@ -10,10 +10,6 @@
       Name="RFIDScanInPageName" Loaded="RFIDScanInPageName_Loaded">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="429*" />
-            <ColumnDefinition Width="24*" />
-        </Grid.ColumnDefinitions>
-        <Label x:Name="contentLabel" Content="入口RFID已就绪, 请等待领料车..." HorizontalAlignment="Left" Margin="74,111,0,0" VerticalAlignment="Top" FontSize="22"/>
+        <Label x:Name="contentLabel"  FontFamily="宋体 Arial Comic Sans MS" Content="入口RFID已就绪, 请等待领料车..." HorizontalAlignment="Left" Margin="74,111,0,0" VerticalAlignment="Top" FontSize="22"/>
     </Grid>
 </Page>
