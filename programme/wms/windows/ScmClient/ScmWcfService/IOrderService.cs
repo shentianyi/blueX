@@ -23,6 +23,10 @@ namespace ScmWcfService
         [OperationContract]
         ResponseMessage<OrderBox> GetOrderBoxByNr(string nr);
 
+
+        [OperationContract]
+        ResponseMessage<List<OrderBox>> GetOrderBoxByNrs(List<string> nrs);
+
         [OperationContract]
         ResponseMessage<Object> UpdateOrderBoxById(int id, OrderCarStatus status);
 

@@ -27,6 +27,7 @@ namespace ScmWcfService.Config
                 LoginAction = config.Get("LoginAction");
                 GetOrderCarByNrAction = config.Get("GetOrderCarByNrAction");
                 GetOrderBoxByNrAction = config.Get("GetOrderBoxByNrAction");
+                GetOrderBoxByNrsAction = config.Get("GetOrderBoxByNrsAction");
                 CreatePickByCarAction = config.Get("CreatePickByCarAction");
                 MoveStorageByCarAction = config.Get("MoveStorageByCarAction");
             }
@@ -64,6 +65,7 @@ namespace ScmWcfService.Config
         public static string LoginAction { get; set; }
         public static string GetOrderCarByNrAction { get; set; }
         public static string GetOrderBoxByNrAction { get; set; }
+        public static string GetOrderBoxByNrsAction { get; set; }
         public static string CreatePickByCarAction { get; set; }
         public static string MoveStorageByCarAction { get; set; }
     }
