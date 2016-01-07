@@ -128,9 +128,12 @@ namespace ScmClient
             }
         }
 
+        /// <summary>
+        /// 生成择货单
+        /// </summary>
         public void GenereatePick()
         {
-            if (this.orderCar != null && OrderBox.GetNotNullCount(this.orderBoxes) == this.orderBoxes.Count)
+            if (this.orderCar != null && this.orderCar.id>0 && OrderBox.GetNotNullCount(this.orderBoxes) == this.orderBoxes.Count)
             {
                 PickService service = new PickService();
                 
@@ -142,6 +145,31 @@ namespace ScmClient
                 else
                 {
                     this.pick = msg.data;
+                    this.canNext = true;
+                }
+            }
+            else
+            {
+                showMessageBox("料车或料盒不存在，不可生成择货单！");
+            }
+        }
+
+        /// <summary>
+        /// 根据料车移库
+        /// </summary>
+        public void MoveStroage()
+        {
+            if (this.orderCar != null && this.orderCar.id > 0 && OrderBox.GetNotNullCount(this.orderBoxes) == this.orderBoxes.Count)
+            {
+                WarehouseService service = new WarehouseService();
+                ResponseMessage<object> msg = service.MoveStorageByCar(this.orderCar.id, OrderBox.GetAllIds(this.orderBoxes));
+                if (!msg.Success)
+                {
+                    showMessageBox(msg.Message);
+                }
+                else
+                {
+                    showMessageBox("出库成功！");
                     this.canNext = true;
                 }
             }
