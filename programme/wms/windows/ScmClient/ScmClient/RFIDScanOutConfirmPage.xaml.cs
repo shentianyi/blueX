@@ -149,12 +149,7 @@ namespace ScmClient
             }
         }
 
-<<<<<<< HEAD
-        private void ValidateBtn_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
-=======
         private void setQtyLabel()
         {
             this.QtyLabel.Content = this.orderBoxes.Count;
@@ -165,7 +160,5 @@ namespace ScmClient
         {
             validate();
         }
-
->>>>>>> 924c68ae8974fd938691cb0c21f8afcbe9352811
     }
 }
