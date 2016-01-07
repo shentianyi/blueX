@@ -19,6 +19,7 @@ using System.Windows.Forms;
 using System.Windows.Threading;
 using System.Windows.Navigation;
 using ScmWcfService.Model;
+using ScmClient.Enum;
 
 namespace ScmClient
 {
@@ -33,19 +34,22 @@ namespace ScmClient
         private System.Timers.Timer timer;
         IntPtr g_selectCom = IntPtr.Zero;       //选择操作的串口句柄
 
+        public RFIDScanType type { get; set; }
+
         public RFIDScanInWindow()
         {
             InitializeComponent();
         }
-        public RFIDScanInWindow(MenuWindow menuWindow)
+        public RFIDScanInWindow(MenuWindow menuWindow,RFIDScanType type)
         {
             InitializeComponent();
             this.menuWindow = menuWindow;
+            this.type = type;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.currentPage = new RFIDScanInPage();
+            this.currentPage = new RFIDScanInPage(this);
             NaviFrame.NavigationService.Navigate(this.currentPage);
             initTimer();
             openCom();
@@ -71,7 +75,7 @@ namespace ScmClient
                 this.BackBtn.Content = "放弃";
                 this.timer.Enabled = true;
                 this.timer.Start();
-                this.currentPage = new RFIDScanInPage();
+                this.currentPage = new RFIDScanInPage(this);
                 NaviFrame.NavigationService.Navigate(this.currentPage);
             }
             else {
@@ -133,9 +137,19 @@ namespace ScmClient
                 if (listPage.Validate())
                 {
                     this.StopTimer();
-                    NextBtn.Content = "生成择货单";
+
+                    if (this.type == RFIDScanType.IN)
+                    {
+                        NextBtn.Content = "生成择货单";
+                        
+                    }
+                    else if (this.type == RFIDScanType.OUT) {
+                        NextBtn.Content = "完成出库";
+                    }
+
                     this.currentPage = new RFIDScanInConfirmPage(this, listPage.orderCar, listPage.orderBoxes);
                     NaviFrame.NavigationService.Navigate(this.currentPage);
+                
                 }
                 else
                 {
@@ -145,13 +159,29 @@ namespace ScmClient
             else if (this.currentPage.Name == "RFIDScanInConfirmPageName")
             {
                 RFIDScanInConfirmPage confirmPage = (RFIDScanInConfirmPage)currentPage;
-                confirmPage.GenereatePick();
-                if (confirmPage.pick != null && confirmPage.canNext)
+                if (this.type == RFIDScanType.IN)
                 {
-                    BackBtn.Content = "返回";
-                    NextBtn.Visibility = Visibility.Hidden;
-                    this.currentPage = new RFIDScanInPickPage(this,confirmPage.orderCar,confirmPage.orderBoxes,confirmPage.pick);
-                    NaviFrame.NavigationService.Navigate(this.currentPage);
+                    confirmPage.GenereatePick();
+                    if (confirmPage.pick != null && confirmPage.canNext)
+                    {
+                        BackBtn.Content = "返回";
+                        NextBtn.Visibility = Visibility.Hidden;
+                        this.currentPage = new RFIDScanInPickPage(this, confirmPage.orderCar, confirmPage.orderBoxes, confirmPage.pick);
+                        NaviFrame.NavigationService.Navigate(this.currentPage);
+                    }
+                }
+                else if (this.type == RFIDScanType.OUT) {
+                    confirmPage.MoveStroage();
+                    if (confirmPage.canNext)
+                    {
+                        BackBtn.Content = "放弃";
+                        this.NextBtn.Visibility = Visibility.Visible;
+                        this.NextBtn.Content = "下一步";
+                        this.currentPage = new RFIDScanInPage(this);
+                        NaviFrame.NavigationService.Navigate(this.currentPage);
+                        this.timer.Enabled = true;
+                        this.timer.Start();
+                    }
                 }
             }
         }

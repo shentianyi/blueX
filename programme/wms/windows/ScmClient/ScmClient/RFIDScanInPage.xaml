@@ -7,9 +7,13 @@
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="453"
       Title="RFIDScanInPage"
-      Name="RFIDScanInPageName">
+      Name="RFIDScanInPageName" Loaded="RFIDScanInPageName_Loaded">
 
     <Grid>
-        <Label x:Name="label" Content="入口RFID已就绪, 请等待领料车..." HorizontalAlignment="Left" Margin="74,111,0,0" VerticalAlignment="Top" FontSize="22"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="429*" />
+            <ColumnDefinition Width="24*" />
+        </Grid.ColumnDefinitions>
+        <Label x:Name="contentLabel" Content="入口RFID已就绪, 请等待领料车..." HorizontalAlignment="Left" Margin="74,111,0,0" VerticalAlignment="Top" FontSize="22"/>
     </Grid>
 </Page>

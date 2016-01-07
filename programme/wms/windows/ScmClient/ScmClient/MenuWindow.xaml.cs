@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ScmClient.Enum;
 
 namespace ScmClient
 {
@@ -26,13 +27,14 @@ namespace ScmClient
 
         private void RFIDScanInNaviBtn_Click(object sender, RoutedEventArgs e)
         {
-            new RFIDScanInWindow(this).Show();
+            new RFIDScanInWindow(this,RFIDScanType.IN).Show();
             this.Hide();
         }
 
         private void RFIDScanOutNaviBtn_Click(object sender, RoutedEventArgs e)
         {
-            new RFIDScanOutWindow(this).Show();
+            //new RFIDScanOutWindow(this).Show();
+            new RFIDScanInWindow(this, RFIDScanType.OUT).Show();
             this.Hide();
         }
     }
