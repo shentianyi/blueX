@@ -4,7 +4,7 @@ class OrderBoxTypesController < ApplicationController
   # GET /order_box_types
   # GET /order_box_types.json
   def index
-    @order_box_types = OrderBoxType.all
+    @order_box_types = OrderBoxType.paginate(:page => params[:page], :per_page => 100)
   end
 
   # GET /order_box_types/1

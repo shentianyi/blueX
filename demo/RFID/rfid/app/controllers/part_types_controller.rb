@@ -4,7 +4,7 @@ class PartTypesController < ApplicationController
   # GET /part_types
   # GET /part_types.json
   def index
-    @part_types = PartType.all
+    @part_types = PartType.paginate(:page => params[:page], :per_page => 100)
   end
 
   # GET /part_types/1

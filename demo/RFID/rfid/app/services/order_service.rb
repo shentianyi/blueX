@@ -5,12 +5,12 @@ class OrderService
     begin
       # Order.transaction do
         validable_car_and_box(params) do |car, boxs|
-          order=Order.new(status: OrderType::INIT)
+          order=Order.new(status: OrderStatus::INIT)
           order.user=user
 
           boxs.each do |box|
             order_item=OrderItem.new({
-                                         status: OrderType::INIT,
+                                         status: OrderStatus::INIT,
                                          quantity: box.quantity,
                                          part_id: box.part_id,
                                          is_emergency: 0
@@ -59,7 +59,7 @@ class OrderService
           ApiMessage.new({meta: {code: 200, message: '数据验证通过'}})
         end
       else
-        ApiMessage.new({meta: {code: 400, message: err_infos.join("/")}})
+        ApiMessage.new({meta: {code: 400, message: err_infos.join(',')}})
       end
     else
       ApiMessage.new({meta: {code: 400, message: '料车没有找到'}})

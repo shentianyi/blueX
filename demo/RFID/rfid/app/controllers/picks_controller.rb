@@ -4,7 +4,7 @@ class PicksController < ApplicationController
   # GET /picks
   # GET /picks.json
   def index
-    @picks = Pick.all
+    @picks = Pick.paginate(:page => params[:page], :per_page => 100)
   end
 
   # GET /picks/1

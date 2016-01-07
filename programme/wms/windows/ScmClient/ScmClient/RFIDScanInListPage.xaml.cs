@@ -29,15 +29,16 @@ namespace ScmClient
     {
         RFIDScanInWindow parentWindow;
         bool showMultiCarFlag = false;
-        public bool carValid = true;
+        public bool carValid = false;
         public bool carValidated = false;
-        public bool boxValid = true;
+        public bool boxValid = false;
 
         List<RFIDMessage> carMsgList = new List<RFIDMessage>();
         List<RFIDMessage> boxMsgList = new List<RFIDMessage>();
 
-        OrderCar orderCar = null;
-        List<OrderBox> orderBoxes = new List<OrderBox>();
+        public OrderCar orderCar { get; set; }
+        public List<OrderBox> orderBoxes { get; set; }
+
 
         public RFIDScanInListPage()
         {
@@ -49,6 +50,7 @@ namespace ScmClient
             InitializeComponent();
             OrderCarMsgLabel.Visibility = Visibility.Hidden;
             this.parentWindow = parentWindow;
+            this.orderBoxes = new List<OrderBox>();
         }
 
 
@@ -105,7 +107,7 @@ namespace ScmClient
             if (carMsgList.Count == 1)
             {
                 OrderCarTB.Text = carMsgList.First().Nr;
-                if (carValidated)
+                if (!carValidated || !carValid)
                 {
                     validateOrderCarNr();
                 }
@@ -141,8 +143,11 @@ namespace ScmClient
             }
             else
             {
-                carValidated = true;
                 this.orderCar = msg.data;
+                OrderCarMsgLabel.Visibility = Visibility.Visible;
+                OrderCarMsgLabel.Content = orderCar.status_display;
+                carValidated = true;
+                this.carValid = true;
             }
         }
 
@@ -175,7 +180,7 @@ namespace ScmClient
             else
             {
                 refreshOrderBox(msg.data);
-
+                this.boxValid = true;
               //  PreviewDG.ItemsSource = orderBoxes;
             }
         }
@@ -221,6 +226,7 @@ namespace ScmClient
                     {
                         addBoxMessage(msg);
                     }
+                    ScanTB.Text = string.Empty;
                 }
             }
         }
@@ -237,6 +243,13 @@ namespace ScmClient
             //{
                 parentWindow.StopTimer();
            // });
+        }
+
+        public bool Validate() {
+            if (this.carValid == true && this.boxValid == true) {
+                return true;
+            }
+           return false;
         }
     }
 }

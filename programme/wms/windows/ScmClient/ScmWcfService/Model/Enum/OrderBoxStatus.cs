@@ -7,7 +7,28 @@ namespace ScmWcfService.Model.Enum
 {
     public enum OrderBoxStatus
     {
-        FREE,
-        IN_PICK
+        INIT = 100,
+        PICKING = 200
+    }
+
+    public class OrderBoxStatusDisplay
+    {
+        public static string GetStatusOfOrderBox(OrderBoxStatus status)
+        {
+            string result = string.Empty;
+            switch (status)
+            {
+                case OrderBoxStatus.INIT:
+                    result = "空闲";
+                    break;
+                case OrderBoxStatus.PICKING:
+                    result = "择货中";
+                    break;
+                default:
+                    result = "N/A";
+                    break;
+            }
+            return result;
+        }
     }
 }

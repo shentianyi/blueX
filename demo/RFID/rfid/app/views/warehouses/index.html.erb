@@ -1,37 +1,102 @@
-<p id="notice"><%= notice %></p>
+<style type="text/css">
 
-<h1>Listing Warehouses</h1>
+    th, td {
+        text-align: center;
+    }
+</style>
 
-<table>
-  <thead>
-    <tr>
-      <th>Nr</th>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Type</th>
-      <th>Parent</th>
-      <th>Location</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<p class="title">仓库列表 <i>&#8593;</i></p>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 158px;"/>
 
-  <tbody>
-    <% @warehouses.each do |warehouse| %>
+
+<div class="slide col-sm-12">
+  <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
+    <div class="col-sm-3">
+           <span>仓库号：
+        <input type="text" name="warehouse[nr]" value="<%= @nr %>"/>
+        <input type="hidden" name="warehouse[nr_fuzzy]"/>
+      </span>
+    </div>
+    <div class="col-sm-3">
+           <span>仓库类型：
+        <input type="text" name="warehouse[type]" value="<%= @type %>"/>
+        <input type="hidden" name="warehouse[type_fuzzy]"/>
+      </span>
+    </div>
+    <div class="col-sm-3">
+          <span> 所属地点：
+            <%= select_tag('warehouse[location]', options_from_collection_for_select(Location.all, 'id', 'nr', @location), include_blank: true) %>
+      </span>
+    </div>
+    <div class="col-sm-3">
+      <input style="margin: 0" type="submit" value="查 找" class="btn btn-primary"/>
+    </div>
+  </form>
+</div>
+
+<hr style="border: 1px solid #000;">
+
+<div class="container">
+  <fieldset style="width: 80%;margin-top: 60px;border: 1px solid #ccc;">
+
+    <legend style="width: 100px;">仓库列表</legend>
+    <div style="display: inline-flex;">
+      <div class="trapezoid" style="margin: 0;">
+        <p style="padding-top: 20px;">仓库列表</p>
+      </div>
+      <div style="display: inline-flex;">
+        <div class="digg_pagination" style="padding-top: 10px;padding-left: 10px;">
+          <div class="page_info">
+            <%= page_entries_info @warehouse %>
+          </div>
+          <%= will_paginate @warehouse, :container => false %>
+        </div>
+
+        <% if current_user.admin? %>
+            <%= link_to '新建仓库', send("new_#{@model}_path"), :class => 'btn btn-primary',
+                        :style => 'color:#fff;padding-top:10px;margin:10px 0 0 20px' %>
+            <%= link_to '导入数据', import_warehouses_path, :class => 'btn btn-primary',
+                        :style => 'color:#fff;padding-top:10px;margin-left:50px;margin-top:10px;' %>
+        <% end %>
+      </div>
+    </div>
+
+
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
       <tr>
-        <td><%= warehouse.nr %></td>
-        <td><%= warehouse.name %></td>
-        <td><%= warehouse.description %></td>
-        <td><%= warehouse.type %></td>
-        <td><%= warehouse.parent_id %></td>
-        <td><%= warehouse.location %></td>
-        <td><%= link_to 'Show', warehouse %></td>
-        <td><%= link_to 'Edit', edit_warehouse_path(warehouse) %></td>
-        <td><%= link_to 'Destroy', warehouse, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>仓库号</th>
+        <th>名称</th>
+        <th>描述</th>
+        <th>类型</th>
+        <th>上级仓库</th>
+        <th>所属地点</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+      </thead>
 
-<br>
+      <tbody>
+      <% @warehouses.each do |warehouse| %>
+          <tr>
+            <td><%= warehouse.nr %></td>
+            <td><%= warehouse.name %></td>
+            <td><%= warehouse.description %></td>
+            <td><%= warehouse.type %></td>
+            <td><%= warehouse.parent.blank? ? '' : warehouse.parent.nr %></td>
+            <td><%= warehouse.location.nr %></td>
+            <td>
+              <%= link_to '[详情]', warehouse %>
+              <% if current_user.can_edit %>
+                  <%= link_to '[编辑]', edit_warehouse_path(warehouse) %>
+              <% end %>
+              <% if current_user.can_delete %>
+                  <%= link_to '[删除]', warehouse, method: :delete, data: {confirm: '确定删除?'} %>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
 
-<%= link_to 'New Warehouse', new_warehouse_path %>
+  </fieldset>
+</div>

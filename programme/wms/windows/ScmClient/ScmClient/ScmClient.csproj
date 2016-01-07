@@ -76,6 +76,24 @@
     <Compile Include="RFIDScanInConfirmPage.xaml.cs">
       <DependentUpon>RFIDScanInConfirmPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RFIDScanInPickPage.xaml.cs">
+      <DependentUpon>RFIDScanInPickPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RFIDScanOutWindow.xaml.cs">
+      <DependentUpon>RFIDScanOutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RFIDScanOutPage.xaml.cs">
+      <DependentUpon>RFIDScanOutPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RFIDScanOutListPage.xaml.cs">
+      <DependentUpon>RFIDScanOutListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RFIDScanOutConfirmPage.xaml.cs">
+      <DependentUpon>RFIDScanOutConfirmPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RFIDScanOutPickPage.xaml.cs">
+      <DependentUpon>RFIDScanOutPickPage.xaml</DependentUpon>
+    </Compile>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -108,6 +126,30 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RFIDScanInConfirmPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="RFIDScanInPickPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="RFIDScanOutWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="RFIDScanOutPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="RFIDScanOutListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="RFIDScanOutConfirmPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="RFIDScanOutPickPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

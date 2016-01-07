@@ -5,7 +5,7 @@ class CreateParts < ActiveRecord::Migration
       t.string :name
       t.string :description
       t.string :short_description
-      t.references :part, index: true, foreign_key: true
+      t.references :part_type, index: true, foreign_key: true
       t.references :color, index: true, foreign_key: true
       t.integer :measure_unit_id
       t.integer :purchase_unit_id

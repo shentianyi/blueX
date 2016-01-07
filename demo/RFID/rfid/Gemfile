@@ -58,6 +58,15 @@ gem 'will_paginate', '3.0.7'
 gem 'redis'
 gem 'redis-namespace'
 
+# for excelx
+gem 'roo'
+gem 'axlsx'
+gem "iconv", "~> 1.0.3"
+
+#Search
+gem 'scoped_search'
+
+gem 'best_in_place', '~> 3.0.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

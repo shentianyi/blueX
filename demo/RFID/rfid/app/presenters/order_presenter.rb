@@ -13,7 +13,7 @@ class OrderPresenter<Presenter
     {
         id:  @order.id,
         user: UserPresenter.new(User.find_by_id(@order.user_id)).as_basic_info,
-        status: OrderType.display(@order.status),
+        status:@order.status,
         order_car: OrderCarPresenter.new(@order.orderable).as_basic_info,
         remarks: @order.remarks
     }

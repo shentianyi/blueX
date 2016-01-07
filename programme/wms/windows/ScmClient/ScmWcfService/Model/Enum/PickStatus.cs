@@ -7,9 +7,33 @@ namespace ScmWcfService.Model.Enum
 {
     public enum PickStatus
     {
-        INIT,
-        PICKING,
-        PICKED,
-        ABORTED
+        INIT=100,
+        PICKING=200,
+        PICKED=300,
+        ABORTED=400
+    }
+
+    public class PickStatusDisplay {
+        public static string GetStatusOfPick(PickStatus status) {
+            string result = string.Empty;
+            switch (status) { 
+                case PickStatus.INIT:
+                    result = "新建";
+                    break;
+                case PickStatus.PICKING:
+                    result = "择货中";
+                    break;
+                case PickStatus.PICKED:
+                    result = "择货完成";
+                    break;
+                case PickStatus.ABORTED:
+                    result = "已放弃";
+                    break;
+                default:
+                    result = "N/A";
+                    break;
+            }
+            return result;
+        }
     }
 }

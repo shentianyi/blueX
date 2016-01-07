@@ -4,7 +4,7 @@ class UnitGroupsController < ApplicationController
   # GET /unit_groups
   # GET /unit_groups.json
   def index
-    @unit_groups = UnitGroup.all
+    @unit_groups = UnitGroup.paginate(:page => params[:page], :per_page => 100)
   end
 
   # GET /unit_groups/1

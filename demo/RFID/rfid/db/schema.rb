@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160105091634) do
+ActiveRecord::Schema.define(version: 20160106200042) do
 
   create_table "colors", force: :cascade do |t|
     t.string   "nr",          limit: 255
@@ -108,59 +108,68 @@ ActiveRecord::Schema.define(version: 20160105091634) do
   create_table "order_boxes", force: :cascade do |t|
     t.string   "nr",                  limit: 255
     t.string   "rfid_nr",             limit: 255
-    t.integer  "status",              limit: 4
+    t.integer  "status",              limit: 4,   default: 0
     t.integer  "part_id",             limit: 4
     t.float    "quantity",            limit: 24
     t.integer  "warehouse_id",        limit: 4
     t.integer  "source_warehouse_id", limit: 4
     t.integer  "order_box_type_id",   limit: 4
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
   end
 
+  add_index "order_boxes", ["order_box_type_id"], name: "index_order_boxes_on_order_box_type_id", using: :btree
+  add_index "order_boxes", ["part_id"], name: "index_order_boxes_on_part_id", using: :btree
   add_index "order_boxes", ["warehouse_id"], name: "index_order_boxes_on_warehouse_id", using: :btree
 
   create_table "order_cars", force: :cascade do |t|
     t.string   "nr",           limit: 255
     t.string   "rfid_nr",      limit: 255
     t.integer  "warehouse_id", limit: 4
-    t.integer  "status",       limit: 4
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.integer  "status",       limit: 4,   default: 0
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
   end
+
+  add_index "order_cars", ["warehouse_id"], name: "index_order_cars_on_warehouse_id", using: :btree
 
   create_table "order_items", force: :cascade do |t|
     t.integer  "order_id",       limit: 4
     t.integer  "user_id",        limit: 4
-    t.integer  "status",         limit: 4
+    t.integer  "status",         limit: 4,   default: 0
     t.float    "quantity",       limit: 24
     t.integer  "part_id",        limit: 4
     t.integer  "orderable_id",   limit: 4
     t.string   "orderable_type", limit: 255
     t.boolean  "is_emergency"
     t.string   "remarks",        limit: 255
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   add_index "order_items", ["order_id"], name: "index_order_items_on_order_id", using: :btree
   add_index "order_items", ["orderable_id"], name: "index_order_items_on_orderable_id", using: :btree
   add_index "order_items", ["orderable_type"], name: "index_order_items_on_orderable_type", using: :btree
+  add_index "order_items", ["part_id"], name: "index_order_items_on_part_id", using: :btree
   add_index "order_items", ["user_id"], name: "index_order_items_on_user_id", using: :btree
 
   create_table "orders", force: :cascade do |t|
     t.integer  "user_id",        limit: 4
-    t.integer  "status",         limit: 4
+    t.integer  "status",         limit: 4,   default: 0
     t.integer  "orderable_id",   limit: 4
     t.string   "orderable_type", limit: 255
     t.string   "remarks",        limit: 255
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.integer  "warehouse_id",   limit: 4
+    t.string   "nr",             limit: 255
   end
 
+  add_index "orders", ["nr"], name: "index_orders_on_nr", using: :btree
   add_index "orders", ["orderable_id"], name: "index_orders_on_orderable_id", using: :btree
   add_index "orders", ["orderable_type"], name: "index_orders_on_orderable_type", using: :btree
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
+  add_index "orders", ["warehouse_id"], name: "index_orders_on_warehouse_id", using: :btree
 
   create_table "part_positions", force: :cascade do |t|
     t.integer  "part_id",           limit: 4
@@ -188,7 +197,7 @@ ActiveRecord::Schema.define(version: 20160105091634) do
     t.string   "name",              limit: 255
     t.string   "description",       limit: 255
     t.string   "short_description", limit: 255
-    t.integer  "part_id",           limit: 4
+    t.integer  "part_type_id",      limit: 4
     t.integer  "color_id",          limit: 4
     t.integer  "measure_unit_id",   limit: 4
     t.integer  "purchase_unit_id",  limit: 4
@@ -200,11 +209,11 @@ ActiveRecord::Schema.define(version: 20160105091634) do
   end
 
   add_index "parts", ["color_id"], name: "index_parts_on_color_id", using: :btree
-  add_index "parts", ["part_id"], name: "index_parts_on_part_id", using: :btree
+  add_index "parts", ["part_type_id"], name: "index_parts_on_part_type_id", using: :btree
 
   create_table "pick_items", force: :cascade do |t|
     t.integer  "pick_id",       limit: 4
-    t.integer  "status",        limit: 4
+    t.integer  "status",        limit: 4,   default: 0
     t.integer  "warehouse_id",  limit: 4
     t.integer  "position_id",   limit: 4
     t.float    "quantity",      limit: 24
@@ -212,11 +221,15 @@ ActiveRecord::Schema.define(version: 20160105091634) do
     t.boolean  "is_emergency"
     t.integer  "order_item_id", limit: 4
     t.string   "remarks",       limit: 255
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
+  add_index "pick_items", ["order_item_id"], name: "index_pick_items_on_order_item_id", using: :btree
+  add_index "pick_items", ["part_id"], name: "index_pick_items_on_part_id", using: :btree
   add_index "pick_items", ["pick_id"], name: "index_pick_items_on_pick_id", using: :btree
+  add_index "pick_items", ["position_id"], name: "index_pick_items_on_position_id", using: :btree
+  add_index "pick_items", ["warehouse_id"], name: "index_pick_items_on_warehouse_id", using: :btree
 
   create_table "pick_orders", force: :cascade do |t|
     t.integer  "pick_id",    limit: 4
@@ -230,14 +243,17 @@ ActiveRecord::Schema.define(version: 20160105091634) do
 
   create_table "picks", force: :cascade do |t|
     t.integer  "user_id",      limit: 4
-    t.integer  "status",       limit: 4
+    t.integer  "status",       limit: 4,   default: 0
     t.integer  "warehouse_id", limit: 4
     t.string   "remarks",      limit: 255
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.string   "nr",           limit: 255
   end
 
+  add_index "picks", ["nr"], name: "index_picks_on_nr", using: :btree
   add_index "picks", ["user_id"], name: "index_picks_on_user_id", using: :btree
+  add_index "picks", ["warehouse_id"], name: "index_picks_on_warehouse_id", using: :btree
 
   create_table "positions", force: :cascade do |t|
     t.string   "nr",           limit: 255
@@ -292,6 +308,8 @@ ActiveRecord::Schema.define(version: 20160105091634) do
     t.datetime "updated_at",                null: false
   end
 
+  add_index "units", ["unit_group_id"], name: "index_units_on_unit_group_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "nr",                     limit: 255
     t.string   "name",                   limit: 255
@@ -328,18 +346,28 @@ ActiveRecord::Schema.define(version: 20160105091634) do
 
   add_index "warehouses", ["location_id"], name: "index_warehouses_on_location_id", using: :btree
 
+  add_foreign_key "order_boxes", "order_box_types"
+  add_foreign_key "order_boxes", "parts"
   add_foreign_key "order_boxes", "warehouses"
+  add_foreign_key "order_cars", "warehouses"
   add_foreign_key "order_items", "orders"
+  add_foreign_key "order_items", "parts"
   add_foreign_key "order_items", "users"
   add_foreign_key "orders", "users"
   add_foreign_key "part_positions", "parts"
   add_foreign_key "part_positions", "positions"
   add_foreign_key "parts", "colors"
-  add_foreign_key "parts", "parts"
+  add_foreign_key "parts", "part_types"
+  add_foreign_key "pick_items", "order_items"
+  add_foreign_key "pick_items", "parts"
   add_foreign_key "pick_items", "picks"
+  add_foreign_key "pick_items", "positions"
+  add_foreign_key "pick_items", "warehouses"
   add_foreign_key "pick_orders", "orders"
   add_foreign_key "pick_orders", "picks"
   add_foreign_key "picks", "users"
+  add_foreign_key "picks", "warehouses"
   add_foreign_key "positions", "warehouses"
+  add_foreign_key "units", "unit_groups"
   add_foreign_key "warehouses", "locations"
 end
