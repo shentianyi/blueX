@@ -35,5 +35,18 @@ namespace ScmClient
             new RFIDScanOutWindow(this).Show();
             this.Hide();
         }
+
+        private void Close(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
+        }
     }
 }

@@ -21,35 +21,44 @@
             <Setter Property="FontFamily" Value="Times New Roman" />
         </Style>
     </Page.Resources>
-    <Grid>
+    <Grid Margin="0 5 0 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="20*"/>
             <RowDefinition Height="80*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top"  Orientation="Horizontal">
-            <StackPanel Orientation="Vertical">
-                <StackPanel  Orientation="Vertical">
-                    <StackPanel  Orientation="Horizontal">
-                        <Label Content="择货单号：" Height="28"    Name="label11" />
-                    <Label Height="27"     Name="PickNrLabel" Width="198" />
-                    </StackPanel>
-                    <StackPanel  Orientation="Horizontal">
-                    <Label Content="料      车：" Height="28"    Name="label1" />
-                    <Label Height="27"     Name="OrderCarLabel" Width="198" />
-                        </StackPanel>
-                </StackPanel>
-                <StackPanel  Orientation="Horizontal">
-                    <Label Content="扫描料盒数量：" Height="28" Name="label2"  />
-                    <Label Content="0" Name="QtyLabel" Height="28"  Width="86" />
-                </StackPanel>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
 
-                <Label Content="状态：" Height="28" Name="label21"  />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
 
-                <Label Content="" Height="28" Name="PickStatusLabel" FontWeight="Bold" Width="100" />
-            </StackPanel>
-        </StackPanel>
+            <DockPanel>
+                <Label DockPanel.Dock="Left" Width="100" Margin="10 0 0 0" Content="择货单号：" Name="label11" />
+                <Label  Name="PickNrLabel" />
+            </DockPanel>
+
+            <DockPanel Grid.Row="1">
+                <Label DockPanel.Dock="Left" Width="100" Content="料车：" Margin="10 0 0 0"  Name="label1" />
+                <Label Name="OrderCarLabel"/>
+            </DockPanel>
+
+            <DockPanel Grid.Row="2">
+                <Label DockPanel.Dock="Left" Width="100" Margin="10 0 0 0" Content="扫描料盒数量：" Name="label2"  />
+                <Label Content="0" Name="QtyLabel"/>
+            </DockPanel>
+
+            <DockPanel Grid.Column="1" Grid.RowSpan="3">
+                <Label FontSize="20" FontWeight="Bold" Content="状态：" VerticalAlignment="Center" Name="label21"  />
+                <Label Content="" VerticalAlignment="Center" FontSize="20" Name="PickStatusLabel" FontWeight="Bold"/>
+            </DockPanel>
+        </Grid>
+       
         <StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
             <DataGrid  Name="PreviewDG" AutoGenerateColumns="False" IsReadOnly="True"
                        Height="309" Margin="5,0,0,0" Width="780" VerticalScrollBarVisibility="Auto">
