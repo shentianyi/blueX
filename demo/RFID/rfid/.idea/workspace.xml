@@ -461,7 +461,11 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD
+    <frame x="1985" y="24" width="1855" height="1056" extended-state="6" />
+=======
     <frame x="78" y="23" width="1202" height="777" extended-state="0" />
+>>>>>>> fc86a81f5ae35c0229dfa6e478e6e29210a49c8c
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32672414" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />

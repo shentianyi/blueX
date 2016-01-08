@@ -4,7 +4,7 @@ class OrderBoxTypesController < ApplicationController
   # GET /order_box_types
   # GET /order_box_types.json
   def index
-    @order_box_types = OrderBoxType.all
+    @order_box_types = OrderBoxType.paginate(:page => params[:page], :per_page => 100)
   end
 
   # GET /order_box_types/1
@@ -58,6 +58,21 @@ class OrderBoxTypesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to order_box_types_url, notice: 'Order box type was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def import
+    if request.post?
+      msg = Message.new
+      begin
+        file=params[:files][0]
+        fd = FileData.new(data: file, original_name: file.original_filename, path: $upload_data_file_path, path_name: "#{Time.now.strftime('%Y%m%d%H%M%S%L')}~#{file.original_filename}")
+        fd.save
+        msg = FileHandler::Excel::OrderBoxTypeHandler.import(fd)
+      rescue => e
+        msg.content = e.message
+      end
+      render json: msg
     end
   end
 

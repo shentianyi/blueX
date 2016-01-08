@@ -4,7 +4,7 @@ class PositionsController < ApplicationController
   # GET /positions
   # GET /positions.json
   def index
-    @positions = Position.all
+    @positions = Position.paginate(:page => params[:page], :per_page => 100)
   end
 
   # GET /positions/1
@@ -58,6 +58,21 @@ class PositionsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to positions_url, notice: 'Position was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def import
+    if request.post?
+      msg = Message.new
+      begin
+        file=params[:files][0]
+        fd = FileData.new(data: file, original_name: file.original_filename, path: $upload_data_file_path, path_name: "#{Time.now.strftime('%Y%m%d%H%M%S%L')}~#{file.original_filename}")
+        fd.save
+        msg = FileHandler::Excel::PositionHandler.import(fd)
+      rescue => e
+        msg.content = e.message
+      end
+      render json: msg
     end
   end
 

@@ -1,7 +1,7 @@
 #encoding: utf-8
 require 'base_class'
 
-class ApiMessage<CZ::BaseClass
+class ApiMessage<BaseClass
   attr_accessor :meta, :code, :error_message, :data
 
   def default

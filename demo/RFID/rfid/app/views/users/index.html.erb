@@ -14,8 +14,8 @@
       <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
         <div class="col-sm-3">
            <span>员工号：
-        <input type="text" name="user[id]" value="<%= @id %>"/>
-        <input type="hidden" name="user[id_fuzzy]"/>
+        <input type="text" name="user[nr]" value="<%= @nr %>"/>
+        <input type="hidden" name="user[nr_fuzzy]"/>
       </span>
         </div>
         <div class="col-sm-3">

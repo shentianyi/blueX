@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:nr]
 
+  validates_presence_of :nr, :message => "员工号不能为空!"
+  validates_uniqueness_of :nr, :message => "员工号不能重复!"
   after_create :generate_access_token
 
 

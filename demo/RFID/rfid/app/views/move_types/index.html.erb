@@ -1,29 +1,63 @@
-<p id="notice"><%= notice %></p>
+<style type="text/css">
 
-<h1>Listing Move Types</h1>
+    th, td {
+        text-align: center;
+    }
+</style>
 
-<table>
-  <thead>
-    <tr>
-      <th>Nr</th>
-      <th>Description</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<p class="title">移库类型列表 <i>&#8593;</i></p>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 158px;"/>
 
-  <tbody>
-    <% @move_types.each do |move_type| %>
+<hr style="border: 1px solid #000;">
+
+<div class="container">
+  <fieldset style="width: 80%;margin-top: 60px;border: 1px solid #ccc;">
+
+    <legend style="width: 100px;">移库类型列表</legend>
+    <div style="display: inline-flex;">
+      <div class="trapezoid" style="margin: 0;">
+        <p style="padding-top: 20px;">移库类型列表</p>
+      </div>
+      <div style="display: inline-flex;">
+        <div class="digg_pagination" style="padding-top: 10px;padding-left: 10px;">
+          <div class="page_info">
+            <%= page_entries_info @move_types %>
+          </div>
+          <%= will_paginate @move_types, :container => false %>
+        </div>
+
+        <%= link_to '新建移库类型', send("new_#{@model}_path"), :class => 'btn btn-primary',
+                    :style => 'color:#fff;padding-top:10px;margin:10px 0 0 20px' %>
+      </div>
+    </div>
+
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
       <tr>
-        <td><%= move_type.nr %></td>
-        <td><%= move_type.description %></td>
-        <td><%= link_to 'Show', move_type %></td>
-        <td><%= link_to 'Edit', edit_move_type_path(move_type) %></td>
-        <td><%= link_to 'Destroy', move_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Nr</th>
+        <th>Description</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+      </thead>
 
-<br>
+      <tbody>
+      <% @move_types.each do |move_type| %>
+          <tr>
+            <td><%= move_type.nr %></td>
+            <td><%= move_type.description %></td>
+            <td>
+              <%= link_to '[详情]', move_type %>
+              <% if current_user.can_edit %>
+                  <%= link_to '[编辑]', edit_move_type_path(move_type) %>
+              <% end %>
+              <% if current_user.can_delete %>
+                  <%= link_to '[删除]', move_type, method: :delete, data: {confirm: '确定删除?'} %>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
 
-<%= link_to 'New Move type', new_move_type_path %>
+  </fieldset>
+</div>

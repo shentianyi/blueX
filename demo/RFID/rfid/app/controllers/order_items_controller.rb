@@ -4,7 +4,7 @@ class OrderItemsController < ApplicationController
   # GET /order_items
   # GET /order_items.json
   def index
-    @order_items = OrderItem.all
+    @order_items = OrderItem.paginate(:page => params[:page], :per_page => 100)
   end
 
   # GET /order_items/1

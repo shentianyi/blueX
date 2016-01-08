@@ -4,7 +4,7 @@ class MovementsController < ApplicationController
   # GET /movements
   # GET /movements.json
   def index
-    @movements = Movement.all
+    @movements = Movement.paginate(:page => params[:page], :per_page => 100)
   end
 
   # GET /movements/1

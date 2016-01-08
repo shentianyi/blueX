@@ -1,49 +1,162 @@
-<p id="notice"><%= notice %></p>
+<style type="text/css">
 
-<h1>Listing Movements</h1>
+    th, td {
+        text-align: center;
+    }
+</style>
 
-<table>
-  <thead>
-    <tr>
-      <th>Part</th>
-      <th>Fifo</th>
-      <th>Quantity</th>
-      <th>Package nr</th>
-      <th>Uniq</th>
-      <th>From position</th>
-      <th>From warehouse</th>
-      <th>To position</th>
-      <th>To warehouse</th>
-      <th>Move type</th>
-      <th>User</th>
-      <th>Remarks</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<p class="title">库存移动记录列表 <i>&#8593;</i></p>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 158px;"/>
 
-  <tbody>
-    <% @movements.each do |movement| %>
+
+<div class="slide col-sm-12">
+  <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
+    <div class="col-sm-3">
+
+            <span>零件号：
+              <input type="text" name="movement[part_id]" value="<%= @part_id %>"/>
+              <input type="hidden" name="movement[part_id_fuzzy]"/>
+            </span>
+    </div>
+    <div class="col-sm-3">
+            <span>唯一码：
+              <input type="text" name="movement[package_nr]" value="<%= @package_nr %>"/>
+              <input type="hidden" name="movement[package_nr_fuzzy]"/>
+            </span>
+    </div>
+    <div class="col-sm-3">
+            <span>类型：
+              <%= select_tag('movement[move_type_id]', options_from_collection_for_select(MoveType.all, :id, :nr, @move_type_id), include_blank: true) %>
+            </span>
+    </div>
+    <div class="col-sm-3">
+            <span>员工号：
+              <input type="text" name="movement[user_id]" value="<%= @user_id %>"/>
+            </span>
+    </div>
+
+    <div class="col-sm-3">
+            <span>源仓库号：
+              <%= select_tag('movement[from_warehouse_id]', options_from_collection_for_select(Warehouse.all, :id, :nr, @from_warehouse_id), include_blank: true) %>
+            </span>
+    </div>
+    <div class="col-sm-3">
+            <span>源库位号：
+              <input type="text" name="movement[from_position_id]" value="<%= @from_position_id %>"/>
+              <input type="hidden" name="movement[from_position_id_fuzzy]"/>
+            </span>
+    </div>
+    <div class="col-sm-3">
+            <span>目的仓库号：
+              <%= select_tag('movement[to_warehouse_id]', options_from_collection_for_select(Warehouse.all, :id, :nr, @to_warehouse_id), include_blank: true) %>
+            </span>
+    </div>
+    <div class="col-sm-3">
+            <span>目的库位号：
+              <input type="text" name="movement[to_position_id]" value="<%= @to_position_id %>"/>
+              <input type="hidden" name="movement[to_position_id_fuzzy]"/>
+            </span>
+    </div>
+
+    <div class="col-sm-4">
+            <span>
+              创建日期：
+              <input type="text" name="movement[created_at][start]" class="date-picker" value="<%= @created_at_start %>"/>
+              ~  <input type="text" name="movement[created_at][end]" class="date-picker" value="<%= @created_at_end %>"/>
+            </span>
+    </div>
+    <div class="col-sm-4">
+            <span>
+              FIFO：
+              <input type="text" name="movement[fifo][start]" class="date-picker" value="<%= @fifo_start %>"/>
+              ~  <input type="text" name="movement[fifo][end]" class="date-picker" value="<%= @fifo_end %>"/>
+            </span>
+    </div>
+    <div class="col-sm-3">
+            <span>
+              数量：
+              <input type="number" name="movement[quantity][start]" value="<%= @qty_start %>"/>
+              ~  <input type="number" name="movement[quantity][end]" value="<%= @qty_end %>"/>
+            </span>
+    </div>
+    <div class="col-sm-3">备注：
+      <input type="text" name="movement[remarks]" value="<%= @remarks %>"/>
+      <input type="hidden" name="movement[remarks_fuzzy]"/>
+    </div>
+    <div class="col-sm-3">
+      <input style="margin: 0" type="submit" value="查 找" class="btn btn-primary"/>
+    </div>
+  </form>
+</div>
+
+<hr style="border: 1px solid #000;">
+
+<div class="container">
+  <fieldset style="width: 80%;margin-top: 60px;border: 1px solid #ccc;">
+
+    <legend style="width: 200px;">库存移动记录列表</legend>
+    <div style="display: inline-flex;">
+      <div class="trapezoid" style="margin: 0;">
+        <p style="padding-top: 20px;">库存移动记录列表</p>
+      </div>
+      <div style="display: inline-flex;">
+        <div class="digg_pagination" style="padding-top: 10px;padding-left: 10px;">
+          <div class="page_info">
+            <%= page_entries_info @movement %>
+          </div>
+          <%= will_paginate @movement, :container => false %>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
       <tr>
-        <td><%= movement.part_id %></td>
-        <td><%= movement.fifo %></td>
-        <td><%= movement.quantity %></td>
-        <td><%= movement.package_nr %></td>
-        <td><%= movement.uniq %></td>
-        <td><%= movement.from_position_id %></td>
-        <td><%= movement.from_warehouse_id %></td>
-        <td><%= movement.to_position_id %></td>
-        <td><%= movement.to_warehouse_id %></td>
-        <td><%= movement.move_type_id %></td>
-        <td><%= movement.user_id %></td>
-        <td><%= movement.remarks %></td>
-        <td><%= link_to 'Show', movement %></td>
-        <td><%= link_to 'Edit', edit_movement_path(movement) %></td>
-        <td><%= link_to 'Destroy', movement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>零件号</th>
+        <th>FIFO</th>
+        <th>数量</th>
+        <th>唯一码</th>
+        <th>源库位</th>
+        <th>源仓库</th>
+        <th>目的库位</th>
+        <th>目的仓库</th>
+        <th>移库类型</th>
+        <th>创建者</th>
+        <th>创建时间</th>
+        <th>备注</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+      </thead>
 
-<br>
+      <tbody>
+      <% @movements.each do |movement| %>
+          <tr>
+            <td><%= movement.part.blank? ? '' : movement.part.nr %></td>
+            <td><%= movement.fifo %></td>
+            <td><%= movement.quantity %></td>
+            <td><%= movement.package_nr %></td>
+            <td><%= movement.from_position.blank? ? '' : movement.from_position.nr %></td>
+            <td><%= movement.from_warehouse.blank? ? '' : movement.from_warehouse.nr %></td>
+            <td><%= movement.to_position.blank? ? '' : movement.to_position.nr %></td>
+            <td><%= movement.to_warehouse.blank? ? '' : movement.to_warehouse.nr %></td>
+            <td><%= movement.move_type.blank? ? '' : movement.move_type.nr %></td>
+            <td><%= movement.user.blank? ? '' : movement.user.nr %></td>
+            <td><%= movement.created_at.localtime %></td>
+            <td><%= movement.remarks %></td>
 
-<%= link_to 'New Movement', new_movement_path %>
+            <td>
+              <%= link_to '[详情]', movement %>
+              <% if current_user.can_edit %>
+                  <%= link_to '[编辑]', edit_movement_path(movement) %>
+              <% end %>
+              <% if current_user.can_delete %>
+                  <%= link_to '[删除]', movement, method: :delete, data: {confirm: '确定删除?'} %>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+  </fieldset>
+</div>

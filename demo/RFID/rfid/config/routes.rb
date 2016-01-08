@@ -1,25 +1,147 @@
 Rails.application.routes.draw do
   use_doorkeeper
-  resources :pick_orders
-  resources :pick_items
-  resources :picks
-  resources :order_items
-  resources :orders
-  resources :order_box_types
-  resources :order_boxes
-  resources :order_cars
-  resources :part_positions
-  resources :parts
-  resources :units
-  resources :unit_groups
-  resources :colors
-  resources :part_types
-  resources :movements
-  resources :move_types
-  resources :storages
-  resources :positions
-  resources :warehouses
-  resources :locations
+  resources :files
+
+  resources :pick_orders do
+    collection do
+      get :search
+      match :import, action: :import, via: [:get, :post]
+    end
+  end
+
+  resources :pick_items do
+    collection do
+      get :search
+      match :import, action: :import, via: [:get, :post]
+    end
+  end
+
+  resources :picks do
+    collection do
+      get :search
+      match :import, action: :import, via: [:get, :post]
+    end
+  end
+
+  resources :order_items do
+    collection do
+      get :search
+      match :import, action: :import, via: [:get, :post]
+    end
+  end
+
+  resources :orders do
+    collection do
+      get :search
+      match :import, action: :import, via: [:get, :post]
+    end
+  end
+
+  resources :order_box_types do
+    collection do
+      get :search
+      match :import, action: :import, via: [:get, :post]
+    end
+  end
+
+  resources :order_boxes do
+    collection do
+      get :search
+      match :import, action: :import, via: [:get, :post]
+    end
+  end
+
+  resources :order_cars do
+    collection do
+      get :search
+      match :import, action: :import, via: [:get, :post]
+    end
+  end
+
+  resources :part_positions do
+    collection do
+      get :search
+      match :import, action: :import, via: [:get, :post]
+    end
+  end
+
+  resources :parts do
+    collection do
+      get :search
+      match :import, action: :import, via: [:get, :post]
+    end
+  end
+
+  resources :units do
+    collection do
+      get :search
+      match :import, action: :import, via: [:get, :post]
+    end
+  end
+
+  resources :unit_groups do
+    collection do
+      get :search
+      match :import, action: :import, via: [:get, :post]
+    end
+  end
+
+  resources :colors do
+    collection do
+      get :search
+      match :import, action: :import, via: [:get, :post]
+    end
+  end
+
+  resources :part_types do
+    collection do
+      get :search
+      match :import, action: :import, via: [:get, :post]
+    end
+  end
+
+  resources :movements do
+    collection do
+      get :search
+      match :import, action: :import, via: [:get, :post]
+    end
+  end
+
+  resources :move_types do
+    collection do
+      get :search
+      match :import, action: :import, via: [:get, :post]
+    end
+  end
+
+  resources :storages do
+    collection do
+      get :search
+      match :import, action: :import, via: [:get, :post]
+    end
+  end
+
+  resources :positions do
+    collection do
+      get :search
+      match :import, action: :import, via: [:get, :post]
+    end
+  end
+
+  resources :warehouses do
+    collection do
+      get :search
+      match :import, action: :import, via: [:get, :post]
+    end
+  end
+
+  resources :locations do
+    collection do
+      get :search
+      match :import, action: :import, via: [:get, :post]
+    end
+  end
+
   devise_for :users, path: "auth", path_names: { sign_in: 'login',
                                                  sign_out: 'logout',
                                                  password: 'secret',
