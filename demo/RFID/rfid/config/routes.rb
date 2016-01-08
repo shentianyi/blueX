@@ -19,7 +19,12 @@ Rails.application.routes.draw do
   resources :picks do
     collection do
       get :search
+      get :exports
       match :import, action: :import, via: [:get, :post]
+    end
+
+    member do
+      get :pick_items
     end
   end
 
@@ -33,7 +38,12 @@ Rails.application.routes.draw do
   resources :orders do
     collection do
       get :search
+      get :exports
       match :import, action: :import, via: [:get, :post]
+    end
+
+    member do
+      get :order_items
     end
   end
 

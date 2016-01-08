@@ -1,9 +1,8 @@
-class OrderStatus<BaseStatus
+class PickItemStatus<BaseStatus
   INIT = 100
   PICKING = 200
   PICKED = 300
-  DELIVERED=400
-  ABORTED = 500
+  ABORTED = 400
 
   def self.display state
     case state
@@ -12,9 +11,7 @@ class OrderStatus<BaseStatus
       when PICKING
         '进行中'
       when PICKED
-        '完成择货'
-      when DELIVERED
-        '完成交接'
+        '完成'
       else
         '放弃'
     end

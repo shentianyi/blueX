@@ -24,15 +24,25 @@
       </span>
     </div>
     <div class="col-sm-3">
-          <span> 所属仓库：
-            <%= select_tag('part[warehouse]', options_from_collection_for_select(Warehouse.all, 'id', 'nr', @warehouse), include_blank: true) %>
+           <span>客户号：
+        <input type="text" name="part[custom_nr]" value="<%= @custom_nr %>"/>
+        <input type="hidden" name="part[custom_nr_fuzzy]"/>
       </span>
     </div>
-
+    <div class="col-sm-3">
+          <span> 零件类型：
+            <%= select_tag('part[part_type_id]', options_from_collection_for_select(PartType.all, 'id', 'nr', @part_type_id), include_blank: true) %>
+      </span>
+    </div>
+    <div class="col-sm-3">
+          <span> 零件颜色：
+            <%= select_tag('part[color_id]', options_from_collection_for_select(Color.all, 'id', 'nr', @color_id), include_blank: true) %>
+      </span>
+    </div>
     <div class="col-sm-4">
       <b>重量：从</b>
-      <input type="text" name="part[weight][start]" value="<%= @weight_start %>" class="date-picker"><b>到</b>
-      <input type="text" name="part[weight][end]" value="<%= @weight_end %>" class="date-picker">
+      <input type="text" name="part[weight][start]" value="<%= @weight_start %>"><b>到</b>
+      <input type="text" name="part[weight][end]" value="<%= @weight_end %>">
     </div>
     <div class="col-sm-3">
       <input style="margin: 0" type="submit" value="查 找" class="btn btn-primary"/>

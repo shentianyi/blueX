@@ -25,6 +25,8 @@ module FileHandler
                 row[:measure_unit_id] = Unit.find_by_nr(row[:measure_unit_id]).id unless row[:measure_unit_id].blank?
                 row[:purchase_unit_id] = Unit.find_by_nr(row[:purchase_unit_id]).id unless row[:purchase_unit_id].blank?
 
+                row.delete(:status) if row[:status].blank?
+
                 s =Part.new(row)
                 unless s.save
                   puts s.errors.to_json

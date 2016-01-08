@@ -35,6 +35,58 @@ class WarehouseService
     # end
   end
 
+  def validate_fifo_time(fifo)
+    return nil if fifo.blank?
+    t = fifo.to_time
+    raise "fifo:#{fifo} 无效" if t > Time.now
+    t
+  end
+
+  #:part_id, :fifo, :quantity, :package_nr, :position_id, :warehouse_id, :remarks, :user_id
+  def enter_stock(params, user)
+    # PaperTrail.whodunnit = user.id
+
+    # validate fifo
+    puts '----------------------ss'
+    fifo = validate_fifo_time(params[:fifo])
+    # validate whId existing
+    wh = Warehouse.find_by(id: params[:warehouse_id])
+    raise '仓库未找到' unless wh
+    # validate uniq_nr
+    raise 'uniq nr 已存在!' if params[:uniq_nr].present? and Storage.find_by(params[:uniq_nr])
+
+    if !params[:package_nr].blank? and Storage.find_by(package_nr: params[:package_nr], part_id: params[:part_id])
+      raise "该唯一码#{params[:package_nr]}已入库！"
+    else
+      data = {part_id: params[:part_id], quantity: params[:quantity], fifo: fifo, warehouse_id: wh.id, position_id: params[:position_id]}
+      data[:uniq_nr] = params[:uniq_nr] if params[:uniq_nr].present?
+      data[:package_nr] = params[:package_nr] if params[:package_nr].present?
+      data[:user_id] = user.id
+      # data[:locked]=true if params[:locked].present?
+      if params[:package_nr].present?
+        Storage.create!(data)
+      else
+        storage = Storage.where(part_id: params[:part_id], warehouse_id: wh.id, position_id: params[:position_id], package_nr: nil).order("storages.quantity asc").first
+
+        if storage
+          storage.update!(quantity: storage.quantity + params[:quantity].to_f)
+        else
+          Storage.create!(data)
+        end
+      end
+    end
+
+    #:part_id, :fifo, :quantity, :package_nr, :uniq, :from_position_id, :from_warehouse_id, :to_position_id, :to_warehouse_id, :move_type_id, :user_id, :remarks
+    type = MoveType.find_by_nr('ENTRY')
+    data = {fifo: fifo, part_id: params[:part_id], quantity: params[:quantity], to_warehouse_id: wh.id, to_position_id: params[:position_id],
+            move_type_id: type.id}
+    data[:uniq_nr] = params[:uniq_nr] if params[:uniq_nr].present?
+    data[:package_nr] = params[:package_nr] if params[:package_nr].present?
+    data[:user_id] = user.id
+    data[:remarks] = params[:remarks] if params[:remarks].present?
+    Movement.create!(data)
+  end
+
 
   def self.move(params)
     type = MoveType.find_by_nr('MOVE')

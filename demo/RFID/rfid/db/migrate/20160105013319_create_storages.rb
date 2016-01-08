@@ -9,6 +9,7 @@ class CreateStorages < ActiveRecord::Migration
       t.integer :position_id
       t.integer :warehouse_id
       t.string :remarks
+      t.references :user, index: true, foreign_key: true
 
       t.timestamps null: false
     end

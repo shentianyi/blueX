@@ -1,4 +1,4 @@
-class OrderStatus<BaseStatus
+class OrderItemStatus<BaseStatus
   INIT = 100
   PICKING = 200
   PICKED = 300
