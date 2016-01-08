@@ -20,6 +20,7 @@ using System.Windows.Threading;
 using System.Windows.Navigation;
 using ScmWcfService.Model;
 using ScmClient.Enum;
+using ScmWcfService.Config;
 
 namespace ScmClient
 {
@@ -194,7 +195,7 @@ namespace ScmClient
         private void openCom()
         {
             IntPtr t_hCom = IntPtr.Zero;
-            int openFlag = RFIDDll.ComOpenCom(ref t_hCom, "COM1", 9600);
+            int openFlag = RFIDDll.ComOpenCom(ref t_hCom,RFIDConfig.RFIDCOM, 9600);
 
             string m_MsgInfo = string.Empty;
 
