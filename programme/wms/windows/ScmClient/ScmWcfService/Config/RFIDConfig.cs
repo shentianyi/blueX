@@ -15,7 +15,8 @@ namespace ScmWcfService.Config
             try
             {
                 config = new ConfigUtil("RFID", "Ini/rfid.ini");
-
+                RFIDCOM = config.Get("RFIDCOM");
+                DOORCOM = config.Get("DOORCOM");
                 MessageRegex = config.Get("MessageRegex");
                 LabelRegex = config.Get("LabelRegex");
                 OrderCarLabelRegex = config.Get("OrderCarLabelRegex");
@@ -32,5 +33,7 @@ namespace ScmWcfService.Config
         public static string LabelRegex { get; set; }
         public static string OrderCarLabelRegex { get; set; }
         public static string OrderBoxLabelRegex { get; set; }
+        public static string RFIDCOM { get; set; }
+        public static string DOORCOM { get; set; }
     }
 }
