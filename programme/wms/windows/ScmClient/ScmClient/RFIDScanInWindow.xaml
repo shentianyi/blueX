@@ -6,14 +6,14 @@
         xmlns:local="clr-namespace:ScmClient"
         mc:Ignorable="d"
         Title="RFIDScanInWindow" Height="500" Width="800" Loaded="Window_Loaded"
-        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Background="#0e80b0" MouseDown="Window_MouseMove">
+        <Grid Background="#0e80b0">
             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left"
                        FontSize="30" Margin="10 0 0 0" Foreground="White" FontFamily="宋体 Arial Comic Sans MS">RFIDScanInWindow</TextBlock>
             

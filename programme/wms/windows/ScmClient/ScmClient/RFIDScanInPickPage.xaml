@@ -87,9 +87,9 @@
                     <DataGridTextColumn Header="取料仓库" Binding="{Binding Path=source_warehouse_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
                     <DataGridTextColumn Header="零件号" Binding="{Binding Path=part_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
                     <DataGridTextColumn Header="数量" Binding="{Binding Path=quantity}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                    <DataGridTextColumn Header="库存" Binding="{Binding Path=stock}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                    <!--<DataGridTextColumn Header="库存" Binding="{Binding Path=stock}" ElementStyle="{StaticResource contentCenterStyle}"/>
                     <DataGridTextColumn Header="超量" Binding="{Binding Path=over_stock}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                    <DataGridTextColumn Header="取料库位" Binding="{Binding Path=positions_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                    <DataGridTextColumn Header="取料库位" Binding="{Binding Path=positions_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>-->
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

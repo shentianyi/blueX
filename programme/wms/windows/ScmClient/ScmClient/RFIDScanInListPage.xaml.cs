@@ -48,17 +48,24 @@ namespace ScmClient
             this.parentWindow = parentWindow;
             this.orderBoxes = new List<OrderBox>();
         }
-
-
-        public void ReceiveData(string data)
+        public void ReceiveData(List<RFIDMessage> messages)
         {
-            List<RFIDMessage> messages = Parser.StringToList(data);
             List<RFIDMessage> carMsgs = (from msg in messages where msg.Type == MessageType.CAR select msg).ToList();
             List<RFIDMessage> boxMsgs = (from msg in messages where msg.Type == MessageType.BOX select msg).ToList();
 
             addCarMessages(carMsgs);
             addBoxMessages(boxMsgs);
         }
+
+        //public void ReceiveData(string data)
+        //{
+        //    List<RFIDMessage> messages = Parser.StringToList(data);
+        //    List<RFIDMessage> carMsgs = (from msg in messages where msg.Type == MessageType.CAR select msg).ToList();
+        //    List<RFIDMessage> boxMsgs = (from msg in messages where msg.Type == MessageType.BOX select msg).ToList();
+
+        //    addCarMessages(carMsgs);
+        //    addBoxMessages(boxMsgs);
+        //}
 
         private void addCarMessages(List<RFIDMessage> msgs)
         {
@@ -74,7 +81,7 @@ namespace ScmClient
             {
                 carMsgList.Add(msg);
             }
-            handleCarMessages();
+            handleCarMessages( msg);
         }
 
         private void addBoxMessages(List<RFIDMessage> msgs)
@@ -98,7 +105,7 @@ namespace ScmClient
         /// <summary>
         /// 处理扫描的料车号
         /// </summary>
-        private void handleCarMessages()
+        private void handleCarMessages(RFIDMessage msg)
         {
             if (carMsgList.Count == 1)
             {
@@ -108,12 +115,12 @@ namespace ScmClient
             else if (carMsgList.Count > 1)
             {
                 this.orderCar = null;
-                stopScan();
+              //  stopScan();
 
                 if (!showMultiCarFlag)
                 {
                     showMultiCarFlag = true;
-                    System.Windows.Forms.MessageBox.Show("信号干扰！同时扫描到多辆料车，请重新扫描！");
+                    System.Windows.Forms.MessageBox.Show("信号干扰！同时扫描到多辆料车:"+msg.Nr+"，请重新扫描！");
                 }
             }
         }

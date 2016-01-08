@@ -23,7 +23,7 @@ namespace ScmWcfService.Config
                 ApiUri = config.Get("ApiUri");
                 BaseUri = host + ApiUri;
                 token = config.Get("Token");
-
+                AutoToken = bool.Parse(config.Get("AutoToken"));
                 LoginAction = config.Get("LoginAction");
                 GetOrderCarByNrAction = config.Get("GetOrderCarByNrAction");
                 GetOrderBoxByNrAction = config.Get("GetOrderBoxByNrAction");
@@ -63,6 +63,7 @@ namespace ScmWcfService.Config
         public static string ApiUri { get; set; }
         public static string BaseUri { get; set; }
         public static string LoginAction { get; set; }
+        public static bool AutoToken { get; set; }
         public static string GetOrderCarByNrAction { get; set; }
         public static string GetOrderBoxByNrAction { get; set; }
         public static string GetOrderBoxByNrsAction { get; set; }
