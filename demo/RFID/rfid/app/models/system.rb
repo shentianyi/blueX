@@ -4,11 +4,11 @@ class System
   def self.init
     # init first system user
     unless user=User.find_by_email('leoni@warehouse.com')
-      user=User.new({nr: 'leoni_wms', name: 'leoni_wms', password: '123456@', password_confirmation: '123456@', role_id: 100, email: 'leoni@warehouse.com'})
+      user=User.create({nr: 'leoni_wms', name: 'leoni_wms', password: '123456@', password_confirmation: '123456@', role_id: 100, email: 'leoni@warehouse.com', can_edit: 1, can_delete: 1})
     end
 
     unless user=User.find_by_email('rfid@rfid.com')
-      user=User.new({nr: 'rfid', name: 'rfid', password: 'rfid', password_confirmation: 'rfid', role_id: 400, email: 'rfid@rfid.com', can_edit: 1, can_delete: 1})
+      user=User.create({nr: 'rfid', name: 'rfid', password: 'rfid', password_confirmation: 'rfid', role_id: 400, email: 'rfid@rfid.com', can_edit: 1, can_delete: 1})
     end
     # user.update_attributes(:is_sys => true)
 

@@ -20,12 +20,17 @@ module FileHandler
                 HEADERS.each_with_index do |k, i|
                   row[k] = book.cell(line, i+1).to_s.strip
                 end
+                row[:nr] = row[:nr].sub(/\.0/, '')
                 row[:part_type_id] = PartType.find_by_nr(row[:part_type_id]).id unless row[:part_type_id].blank?
                 row[:color_id] = Color.find_by_nr(row[:color_id]).id unless row[:color_id].blank?
                 row[:measure_unit_id] = Unit.find_by_nr(row[:measure_unit_id]).id unless row[:measure_unit_id].blank?
                 row[:purchase_unit_id] = Unit.find_by_nr(row[:purchase_unit_id]).id unless row[:purchase_unit_id].blank?
 
                 row.delete(:status) if row[:status].blank?
+                row.delete(:part_type_id) if row[:part_type_id].blank?
+                row.delete(:color_id) if row[:color_id].blank?
+                row.delete(:measure_unit_id) if row[:measure_unit_id].blank?
+                row.delete(:purchase_unit_id) if row[:purchase_unit_id].blank?
 
                 s =Part.new(row)
                 unless s.save
@@ -88,20 +93,28 @@ module FileHandler
           msg.contents<<"该零件已存在"
         end
 
-        unless PartType.find_by_nr(row[:part_type_id])
-          msg.contents<<"该零件类型不存在"
+        unless row[:part_type_id].blank?
+          unless PartType.find_by_nr(row[:part_type_id])
+            msg.contents<<"该零件类型不存在"
+          end
         end
 
-        unless Color.find_by_nr(row[:color_id])
-          msg.contents<<"该颜色不存在"
+        unless row[:color_id].blank?
+          unless Color.find_by_nr(row[:color_id])
+            msg.contents<<"该颜色不存在"
+          end
         end
 
-        unless Unit.find_by_nr(row[:measure_unit_id])
-          msg.contents<<"计量单位#{row[:measure_unit_id]}不存在"
+        unless row[:measure_unit_id].blank?
+          unless Unit.find_by_nr(row[:measure_unit_id])
+            msg.contents<<"计量单位#{row[:measure_unit_id]}不存在"
+          end
         end
 
-        unless Unit.find_by_nr(row[:purchase_unit_id])
-          msg.contents<<"计量单位#{row[:purchase_unit_id]}不存在"
+        unless row[:purchase_unit_id].blank?
+          unless Unit.find_by_nr(row[:purchase_unit_id])
+            msg.contents<<"计量单位#{row[:purchase_unit_id]}不存在"
+          end
         end
 
         unless msg.result=(msg.contents.size==0)

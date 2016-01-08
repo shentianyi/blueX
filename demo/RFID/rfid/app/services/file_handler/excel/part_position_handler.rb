@@ -1,8 +1,8 @@
 module FileHandler
   module Excel
-    class OrderBoxTypeHandler<Base
+    class PartPositionHandler<Base
       HEADERS=[
-          :name, :description, :weight
+          :part_id, :position_id, :safe_stock, :from_warehouse_id, :from_position_id
       ]
 
       def self.import(file)
@@ -14,14 +14,18 @@ module FileHandler
         if validate_msg.result
           #validate file
           begin
-            OrderBoxType.transaction do
+            PartPosition.transaction do
               2.upto(book.last_row) do |line|
                 row = {}
                 HEADERS.each_with_index do |k, i|
                   row[k] = book.cell(line, i+1).to_s.strip
                 end
+                row[:part_id] = Part.find_by_nr(row[:part_id]).id unless row[:part_id].blank?
+                row[:position_id] = Position.find_by_nr(row[:position_id]).id unless row[:position_id].blank?
+                row[:from_warehouse_id] = Warehouse.find_by_nr(row[:from_warehouse_id]).id unless row[:from_warehouse_id].blank?
+                row[:from_position_id] = Position.find_by_nr(row[:from_position_id]).id unless row[:from_position_id].blank?
 
-                s =OrderBoxType.new(row)
+                s =PartPosition.new(row)
                 unless s.save
                   puts s.errors.to_json
                   raise s.errors.to_json
@@ -29,7 +33,7 @@ module FileHandler
               end
             end
             msg.result = true
-            msg.content = "导入料盒类型信息成功！"
+            msg.content = "导入零件位置信息成功！"
           rescue => e
             puts e.backtrace
             msg.result = false
@@ -78,8 +82,28 @@ module FileHandler
       def self.validate_row(row, line)
         msg = Message.new(contents: [])
 
-        if OrderBoxType.find_by_name(row[:name])
-          msg.contents<<"该料盒类型已存在"
+        unless row[:part_id].blank?
+          if Part.find_by_nr(row[:part_id]).blank?
+            msg.contents<<"零件号:#{row[:part_id]}不存在"
+          end
+        end
+
+        unless row[:position_id].blank?
+          if Position.find_by_nr(row[:position_id]).blank?
+            msg.contents<<"库位号:#{row[:position_id]}不存在"
+          end
+        end
+
+        unless row[:from_warehouse_id].blank?
+          if Warehouse.find_by_nr(row[:from_warehouse_id]).blank?
+            msg.contents<<"默认源仓库:#{row[:from_warehouse_id]}不存在"
+          end
+        end
+
+        unless row[:from_position_id].blank?
+          if Position.find_by_nr(row[:from_position_id]).blank?
+            msg.contents<<"默认源库位:#{row[:from_position_id]}不存在"
+          end
         end
 
         unless msg.result=(msg.contents.size==0)

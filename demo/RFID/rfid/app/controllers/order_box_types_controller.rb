@@ -84,6 +84,6 @@ class OrderBoxTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_box_type_params
-      params.require(:order_box_type).permit(:name, :description)
+      params.require(:order_box_type).permit(:name, :description, :weight)
     end
 end

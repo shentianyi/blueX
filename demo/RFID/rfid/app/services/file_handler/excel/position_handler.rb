@@ -80,12 +80,12 @@ module FileHandler
         msg = Message.new(contents: [])
 
         if Position.find_by_nr(row[:nr])
-          msg.contents<<"该库位已存在"
+          msg.contents<<"该库位:#{row[:nr]}已存在"
         end
 
         unless row[:warehouse_id].blank?
           unless Warehouse.find_by_nr(row[:warehouse_id])
-            msg.contents<<"所属仓库不存在"
+            msg.contents<<"所属仓库:#{row[:warehouse_id]}不存在"
           end
         end
 
