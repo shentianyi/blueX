@@ -1,39 +1,125 @@
-<p id="notice"><%= notice %></p>
+<style type="text/css">
 
-<h1>Listing Storages</h1>
+    th, td {
+        text-align: center;
+    }
+</style>
 
-<table>
-  <thead>
-    <tr>
-      <th>Part</th>
-      <th>Fifo</th>
-      <th>Quantity</th>
-      <th>Package nr</th>
-      <th>Uniq</th>
-      <th>Position</th>
-      <th>Warehouse</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<p class="title">库存详细列表 <i>&#8593;</i></p>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 158px;"/>
 
-  <tbody>
-    <% @storages.each do |storage| %>
+
+<div class="slide col-sm-12">
+  <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
+    <div class="col-sm-3">
+
+            <span>零件号：
+              <input type="text" name="storage[part_id]" value="<%= @part_id %>"/>
+            </span>
+    </div>
+    <div class="col-sm-3">
+            <span>唯一码：
+              <input type="text" name="storage[package_nr]" value="<%= @package_nr %>"/>
+              <input type="hidden" name="storage[package_nr_fuzzy]"/>
+            </span>
+    </div>
+    <div class="col-sm-3">
+            <span>仓库号：
+              <%= select_tag('storage[warehouse_id]', options_from_collection_for_select(Warehouse.all, :id, :nr, @warehouse_id), include_blank: true) %>
+            </span>
+    </div>
+    <div class="col-sm-3">
+            <span>库位号：
+              <input type="text" name="storage[position_id]" value="<%= @position_id %>"/>
+            </span>
+    </div>
+
+    <div class="col-sm-4">
+            <span>
+              创建日期：
+              <input type="text" name="storage[created_at][start]" class="datetime-picker" value="<%= @created_at_start %>"/>
+              ~  <input type="text" name="storage[created_at][end]" class="datetime-picker" value="<%= @created_at_end %>"/>
+            </span>
+    </div>
+    <div class="col-sm-4">
+            <span>
+              FIFO：
+              <input type="text" name="storage[fifo][start]" class="datetime-picker" value="<%= @fifo_start %>"/>
+              ~  <input type="text" name="storage[fifo][end]" class="datetime-picker" value="<%= @fifo_end %>"/>
+            </span>
+    </div>
+    <div class="col-sm-3">备注：
+      <input type="text" name="storage[remarks]" value="<%= @remarks %>"/>
+      <input type="hidden" name="storage[remarks_fuzzy]"/>
+    </div>
+    <div class="col-sm-3">
+      <input style="margin: 0" type="submit" value="查 找" class="btn btn-primary"/>
+    </div>
+  </form>
+</div>
+
+<hr style="border: 1px solid #000;">
+
+<div class="container">
+  <fieldset style="width: 80%;margin-top: 60px;border: 1px solid #ccc;">
+
+    <legend style="width: 200px;">库存详细列表</legend>
+    <div style="display: inline-flex;">
+      <div class="trapezoid" style="margin: 0;">
+        <p style="padding-top: 20px;">库存详细列表</p>
+      </div>
+      <div style="display: inline-flex;">
+        <div class="digg_pagination" style="padding-top: 10px;padding-left: 10px;">
+          <div class="page_info">
+            <%= page_entries_info @storage %>
+          </div>
+          <%= will_paginate @storage, :container => false %>
+        </div>
+
+        <%= link_to '导入入库数据', import_storages_path, :class => 'btn btn-primary',
+                    :style => 'color:#fff;padding-top:10px;margin-left:50px;margin-top:10px;' %>
+      </div>
+    </div>
+
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
       <tr>
-        <td><%= storage.part_id %></td>
-        <td><%= storage.fifo %></td>
-        <td><%= storage.quantity %></td>
-        <td><%= storage.package_nr %></td>
-        <td><%= storage.uniq_nr %></td>
-        <td><%= storage.position_id %></td>
-        <td><%= storage.warehouse_id %></td>
-        <td><%= link_to 'Show', storage %></td>
-        <td><%= link_to 'Edit', edit_storage_path(storage) %></td>
-        <td><%= link_to 'Destroy', storage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>零件</th>
+        <th>FIFO</th>
+        <th>数量</th>
+        <th>唯一码</th>
+        <th>库位</th>
+        <th>仓库</th>
+        <th>创建时间</th>
+        <th>备注</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+      </thead>
 
-<br>
+      <tbody>
+      <% @storages.each do |storage| %>
+          <tr>
+            <td><%= storage.part.blank? ? '' : storage.part.nr %></td>
+            <td><%= storage.fifo.localtime unless storage.fifo.blank? %></td>
+            <td><%= storage.quantity %></td>
+            <td><%= storage.package_nr %></td>
+            <td><%= storage.position.blank? ? '' : storage.position.nr %></td>
+            <td><%= storage.warehouse.blank? ? '' : storage.warehouse.nr %></td>
+            <td><%= storage.created_at.localtime %></td>
+            <td><%= storage.remarks %></td>
+            <td>
+              <%= link_to '[详情]', storage %>
+              <% if current_user.can_edit %>
+                  <%= link_to '[编辑]', edit_storage_path(storage) %>
+              <% end %>
+              <% if current_user.can_delete %>
+                  <%= link_to '[删除]', storage, method: :delete, data: {confirm: '确定删除?'} %>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
 
-<%= link_to 'New Storage', new_storage_path %>
+  </fieldset>
+</div>

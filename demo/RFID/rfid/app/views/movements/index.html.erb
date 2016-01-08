@@ -15,7 +15,6 @@
 
             <span>零件号：
               <input type="text" name="movement[part_id]" value="<%= @part_id %>"/>
-              <input type="hidden" name="movement[part_id_fuzzy]"/>
             </span>
     </div>
     <div class="col-sm-3">
@@ -43,7 +42,6 @@
     <div class="col-sm-3">
             <span>源库位号：
               <input type="text" name="movement[from_position_id]" value="<%= @from_position_id %>"/>
-              <input type="hidden" name="movement[from_position_id_fuzzy]"/>
             </span>
     </div>
     <div class="col-sm-3">
@@ -54,22 +52,21 @@
     <div class="col-sm-3">
             <span>目的库位号：
               <input type="text" name="movement[to_position_id]" value="<%= @to_position_id %>"/>
-              <input type="hidden" name="movement[to_position_id_fuzzy]"/>
             </span>
     </div>
 
     <div class="col-sm-4">
             <span>
               创建日期：
-              <input type="text" name="movement[created_at][start]" class="date-picker" value="<%= @created_at_start %>"/>
-              ~  <input type="text" name="movement[created_at][end]" class="date-picker" value="<%= @created_at_end %>"/>
+              <input type="text" name="movement[created_at][start]" class="datetime-picker" value="<%= @created_at_start %>"/>
+              ~  <input type="text" name="movement[created_at][end]" class="datetime-picker" value="<%= @created_at_end %>"/>
             </span>
     </div>
     <div class="col-sm-4">
             <span>
               FIFO：
-              <input type="text" name="movement[fifo][start]" class="date-picker" value="<%= @fifo_start %>"/>
-              ~  <input type="text" name="movement[fifo][end]" class="date-picker" value="<%= @fifo_end %>"/>
+              <input type="text" name="movement[fifo][start]" class="datetime-picker" value="<%= @fifo_start %>"/>
+              ~  <input type="text" name="movement[fifo][end]" class="datetime-picker" value="<%= @fifo_end %>"/>
             </span>
     </div>
     <div class="col-sm-3">

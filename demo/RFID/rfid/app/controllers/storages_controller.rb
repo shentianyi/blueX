@@ -61,14 +61,47 @@ class StoragesController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_storage
-      @storage = Storage.find(params[:id])
-    end
+  def search
+    super { |query|
+      unless params[:storage][:position_id].blank?
+        if position = Position.find_by_nr(params[:storage][:position_id])
+          query = query.unscope(where: :position_id).where(position_id: position.id)
+        end
+      end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def storage_params
-      params.require(:storage).permit(:part_id, :fifo, :quantity, :package_nr, :uniq_nr, :position_id, :warehouse_id, :remarks)
+      unless params[:storage][:part_id].blank?
+        if part_id = Part.find_by_nr(params[:storage][:part_id])
+          query = query.unscope(where: :part_id).where(part_id: part_id)
+        end
+      end
+
+      query
+    }
+  end
+
+  def import
+    if request.post?
+      msg = Message.new
+      begin
+        file=params[:files][0]
+        fd = FileData.new(data: file, original_name: file.original_filename, path: $upload_data_file_path, path_name: "#{Time.now.strftime('%Y%m%d%H%M%S%L')}~#{file.original_filename}")
+        fd.save
+        msg = FileHandler::Excel::StorageHandler.import(fd, current_user)
+      rescue => e
+        msg.content = e.message
+      end
+      render json: msg
     end
+  end
+
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_storage
+    @storage = Storage.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def storage_params
+    params.require(:storage).permit(:part_id, :fifo, :quantity, :package_nr, :uniq_nr, :position_id, :warehouse_id, :remarks, :user_id)
+  end
 end

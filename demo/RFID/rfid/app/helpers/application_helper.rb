@@ -1,3 +1,9 @@
+class String
+  def is_date?
+    true if Date.parse(self) && Time.parse(self) rescue false
+  end
+end
+
 module ApplicationHelper
   def search
     @condition=params[@model]

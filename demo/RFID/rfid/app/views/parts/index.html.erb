@@ -24,15 +24,25 @@
       </span>
     </div>
     <div class="col-sm-3">
-          <span> 所属仓库：
-            <%= select_tag('part[warehouse]', options_from_collection_for_select(Warehouse.all, 'id', 'nr', @warehouse), include_blank: true) %>
+           <span>客户号：
+        <input type="text" name="part[custom_nr]" value="<%= @custom_nr %>"/>
+        <input type="hidden" name="part[custom_nr_fuzzy]"/>
       </span>
     </div>
-
+    <div class="col-sm-3">
+          <span> 零件类型：
+            <%= select_tag('part[part_type_id]', options_from_collection_for_select(PartType.all, 'id', 'nr', @part_type_id), include_blank: true) %>
+      </span>
+    </div>
+    <div class="col-sm-3">
+          <span> 零件颜色：
+            <%= select_tag('part[color_id]', options_from_collection_for_select(Color.all, 'id', 'nr', @color_id), include_blank: true) %>
+      </span>
+    </div>
     <div class="col-sm-4">
       <b>重量：从</b>
-      <input type="text" name="part[weight][start]" value="<%= @weight_start %>" class="date-picker"><b>到</b>
-      <input type="text" name="part[weight][end]" value="<%= @weight_end %>" class="date-picker">
+      <input type="text" name="part[weight][start]" value="<%= @weight_start %>"><b>到</b>
+      <input type="text" name="part[weight][end]" value="<%= @weight_end %>">
     </div>
     <div class="col-sm-3">
       <input style="margin: 0" type="submit" value="查 找" class="btn btn-primary"/>
@@ -66,49 +76,49 @@
     </div>
 
     <table class="table table-bordered table-striped table-hover">
-  <thead>
-    <tr>
-      <th>零件编号</th>
-      <th>名称</th>
-      <th>描述</th>
-      <th>类型</th>
-      <th>颜色</th>
-      <th>计量单位</th>
-      <th>销售单位</th>
-      <th>客户号</th>
-      <th>截面</th>
-      <th>重量</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @parts.each do |part| %>
+      <thead>
       <tr>
-        <td><%= part.nr %></td>
-        <td><%= part.name %></td>
-        <td><%= part.description %></td>
-        <td><%= part.part_type.blank? ? '' : part.part_type.nr %></td>
-        <td><%= part.color.blank? ? '' : part.color.nr %></td>
-        <td><%= part.display_unit(part.measure_unit_id) %></td>
-        <td><%= part.display_unit(part.purchase_unit_id) %></td>
-        <td><%= part.custom_nr %></td>
-        <td><%= part.cross_section %></td>
-        <td><%= part.weight %></td>
-        <td>
-          <%= link_to '[详情]', part %>
-          <% if current_user.can_edit %>
-              <%= link_to '[编辑]', edit_part_path(part) %>
-          <% end %>
-          <% if current_user.can_delete %>
-              <%= link_to '[删除]', part, method: :delete, data: {confirm: '确定删除?'} %>
-          <% end %>
-        </td>
+        <th>零件编号</th>
+        <th>名称</th>
+        <th>描述</th>
+        <th>类型</th>
+        <th>颜色</th>
+        <th>计量单位</th>
+        <th>销售单位</th>
+        <th>客户号</th>
+        <th>截面</th>
+        <th>重量</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+      </thead>
 
-</fieldset>
+      <tbody>
+      <% @parts.each do |part| %>
+          <tr>
+            <td><%= part.nr %></td>
+            <td><%= part.name %></td>
+            <td><%= part.description %></td>
+            <td><%= part.part_type.blank? ? '' : part.part_type.nr %></td>
+            <td><%= part.color.blank? ? '' : part.color.nr %></td>
+            <td><%= part.display_unit(part.measure_unit_id) %></td>
+            <td><%= part.display_unit(part.purchase_unit_id) %></td>
+            <td><%= part.custom_nr %></td>
+            <td><%= part.cross_section %></td>
+            <td><%= part.weight %></td>
+            <td>
+              <%= link_to '[详情]', part %>
+              <% if current_user.can_edit %>
+                  <%= link_to '[编辑]', edit_part_path(part) %>
+              <% end %>
+              <% if current_user.can_delete %>
+                  <%= link_to '[删除]', part, method: :delete, data: {confirm: '确定删除?'} %>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+  </fieldset>
 </div>
 

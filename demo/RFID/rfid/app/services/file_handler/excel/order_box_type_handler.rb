@@ -2,7 +2,7 @@ module FileHandler
   module Excel
     class OrderBoxTypeHandler<Base
       HEADERS=[
-          :name, :description
+          :name, :description, :weight
       ]
 
       def self.import(file)

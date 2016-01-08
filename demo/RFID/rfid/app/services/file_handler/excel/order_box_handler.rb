@@ -25,6 +25,8 @@ module FileHandler
                 row[:source_warehouse_id] = Warehouse.find_by_nr(row[:source_warehouse_id]).id unless row[:source_warehouse_id].blank?
                 row[:order_box_type_id] = OrderBoxType.find_by_nr(row[:order_box_type_id]).id unless row[:order_box_type_id].blank?
 
+                row.delete(:status) if row[:status].blank?
+
                 s =OrderBox.new(row)
                 unless s.save
                   puts s.errors.to_json

@@ -76,6 +76,24 @@ class PartsController < ApplicationController
     end
   end
 
+  def search
+    super { |query|
+      unless params[:part][:part_type_id].blank?
+        if type = PartType.find_by_nr(params[:part][:part_type_id])
+          query = query.unscope(where: :part_type_id).where(part_type_id: type.id)
+        end
+      end
+
+      unless params[:part][:color_id].blank?
+        if type = Color.find_by_nr(params[:part][:color_id])
+          query = query.unscope(where: :color_id).where(color_id: type.id)
+        end
+      end
+
+      query
+    }
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_part

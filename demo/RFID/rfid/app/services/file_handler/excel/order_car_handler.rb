@@ -22,6 +22,8 @@ module FileHandler
                 end
                 row[:warehouse_id] = Warehouse.find_by_nr(row[:warehouse_id]).id unless row[:warehouse_id].blank?
 
+                row.delete(:status) if row[:status].blank?
+
                 s =OrderCar.new(row)
                 unless s.save
                   puts s.errors.to_json
