@@ -140,6 +140,7 @@ namespace ScmClient
                 ResponseMessage<Pick> msg = service.CreatePickByOrderCar(this.orderCar.id, OrderBox.GetAllIds(this.orderBoxes));
                 if (!msg.Success)
                 {
+                    this.canNext = false;
                     showMessageBox(msg.Message);
                 }
                 else
@@ -150,6 +151,7 @@ namespace ScmClient
             }
             else
             {
+                this.canNext = false;
                 showMessageBox("料车或料盒不存在，不可生成择货单！");
             }
         }
@@ -159,12 +161,14 @@ namespace ScmClient
         /// </summary>
         public void MoveStroage()
         {
-            if (this.orderCar != null && this.orderCar.id > 0 && OrderBox.GetNotNullCount(this.orderBoxes) == this.orderBoxes.Count)
+            int qty = OrderBox.GetNotNullCount(this.orderBoxes);
+            if (this.orderCar != null && this.orderCar.id > 0 && qty == this.orderBoxes.Count && qty > 0)
             {
                 WarehouseService service = new WarehouseService();
                 ResponseMessage<object> msg = service.MoveStorageByCar(this.orderCar.id, OrderBox.GetAllIds(this.orderBoxes));
                 if (!msg.Success)
                 {
+                    this.canNext = false;
                     showMessageBox(msg.Message);
                 }
                 else
@@ -175,11 +179,13 @@ namespace ScmClient
             }
             else
             {
+                this.canNext = false;
                 showMessageBox("料车或料盒不存在，不可生成择货单！");
             }
         }
 
-        private void setQtyLabel() {
+        private void setQtyLabel()
+        {
             this.QtyLabel.Content = this.orderBoxes.Count;
             this.QtyValidLabel.Content = OrderBox.GetNotNullCount(this.orderBoxes);
         }

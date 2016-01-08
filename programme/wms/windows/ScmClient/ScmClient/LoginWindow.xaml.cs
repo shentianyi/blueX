@@ -28,6 +28,16 @@ namespace ScmClient
             initControl();
         }
 
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (ApiConfig.AutoToken && ApiConfig.Token != null && ApiConfig.Token.Length > 0)
+            {
+                new MenuWindow().Show();
+                this.Close();
+            }
+        }
+
         /// <summary>
         /// 点击登录按钮
         /// </summary>

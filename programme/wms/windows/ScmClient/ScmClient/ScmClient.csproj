@@ -40,6 +40,9 @@
     <Reference Include="log4net">
       <HintPath>..\..\..\..\ThridPart\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="n3kAdrtB">
+      <HintPath>..\..\..\..\ThridPart\n3kAdrtB.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -60,6 +63,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="RFID\RFIDDoor.cs" />
     <Compile Include="Enum\RFIDScanType.cs" />
     <Compile Include="RFID\MessageType.cs" />
     <Compile Include="RFID\Parser.cs" />
@@ -79,6 +83,9 @@
     </Compile>
     <Compile Include="RFIDScanInPickPage.xaml.cs">
       <DependentUpon>RFIDScanInPickPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SettingWindow.xaml.cs">
+      <DependentUpon>SettingWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
@@ -118,6 +125,10 @@
     <Page Include="RFIDScanInPickPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SettingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
