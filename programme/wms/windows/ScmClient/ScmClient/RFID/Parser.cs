@@ -20,10 +20,11 @@ namespace ScmClient.RFID
             List<string> dataList = data.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
             foreach (string d in dataList)
             {
-                string dd = new String(d.Skip(8).Take(36).ToArray()).Replace(" ", "");
+                string dd = d.Replace(" ","");
+                //string dd = new String(d.Skip(6).Take(36).ToArray()).Replace(" ", "");
                 if (messageRegex.Match(dd).Success)
                 {
-                    RFIDMessage msg = StringToMessage(new String(dd.Take(4).ToArray()));
+                    RFIDMessage msg = StringToMessage(new String(dd.Skip(4).Take(4).ToArray()));
                     if (msg != null)
                     {
                         list.Add(msg);

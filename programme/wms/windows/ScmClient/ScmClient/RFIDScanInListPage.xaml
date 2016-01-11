@@ -3,9 +3,9 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:ScmClient"
+     
       mc:Ignorable="d" 
-      d:DesignHeight="406" d:DesignWidth="790"
+      d:DesignHeight="606" d:DesignWidth="790"
       Title="RFIDScanInListPage"
       Name="RFIDScanInListPageName">
 
@@ -45,6 +45,7 @@
             <DockPanel Grid.Column="1" LastChildFill="False">
                 <Label Content="扫描条码：" Margin="10 6 0 0" Name="label3"   />
                 <TextBox DockPanel.Dock="Left" Name="ScanTB" BorderBrush="#0e80b0" MinWidth="200" Margin="5" KeyUp="ScanTB_KeyUp" />
+                <Button Content="开 门" Height="43" Name="OpenDoorBtn" Width="75" Click="OpenDoorBtn_Click" />
             </DockPanel>
 
             <DockPanel Grid.Row="1">

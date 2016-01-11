@@ -189,5 +189,11 @@ namespace ScmClient
             return false;
         }
 
+        private void OpenDoorBtn_Click(object sender, RoutedEventArgs e)
+        {
+            RFIDDoor door = new RFIDDoor();
+            door.OpenDoor();
+        }
+
     }
 }

@@ -15,6 +15,9 @@ namespace ScmWcfService.Config
             try
             {
                 config = new ConfigUtil("RFID", "Ini/rfid.ini");
+
+                USE_DLL = bool.Parse(config.Get("USE_DLL"));
+
                 RFIDCOM = config.Get("RFIDCOM");
                 RFIDBaudRate = int.Parse(config.Get("RFIDBaudRate"));
 
@@ -30,7 +33,7 @@ namespace ScmWcfService.Config
                 throw e;
             }
         }
-
+        public static bool USE_DLL { get; set; }
         public static string MessageRegex { get; set; }
         public static string LabelRegex { get; set; }
         public static string OrderCarLabelRegex { get; set; }

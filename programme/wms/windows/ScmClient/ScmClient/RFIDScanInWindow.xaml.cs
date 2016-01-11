@@ -21,6 +21,7 @@ using System.Windows.Navigation;
 using ScmWcfService.Model;
 using ScmClient.Enum;
 using ScmWcfService.Config;
+using System.IO.Ports;
 
 namespace ScmClient
 {
@@ -32,10 +33,12 @@ namespace ScmClient
         private MenuWindow menuWindow; 
         private Page currentPage;
 
-        private System.Timers.Timer timer;
+        private System.Timers.Timer dllTimer;
         IntPtr g_selectCom = IntPtr.Zero;       //选择操作的串口句柄
 
         public RFIDScanType type { get; set; }
+
+        SerialPort sp;
 
         public RFIDScanInWindow()
         {
@@ -52,18 +55,24 @@ namespace ScmClient
         {
             this.currentPage = new RFIDScanInPage(this);
             NaviFrame.NavigationService.Navigate(this.currentPage);
-            initTimer();
-            openCom();
+            if (RFIDConfig.USE_DLL)
+            {
+                initTimer();
+                openDllCom();
+            }
+            else {
+                openCustomCom();
+            }
         }
 
         private void initTimer()
         {
-            timer = new System.Timers.Timer();
-            ((System.ComponentModel.ISupportInitialize)(this.timer)).BeginInit();
-            timer.Enabled = false;
-            timer.Interval = 500;
-            timer.Elapsed += new System.Timers.ElapsedEventHandler(Timer_Elapsed);
-            ((System.ComponentModel.ISupportInitialize)(this.timer)).EndInit();
+            dllTimer = new System.Timers.Timer();
+            ((System.ComponentModel.ISupportInitialize)(this.dllTimer)).BeginInit();
+            dllTimer.Enabled = false;
+            dllTimer.Interval = 500;
+            dllTimer.Elapsed += new System.Timers.ElapsedEventHandler(Timer_Elapsed);
+            ((System.ComponentModel.ISupportInitialize)(this.dllTimer)).EndInit();
         }
 
 
@@ -74,12 +83,16 @@ namespace ScmClient
                 this.NextBtn.Visibility = Visibility.Visible;
                 this.NextBtn.Content = "下一步";
                 this.BackBtn.Content = "放弃";
-                this.timer.Enabled = true;
-                this.timer.Start();
+                if (RFIDConfig.USE_DLL)
+                {
+                    this.dllTimer.Enabled = true;
+                    this.dllTimer.Start();
+                }
                 this.currentPage = new RFIDScanInPage(this);
                 NaviFrame.NavigationService.Navigate(this.currentPage);
             }
-            else {
+            else
+            {
                 closeWindow();
             }
         }
@@ -87,11 +100,30 @@ namespace ScmClient
         private void closeWindow() {
             this.Close(); 
         }
-        private void closeCOM() {
+
+        private void closeCustomCOM()
+        {
+            try
+            {
+                if (sp != null)
+                {
+                    sp.Close();
+
+                    LogUtil.Logger.Error("Close COM Success");
+                }
+            }
+            catch (Exception e)
+            {
+                LogUtil.Logger.Error("Close COM Error");
+                LogUtil.Logger.Error(e.Message);
+            }
+        }
+
+        private void closeDllCOM() {
             int stopReadFlag = RFIDDll.ComStopReadMultiTag(g_selectCom);
             if (stopReadFlag == RFIDDll.STOP_READ_MULITTAG_SUCCESS)
             {
-                timer.Stop();
+                dllTimer.Stop();
             }
 
             int restFlag = RFIDDll.ComResetReader(g_selectCom);
@@ -179,8 +211,8 @@ namespace ScmClient
                         this.NextBtn.Content = "下一步";
                         this.currentPage = new RFIDScanInPage(this);
                         NaviFrame.NavigationService.Navigate(this.currentPage);
-                        this.timer.Enabled = true;
-                        this.timer.Start();
+                        this.dllTimer.Enabled = true;
+                        this.dllTimer.Start();
                     }
                 }
             }
@@ -191,7 +223,79 @@ namespace ScmClient
             System.Windows.Forms.MessageBox.Show(message);
         }
 
-        private void openCom()
+        private void openCustomCom() {
+            try
+            {
+                sp = new SerialPort(RFIDConfig.RFIDCOM, RFIDConfig.RFIDBaudRate);
+                sp.Open();
+                sp.DataReceived += new SerialDataReceivedEventHandler(sp_DataReceived);
+
+                LogUtil.Logger.Info("Open COM Success");
+            }
+            catch (Exception e) {
+                if (sp.IsOpen) {
+                    sp.Close();
+                }
+
+                LogUtil.Logger.Error("Open COM Error");
+                LogUtil.Logger.Error(e.Message);
+            }
+        }
+
+        void sp_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            Byte[] recvbuf = new Byte[17];
+            sp.Read(recvbuf, 0, recvbuf.Length);
+
+            //string data = System.Text.Encoding.Default.GetString(recvbuf);
+
+            //string data = Encoding.ASCII.GetString(recvbuf);
+            string data = string.Empty;
+            foreach (byte b in recvbuf)
+            {
+                //string bb = b.ToString("X0");
+                //if (bb.Length == 1)
+                //{
+                //    bb = "0" + bb;
+                //}
+                //data += bb + " ";
+
+                data += b.ToString("X0").PadLeft(2, '0');
+            }
+
+         // data=  Encoding.ASCII.GetString(recvbuf);  
+
+            LogUtil.Logger.Info(recvbuf);
+
+            LogUtil.Logger.Info(data); 
+            if (recvbuf.Length != 0 && recvbuf.Length < 40960)
+            {
+
+            //    string data = System.Text.Encoding.Default.GetString(recvbuf);
+
+                LogUtil.Logger.Info("[接收到]" + data); 
+                List<RFIDMessage> messages = new List<RFIDMessage>();
+                messages = Parser.StringToList(data);
+                if (messages.Count > 0)
+                {
+                    this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate()
+                    {
+                        LogUtil.Logger.Info(this.currentPage.Name);
+                        if (this.currentPage.Name == "RFIDScanInPageName")
+                        {
+                            this.currentPage = new RFIDScanInListPage(this);
+                            NaviFrame.NavigationService.Navigate(this.currentPage);
+                        }
+                        if (this.currentPage.Name == "RFIDScanInListPageName")
+                        {
+                            ((RFIDScanInListPage)this.currentPage).ReceiveData(messages);
+                        }
+                    });
+                }
+            }
+        }
+
+        private void openDllCom()
         {
             IntPtr t_hCom = IntPtr.Zero;
             int openFlag = RFIDDll.ComOpenCom(ref t_hCom,RFIDConfig.RFIDCOM, RFIDConfig.RFIDBaudRate);
@@ -216,8 +320,8 @@ namespace ScmClient
                     {
                         LogUtil.Logger.Info("Read Multi COM Success");
                         LogUtil.Logger.Info(m_MsgInfo);
-                        timer.Enabled = true;
-                        timer.Start();
+                        dllTimer.Enabled = true;
+                        dllTimer.Start();
                     }
                     else {
                         LogUtil.Logger.Error("Read COM Error");
@@ -240,9 +344,12 @@ namespace ScmClient
 
         public void StopTimer()
         {
-            LogUtil.Logger.Info("Stop Timer Scan");
-            timer.Stop();
-            timer.Enabled = false;
+            if (RFIDConfig.USE_DLL)
+            {
+                LogUtil.Logger.Info("Stop Timer Scan");
+                dllTimer.Stop();
+                dllTimer.Enabled = false;
+            }
         }
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -288,7 +395,13 @@ namespace ScmClient
         
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            closeCOM();
+            if (RFIDConfig.USE_DLL)
+            {
+                closeDllCOM();
+            }
+            else {
+                closeCustomCOM();
+            }
             Thread.Sleep(500);
             new MenuWindow().Show();
         }
