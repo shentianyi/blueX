@@ -11,6 +11,6 @@ class Pick < ActiveRecord::Base
 
   belongs_to :warehouse
 
-  validates_presence_of :nr, :message => "择货单号不能为空!"
-  validates_uniqueness_of :nr, :message => "择货单号不能重复!"
+#  validates_presence_of :nr, :message => "择货单号不能为空!"
+#  validates_uniqueness_of :nr, :message => "择货单号不能重复!"
 end
