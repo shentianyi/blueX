@@ -47,7 +47,7 @@ namespace PTLWPF
 
         void sp_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            Byte[] recvbuf = new Byte[6];
+            Byte[] recvbuf = new Byte[26];
             sp.Read(recvbuf, 0, recvbuf.Length);
             LogUtil.Logger.Info(recvbuf);
             p.HandleMsg(recvbuf);
