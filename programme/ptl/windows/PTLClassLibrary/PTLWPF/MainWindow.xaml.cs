@@ -22,6 +22,7 @@ namespace PTLWPF
     public partial class MainWindow : Window
     {
         SerialPort sp;
+        PTL p;
 
         public MainWindow()
         {
@@ -34,6 +35,7 @@ namespace PTLWPF
             {
                 sp = new SerialPort(comTB.Text);
                 sp.BaudRate = int.Parse(baundTB.Text);
+                sp.Open();
                 sp.DataReceived += new SerialDataReceivedEventHandler(sp_DataReceived);
                 LogUtil.Logger.Info("COM Opend!");
             }
@@ -45,7 +47,29 @@ namespace PTLWPF
 
         void sp_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-          
+            Byte[] recvbuf = new Byte[6];
+            sp.Read(recvbuf, 0, recvbuf.Length);
+            LogUtil.Logger.Info(recvbuf);
+            p.HandleMsg(recvbuf);
+        }
+
+        private void findBtn_Click(object sender, RoutedEventArgs e)
+        {
+           // PTL p = new PTL(sp, int.Parse(addressTB.Text));
+            p = new PTL(sp, int.Parse(addressTB.Text));
+           //  p.nrs = getNrs();
+           //  p.FindLabels();
+           // p.FindLabels();
+            p.FindLabels(getNrs());
+        }
+
+        public List<string> getNrs() {
+          return  nrTB.Text.Split(',').ToList();
+        }
+        private void cancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            PTL p = new PTL(sp, int.Parse(addressTB.Text));
+            p.CancelLabels(getNrs());
         }
     }
 }

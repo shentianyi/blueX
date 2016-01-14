@@ -7,6 +7,6 @@ namespace PTLClassLibrary
 {
     public class PTL
     {
-        public 
+        public Serial
     }
 }

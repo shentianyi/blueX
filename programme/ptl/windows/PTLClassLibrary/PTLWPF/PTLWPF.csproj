@@ -59,6 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="PTL.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -104,10 +105,6 @@
     <ProjectReference Include="..\..\..\..\..\programme\base\windows\Brilliantech.Framwork\Brilliantech.Framwork.csproj">
       <Project>{9B5F850A-5136-4095-8955-6C4F7747C48A}</Project>
       <Name>Brilliantech.Framwork</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PTLClassLibrary\PTLClassLibrary.csproj">
-      <Project>{EB455854-55E2-4AD1-B356-D40C19A57F38}</Project>
-      <Name>PTLClassLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
