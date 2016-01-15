@@ -10,9 +10,10 @@
         <TextBox Height="23" Text="38400" HorizontalAlignment="Left" Margin="89,47,0,0" Name="baundTB" VerticalAlignment="Top" Width="120" />
         <TextBox Height="23" Text="1" HorizontalAlignment="Left" Margin="89,0,0,201" Name="addressTB" VerticalAlignment="Bottom" Width="120" />
         <Button Content="打开COM" Height="39" HorizontalAlignment="Left" Margin="12,130,0,0" Name="openComBtn" VerticalAlignment="Top" Width="86" Click="openComBtn_Click" />
-        <TextBox Height="65" Text="1462" HorizontalAlignment="Left" Margin="290,51,0,0" Name="nrTB" VerticalAlignment="Top" Width="228" TextWrapping="Wrap" />
+        <TextBox Height="65" Text="1273,1389,1441,1462" HorizontalAlignment="Left" Margin="290,51,0,0" Name="nrTB" VerticalAlignment="Top" Width="228" TextWrapping="Wrap" />
         <Label Content="号码(多个以逗号隔开)" Height="28" HorizontalAlignment="Left" Margin="284,27,0,0" Name="label4" VerticalAlignment="Top" />
         <Button Content="查找" Height="23" HorizontalAlignment="Left" Margin="290,137,0,0" Name="findBtn" VerticalAlignment="Top" Width="75" Click="findBtn_Click" />
         <Button Content="撤销" Height="23" HorizontalAlignment="Left" Margin="420,137,0,0" Name="cancelBtn" VerticalAlignment="Top" Width="75" Click="cancelBtn_Click" />
+        <Button Content="撤销全部" Height="23" HorizontalAlignment="Left" Margin="290,222,0,0" Name="cancelAllBtn" VerticalAlignment="Top" Width="75" Click="cancelAllBtn_Click" />
     </Grid>
 </Window>

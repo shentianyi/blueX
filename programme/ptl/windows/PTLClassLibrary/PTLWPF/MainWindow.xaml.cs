@@ -33,34 +33,18 @@ namespace PTLWPF
         {
             try
             {
-                sp = new SerialPort(comTB.Text);
-                sp.BaudRate = int.Parse(baundTB.Text);
-                sp.Open();
-                sp.DataReceived += new SerialDataReceivedEventHandler(sp_DataReceived);
-                LogUtil.Logger.Info("COM Opend!");
+                p = new PTL(this.comTB.Text, int.Parse(this.baundTB.Text), int.Parse(this.addressTB.Text));
             }
             catch (Exception ex)
             {
                 LogUtil.Logger.Debug(ex.Message);
             }
         }
-
-        void sp_DataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-            Byte[] recvbuf = new Byte[26];
-            sp.Read(recvbuf, 0, recvbuf.Length);
-            LogUtil.Logger.Info(recvbuf);
-            p.HandleMsg(recvbuf);
-        }
-
         private void findBtn_Click(object sender, RoutedEventArgs e)
         {
-           // PTL p = new PTL(sp, int.Parse(addressTB.Text));
-            p = new PTL(sp, int.Parse(addressTB.Text));
-           //  p.nrs = getNrs();
-           //  p.FindLabels();
-           // p.FindLabels();
-            p.FindLabels(getNrs());
+            p.cmdType = CommandType.FIND;
+            p.nrs = getNrs();
+            p.FindLabels();
         }
 
         public List<string> getNrs() {
@@ -68,8 +52,15 @@ namespace PTLWPF
         }
         private void cancelBtn_Click(object sender, RoutedEventArgs e)
         {
-            PTL p = new PTL(sp, int.Parse(addressTB.Text));
-            p.CancelLabels(getNrs());
+            p.cmdType = CommandType.CANCEL;
+            p.nrs = getNrs();
+            p.CancelLabels();
+        }
+
+        private void cancelAllBtn_Click(object sender, RoutedEventArgs e)
+        {
+            p.cmdType = CommandType.ALL_CANCEL;
+            p.CancelAllLabels();
         }
     }
 }

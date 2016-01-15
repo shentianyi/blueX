@@ -4,38 +4,127 @@ using System.Linq;
 using System.Text;
 using System.IO.Ports;
 using System.Threading;
+using Brilliantech.Framwork.Utils.LogUtil;
 
 namespace PTLWPF
 {
+    public enum CommandType
+    {
+        FIND,
+        CANCEL,
+        ALL_FIND,
+        ALL_CANCEL
+    }
+
+
     public class PTL
     {
         public SerialPort sp{get;set;}
+        public string com { get; set; }
+        public int baundRate { get; set; }
         public int readerAddress{get;set;}
+        public CommandType cmdType { get; set; }
+        public int retryTimes { get; set; }
+
         public List<string> nrs { get; set; }
+         
+        private System.Timers.Timer timer;
 
-        private bool success = false;
+        private Dictionary<string, int> executeTimesQ ;
+
+    //    private int executeTimes = 0;
+
         public PTL() { }
-
-        public PTL(SerialPort sp, int readerAddress)
+        public PTL(string com,int baundRate=38400, int readerAddress=1,int retryTimes=6)
         {
-            this.sp = sp;
+            this.com = com;
+            this.baundRate = baundRate;
             this.readerAddress = readerAddress;
+            this.retryTimes = retryTimes;
+            this.OpenCom();
+        }
+         
+        public void OpenCom()
+        {
+            try
+            {
+                this.sp = new SerialPort(this.com);
+                this.sp.BaudRate = this.baundRate;
+                sp.Open();
+                sp.DataReceived += new SerialDataReceivedEventHandler(sp_DataReceived);
+                LogUtil.Logger.Info("COM Opend!");
+            }
+            catch (Exception ex)
+            {
+                LogUtil.Logger.Debug(ex.Message);
+            }
+        }
+
+        public void CloseCom()
+        {
+            try
+            {
+                if (sp != null)
+                {
+                    sp.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtil.Logger.Debug(ex.Message);
+            }
+        }
+
+        void sp_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            Byte[] recvbuf = new Byte[5];
+            sp.Read(recvbuf, 0, recvbuf.Length);
+            LogUtil.Logger.Info(recvbuf);
+            HandleMsg(recvbuf);
         }
 
         public void HandleMsg(byte[] bytes)
         {
-            string data = byteToStringHex(bytes);
-            if (data.Length > 2)
+            string receive_string = byteToStringHex(bytes);
+            LogUtil.Logger.Info(receive_string);
+            if (receive_string.Length > 2)
             {
-                string crc_string = data.Substring(0, data.Length - 2);
+                string crc_string = receive_string.Substring(0, receive_string.Length - 2);
                 byte[] crc_bytes = GetCRCBytes(crc_string);
                 string crc_check_string = byteToStringHex(crc_bytes);
-                if (data.Equals(crc_bytes))
+                LogUtil.Logger.Info("rcr string:" + crc_check_string);
+                 
+                // 是否通过CRC校验后
+                if (receive_string.Equals(crc_check_string))
                 {
-                    this.success = true;
-                    if (this.nrs.Count > 0)
+                    // 判断是否是单标签返回
+
+                    // 判断第四位是否是00 成功， 01失败
+                    string success_fail_tag = receive_string.Substring(6, 2);
+
+                    LogUtil.Logger.Info("success_fail_tag:" + success_fail_tag);
+
+                    if (success_fail_tag.Equals("00"))
                     {
-                        this.nrs.RemoveAt(0);
+                        LogUtil.Logger.Info("【Success】" + success_fail_tag);
+
+                        if (this.nrs != null && this.nrs.Count > 0)
+                        {
+                            if (this.executeTimesQ[this.nrs.First()] > 0)
+                            {
+                                this.nrs.RemoveAt(0);
+                            }
+                            //Thread.Sleep(100);
+
+                            executeCmd();
+                        }
+                        else
+                        {
+                            if (timer != null)
+                            {
+                                timer.Stop();
+                            }
+                        }
                     }
                 }
             }
@@ -46,47 +135,62 @@ namespace PTLWPF
             throw new NotImplementedException();
         }
 
+
         public void FindLabels()
         {
+            initVar();
+        }
 
-            int totalTimes = nrs.Count;
-            while (nrs.Count > 0)
+        public void CancelLabels()
+        {
+            initVar();
+        }
+
+        public void CancelAllLabels() {
+            initVar();
+        }
+
+        public void initVar() {
+            initExecuteQ();
+            initTimer();
+        }
+
+        private void initExecuteQ()
+        {
+            executeTimesQ = new Dictionary<string, int>();
+            if (CommandType.ALL_CANCEL == this.cmdType)
             {
-                success = false;
-                int times = 0;
-                while (times < 3 || !success)
+                executeTimesQ.Add("ALL_CANCEL", 0);
+            }
+            else
+            {
+                foreach (string nnr in nrs)
                 {
-                    FindLabel(nrs.First());
-                    Thread.Sleep(10);
-                }
-
-                totalTimes -= 1;
-                if (totalTimes < 0) {
-                    break;
+                    executeTimesQ.Add(nnr, 0);
                 }
             }
         }
 
-        public void FindLabels(List<string> nrs)
+        private void initTimer()
         {
-            
-            foreach (string nr in nrs)
+            if (timer != null)
             {
-                FindLabel(nr);
-              // Thread.Sleep(1000);
+                timer.Stop();
+                timer = null;
             }
+
+            timer = new System.Timers.Timer();
+            timer.Enabled = true;
+            timer.Interval = 100;
+            timer.Elapsed += new System.Timers.ElapsedEventHandler(timer_Elapsed);
+            timer.Start();
         }
 
-
-        public void CancelLabels(List<string> nrs)
+        void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            foreach (string nr in nrs)
-            {
-                CancelLabel(nr);
-
-               // Thread.Sleep(1000);
-            }
+            executeCmd();
         }
+
 
         public void FindLabel(string labelNr)
         {
@@ -98,7 +202,15 @@ namespace PTLWPF
         }
          
         public void CancelLabel(string labelNr) { 
-            string cmd = "0" + this.readerAddress + " AE 01 00 00 " + stringToStringHex(labelNr);
+            string cmd = getAddress() + " AE 01 00 00 " + stringToStringHex(labelNr);
+
+            byte[] bytes = GetCRCBytes(cmd);
+            sp.Write(bytes, 0, bytes.Length);
+        }
+
+        public void CancelAll()
+        {
+            string cmd = getAddress() + " AE 00 00 00 ";
 
             byte[] bytes = GetCRCBytes(cmd);
             sp.Write(bytes, 0, bytes.Length);
@@ -141,16 +253,8 @@ namespace PTLWPF
                     b[i] = (byte)((parse(c0) << 4) | parse(c1));  
                 }  
                 return b;  
-            //hexString = hexString.Replace(" ", "");
-            //if ((hexString.Length % 2) != 0)
-            //    hexString += " ";
-            //byte[] returnBytes = new byte[hexString.Length / 2];
-            //for (int i = 0; i < returnBytes.Length; i++)
-            //    returnBytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
-
-            //return returnBytes;
         }
-        public   int parse(char c)
+        public int parse(char c)
         {
             if (c >= 'a')
                 return (c - 'a' + 10) & 0x0f;
@@ -180,6 +284,80 @@ namespace PTLWPF
                 }
             }
             return crc;
+        }
+
+        private string getAddress() {
+            return "0" + this.readerAddress;
+        }
+
+        private bool canExecuteCmd()
+        {
+            bool result = false;
+            if (this.cmdType == CommandType.FIND || this.cmdType == CommandType.CANCEL)
+            {
+                if (this.nrs.Count > 0)
+                {
+                    if (this.executeTimesQ[this.nrs.First()] < this.retryTimes)
+                    {
+                        LogUtil.Logger.Info("【发送】 第" + this.executeTimesQ[this.nrs.First()] + "次");
+                        this.executeTimesQ[this.nrs.First()] += 1;
+                        result = true;
+                    }
+                    else
+                    {
+                        this.nrs.RemoveAt(0);
+                        LogUtil.Logger.Info("【结束重试】 ");
+                    }
+                }
+                else
+                {
+                    timer.Stop();
+                    LogUtil.Logger.Info("【结束全部操作】 ");
+                }
+            }
+            else if (this.cmdType == CommandType.ALL_CANCEL)
+            {
+                if (this.executeTimesQ.First().Value < this.retryTimes)
+                {
+                    this.executeTimesQ[this.executeTimesQ.First().Key] += 1;
+                    result = true;
+                }
+                else
+                {
+                    timer.Stop();
+                    LogUtil.Logger.Info("【结束次重试】 ");
+                    LogUtil.Logger.Info("【结束全部操作】 ");
+                }
+            }
+            return result;
+        }
+
+        private void executeCmd()
+        {
+            if (this.cmdType == CommandType.FIND)
+            {
+                if (canExecuteCmd())
+                {
+                    LogUtil.Logger.Info("【find】 " + nrs.First());
+                    FindLabel(nrs.First());
+                }
+            }
+            else if (this.cmdType == CommandType.CANCEL)
+            {
+                if (canExecuteCmd())
+                {
+                    LogUtil.Logger.Info("【cancel】 " + nrs.First());
+                    CancelLabel(nrs.First());
+                }
+            }
+            else if (this.cmdType == CommandType.ALL_CANCEL)
+            {
+                if (canExecuteCmd())
+                {
+                    LogUtil.Logger.Info("【cancel all】 ");
+                    CancelAll();
+                }
+            }
         }
     }
 }
