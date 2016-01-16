@@ -19,6 +19,9 @@ module FileHandler
                 row = {}
                 HEADERS.each_with_index do |k, i|
                   row[k] = book.cell(line, i+1).to_s.strip
+                  if k.to_s=='part_id'
+row[k]=row[k].sub(/\.0/,'')
+end
                 end
                 row[:part_id] = Part.find_by_nr(row[:part_id]).id unless row[:part_id].blank?
                 row[:position_id] = Position.find_by_nr(row[:position_id]).id unless row[:position_id].blank?
@@ -60,7 +63,10 @@ module FileHandler
             row = {}
             HEADERS.each_with_index do |k, i|
               row[k] = book.cell(line, i+1).to_s.strip
-            end
+                  if k.to_s=='part_id'
+row[k]=row[k].sub(/\.0/,'')
+end
+end
 
             mssg = validate_row(row, line)
             if mssg.result

@@ -13,17 +13,21 @@ module FileHandler
         validate_msg = validate_import(file)
         if validate_msg.result
           #validate file
-          begin
+         # begin
             OrderBox.transaction do
               2.upto(book.last_row) do |line|
                 row = {}
                 HEADERS.each_with_index do |k, i|
                   row[k] = book.cell(line, i+1).to_s.strip
+      if k.to_s=='part_id'
+row[k]=row[k].sub(/\.0/,'')
+end
+
                 end
                 row[:part_id] = Part.find_by_nr(row[:part_id]).id
                 row[:warehouse_id] = Warehouse.find_by_nr(row[:warehouse_id]).id unless row[:warehouse_id].blank?
                 row[:source_warehouse_id] = Warehouse.find_by_nr(row[:source_warehouse_id]).id unless row[:source_warehouse_id].blank?
-                row[:order_box_type_id] = OrderBoxType.find_by_nr(row[:order_box_type_id]).id unless row[:order_box_type_id].blank?
+                row[:order_box_type_id] = OrderBoxType.find_by_name(row[:order_box_type_id]).id unless row[:order_box_type_id].blank?
 
                 row.delete(:status) if row[:status].blank?
 
@@ -36,11 +40,11 @@ module FileHandler
             end
             msg.result = true
             msg.content = "导入料盒信息成功！"
-          rescue => e
-            puts e.backtrace
-            msg.result = false
-            msg.content = e.message
-          end
+         # rescue => e
+          #  puts e.backtrace
+           # msg.result = false
+           # msg.content = e.message
+         # end
         else
           msg.result = false
           msg.content = validate_msg.content
@@ -62,6 +66,11 @@ module FileHandler
             row = {}
             HEADERS.each_with_index do |k, i|
               row[k] = book.cell(line, i+1).to_s.strip
+
+      if k.to_s=='part_id'
+row[k]=row[k].sub(/\.0/,'')
+end
+
             end
 
             mssg = validate_row(row, line)
@@ -105,7 +114,7 @@ module FileHandler
         end
 
         unless row[:order_box_type_id].blank?
-          unless OrderBoxType.find_by_nr(row[:order_box_type_id])
+          unless OrderBoxType.find_by_name(row[:order_box_type_id])
             msg.contents<<"料盒类型不存在"
           end
         end
