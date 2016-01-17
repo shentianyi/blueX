@@ -1,5 +1,5 @@
 module V1
-class PickAPI < Base
+  class PickAPI < Base
     guard_all!
 
     namespace :picks do
@@ -13,6 +13,13 @@ class PickAPI < Base
         Rails.logger.debug '-----------------------'
         params[:order_box_ids]=params[:order_box_ids].split(',')
         PickService.create_by_car(current_user, params)
+      end
+
+      params do
+        requires :status, type: Integer, desc: 'Pick Status'
+      end
+      get :by_status do
+        PickService.by_status(status)
       end
 
     end

@@ -8,7 +8,7 @@ class OrderCarService
       ApiMessage.new({
                          meta: {
                              code: 400,
-                             message: '未找到该料车'
+                             error_message: '未找到该料车'
                          }
                      })
     end

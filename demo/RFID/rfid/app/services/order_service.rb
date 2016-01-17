@@ -30,7 +30,7 @@ class OrderService
                 data: OrderPresenter.new(order).as_basic_info
             }
           else
-            ApiMessage.new({meta: {code: 400, message: '生成需求单失败'}})
+            ApiMessage.new({meta: {code: 400, error_message: '生成需求单失败'}})
           end
         end
       end

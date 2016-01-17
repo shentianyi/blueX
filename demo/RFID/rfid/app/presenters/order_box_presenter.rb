@@ -14,14 +14,14 @@ class OrderBoxPresenter<Presenter
       {
           meta: {
               code: 400,
-              error_message:'未找到该料盒'
+              error_message: '未找到该料盒'
           }
       }
     else
       {
           meta: {
               code: result_code||200,
-              message:'找到啦'
+              message: '找到啦'
           },
           data: as_data
       }
@@ -39,7 +39,7 @@ class OrderBoxPresenter<Presenter
 
         #要货仓库
         warehouse: WarehousePresenter.new(Warehouse.find_by_id(@order_box.warehouse_id)).as_basic_info,
-        position:PositionPresenter.new(@order_box.position).as_basic_info,
+        position: PositionPresenter.new(@order_box.position).as_basic_info,
         #出货仓库
         source_warehouse: WarehousePresenter.new(Warehouse.find_by_id(@order_box.source_warehouse_id)).as_basic_info,
 
@@ -50,4 +50,15 @@ class OrderBoxPresenter<Presenter
     }
   end
 
+
+  def as_basic_info
+    {
+        id: @order_box.id,
+        nr: @order_box.nr,
+        quantity: @order_box.quantity,
+        status:@order_box.status,
+        positions: StorageService.positions(@order_box.source_warehouse_id, @order_box.part_id).uniq.pluck(:nr),
+        weight: @order_box.order_box_type.weight || 0
+    }
+  end
 end

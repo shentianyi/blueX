@@ -8,6 +8,7 @@ module V1
     mount UserAPI
     mount OrderAPI
     mount PickAPI
+    mount PickItemAPI
     mount WarehouseAPI
   end
 end

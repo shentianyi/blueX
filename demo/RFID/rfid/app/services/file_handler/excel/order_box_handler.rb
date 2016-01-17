@@ -13,38 +13,38 @@ module FileHandler
         validate_msg = validate_import(file)
         if validate_msg.result
           #validate file
-         # begin
-            OrderBox.transaction do
-              2.upto(book.last_row) do |line|
-                row = {}
-                HEADERS.each_with_index do |k, i|
-                  row[k] = book.cell(line, i+1).to_s.strip
-      if k.to_s=='part_id'
-row[k]=row[k].sub(/\.0/,'')
-end
-
+          # begin
+          OrderBox.transaction do
+            2.upto(book.last_row) do |line|
+              row = {}
+              HEADERS.each_with_index do |k, i|
+                row[k] = book.cell(line, i+1).to_s.strip
+                if k.to_s=='part_id'
+                  row[k]=row[k].sub(/\.0/, '')
                 end
-                row[:part_id] = Part.find_by_nr(row[:part_id]).id
-                row[:warehouse_id] = Warehouse.find_by_nr(row[:warehouse_id]).id unless row[:warehouse_id].blank?
-                row[:source_warehouse_id] = Warehouse.find_by_nr(row[:source_warehouse_id]).id unless row[:source_warehouse_id].blank?
-                row[:order_box_type_id] = OrderBoxType.find_by_name(row[:order_box_type_id]).id unless row[:order_box_type_id].blank?
 
-                row.delete(:status) if row[:status].blank?
+              end
+              row[:part_id] = Part.find_by_nr(row[:part_id]).id
+              row[:warehouse_id] = Warehouse.find_by_nr(row[:warehouse_id]).id unless row[:warehouse_id].blank?
+              row[:source_warehouse_id] = Warehouse.find_by_nr(row[:source_warehouse_id]).id unless row[:source_warehouse_id].blank?
+              row[:order_box_type_id] = OrderBoxType.find_by_name(row[:order_box_type_id]).id unless row[:order_box_type_id].blank?
 
-                s =OrderBox.new(row)
-                unless s.save
-                  puts s.errors.to_json
-                  raise s.errors.to_json
-                end
+              row.delete(:status) if row[:status].blank?
+
+              s =OrderBox.new(row)
+              unless s.save
+                puts s.errors.to_json
+                raise s.errors.to_json
               end
             end
-            msg.result = true
-            msg.content = "导入料盒信息成功！"
-         # rescue => e
+          end
+          msg.result = true
+          msg.content = "导入料盒信息成功！"
+          # rescue => e
           #  puts e.backtrace
-           # msg.result = false
-           # msg.content = e.message
-         # end
+          # msg.result = false
+          # msg.content = e.message
+          # end
         else
           msg.result = false
           msg.content = validate_msg.content
@@ -67,9 +67,9 @@ end
             HEADERS.each_with_index do |k, i|
               row[k] = book.cell(line, i+1).to_s.strip
 
-      if k.to_s=='part_id'
-row[k]=row[k].sub(/\.0/,'')
-end
+              if k.to_s=='part_id'
+                row[k]=row[k].sub(/\.0/, '')
+              end
 
             end
 

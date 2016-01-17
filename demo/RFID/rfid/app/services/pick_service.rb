@@ -10,10 +10,10 @@ class PickService
         order.warehouse=car.warehouse
 
         order.orderable=car
-        car.update_attributes(status:OrderCarStatus::PICKING)
+        car.update_attributes(status: OrderCarStatus::PICKING)
         car.orders<<order
         boxs.each do |box|
-          box.update_attributes(status:OrderBoxStatus::PICKING)
+          box.update_attributes(status: OrderBoxStatus::PICKING)
           order_item=OrderItem.new({
                                        quantity: box.quantity,
                                        part_id: box.part_id,
@@ -26,16 +26,16 @@ class PickService
           order.order_items<<order_item
         end
 
-        pick=Pick.new(status:PickStatus::PICKING)
+        pick=Pick.new(status: PickStatus::PICKING)
         pick.user=user
 
         order.order_items.each do |item|
           order_box=item.orderable
           pick_item=PickItem.new(
-                                    warehouse_id:order_box.source_warehouse_id,
-                                    part_id:item.part_id,
-                                    quantity:item.quantity,
-                                    status:PickStatus::PICKING
+              warehouse_id: order_box.source_warehouse_id,
+              part_id: item.part_id,
+              quantity: item.quantity,
+              status: PickStatus::PICKING
           )
           pick_item.order_item=item
           pick.pick_items<<pick_item
@@ -52,7 +52,7 @@ class PickService
               data: PickPresenter.new(pick).as_basic_info
           }
         else
-          ApiMessage.new({meta: {code: 400, message: '生成需求单失败'}})
+          ApiMessage.new({meta: {code: 400, error_message: '生成需求单失败'}})
         end
       end
     end
@@ -60,7 +60,6 @@ class PickService
     #   ApiMessage.new({meta: {code: 400, message: e.message}})
     # end
   end
-
 
 
   def self.validable_car_and_box params
@@ -78,14 +77,19 @@ class PickService
         if block_given?
           yield(car, boxs)
         else
-          ApiMessage.new({meta: {code: 200, message: '数据验证通过'}})
+          ApiMessage.new({meta: {code: 200, error_message: '数据验证通过'}})
         end
       else
-        ApiMessage.new({meta: {code: 400, message: err_infos.join(',')}})
+        ApiMessage.new({meta: {code: 400, error_message: err_infos.join(',')}})
       end
     else
-      ApiMessage.new({meta: {code: 400, message: '料车没有找到'}})
+      ApiMessage.new({meta: {code: 400, error_message: '料车没有找到'}})
     end
+  end
+
+
+  def self.by_status status
+    PickPresenter.as_details(Pick.where(status: status).all)
   end
 
 end
