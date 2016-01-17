@@ -36,12 +36,12 @@ namespace ScmClient
         {
             if (parentWindow.type == RFIDScanType.IN)
             {
-                this.contentLabel.Content = "入口RFID已就绪, 请等待领料车...";
+                this.contentLabel.Content = "RFIDIn Is Ready, Waiting for a Car...";
             }
             else if (parentWindow.type == RFIDScanType.OUT)
             {
 
-                this.contentLabel.Content = "出口RFID已就绪, 请等待领料车...";
+                this.contentLabel.Content = "RFIDOut Is Ready, Waiting for a Car...";
             }
         }
 

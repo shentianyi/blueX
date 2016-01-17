@@ -62,5 +62,11 @@ namespace PTLWPF
             p.cmdType = CommandType.ALL_CANCEL;
             p.CancelAllLabels();
         }
+
+        private void findAllBtn_Click(object sender, RoutedEventArgs e)
+        {
+            p.cmdType = CommandType.ALL_FIND;
+            p.FindAllLabels();
+        }
     }
 }

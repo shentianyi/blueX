@@ -21,13 +21,29 @@ namespace ScmClient.RFID
             foreach (string d in dataList)
             {
                 string dd = d.Replace(" ","");
-                //string dd = new String(d.Skip(6).Take(36).ToArray()).Replace(" ", "");
-                if (messageRegex.Match(dd).Success)
+
+                if (RFIDConfig.USE_DLL)
                 {
-                    RFIDMessage msg = StringToMessage(new String(dd.Skip(4).Take(4).ToArray()));
-                    if (msg != null)
+                    dd = new String(d.Skip(6).Take(38).ToArray()).Replace(" ", "");
+                    if (messageRegex.Match(dd).Success)
                     {
-                        list.Add(msg);
+
+                        RFIDMessage msg = StringToMessage(new String(dd.Skip(0).Take(4).ToArray()));
+                        if (msg != null)
+                        {
+                            list.Add(msg);
+                        }
+                    }
+                }
+                else
+                {
+                    if (messageRegex.Match(dd).Success)
+                    {
+                        RFIDMessage msg = StringToMessage(new String(dd.Skip(4).Take(4).ToArray()));
+                        if (msg != null)
+                        {
+                            list.Add(msg);
+                        }
                     }
                 }
             }

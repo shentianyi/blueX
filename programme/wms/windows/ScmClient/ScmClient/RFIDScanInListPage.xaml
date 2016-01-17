@@ -8,80 +8,81 @@
       d:DesignHeight="606" d:DesignWidth="790"
       Title="RFIDScanInListPage"
       Name="RFIDScanInListPageName">
-
-    <Page.Resources>
-        <Style x:Key="contentCenterStyle"
-               TargetType="{x:Type TextBlock}">
-            <Setter Property="HorizontalAlignment"
-                    Value="Center" />
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="10,5,10,10"/>
-            <Setter Property="FontSize" Value="13" />
-            <Setter Property="FontFamily" Value="Times New Roman" />
-        </Style>
-    </Page.Resources>
-
-    <Grid Margin="0 5 0 0">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20*"/>
-            <RowDefinition Height="80*"/>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
 
-            <DockPanel LastChildFill="False">
-                <Label DockPanel.Dock="Left" Content="料车：" Margin="10 6 0 0" Name="label1" />
-                <TextBox BorderBrush="#0e80b0" Name="OrderCarTB" IsEnabled="False" MinWidth="200" Margin="5"/>
-                <!--<Label DockPanel.Dock="Right" Content="*料车不存在" Margin="0 6 0 0" Name="OrderCarMsgLabel" FontWeight="Bold" Foreground="Red" />-->
+        
+        
+        <DockPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Name="briefDP">
+            
+            <DockPanel DockPanel.Dock="Top">
+                <StackPanel Orientation="Horizontal">
+                    <Label DockPanel.Dock="Top" FontFamily="Solomo_Sans_Bold" FontSize="25" Foreground="White"  Content="Car:"/>
+                    <Label FontFamily="Solomo_Sans_Bold" FontSize="25" Foreground="White"  Name="OrderCarLabel"
+                          Content="" />
+                </StackPanel>
             </DockPanel>
+            <DockPanel>
+            <Label DockPanel.Dock="Top" Name="QtyLabel" FontFamily="Solomon_Sans_Light" 
+                   FontSize="200" Foreground="White" Content="0"/>
+                <Label DockPanel.Dock="Bottom" FontFamily="Solomon_Sans_SemiBold" FontSize="15" Foreground="White" 
+                   HorizontalAlignment="Center"  Margin="0 -35 0 0">Boxes captured</Label>
+            </DockPanel>
+           
+        </DockPanel>
+        <DockPanel  VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,50,90,0" Name="detailDP" Visibility="Hidden">
+            <StackPanel>          
+                <StackPanel>
+                <Label Content="Scan:" Name="label3"  FontSize="20" />
+                    <StackPanel Orientation="Horizontal">
+                <TextBox  Name="ScanTB" BorderBrush="#0e80b0" MinWidth="150" Margin="5" KeyUp="ScanTB_KeyUp" Height="40" />
+                        <Button Name="clearBtn" Height="40" Click="clearBtn_Click">Clean</Button>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Left" Height="280">
+                    <DataGrid  Name="PreviewDG" AutoGenerateColumns="False" Margin="5"
+                               IsReadOnly="True" Height="260" 
+                       Width="200" VerticalScrollBarVisibility="Auto">
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="FontSize" Value="12" />
+                                <Setter Property="Padding" Value="20,10,20,10"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn/>
+                            <DataGridTextColumn Header="BOX NR" Binding="{Binding Path=nr}"/>
+                           </DataGrid.Columns>
+                    </DataGrid>
 
-            <DockPanel Grid.Column="1" LastChildFill="False">
-                <Label Content="扫描条码：" Margin="10 6 0 0" Name="label3"   />
-                <TextBox DockPanel.Dock="Left" Name="ScanTB" BorderBrush="#0e80b0" MinWidth="200" Margin="5" KeyUp="ScanTB_KeyUp" />
-                <Button Content="开 门" Height="43" Name="OpenDoorBtn" Width="75" Click="OpenDoorBtn_Click" />
-            </DockPanel>
+                </StackPanel>
+            </StackPanel>
 
-            <DockPanel Grid.Row="1">
-                <Label Content="扫描料盒数量：" Margin="10 10 0 0" Name="label2"  />
-                <Label Content="0" Name="QtyLabel" Margin="10 10 0 0"/>
-            </DockPanel>
-        </Grid>
-        <StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <DataGrid  Name="PreviewDG" AutoGenerateColumns="False" IsReadOnly="True"
-                       Height="309" Margin="5,0,0,0" Width="780" VerticalScrollBarVisibility="Auto">
-                <DataGrid.ColumnHeaderStyle>
-                    <Style TargetType="DataGridColumnHeader">
-                        <Setter Property="Background">
-                            <Setter.Value>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FF269EF1"/>
-                                    <GradientStop Color="#FF052841" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="FontSize" Value="10" />
-                        <Setter Property="Padding" Value="20,10,20,10"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                    </Style>
-                </DataGrid.ColumnHeaderStyle>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="料盒号" Binding="{Binding Path=nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                    <!--<DataGridTextColumn Header="状态" Binding="{Binding Path=status_display}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                    <DataGridTextColumn Header="料盒类型" Binding="{Binding Path=box_type_name}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                    <DataGridTextColumn Header="从属部门" Binding="{Binding Path=warehouse_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                    <DataGridTextColumn Header="取料仓库" Binding="{Binding Path=source_warehouse_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                    <DataGridTextColumn Header="零件号" Binding="{Binding Path=part_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                <DataGridTextColumn Header="数量" Binding="{Binding Path=quantity}" ElementStyle="{StaticResource contentCenterStyle}"/>-->
-                </DataGrid.Columns>
-            </DataGrid>
-        </StackPanel>
+        </DockPanel>
+        <DockPanel>
+            
+        </DockPanel>
+
+        <DockPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Height="60" Width="160" FontFamily="Solomon_Sans_Bold" Margin="20 0 0 0 " Name="OpenDoorBtn"  Click="OpenDoorBtn_Click">
+                <DockPanel>
+                    <Image Height="18" Width="24"  Source="/images/confirm icon.png"/>
+                    <Label FontFamily="Solomon_Sans_Bold" FontSize="20" Margin="20 0 0 0">Confirm</Label>
+                </DockPanel>
+            </Button>
+            <Button Height="60" Width="160" FontFamily="Solomon_Sans_Bold" Margin="20 0 0 0 " Name="previewBtn" Click="previewBtn_Click">
+                <DockPanel>
+                    <Image Height="18" Width="24"  Source="/images/review icon.png"/>
+                    <Label FontFamily="Solomon_Sans_Bold" FontSize="20" Margin="20 0 0 0" Name="previewBtnLabel">Preview</Label>
+                </DockPanel>
+            </Button>
+        </DockPanel>
     </Grid>
+
+
 </Page>

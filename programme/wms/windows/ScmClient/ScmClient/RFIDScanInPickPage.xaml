@@ -10,17 +10,6 @@
       Title="RFIDScanInPickPage"
       Name="RFIDScanInPickPageName">
 
-    <Page.Resources>
-        <Style x:Key="contentCenterStyle"
-               TargetType="{x:Type TextBlock}">
-            <Setter Property="HorizontalAlignment"
-                    Value="Center" />
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="10,5,10,10"/>
-            <Setter Property="FontSize" Value="13" />
-            <Setter Property="FontFamily" Value="Times New Roman" />
-        </Style>
-    </Page.Resources>
     <Grid Margin="0 5 0 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="20*"/>
@@ -39,22 +28,22 @@
             </Grid.RowDefinitions>
 
             <DockPanel>
-                <Label DockPanel.Dock="Left" Width="100" Margin="10 0 0 0" Content="择货单号：" Name="label11" />
+                <Label DockPanel.Dock="Left" Width="100" Margin="10 0 0 0" Content="PickListNo." Name="label11" />
                 <Label  Name="PickNrLabel" />
             </DockPanel>
 
             <DockPanel Grid.Row="1">
-                <Label DockPanel.Dock="Left" Width="100" Content="料车：" Margin="10 0 0 0"  Name="label1" />
+                <Label DockPanel.Dock="Left" Width="100" Content="CarNo." Margin="10 0 0 0"  Name="label1" />
                 <Label Name="OrderCarLabel"/>
             </DockPanel>
 
             <DockPanel Grid.Row="2">
-                <Label DockPanel.Dock="Left" Width="100" Margin="10 0 0 0" Content="扫描料盒数量：" Name="label2"  />
+                <Label DockPanel.Dock="Left" Width="100" Margin="10 0 0 0" Content="BoxQty：" Name="label2"  />
                 <Label Content="0" Name="QtyLabel"/>
             </DockPanel>
 
             <DockPanel Grid.Column="1" Grid.RowSpan="3">
-                <Label FontSize="20" FontWeight="Bold" Content="状态：" VerticalAlignment="Center" Name="label21"  />
+                <Label FontSize="20" FontWeight="Bold" Content="Status：" VerticalAlignment="Center" Name="label21"  />
                 <Label Content="" VerticalAlignment="Center" FontSize="20" Name="PickStatusLabel" FontWeight="Bold"/>
             </DockPanel>
         </Grid>
@@ -64,29 +53,20 @@
                        Height="309" Margin="5,0,0,0" Width="780" VerticalScrollBarVisibility="Auto">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
-                        <Setter Property="Background">
-                            <Setter.Value>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FF269EF1"/>
-                                    <GradientStop Color="#FF052841" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="FontSize" Value="10" />
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="FontSize" Value="12" />
                         <Setter Property="Padding" Value="20,10,20,10"/>
                         <Setter Property="HorizontalContentAlignment" Value="Center"/>
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
                 <DataGrid.Columns>
                     <!--<DataGridTextColumn Header="No." Binding="{Binding Path=no}" ElementStyle="{StaticResource contentCenterStyle}"/>-->
-                    <DataGridTextColumn Header="料盒号" Binding="{Binding Path=nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                    <DataGridTextColumn Header="状态" Binding="{Binding Path=status_display}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                    <DataGridTextColumn Header="料盒类型" Binding="{Binding Path=box_type_name}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                    <DataGridTextColumn Header="BoxNr" Binding="{Binding Path=nr}"/>
+                    <!--<DataGridTextColumn Header="料盒类型" Binding="{Binding Path=box_type_name}" ElementStyle="{StaticResource contentCenterStyle}"/>
                     <DataGridTextColumn Header="从属部门" Binding="{Binding Path=warehouse_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                    <DataGridTextColumn Header="取料仓库" Binding="{Binding Path=source_warehouse_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                    <DataGridTextColumn Header="零件号" Binding="{Binding Path=part_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                    <DataGridTextColumn Header="数量" Binding="{Binding Path=quantity}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                    <DataGridTextColumn Header="取料仓库" Binding="{Binding Path=source_warehouse_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>-->
+                    <DataGridTextColumn Header="PartNr" Binding="{Binding Path=part_nr}" />
+                    <DataGridTextColumn Header="Qty" Binding="{Binding Path=quantity}"/>
                     <!--<DataGridTextColumn Header="库存" Binding="{Binding Path=stock}" ElementStyle="{StaticResource contentCenterStyle}"/>
                     <DataGridTextColumn Header="超量" Binding="{Binding Path=over_stock}" ElementStyle="{StaticResource contentCenterStyle}"/>
                     <DataGridTextColumn Header="取料库位" Binding="{Binding Path=positions_nr}" ElementStyle="{StaticResource contentCenterStyle}"/>-->

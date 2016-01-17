@@ -20,7 +20,7 @@ namespace ScmWcfService.Config
 
                 RFIDCOM = config.Get("RFIDCOM");
                 RFIDBaudRate = int.Parse(config.Get("RFIDBaudRate"));
-
+                RFIDInterVal = int.Parse(config.Get("RFIDInterVal"));
                 
                 MessageRegex = config.Get("MessageRegex");
                 LabelRegex = config.Get("LabelRegex");
@@ -40,5 +40,6 @@ namespace ScmWcfService.Config
         public static string OrderBoxLabelRegex { get; set; }
         public static string RFIDCOM { get; set; }
         public static int RFIDBaudRate { get; set; }
+        public static int RFIDInterVal { get; set; }
     }
 }

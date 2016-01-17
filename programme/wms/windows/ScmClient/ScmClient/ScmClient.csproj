@@ -36,6 +36,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
       <HintPath>..\..\..\..\ThridPart\log4net.dll</HintPath>
@@ -114,6 +117,10 @@
       <DependentUpon>MenuWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Properties\Resources\Icons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="RFIDScanInPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -162,6 +169,14 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <Resource Include="Resources\Entypo.ttf" />
+    <Resource Include="Resources\fonts\Solomon Sans Bold.otf" />
+    <Resource Include="Resources\fonts\Solomon Sans Light.otf" />
+    <Resource Include="Resources\fonts\Solomon Sans SemiBold.otf" />
+    <Resource Include="Properties\Resources\Entypo.ttf" />
+    <Resource Include="Properties\Resources\fonts\Solomon Sans Bold.otf" />
+    <Resource Include="Properties\Resources\fonts\Solomon Sans Light.otf" />
+    <Resource Include="Properties\Resources\fonts\Solomon Sans SemiBold.otf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -169,6 +184,22 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="images\cancel icon.png" />
+    <Resource Include="images\confirm icon.png" />
+    <Resource Include="images\footer logo.png" />
+    <Resource Include="images\forklift one.png" />
+    <Resource Include="images\forklift two.png" />
+    <Resource Include="images\logo.png" />
+    <Resource Include="images\QR.jpg" />
+    <Resource Include="images\review icon.png" />
+    <Resource Include="images\scale.png" />
+    <Resource Include="Properties\Resources\Entypo-license.txt" />
+    <Resource Include="Properties\Resources\WindowsIcons-license.txt" />
+    <Resource Include="Resources\Entypo-license.txt" />
+    <Resource Include="Resources\WindowsIcons-license.txt" />
+    <Resource Include="icon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="ThridPart\EpcDll.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -30,8 +30,8 @@ namespace ScmClient
         RFIDScanInWindow parentWindow;
         bool showMultiCarFlag = false;
 
-        List<RFIDMessage> carMsgList = new List<RFIDMessage>();
-        List<RFIDMessage> boxMsgList = new List<RFIDMessage>();
+        List<RFIDMessage> carMsgList;
+        List<RFIDMessage> boxMsgList;
 
         public OrderCar orderCar { get; set; }
         public List<OrderBox> orderBoxes { get; set; }
@@ -47,6 +47,8 @@ namespace ScmClient
             InitializeComponent();
             this.parentWindow = parentWindow;
             this.orderBoxes = new List<OrderBox>();
+            this.carMsgList = new List<RFIDMessage>();
+            this.boxMsgList = new List<RFIDMessage>();
         }
         public void ReceiveData(List<RFIDMessage> messages)
         {
@@ -57,15 +59,6 @@ namespace ScmClient
             addBoxMessages(boxMsgs);
         }
 
-        //public void ReceiveData(string data)
-        //{
-        //    List<RFIDMessage> messages = Parser.StringToList(data);
-        //    List<RFIDMessage> carMsgs = (from msg in messages where msg.Type == MessageType.CAR select msg).ToList();
-        //    List<RFIDMessage> boxMsgs = (from msg in messages where msg.Type == MessageType.BOX select msg).ToList();
-
-        //    addCarMessages(carMsgs);
-        //    addBoxMessages(boxMsgs);
-        //}
 
         private void addCarMessages(List<RFIDMessage> msgs)
         {
@@ -110,7 +103,7 @@ namespace ScmClient
             if (carMsgList.Count == 1)
             {
                 this.orderCar = new OrderCar() { nr = carMsgList.First().Nr };
-                OrderCarTB.Text = carMsgList.First().Nr;
+                OrderCarLabel.Content = carMsgList.First().Nr;
             }
             else if (carMsgList.Count > 1)
             {
@@ -138,7 +131,7 @@ namespace ScmClient
         private void refreshOrderBox(OrderBox orderBox = null)
         {
             this.orderBoxes.Add(orderBox);
-            // 设置datagrid的数据
+             //设置datagrid的数据
             PreviewDG.ItemsSource = this.orderBoxes;
             PreviewDG.Items.Refresh();
         }
@@ -194,6 +187,43 @@ namespace ScmClient
             RFIDDoor door = new RFIDDoor();
             door.OpenDoor();
         }
+
+        private void previewBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (detailDP.Visibility == Visibility.Hidden)
+            {
+                briefDP.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+                Thickness m = new Thickness();
+                m.Left = 150;
+                briefDP.Margin = m;
+
+                detailDP.Visibility = Visibility.Visible;
+                Thickness mm = new Thickness();
+                mm.Right = 200;
+                detailDP.Margin = mm;
+
+                previewBtnLabel.Content = "Back";
+
+            }
+            else if(detailDP.Visibility==Visibility.Visible){
+                briefDP.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+                Thickness m = new Thickness();
+                m.Left = 0;
+                briefDP.Margin = m;
+
+
+                detailDP.Visibility = Visibility.Hidden;
+
+
+                previewBtnLabel.Content = "Preview";
+            }
+        }
+
+        private void clearBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ScanTB.Text = string.Empty;
+        }
+
 
     }
 }

@@ -25,6 +25,7 @@ namespace PTLWPF
         public int readerAddress{get;set;}
         public CommandType cmdType { get; set; }
         public int retryTimes { get; set; }
+        public int retryInterval { get; set; }
 
         public List<string> nrs { get; set; }
          
@@ -35,12 +36,13 @@ namespace PTLWPF
     //    private int executeTimes = 0;
 
         public PTL() { }
-        public PTL(string com,int baundRate=38400, int readerAddress=1,int retryTimes=6)
+        public PTL(string com,int baundRate=38400, int readerAddress=1,int retryTimes=6,int retryInterval=200)
         {
             this.com = com;
             this.baundRate = baundRate;
             this.readerAddress = readerAddress;
             this.retryTimes = retryTimes;
+            this.retryInterval = retryInterval;
             this.OpenCom();
         }
          
@@ -146,6 +148,10 @@ namespace PTLWPF
             initVar();
         }
 
+        public void FindAllLabels() {
+            initVar();
+        }
+
         public void CancelAllLabels() {
             initVar();
         }
@@ -161,6 +167,9 @@ namespace PTLWPF
             if (CommandType.ALL_CANCEL == this.cmdType)
             {
                 executeTimesQ.Add("ALL_CANCEL", 0);
+            }
+            else if (CommandType.ALL_FIND == this.cmdType) {
+                executeTimesQ.Add("ALL_FIND",0);
             }
             else
             {
@@ -181,7 +190,7 @@ namespace PTLWPF
 
             timer = new System.Timers.Timer();
             timer.Enabled = true;
-            timer.Interval = 100;
+            timer.Interval = this.retryInterval;
             timer.Elapsed += new System.Timers.ElapsedEventHandler(timer_Elapsed);
             timer.Start();
         }
@@ -203,6 +212,13 @@ namespace PTLWPF
          
         public void CancelLabel(string labelNr) { 
             string cmd = getAddress() + " AE 01 00 00 " + stringToStringHex(labelNr);
+
+            byte[] bytes = GetCRCBytes(cmd);
+            sp.Write(bytes, 0, bytes.Length);
+        }
+
+        public void FindAll() {
+            string cmd = getAddress() + " AD 00 00 00 ";
 
             byte[] bytes = GetCRCBytes(cmd);
             sp.Write(bytes, 0, bytes.Length);
@@ -315,7 +331,7 @@ namespace PTLWPF
                     LogUtil.Logger.Info("【结束全部操作】 ");
                 }
             }
-            else if (this.cmdType == CommandType.ALL_CANCEL)
+            else if (this.cmdType == CommandType.ALL_CANCEL || this.cmdType==CommandType.ALL_FIND)
             {
                 if (this.executeTimesQ.First().Value < this.retryTimes)
                 {
@@ -348,6 +364,14 @@ namespace PTLWPF
                 {
                     LogUtil.Logger.Info("【cancel】 " + nrs.First());
                     CancelLabel(nrs.First());
+                }
+            }
+            else if (this.cmdType == CommandType.ALL_FIND) 
+            {
+                if (canExecuteCmd())
+                {
+                    LogUtil.Logger.Info("【find all】 ");
+                    FindAll();
                 }
             }
             else if (this.cmdType == CommandType.ALL_CANCEL)

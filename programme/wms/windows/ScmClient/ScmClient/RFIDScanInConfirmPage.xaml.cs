@@ -72,8 +72,8 @@ namespace ScmClient
             else
             {
                 this.orderCar = msg.data;
-                OrderCarMsgLabel.Visibility = Visibility.Visible;
-                OrderCarMsgLabel.Content = orderCar.status_display;
+                //OrderCarMsgLabel.Visibility = Visibility.Visible;
+                //OrderCarMsgLabel.Content = orderCar.status_display;
             }
         }
 
