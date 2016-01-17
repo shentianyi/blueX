@@ -18,7 +18,7 @@ class PartPresenter<Presenter
           id: @part.id,
           nr: @part.nr,
           weight:@part.weight||1,
-          weight_range:0.1
+          weight_range:@part.weight_range
       }
     end
   end

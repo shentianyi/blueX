@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160107020132) do
+ActiveRecord::Schema.define(version: 20160117114929) do
 
   create_table "colors", force: :cascade do |t|
     t.string   "nr",          limit: 255
@@ -207,8 +207,9 @@ ActiveRecord::Schema.define(version: 20160107020132) do
     t.string   "custom_nr",         limit: 255
     t.float    "cross_section",     limit: 24
     t.float    "weight",            limit: 24
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.float    "weight_range",      limit: 24,  default: 0.1
   end
 
   add_index "parts", ["color_id"], name: "index_parts_on_color_id", using: :btree
