@@ -23,6 +23,9 @@ namespace ScmWcfService.Model
         public DateTime created_at { get; set; }
 
         [DataMember]
+        public string orderable_nr { get; set; }
+
+        [DataMember]
         public List<PickItem> pick_items { get; set; }
         
 

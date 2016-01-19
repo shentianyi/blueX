@@ -51,5 +51,11 @@ namespace ScmClient
                 this.DragMove();
             }
         }
+
+        private void PickBtn_Click(object sender, RoutedEventArgs e)
+        {
+            new PickScanWindow().Show();
+            this.Close();
+        }
     }
 }

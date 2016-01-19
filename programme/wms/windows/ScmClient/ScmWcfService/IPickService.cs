@@ -23,5 +23,8 @@ namespace ScmWcfService
 
         [OperationContract]
         ResponseMessage<Pick> GetPickItemsByPickId(int id);
+
+        [OperationContract]
+        ResponseMessage<List<PickItem>> GetPickItemByCarNr(string car_nr);
     }
 }

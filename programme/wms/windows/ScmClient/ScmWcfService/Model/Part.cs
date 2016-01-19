@@ -15,5 +15,14 @@ namespace ScmWcfService.Model
 
         [DataMember]
         public string nr { get; set; }
+
+        [DataMember]
+        public float weight { get; set; }
+
+        /// <summary>
+        /// percent
+        /// </summary>
+        [DataMember]
+        public float weight_range { get; set; }
     }
 }

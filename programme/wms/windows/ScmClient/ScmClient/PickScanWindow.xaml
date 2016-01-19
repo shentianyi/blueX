@@ -1,10 +1,11 @@
-﻿<controls:MetroWindow x:Class="ScmClient.MenuWindow"
+﻿<controls:MetroWindow  x:Class="ScmClient.PickScanWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                                            xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        Title="PickScanWindow" 
+                                                    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
 
-        Height="400" Width="700" Title="Menu"  WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
-         Name="FirstMenuWindow">
+        Height="500" Width="700"  WindowStartupLocation="CenterScreen"
+                       Closing="MetroWindow_Closing" Loaded="MetroWindow_Loaded">
 
 
     <Grid Background="#0078C1">
@@ -21,25 +22,32 @@
             </Grid.ColumnDefinitions>
             <!--40%(86,32) 50%:(108,40)  60%(129,48)  70%:(151,56) 80%:(172,64) 90%:(194,72)-->
             <Image Stretch="Fill" Height="48" Width="129" Margin="0" VerticalAlignment="Top" Source="/images/logo.png"></Image>
-            
+
         </Grid>
 
 
         <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="RFIDScanInNaviBtn" Content="RFID In" HorizontalAlignment="Center"  VerticalAlignment="Center" 
-                Width="100" Height="80" FontSize="18"   Click="RFIDScanInNaviBtn_Click"/>
-            <Button x:Name="RFIDScanOutNaviBtn"  Grid.Column="1" Content="RFID Out" HorizontalAlignment="Center"  VerticalAlignment="Center" 
-                 Width="100" Height="80" FontSize="18"    Click="RFIDScanOutNaviBtn_Click" />
-            <Button x:Name="PickBtn"  Grid.Column="2" Content="Pick" HorizontalAlignment="Center"  VerticalAlignment="Center" 
-                 Width="100" Height="80" FontSize="18" Click="PickBtn_Click" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
 
+                    <DockPanel Grid.Column="0">
+                       <Image Height="150" Width="112" Source="/images/forklift two.png"></Image>
+                    </DockPanel>
+                <DockPanel Grid.Column="1" VerticalAlignment="Center">
+                    <StackPanel HorizontalAlignment="Left" >
+                    <Label FontSize="20" Foreground="White" Content="Scan Oder Car:" Height="40"/>
+                        <StackPanel Orientation="Horizontal">
+                    <TextBox FontSize="20" Height="40" Width="300" Name="orderCarNrTB" KeyUp="orderCarNrTB_KeyUp" />
+                        <Button Content="GO" Height="40" Width="50" FontSize="20" Name="goBtn" Click="goBtn_Click" />
+                        </StackPanel>
+                    </StackPanel>
+                </DockPanel>
+            </Grid>
         </Grid>
-        
+
         <!--Line-->
         <!--<Line Grid.Row="2" DockPanel.Dock="Top" Stroke="#0096CF" StrokeThickness="1" X1="100" Y1="0" X2="600" Y2="0"></Line>-->
         <Grid Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -52,4 +60,3 @@
         </Grid>
     </Grid>
 </controls:MetroWindow>
-

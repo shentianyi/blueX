@@ -27,7 +27,21 @@ namespace PTLWPF
         public int retryTimes { get; set; }
         public int retryInterval { get; set; }
 
-        public List<string> nrs { get; set; }
+        private List<string> _nrs;
+        public List<string> nrs
+        {
+            get
+            {
+                return this._nrs;
+            }
+            set
+            {
+                this._nrs = value;
+                if (this._nrs != null) {
+                    this._nrs= this._nrs.Distinct().ToList();
+                }
+            }
+        }
          
         private System.Timers.Timer timer;
 
@@ -112,13 +126,22 @@ namespace PTLWPF
 
                         if (this.nrs != null && this.nrs.Count > 0)
                         {
-                            if (this.executeTimesQ[this.nrs.First()] > 0)
-                            {
-                                this.nrs.RemoveAt(0);
+                            try {
+                                if (this.executeTimesQ[this.nrs.First()] > 0)
+                                {
+                                    this.nrs.RemoveAt(0);
+                                }
+                               // Thread.Sleep(100);
+                               // executeCmd();
                             }
-                            //Thread.Sleep(100);
+                            catch (Exception e)
+                            {
 
-                            executeCmd();
+                                LogUtil.Logger.Debug(e.Message);
+                            }
+                            //
+
+                            //
                         }
                         else
                         {
@@ -157,6 +180,12 @@ namespace PTLWPF
         }
 
         public void initVar() {
+            if (timer != null)
+            {
+                timer.Stop();
+                timer = null;
+            }
+
             initExecuteQ();
             initTimer();
         }
@@ -182,12 +211,6 @@ namespace PTLWPF
 
         private void initTimer()
         {
-            if (timer != null)
-            {
-                timer.Stop();
-                timer = null;
-            }
-
             timer = new System.Timers.Timer();
             timer.Enabled = true;
             timer.Interval = this.retryInterval;
@@ -309,41 +332,53 @@ namespace PTLWPF
         private bool canExecuteCmd()
         {
             bool result = false;
-            if (this.cmdType == CommandType.FIND || this.cmdType == CommandType.CANCEL)
+            try
             {
-                if (this.nrs.Count > 0)
+                if (this.cmdType == CommandType.FIND || this.cmdType == CommandType.CANCEL)
                 {
-                    if (this.executeTimesQ[this.nrs.First()] < this.retryTimes)
+                    if (this.nrs.Count > 0)
                     {
-                        LogUtil.Logger.Info("【发送】 第" + this.executeTimesQ[this.nrs.First()] + "次");
-                        this.executeTimesQ[this.nrs.First()] += 1;
+                        string nr = this.nrs.First();
+
+                        if (this.executeTimesQ[nr] < this.retryTimes)
+                        {
+                            LogUtil.Logger.Info("【发送】"+ nr + " 第" + this.executeTimesQ[nr] + "次");
+                            this.executeTimesQ[this.nrs.First()] += 1;
+                            result = true;
+                        }
+                        else
+                        {
+                            if (this.nrs.Contains(nr))
+                            {
+                                this.nrs.Remove(nr);
+                            }
+                            LogUtil.Logger.Info("【结束"+nr+"重试】 ");
+                        }
+                    }
+                    else
+                    {
+                        timer.Stop();
+                        LogUtil.Logger.Info("【结束全部操作】 ");
+                    }
+                }
+                else if (this.cmdType == CommandType.ALL_CANCEL || this.cmdType == CommandType.ALL_FIND)
+                {
+                    if (this.executeTimesQ.First().Value < this.retryTimes)
+                    {
+                        this.executeTimesQ[this.executeTimesQ.First().Key] += 1;
                         result = true;
                     }
                     else
                     {
-                        this.nrs.RemoveAt(0);
-                        LogUtil.Logger.Info("【结束重试】 ");
+                        timer.Stop();
+                        LogUtil.Logger.Info("【结束次重试】 ");
+                        LogUtil.Logger.Info("【结束全部操作】 ");
                     }
                 }
-                else
-                {
-                    timer.Stop();
-                    LogUtil.Logger.Info("【结束全部操作】 ");
-                }
             }
-            else if (this.cmdType == CommandType.ALL_CANCEL || this.cmdType==CommandType.ALL_FIND)
-            {
-                if (this.executeTimesQ.First().Value < this.retryTimes)
-                {
-                    this.executeTimesQ[this.executeTimesQ.First().Key] += 1;
-                    result = true;
-                }
-                else
-                {
-                    timer.Stop();
-                    LogUtil.Logger.Info("【结束次重试】 ");
-                    LogUtil.Logger.Info("【结束全部操作】 ");
-                }
+            catch (Exception e) {
+
+                LogUtil.Logger.Debug(e.Message);
             }
             return result;
         }

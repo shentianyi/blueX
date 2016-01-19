@@ -58,5 +58,31 @@ namespace ScmWcfService
             throw new NotImplementedException();
         }
 
+
+        public ResponseMessage<List<PickItem>> GetPickItemByCarNr(string car_nr)
+        {
+            var msg = new ResponseMessage<List<PickItem>>();
+            try
+            {
+                var client = new ApiClient();
+                var req = client.GenRequest(ApiConfig.GetPickItemByCarNrAction);
+                req.AddParameter("car_nr", car_nr);
+                var res = client.Execute(req);
+                Debug.WriteLine(res.Content);
+                msg = JsonUtil.parse<ResponseMessage<List<PickItem>>>(res.Content);
+            }
+            catch (WebFaultException<string> e)
+            {
+                msg.http_error = true;
+                msg.meta.error_message = e.Detail;
+            }
+            catch (Exception e)
+            {
+                msg.http_error = true;
+                msg.meta.error_message = "系统服务错误，请联系管理员";
+            }
+
+            return msg;
+        }
     }
 }

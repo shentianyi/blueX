@@ -23,7 +23,37 @@ namespace ScmWcfService.Model
         public Part part { get; set; }
 
         [DataMember]
+        public OrderBox order_box { get; set; }
+
+        [DataMember]
         public string created_at { get; set; }
 
+        [DataMember]
+        public bool weight_valid { get; set; }
+
+
+        // partial for view
+        public string part_nr
+        {
+            get {
+                return this.part == null ? "" : this.part.nr;
+            }
+        }
+
+        public string order_box_nr
+        {
+            get
+            {
+                return this.order_box == null ? "" : this.order_box.nr;
+            }
+        }
+
+        public string positions_nr
+        {
+            get
+            {
+                return this.order_box == null ? "" : this.order_box.positions_nr;
+            }
+        }
     }
 }

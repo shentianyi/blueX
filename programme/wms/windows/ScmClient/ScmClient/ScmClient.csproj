@@ -52,6 +52,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.2.2.0\lib\net40\System.Windows.Interactivity.dll</HintPath>
@@ -74,6 +75,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="PickListWindow.xaml.cs">
+      <DependentUpon>PickListWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PickScanWindow.xaml.cs">
+      <DependentUpon>PickScanWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PickWeightWindow.xaml.cs">
+      <DependentUpon>PickWeightWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RFID\RFIDDoor.cs" />
     <Compile Include="Enum\RFIDScanType.cs" />
     <Compile Include="RFID\MessageType.cs" />
@@ -117,6 +127,18 @@
       <DependentUpon>MenuWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PickListWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PickScanWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PickWeightWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Properties\Resources\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -184,15 +206,33 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\cancel icon.png" />
-    <Resource Include="images\confirm icon.png" />
-    <Resource Include="images\footer logo.png" />
-    <Resource Include="images\forklift one.png" />
-    <Resource Include="images\forklift two.png" />
-    <Resource Include="images\logo.png" />
-    <Resource Include="images\QR.jpg" />
-    <Resource Include="images\review icon.png" />
-    <Resource Include="images\scale.png" />
+    <Content Include="images\cancel icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\confirm icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\footer logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\forklift one.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\forklift two.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\QR.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\review icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\scale.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Properties\Resources\Entypo-license.txt" />
     <Resource Include="Properties\Resources\WindowsIcons-license.txt" />
     <Resource Include="Resources\Entypo-license.txt" />

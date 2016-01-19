@@ -23,6 +23,9 @@ namespace ScmWcfService.Model
         public OrderBoxStatus status { get; set; }
 
         [DataMember]
+        public float weight { get; set; }
+
+        [DataMember]
         public OrderBoxType order_box_type { get; set; }
 
         [DataMember]

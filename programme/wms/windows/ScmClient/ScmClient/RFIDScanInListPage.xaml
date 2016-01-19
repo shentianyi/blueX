@@ -36,14 +36,14 @@
         <DockPanel  VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,50,90,0" Name="detailDP" Visibility="Hidden">
             <StackPanel>          
                 <StackPanel>
-                <Label Content="Scan:" Name="label3"  FontSize="20" />
+                <Label Content="Scan:" Name="label3"  FontSize="20" Foreground="White" />
                     <StackPanel Orientation="Horizontal">
                 <TextBox  Name="ScanTB" BorderBrush="#0e80b0" MinWidth="150" Margin="5" KeyUp="ScanTB_KeyUp" Height="40" />
                         <Button Name="clearBtn" Height="40" Click="clearBtn_Click">Clean</Button>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Left" Height="280">
-                    <DataGrid  Name="PreviewDG" AutoGenerateColumns="False" Margin="5"
+                    <DataGrid  Name="PreviewDG" AutoGenerateColumns="False"
                                IsReadOnly="True" Height="260" 
                        Width="200" VerticalScrollBarVisibility="Auto">
                         <DataGrid.ColumnHeaderStyle>
@@ -72,7 +72,7 @@
             <Button Height="60" Width="160" FontFamily="Solomon_Sans_Bold" Margin="20 0 0 0 " Name="OpenDoorBtn"  Click="OpenDoorBtn_Click">
                 <DockPanel>
                     <Image Height="18" Width="24"  Source="/images/confirm icon.png"/>
-                    <Label FontFamily="Solomon_Sans_Bold" FontSize="20" Margin="20 0 0 0">Confirm</Label>
+                    <Label FontFamily="Solomon_Sans_Bold" FontSize="20" Margin="20 0 0 0">OpenDoor</Label>
                 </DockPanel>
             </Button>
             <Button Height="60" Width="160" FontFamily="Solomon_Sans_Bold" Margin="20 0 0 0 " Name="previewBtn" Click="previewBtn_Click">

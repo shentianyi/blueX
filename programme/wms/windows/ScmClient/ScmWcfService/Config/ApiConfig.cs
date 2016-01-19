@@ -30,6 +30,7 @@ namespace ScmWcfService.Config
                 GetOrderBoxByNrsAction = config.Get("GetOrderBoxByNrsAction");
                 CreatePickByCarAction = config.Get("CreatePickByCarAction");
                 MoveStorageByCarAction = config.Get("MoveStorageByCarAction");
+                GetPickItemByCarNrAction = config.Get("GetPickItemByCarNrAction");
             }
             catch (Exception e)
             {
@@ -69,5 +70,6 @@ namespace ScmWcfService.Config
         public static string GetOrderBoxByNrsAction { get; set; }
         public static string CreatePickByCarAction { get; set; }
         public static string MoveStorageByCarAction { get; set; }
+        public static string GetPickItemByCarNrAction { get; set; }
     }
 }

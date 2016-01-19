@@ -46,7 +46,7 @@
                     Margin="0,100,50,0" Name="detailDP">
             <StackPanel>
                 <StackPanel HorizontalAlignment="Left" Height="350">
-                    <DataGrid  Name="PreviewDG" AutoGenerateColumns="False" Margin="5"
+                    <DataGrid  Name="PreviewDG" AutoGenerateColumns="False"
                                IsReadOnly="True" Height="340" 
                        Width="350" VerticalScrollBarVisibility="Auto">
                         <DataGrid.ColumnHeaderStyle>
