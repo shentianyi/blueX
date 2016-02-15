@@ -82,8 +82,8 @@ namespace ScmClient
             if (this.currentPage.Name == "RFIDScanInPickPageName")
             {
                 this.NextBtn.Visibility = Visibility.Visible;
-                this.NextBtn.Content = "Next";
-                this.BackBtn.Content = "Cancel";
+                this.NextBtn.Content = "下一步";
+                this.BackBtn.Content = "取消";
                 if (RFIDConfig.USE_DLL)
                 {
                     this.dllTimer.Enabled = true;
@@ -150,12 +150,12 @@ namespace ScmClient
         public void GoToNextPage()
         {
 
-            BackBtn.Content = "Cancel";
+            BackBtn.Content = "取消";
             NextBtn.Visibility = Visibility.Visible;
 
             if (this.currentPage.Name == "RFIDScanInPageName")
             {
-                NextBtn.Content = "Confirm";
+                NextBtn.Content = "确定";
                 this.currentPage = new RFIDScanInListPage(this);
                 NaviFrame.NavigationService.Navigate(this.currentPage);
             }
@@ -168,12 +168,12 @@ namespace ScmClient
 
                     if (this.type == RFIDScanType.IN)
                     {
-                        NextBtn.Content = "GenPick";
+                        NextBtn.Content = "生成择货";
 
                     }
                     else if (this.type == RFIDScanType.OUT)
                     {
-                        NextBtn.Content = "Confirm";
+                        NextBtn.Content = "确定";
                     }
 
                     this.currentPage = new RFIDScanInConfirmPage(this, listPage.orderCar, listPage.orderBoxes);
@@ -194,7 +194,7 @@ namespace ScmClient
                     confirmPage.GenereatePick();
                     if (confirmPage.pick != null && confirmPage.canNext)
                     {
-                        BackBtn.Content = "Back";
+                        BackBtn.Content = "返回";
                         NextBtn.Visibility = Visibility.Hidden;
                         this.currentPage = new RFIDScanInPickPage(this, confirmPage.orderCar, confirmPage.orderBoxes, confirmPage.pick);
                         NaviFrame.NavigationService.Navigate(this.currentPage);
@@ -207,9 +207,9 @@ namespace ScmClient
                     {
                         new RFIDDoor().OpenDoor();
 
-                        BackBtn.Content = "Cancel";
+                        BackBtn.Content = "取消";
                         this.NextBtn.Visibility = Visibility.Visible;
-                        this.NextBtn.Content = "Next";
+                        this.NextBtn.Content = "下一步";
                         this.currentPage = new RFIDScanInPage(this);
                         NaviFrame.NavigationService.Navigate(this.currentPage);
                         this.dllTimer.Enabled = true;

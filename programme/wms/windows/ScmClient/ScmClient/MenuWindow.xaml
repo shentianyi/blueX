@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                                             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
 
-        Height="400" Width="700" Title="Menu"  WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Height="400" Width="700" Title="菜单"  WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
          Name="FirstMenuWindow">
 
 
@@ -31,11 +31,11 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button x:Name="RFIDScanInNaviBtn" Content="RFID In" HorizontalAlignment="Center"  VerticalAlignment="Center" 
+            <Button x:Name="RFIDScanInNaviBtn" Content="RFID 领料" HorizontalAlignment="Center"  VerticalAlignment="Center" 
                 Width="100" Height="80" FontSize="18"   Click="RFIDScanInNaviBtn_Click"/>
-            <Button x:Name="RFIDScanOutNaviBtn"  Grid.Column="1" Content="RFID Out" HorizontalAlignment="Center"  VerticalAlignment="Center" 
+            <Button x:Name="RFIDScanOutNaviBtn"  Grid.Column="1" Content="RFID 出库" HorizontalAlignment="Center"  VerticalAlignment="Center" 
                  Width="100" Height="80" FontSize="18"    Click="RFIDScanOutNaviBtn_Click" />
-            <Button x:Name="PickBtn"  Grid.Column="2" Content="Pick" HorizontalAlignment="Center"  VerticalAlignment="Center" 
+            <Button x:Name="PickBtn"  Grid.Column="2" Content="择 货" HorizontalAlignment="Center"  VerticalAlignment="Center" 
                  Width="100" Height="80" FontSize="18" Click="PickBtn_Click" />
 
         </Grid>

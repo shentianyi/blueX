@@ -25,10 +25,10 @@
             </Grid.ColumnDefinitions>
             <!--40%(86,32) 50%:(108,40)  60%(129,48)  70%:(151,56) 80%:(172,64) 90%:(194,72)-->
             <Image Stretch="Fill" Height="48" Width="129" Margin="0" VerticalAlignment="Top" Source="/images/logo.png"></Image>
-            <Button x:Name="BackBtn" Content="Cancel" Height="58" Width="80" FontSize="18"
+            <Button x:Name="BackBtn" Content="取消" Height="58" Width="80" FontSize="18"
                     Click="BackBtn_Click" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,116,0" Grid.Column="1" />
             <Button Grid.Column="1" x:Name="NextBtn"  HorizontalAlignment="Right" VerticalAlignment="Top"  Margin="0,0,16,0" 
-                    Click="NextBtn_Click" Content="Next" Height="58" Width="80" FontSize="18"/>
+                    Click="NextBtn_Click" Content="下一步" Height="58" Width="80" FontSize="18"/>
         </Grid>
         <Frame x:Name="NaviFrame" Grid.Row="1" NavigationUIVisibility="Hidden" Cursor="Hand"/>
 

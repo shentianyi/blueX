@@ -98,7 +98,7 @@ namespace ScmClient
 
         private void confirmBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Are you confirm?", "confirm", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes) {
+            if (MessageBox.Show("请确定?", "确定", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes) {
                 this.Close();
             }
         }

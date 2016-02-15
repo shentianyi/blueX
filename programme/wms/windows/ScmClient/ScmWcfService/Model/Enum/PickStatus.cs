@@ -18,16 +18,16 @@ namespace ScmWcfService.Model.Enum
             string result = string.Empty;
             switch (status) { 
                 case PickStatus.INIT:
-                    result = "NEW";
+                    result = "新建";
                     break;
                 case PickStatus.PICKING:
-                    result = "PICKING";
+                    result = "择货中";
                     break;
                 case PickStatus.PICKED:
-                    result = "PICKED";
+                    result = "已择货";
                     break;
                 case PickStatus.ABORTED:
-                    result = "ABORTED";
+                    result = "已放弃";
                     break;
                 default:
                     result = "N/A";

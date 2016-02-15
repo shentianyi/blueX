@@ -19,10 +19,10 @@ namespace ScmWcfService.Model.Enum
             switch (status)
             {
                 case OrderBoxStatus.INIT:
-                    result = "INIT";
+                    result = "新建";
                     break;
                 case OrderBoxStatus.PICKING:
-                    result = "PICKING";
+                    result = "择货";
                     break;
                 default:
                     result = "N/A";

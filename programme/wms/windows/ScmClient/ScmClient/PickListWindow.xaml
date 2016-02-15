@@ -36,7 +36,7 @@
 
                     <DockPanel DockPanel.Dock="Top">
                         <StackPanel Orientation="Horizontal">
-                            <Label DockPanel.Dock="Top" FontFamily="Solomo_Sans_Bold" FontSize="25" Foreground="White"  Content="Car:"/>
+                            <Label DockPanel.Dock="Top" FontFamily="Solomo_Sans_Bold" FontSize="25" Foreground="White"  Content="料车:"/>
                             <Label FontFamily="Solomo_Sans_Bold" FontSize="25" Foreground="White"  Name="OrderCarLabel"
                           Content="" />
                         </StackPanel>
@@ -56,7 +56,7 @@
                             FontFamily="Solomon_Sans_Bold" BorderThickness="1" Name="confirmBtn" Click="confirmBtn_Click">
                                 <DockPanel>
                                     <Image Height="18" Width="24"  Source="/images/confirm icon.png"/>
-                                    <Label FontFamily="Solomon_Sans_Bold" FontSize="20" Margin="20 0 0 0">Confirm</Label>
+                                    <Label FontFamily="Solomon_Sans_Bold" FontSize="20" Margin="20 0 0 0">确定</Label>
                                 </DockPanel>
                             </Button>
                         </StackPanel>
@@ -67,10 +67,10 @@
                             Margin="280,50,0,0" Name="detailDP" Width="500">
                     <StackPanel>
                         <StackPanel>
-                            <Label Content="Scan Box:" Name="label3"  FontSize="20" Foreground="White"/>
+                            <Label Content="扫描:" Name="label3"  FontSize="20" Foreground="White"/>
                             <StackPanel Orientation="Horizontal">
                                 <TextBox  Name="ScanTB" BorderBrush="#0e80b0" MinWidth="250" Margin="5"  Height="40" KeyUp="ScanTB_KeyUp" />
-                                <Button Content="Count" Height="40" Width="60" Name="countBtn" Click="countBtn_Click"/>
+                                <Button Content="称重" Height="40" Width="60" Name="countBtn" Click="countBtn_Click"/>
                             </StackPanel>
                         </StackPanel>
                         <StackPanel HorizontalAlignment="Left" Width="480">
@@ -87,11 +87,11 @@
                                 </DataGrid.ColumnHeaderStyle>
                                 <DataGrid.Columns>
                                     <DataGridTextColumn/>
-                                    <DataGridTextColumn Header="BOX NR" Binding="{Binding Path=order_box_nr}"/>
-                                    <DataGridTextColumn Header="PartNr" Binding="{Binding Path=part_nr}"/>
-                                    <DataGridTextColumn Header="Qty." Binding="{Binding Path=quantity}"/>
-                                    <DataGridTextColumn Header="Position" Binding="{Binding Path=positions_nr}"/>
-                                    <DataGridTextColumn Header="Valid" Binding="{Binding Path=weight_valid}"/>
+                                    <DataGridTextColumn Header="料盒" Binding="{Binding Path=order_box_nr}"/>
+                                    <DataGridTextColumn Header="零件" Binding="{Binding Path=part_nr}"/>
+                                    <DataGridTextColumn Header="数量" Binding="{Binding Path=quantity}"/>
+                                    <DataGridTextColumn Header="库位" Binding="{Binding Path=positions_nr}"/>
+                                    <DataGridTextColumn Header="合法" Binding="{Binding Path=weight_valid}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
 

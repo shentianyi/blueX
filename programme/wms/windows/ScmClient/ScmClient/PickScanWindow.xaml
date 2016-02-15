@@ -38,10 +38,10 @@
                     </DockPanel>
                 <DockPanel Grid.Column="1" VerticalAlignment="Center">
                     <StackPanel HorizontalAlignment="Left" >
-                    <Label FontSize="20" Foreground="White" Content="Scan Oder Car:" Height="40"/>
+                    <Label FontSize="20" Foreground="White" Content="扫描料车:" Height="40"/>
                         <StackPanel Orientation="Horizontal">
                     <TextBox FontSize="20" Height="40" Width="300" Name="orderCarNrTB" KeyUp="orderCarNrTB_KeyUp" />
-                        <Button Content="GO" Height="40" Width="50" FontSize="20" Name="goBtn" Click="goBtn_Click" />
+                        <Button Content="确定" Height="40" Width="60" FontSize="20" Name="goBtn" Click="goBtn_Click" />
                         </StackPanel>
                     </StackPanel>
                 </DockPanel>

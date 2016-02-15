@@ -202,7 +202,7 @@ namespace ScmClient
                 mm.Right = 200;
                 detailDP.Margin = mm;
 
-                previewBtnLabel.Content = "Back";
+                previewBtnLabel.Content = "返回";
 
             }
             else if(detailDP.Visibility==Visibility.Visible){
@@ -215,7 +215,7 @@ namespace ScmClient
                 detailDP.Visibility = Visibility.Hidden;
 
 
-                previewBtnLabel.Content = "Preview";
+                previewBtnLabel.Content = "预览";
             }
         }
 

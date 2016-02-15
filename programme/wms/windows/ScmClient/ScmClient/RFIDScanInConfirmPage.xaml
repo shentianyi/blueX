@@ -21,11 +21,12 @@
 
             <DockPanel DockPanel.Dock="Top">
                 <StackPanel Orientation="Horizontal">
-                    <Label DockPanel.Dock="Top" FontFamily="Solomo_Sans_Bold" FontSize="25" Foreground="Black" Content="Car:"/>
+                    <Label DockPanel.Dock="Top" FontFamily="Solomo_Sans_Bold" FontSize="25" Foreground="Black" Content="料车:"/>
                     <Label FontFamily="Solomo_Sans_Bold" FontSize="25" Foreground="Black" Name="OrderCarLabel"
                           Content="" MinWidth="150" />
 
-                    <Label Content="*Car Not Valid"  Name="OrderCarMsgLabel" FontWeight="Bold" Foreground="Red" Margin="0 10 0 0" Visibility="Hidden"/>
+                    <Label Content="*料车不合法"  Name="OrderCarMsgLabel" 
+                           FontWeight="Bold" Foreground="Red" Margin="0 10 0 0" Visibility="Hidden"/>
                 </StackPanel>
             </DockPanel>
             <DockPanel>
@@ -59,9 +60,9 @@
                         </DataGrid.ColumnHeaderStyle>
                         <DataGrid.Columns>
                             <DataGridTextColumn/>
-                            <DataGridTextColumn Header="BOX NR" Binding="{Binding Path=nr}"/>
-                            <DataGridTextColumn Header="PartNr" Binding="{Binding Path=part_nr}"/>
-                            <DataGridTextColumn Header="Qty" Binding="{Binding Path=quantity}"/>
+                            <DataGridTextColumn Header="料盒" Binding="{Binding Path=nr}"/>
+                            <DataGridTextColumn Header="零件" Binding="{Binding Path=part_nr}"/>
+                            <DataGridTextColumn Header="数量" Binding="{Binding Path=quantity}"/>
 
                         </DataGrid.Columns>
                     </DataGrid>
@@ -78,13 +79,14 @@
             <Button Height="60" Width="160" FontFamily="Solomon_Sans_Bold" Margin="20 0 0 0 " Name="ValidateBtn" Click="ValidateBtn_Click">
                 <DockPanel>
                     <Image Height="18" Width="24"  Source="/images/confirm icon.png"/>
-                    <Label FontFamily="Solomon_Sans_Bold" FontSize="20" Margin="20 0 0 0">ReValidate</Label>
+                    <Label FontFamily="Solomon_Sans_Bold" FontSize="20" Margin="20 0 0 0">重新验证</Label>
                 </DockPanel>
             </Button>
-            <Button Height="60" Width="160" FontFamily="Solomon_Sans_Bold" Margin="20 0 0 0"  Name="DeleteBtn" Click="DeleteBtn_Click" >
+            <Button Height="60" Width="160" FontFamily="Solomon_Sans_Bold" Margin="20 0 0 0"
+                    Name="DeleteBtn" Click="DeleteBtn_Click" >
                 <DockPanel>
                     <Image Height="18" Width="24"  Source="/images/cancel icon.png"/>
-                    <Label FontFamily="Solomon_Sans_Bold" FontSize="20" Margin="20 0 0 0" Name="previewBtnLabel">Delete</Label>
+                    <Label FontFamily="Solomon_Sans_Bold" FontSize="20" Margin="20 0 0 0" Name="previewBtnLabel">删 除</Label>
                 </DockPanel>
             </Button>
         </DockPanel>

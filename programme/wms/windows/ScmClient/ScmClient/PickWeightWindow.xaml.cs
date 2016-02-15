@@ -53,7 +53,7 @@ namespace ScmClient
             positionLabel.Content = item.positions_nr;
             qtyLabel.Content = item.quantity;
             
-            standWeightLabel.Content =minWeight+"--("+ standWeight+")--"+maxWeight;
+            standWeightLabel.Content =minWeight+"-("+ standWeight+")-"+maxWeight;
             actualWeightTB.Focus();
 
             try
@@ -112,7 +112,7 @@ namespace ScmClient
 
                     valid = true;
                     weightMsgBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Green"));
-                    weightMsgTB.Text = "Pass";
+                    weightMsgTB.Text = "通过";
 
                 }
                 else
@@ -120,7 +120,7 @@ namespace ScmClient
 
                     this.item.weight_valid = false;
 
-                    weightMsgTB.Text = "Invalid";
+                    weightMsgTB.Text = "失败";
                     weightMsgBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Red"));
                 }
 
@@ -128,7 +128,7 @@ namespace ScmClient
             }
             else
             {
-                MessageBox.Show("Invalid Weight Input");
+                MessageBox.Show("重量未在范围内");
             }
 
             actualWeightTB.Focus();

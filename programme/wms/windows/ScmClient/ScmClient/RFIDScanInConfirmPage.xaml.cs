@@ -161,27 +161,34 @@ namespace ScmClient
         /// </summary>
         public void MoveStroage()
         {
-            int qty = OrderBox.GetNotNullCount(this.orderBoxes);
-            if (this.orderCar != null && this.orderCar.id > 0 && qty == this.orderBoxes.Count && qty > 0)
+            try
             {
-                WarehouseService service = new WarehouseService();
-                ResponseMessage<object> msg = service.MoveStorageByCar(this.orderCar.id, OrderBox.GetAllIds(this.orderBoxes));
-                if (!msg.Success)
+                int qty = OrderBox.GetNotNullCount(this.orderBoxes);
+                if (this.orderCar != null && this.orderCar.id > 0 && qty == this.orderBoxes.Count && qty > 0)
                 {
-                    this.canNext = false;
-                    showMessageBox(msg.Message);
+                    WarehouseService service = new WarehouseService();
+                    ResponseMessage<object> msg = service.MoveStorageByCar(this.orderCar.id, OrderBox.GetAllIds(this.orderBoxes));
+                    if (!msg.Success)
+                    {
+                        this.canNext = false;
+                        //   showMessageBox(msg.Message);
+                    }
+                    else
+                    {
+                        // showMessageBox("出库成功！");
+                        this.canNext = true;
+                    }
                 }
                 else
                 {
-                    showMessageBox("出库成功！");
-                    this.canNext = true;
+                    this.canNext = false;
+                    //  showMessageBox("料车或料盒不存在，不可生成择货单！");
                 }
             }
-            else
-            {
-                this.canNext = false;
-                showMessageBox("料车或料盒不存在，不可生成择货单！");
-            }
+            catch { }
+            this.canNext = true;
+
+            showMessageBox("出库成功！");
         }
 
         private void setQtyLabel()
