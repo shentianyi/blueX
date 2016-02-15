@@ -51,6 +51,21 @@ class UsersController < ApplicationController
     end
   end
 
+  def import
+    if request.post?
+      msg = Message.new
+      begin
+        file=params[:files][0]
+        fd = FileData.new(data: file, original_name: file.original_filename, path: $upload_data_file_path, path_name: "#{Time.now.strftime('%Y%m%d%H%M%S%L')}~#{file.original_filename}")
+        fd.save
+        msg = FileHandler::Excel::UserHandler.import(fd)
+      rescue => e
+        msg.content = e.message
+      end
+      render json: msg
+    end
+  end
+
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
@@ -69,6 +84,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:nr, :name, :email, :role_id, :encrypted_password, :can_edit, :can_delete)
+      params.require(:user).permit(:nr, :name, :email, :role_id, :encrypted_password, :can_edit, :can_delete, :password, :password_confirmation)
     end
 end

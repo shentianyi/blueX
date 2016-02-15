@@ -1,0 +1,69 @@
+<style type="text/css">
+
+    th, td {
+        text-align: center;
+    }
+</style>
+
+<p class="title">需求项列表 <i>&#8593;</i></p>
+<hr style="border: 1px solid #000;margin-top: 0;padding-top: 0;margin-left: 158px;"/>
+<hr style="border: 1px solid #000;">
+<%= link_to "返回", orders_path, :class => 'btn btn-primary', :style => 'margin-top: 0;padding-top: 0; color:#000; margin-left:1%;' %>
+
+
+<div class="container">
+  <fieldset style="width: 80%;margin-top: 60px;border: 1px solid #ccc;">
+    <legend style="width: 200px;">需求项列表</legend>
+    <div style="display: inline-flex;">
+      <div class="trapezoid" style="margin: 0;">
+        <p style="padding-top: 20px;">需求项列表</p>
+      </div>
+      <div style="display: inline-flex;">
+        <div class="digg_pagination" style="padding-top: 10px;padding-left: 10px;">
+          <div class="page_info">
+            <%= page_entries_info @order_items %>
+          </div>
+          <%= will_paginate @order_items, :container => false %>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-bordered table-striped">
+      <thead>
+      <tr>
+        <th>需求单号</th>
+        <th>创建者</th>
+        <th>状态</th>
+        <th>数量</th>
+        <th>零件号</th>
+        <th>料盒编号</th>
+        <th>是否加急</th>
+        <th>备注</th>
+        <th colspan="3"></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @order_items.each_with_index do |order_item, i| %>
+          <tr>
+            <td><%= order_item.order.nr %></td>
+            <td><%= order_item.user.blank? ? '' : order_item.user.nr %></td>
+            <td><%= OrderItemStatus.display order_item.status %></td>
+            <td><%= order_item.quantity %></td>
+            <td><%= order_item.part.blank? ? '' : order_item.part.nr %></td>
+            <td><%= order_item.orderable.blank? ? '' : order_item.orderable.nr %></td>
+            <td>
+              <% if order_item.is_emergency %>
+                  <span class="label label-success">是</span>
+              <% else %>
+                  <span class="label label-warning">否</span>
+              <% end %>
+            </td>
+            <td><%= order_item.remarks %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+  </fieldset>
+</div>

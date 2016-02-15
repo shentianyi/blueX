@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="Config\ApiConfig.cs" />
     <Compile Include="Config\RFIDConfig.cs" />
+    <Compile Include="Config\DoorConfig.cs" />
     <Compile Include="IOrderService.cs" />
     <Compile Include="IPickService.cs" />
     <Compile Include="IWarehouseService.cs" />
@@ -122,6 +123,9 @@
     <None Include="Ini\rfid.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Ini\door.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\base\windows\Brilliantech.Framwork\Brilliantech.Framwork.csproj">
@@ -142,7 +146,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>12355</DevelopmentServerPort>
+          <DevelopmentServerPort>10661</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

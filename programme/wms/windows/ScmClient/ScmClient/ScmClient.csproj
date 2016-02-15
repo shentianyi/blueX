@@ -40,17 +40,12 @@
     <Reference Include="log4net">
       <HintPath>..\..\..\..\ThridPart\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.Metro, Version=1.2.0.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.1.2.0.0\lib\net40\MahApps.Metro.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="n3kAdrtB">
+      <HintPath>..\..\..\..\ThridPart\n3kAdrtB.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.1.2.0.0\lib\net40\System.Windows.Interactivity.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -68,6 +63,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="RFID\RFIDDoor.cs" />
+    <Compile Include="Enum\RFIDScanType.cs" />
     <Compile Include="RFID\MessageType.cs" />
     <Compile Include="RFID\Parser.cs" />
     <Compile Include="RFID\RFIDDll.cs" />
@@ -87,20 +84,8 @@
     <Compile Include="RFIDScanInPickPage.xaml.cs">
       <DependentUpon>RFIDScanInPickPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RFIDScanOutWindow.xaml.cs">
-      <DependentUpon>RFIDScanOutWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="RFIDScanOutPage.xaml.cs">
-      <DependentUpon>RFIDScanOutPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="RFIDScanOutListPage.xaml.cs">
-      <DependentUpon>RFIDScanOutListPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="RFIDScanOutConfirmPage.xaml.cs">
-      <DependentUpon>RFIDScanOutConfirmPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="RFIDScanOutPickPage.xaml.cs">
-      <DependentUpon>RFIDScanOutPickPage.xaml</DependentUpon>
+    <Compile Include="SettingWindow.xaml.cs">
+      <DependentUpon>SettingWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
@@ -121,10 +106,6 @@
       <DependentUpon>MenuWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Resources\Icons.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="RFIDScanInPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -145,25 +126,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="RFIDScanOutWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="SettingWindow.xaml">
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="RFIDScanOutPage.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="RFIDScanOutListPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="RFIDScanOutConfirmPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="RFIDScanOutPickPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -194,11 +159,8 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <Resource Include="Resources\Entypo.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\WindowsIcons-license.txt" />
-    <Resource Include="Resources\Entypo-license.txt" />
     <Content Include="ThridPart\EpcDll.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

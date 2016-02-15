@@ -4,7 +4,7 @@ class MovementsController < ApplicationController
   # GET /movements
   # GET /movements.json
   def index
-    @movements = Movement.all
+    @movements = Movement.paginate(:page => params[:page], :per_page => 100)
   end
 
   # GET /movements/1
@@ -61,6 +61,36 @@ class MovementsController < ApplicationController
     end
   end
 
+  def search
+    super { |query|
+      unless params[:movement][:from_position_id].blank?
+        if from_position = Position.find_by_nr(params[:movement][:from_position_id])
+          query = query.unscope(where: :from_position_id).where(from_position_id: from_position.id)
+        end
+      end
+
+      unless params[:movement][:to_position_id].blank?
+        if to_position = Position.find_by_nr(params[:movement][:to_position_id])
+          query = query.unscope(where: :to_position_id).where(to_position_id: to_position.id)
+        end
+      end
+
+      unless params[:movement][:part_id].blank?
+        if part = Part.find_by_nr(params[:movement][:part_id])
+          query = query.unscope(where: :part_id).where(part_id: part.id)
+        end
+      end
+
+      unless params[:movement][:user_id].blank?
+        if user = User.find_by_nr(params[:movement][:user_id])
+          query = query.unscope(where: :user_id).where(user_id: user.id)
+        end
+      end
+
+      query
+    }
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_movement
@@ -69,6 +99,6 @@ class MovementsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def movement_params
-      params.require(:movement).permit(:part_id, :fifo, :quantity, :package_nr, :uniq, :from_position_id, :from_warehouse_id, :to_position_id, :to_warehouse_id, :move_type_id, :user_id, :remarks)
+      params.require(:movement).permit(:part_id, :fifo, :quantity, :package_nr, :uniq_nr, :from_position_id, :from_warehouse_id, :to_position_id, :to_warehouse_id, :move_type_id, :user_id, :remarks)
     end
 end

@@ -1,35 +1,67 @@
-<p id="notice"><%= notice %></p>
+<style type="text/css">
 
-<h1>Listing Units</h1>
+    th, td {
+        text-align: center;
+    }
+</style>
 
-<table>
-  <thead>
-    <tr>
-      <th>Nr</th>
-      <th>Name</th>
-      <th>Short name</th>
-      <th>Description</th>
-      <th>Unit group</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<p class="title">零件单位列表 <i>&#8593;</i></p>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 158px;"/>
 
-  <tbody>
-    <% @units.each do |unit| %>
+<hr style="border: 1px solid #000;">
+
+<div class="container">
+  <fieldset style="width: 80%;margin-top: 60px;border: 1px solid #ccc;">
+
+    <legend style="width: 100px;">零件单位列表</legend>
+    <div style="display: inline-flex;">
+      <div class="trapezoid" style="margin: 0;">
+        <p style="padding-top: 20px;">零件单位列表</p>
+      </div>
+      <div style="display: inline-flex;">
+        <div class="digg_pagination" style="padding-top: 10px;padding-left: 10px;">
+          <div class="page_info">
+            <%= page_entries_info @units %>
+          </div>
+          <%= will_paginate @units, :container => false %>
+        </div>
+
+        <%= link_to '新建零件单位', send("new_#{@model}_path"), :class => 'btn btn-primary',
+                    :style => 'color:#fff;padding-top:10px;margin:10px 0 0 20px' %>
+      </div>
+    </div>
+
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
       <tr>
-        <td><%= unit.nr %></td>
-        <td><%= unit.name %></td>
-        <td><%= unit.short_name %></td>
-        <td><%= unit.description %></td>
-        <td><%= unit.unit_group_id %></td>
-        <td><%= link_to 'Show', unit %></td>
-        <td><%= link_to 'Edit', edit_unit_path(unit) %></td>
-        <td><%= link_to 'Destroy', unit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>单位编号</th>
+        <th>名称</th>
+        <th>简称</th>
+        <th>描述</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+      </thead>
 
-<br>
+      <tbody>
+      <% @units.each do |unit| %>
+          <tr>
+            <td><%= unit.nr %></td>
+            <td><%= unit.name %></td>
+            <td><%= unit.short_name %></td>
+            <td><%= unit.description %></td>
+            <td>
+              <%= link_to '[详情]', unit %>
+              <% if current_user.can_edit %>
+                  <%= link_to '[编辑]', edit_unit_path(unit) %>
+              <% end %>
+              <% if current_user.can_delete %>
+                  <%= link_to '[删除]', unit, method: :delete, data: {confirm: '确定删除?'} %>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
 
-<%= link_to 'New Unit', new_unit_path %>
+  </fieldset>
+</div>

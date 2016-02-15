@@ -1,33 +1,108 @@
-<p id="notice"><%= notice %></p>
+<style type="text/css">
 
-<h1>Listing Picks</h1>
+    th, td {
+        text-align: center;
+    }
+</style>
 
-<table>
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Status</th>
-      <th>Warehouse</th>
-      <th>Remarks</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<p class="title">择货单详细列表 <i>&#8593;</i></p>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 158px;"/>
 
-  <tbody>
-    <% @picks.each do |pick| %>
+
+<div class="slide col-sm-12">
+  <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
+    <div class="col-sm-3">
+            <span>择货单号：
+              <input type="text" name="pick[nr]" value="<%= @nr %>"/>
+            </span>
+    </div>
+    <div class="col-sm-3">
+            <span>创建者：
+              <input type="text" name="pick[user_id]" value="<%= @user_id %>"/>
+            </span>
+    </div>
+    <div class="col-sm-3">
+            <span>仓库：
+              <%= select_tag('pick[warehouse_id]', options_from_collection_for_select(Warehouse.all, :id, :nr, @warehouse_id), include_blank: true) %>
+            </span>
+    </div>
+    <div class="col-sm-3">
+            <span>状态：
+              <%= select_tag('pick[status]', options_for_select(PickStatus.menu, @status), include_blank: true) %>
+            </span>
+    </div>
+
+    <div class="col-sm-4">
+            <span>
+              创建日期：
+              <input type="text" name="pick[created_at][start]" class="datetime-picker" value="<%= @created_at_start %>"/>
+              ~  <input type="text" name="pick[created_at][end]" class="datetime-picker" value="<%= @created_at_end %>"/>
+            </span>
+    </div>
+    <div class="col-sm-3">
+      <input style="margin: 0" type="submit" value="查 找" class="btn btn-primary"/>
+    </div>
+  </form>
+</div>
+
+<hr style="border: 1px solid #000;">
+
+<div class="container">
+  <fieldset style="width: 80%;margin-top: 60px;border: 1px solid #ccc;">
+
+    <legend style="width: 200px;">择货单详细列表</legend>
+    <div style="display: inline-flex;">
+      <div class="trapezoid" style="margin: 0;">
+        <p style="padding-top: 20px;">择货单详细列表</p>
+      </div>
+      <div style="display: inline-flex;">
+        <div class="digg_pagination" style="padding-top: 10px;padding-left: 10px;">
+          <div class="page_info">
+            <%= page_entries_info @picks %>
+          </div>
+          <%= will_paginate @picks, :container => false %>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
       <tr>
-        <td><%= pick.user %></td>
-        <td><%= pick.status %></td>
-        <td><%= pick.warehouse_id %></td>
-        <td><%= pick.remarks %></td>
-        <td><%= link_to 'Show', pick %></td>
-        <td><%= link_to 'Edit', edit_pick_path(pick) %></td>
-        <td><%= link_to 'Destroy', pick, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>择货单号</th>
+        <th>创建者</th>
+        <th>创建日期</th>
+        <th>状态</th>
+        <th>仓库</th>
+        <th>备注</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+      </thead>
 
-<br>
+      <tbody>
+      <% @picks.each do |pick| %>
+          <tr>
+            <td><%= pick.nr %></td>
+            <td><%= pick.user.blank? ? '' : pick.user.nr %></td>
+            <td><%= pick.created_at.localtime %></td>
+            <td><%= PickStatus.display pick.status %></td>
+            <td><%= pick.warehouse.blank? ? '' : pick.warehouse.nr %></td>
+            <td><%= pick.remarks %></td>
+            <td><%= link_to '清单列表', pick_items_pick_path(pick) %><span class="badge pull-right"><%= pick.pick_items.count %></td>
+            <td><%= link_to '导出数据', {controller: 'picks', action: 'exports', id: pick} %></td>
+            <td>
+              <%= link_to '[详情]', pick %>
+              <% if current_user.can_edit %>
+                  <%= link_to '[编辑]', edit_pick_path(pick) %>
+              <% end %>
+              <% if current_user.can_delete %>
+                  <%= link_to '[删除]', pick, method: :delete, data: {confirm: '确定删除?'} %>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
 
-<%= link_to 'New Pick', new_pick_path %>
+  </fieldset>
+</div>
+

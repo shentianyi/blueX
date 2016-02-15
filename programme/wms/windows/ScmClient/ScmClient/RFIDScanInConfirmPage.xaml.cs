@@ -128,15 +128,19 @@ namespace ScmClient
             }
         }
 
+        /// <summary>
+        /// 生成择货单
+        /// </summary>
         public void GenereatePick()
         {
-            if (this.orderCar != null && OrderBox.GetNotNullCount(this.orderBoxes) == this.orderBoxes.Count)
+            if (this.orderCar != null && this.orderCar.id>0 && OrderBox.GetNotNullCount(this.orderBoxes) == this.orderBoxes.Count)
             {
                 PickService service = new PickService();
                 
                 ResponseMessage<Pick> msg = service.CreatePickByOrderCar(this.orderCar.id, OrderBox.GetAllIds(this.orderBoxes));
                 if (!msg.Success)
                 {
+                    this.canNext = false;
                     showMessageBox(msg.Message);
                 }
                 else
@@ -147,11 +151,41 @@ namespace ScmClient
             }
             else
             {
+                this.canNext = false;
                 showMessageBox("料车或料盒不存在，不可生成择货单！");
             }
         }
 
-        private void setQtyLabel() {
+        /// <summary>
+        /// 根据料车移库
+        /// </summary>
+        public void MoveStroage()
+        {
+            int qty = OrderBox.GetNotNullCount(this.orderBoxes);
+            if (this.orderCar != null && this.orderCar.id > 0 && qty == this.orderBoxes.Count && qty > 0)
+            {
+                WarehouseService service = new WarehouseService();
+                ResponseMessage<object> msg = service.MoveStorageByCar(this.orderCar.id, OrderBox.GetAllIds(this.orderBoxes));
+                if (!msg.Success)
+                {
+                    this.canNext = false;
+                    showMessageBox(msg.Message);
+                }
+                else
+                {
+                    showMessageBox("出库成功！");
+                    this.canNext = true;
+                }
+            }
+            else
+            {
+                this.canNext = false;
+                showMessageBox("料车或料盒不存在，不可生成择货单！");
+            }
+        }
+
+        private void setQtyLabel()
+        {
             this.QtyLabel.Content = this.orderBoxes.Count;
             this.QtyValidLabel.Content = OrderBox.GetNotNullCount(this.orderBoxes);
         }

@@ -7,9 +7,9 @@
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="453"
       Title="RFIDScanInPage"
-      Name="RFIDScanInPageName">
+      Name="RFIDScanInPageName" Loaded="RFIDScanInPageName_Loaded">
 
     <Grid>
-        <Label x:Name="label" FontFamily="宋体 Arial Comic Sans MS" Content="入口RFID已就绪, 请等待领料车..." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"/>
+        <Label x:Name="contentLabel"  FontFamily="宋体 Arial Comic Sans MS" Content="入口RFID已就绪, 请等待领料车..." HorizontalAlignment="Left" Margin="74,111,0,0" VerticalAlignment="Top" FontSize="22"/>
     </Grid>
 </Page>

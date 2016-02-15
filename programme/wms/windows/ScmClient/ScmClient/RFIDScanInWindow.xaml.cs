@@ -19,6 +19,8 @@ using System.Windows.Forms;
 using System.Windows.Threading;
 using System.Windows.Navigation;
 using ScmWcfService.Model;
+using ScmClient.Enum;
+using ScmWcfService.Config;
 
 namespace ScmClient
 {
@@ -33,19 +35,22 @@ namespace ScmClient
         private System.Timers.Timer timer;
         IntPtr g_selectCom = IntPtr.Zero;       //选择操作的串口句柄
 
+        public RFIDScanType type { get; set; }
+
         public RFIDScanInWindow()
         {
             InitializeComponent();
         }
-        public RFIDScanInWindow(MenuWindow menuWindow)
+        public RFIDScanInWindow(MenuWindow menuWindow,RFIDScanType type)
         {
             InitializeComponent();
             this.menuWindow = menuWindow;
+            this.type = type;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.currentPage = new RFIDScanInPage();
+            this.currentPage = new RFIDScanInPage(this);
             NaviFrame.NavigationService.Navigate(this.currentPage);
             initTimer();
             openCom();
@@ -71,7 +76,7 @@ namespace ScmClient
                 this.BackBtn.Content = "放弃";
                 this.timer.Enabled = true;
                 this.timer.Start();
-                this.currentPage = new RFIDScanInPage();
+                this.currentPage = new RFIDScanInPage(this);
                 NaviFrame.NavigationService.Navigate(this.currentPage);
             }
             else {
@@ -80,14 +85,7 @@ namespace ScmClient
         }
 
         private void closeWindow() {
-            closeCOM();
-
-            this.Close();
-            if (this.menuWindow != null && !this.menuWindow.IsActive)
-            {
-                this.menuWindow.Activate();
-                this.menuWindow.Show();
-            }
+            this.Close(); 
         }
         private void closeCOM() {
             int stopReadFlag = RFIDDll.ComStopReadMultiTag(g_selectCom);
@@ -116,7 +114,8 @@ namespace ScmClient
             this.GoToNextPage();
         }
 
-        public void GoToNextPage() {
+        public void GoToNextPage()
+        {
 
             BackBtn.Content = "放弃";
             NextBtn.Visibility = Visibility.Visible;
@@ -133,9 +132,20 @@ namespace ScmClient
                 if (listPage.Validate())
                 {
                     this.StopTimer();
-                    NextBtn.Content = "生成择货单";
+
+                    if (this.type == RFIDScanType.IN)
+                    {
+                        NextBtn.Content = "生成择货单";
+
+                    }
+                    else if (this.type == RFIDScanType.OUT)
+                    {
+                        NextBtn.Content = "完成出库";
+                    }
+
                     this.currentPage = new RFIDScanInConfirmPage(this, listPage.orderCar, listPage.orderBoxes);
                     NaviFrame.NavigationService.Navigate(this.currentPage);
+
                 }
                 else
                 {
@@ -145,13 +155,33 @@ namespace ScmClient
             else if (this.currentPage.Name == "RFIDScanInConfirmPageName")
             {
                 RFIDScanInConfirmPage confirmPage = (RFIDScanInConfirmPage)currentPage;
-                confirmPage.GenereatePick();
-                if (confirmPage.pick != null && confirmPage.canNext)
+                if (this.type == RFIDScanType.IN)
                 {
-                    BackBtn.Content = "返回";
-                    NextBtn.Visibility = Visibility.Hidden;
-                    this.currentPage = new RFIDScanInPickPage(this,confirmPage.orderCar,confirmPage.orderBoxes,confirmPage.pick);
-                    NaviFrame.NavigationService.Navigate(this.currentPage);
+                    new RFIDDoor().OpenDoor();
+                    confirmPage.GenereatePick();
+                    if (confirmPage.pick != null && confirmPage.canNext)
+                    {
+                        BackBtn.Content = "返回";
+                        NextBtn.Visibility = Visibility.Hidden;
+                        this.currentPage = new RFIDScanInPickPage(this, confirmPage.orderCar, confirmPage.orderBoxes, confirmPage.pick);
+                        NaviFrame.NavigationService.Navigate(this.currentPage);
+                    }
+                }
+                else if (this.type == RFIDScanType.OUT)
+                {
+                    confirmPage.MoveStroage();
+                    if (confirmPage.canNext)
+                    {
+                        new RFIDDoor().OpenDoor();
+
+                        BackBtn.Content = "放弃";
+                        this.NextBtn.Visibility = Visibility.Visible;
+                        this.NextBtn.Content = "下一步";
+                        this.currentPage = new RFIDScanInPage(this);
+                        NaviFrame.NavigationService.Navigate(this.currentPage);
+                        this.timer.Enabled = true;
+                        this.timer.Start();
+                    }
                 }
             }
         }
@@ -164,7 +194,7 @@ namespace ScmClient
         private void openCom()
         {
             IntPtr t_hCom = IntPtr.Zero;
-            int openFlag = RFIDDll.ComOpenCom(ref t_hCom, "COM1", 9600);
+            int openFlag = RFIDDll.ComOpenCom(ref t_hCom,RFIDConfig.RFIDCOM, RFIDConfig.RFIDBaudRate);
 
             string m_MsgInfo = string.Empty;
 
@@ -223,55 +253,44 @@ namespace ScmClient
             int flag = 0;
               
             flag = RFIDDll.ComGetMultiTagBuf_Ex(recvbuf);
-            
+
             if (flag == RFIDDll.GET_TAG_DATA_SUCCESS)
             {
                 string data = System.Text.Encoding.Default.GetString(recvbuf);
 
-                LogUtil.Logger.Info("[接收到]"+data);
+                LogUtil.Logger.Info("[接收到]" + data);
 
-                this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate()
+                List<RFIDMessage> messages = new List<RFIDMessage>();
+                messages = Parser.StringToList(data);
+                if (messages.Count > 0)
                 {
-                    LogUtil.Logger.Info(this.currentPage.Name);
-                    if (this.currentPage.Name == "RFIDScanInPageName")
+                    this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate()
                     {
-                        this.currentPage = new RFIDScanInListPage(this);
-                        NaviFrame.NavigationService.Navigate(this.currentPage);
-                    }
-                });
-                this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate()
-               {
-                   if (this.currentPage.Name == "RFIDScanInListPageName")
-                   {
-                       ((RFIDScanInListPage)this.currentPage).ReceiveData(data);
-                   }
-               });
+                        LogUtil.Logger.Info(this.currentPage.Name);
+                        if (this.currentPage.Name == "RFIDScanInPageName")
+                        {
+                            this.currentPage = new RFIDScanInListPage(this);
+                            NaviFrame.NavigationService.Navigate(this.currentPage);
+                        } 
+                       if (this.currentPage.Name == "RFIDScanInListPageName")
+                       {
+                           ((RFIDScanInListPage)this.currentPage).ReceiveData(messages);
+                       }
+                    });
+                   // this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate()
+                   //{
+                      
+                   //});
+                }
             }
         }
 
-        //private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    if (System.Windows.MessageBox.Show("确定关闭?", "确认提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-        //    {
-        //        closeCOM();
-
-        //        System.Windows.Application.Current.Shutdown();
-        //    }
-        //}
-
-        //Drog and Drop
-        private void Window_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                this.DragMove();
-            }
-        }
-        //Close function
-        private void Close(object sender,RoutedEventArgs e)
-        {
-            this.Close();
-            Environment.Exit(0);
+            closeCOM();
+            Thread.Sleep(500);
+            new MenuWindow().Show();
         }
 
     }

@@ -30,14 +30,6 @@ class Role
     id.to_s.to_sym
   end
 
-  def self.role_items
-    role_items=[]
-    @@roles.each do |key, value|
-      role_items<<RoleItem.new(id: key.to_s.to_i, name: Role.display(key))
-    end
-    return role_items
-  end
-
   def self.menu
     roles = []
     @@roles.each { |key, value|
@@ -45,8 +37,4 @@ class Role
     }
     roles
   end
-end
-
-class RoleItem<CZ::BaseClass
-  attr_accessor :id, :name
 end

@@ -1,0 +1,40 @@
+<script type="text/javascript">
+    $(document).ready(function () {
+        data_upload("#item-data-uploader");
+    });
+</script>
+<p id="notice">
+  <%= notice %>
+</p>
+
+<style type="text/css">
+    a:hover, a:active, a:focus {
+        background-color: #F2F2F2;
+        color: red;
+        text-decoration: none;
+    }
+
+    hr {
+        border: 1px solid #999;
+    }
+</style>
+<h1>上传<strong>员工信息</strong>文件</h1>
+<hr/>
+<form>
+  <fieldset style="border: 1px solid #424A5D;margin-left: 2%;margin-right: 2%;">
+    <legend style="width: auto;">员工信息表</legend>
+    <div style="margin-left: 2%;">
+      <b style="font-size: 1.2em">选择数据文件：</b>
+      <input style="border: 0;margin-left: 5%;margin-top: 2%; width: auto;" id="item-data-uploader" type="file" name="files[]" data-url="/users/import"/>
+
+
+      <hr/>
+      <div id="item-data-uploader-preview" style="display:none;color: #000;font-size: 1.2em;"></div>
+      <div style="margin-top: 2%;">
+        <b style="font-size: 1.2em;color: #000">下载模板：</b>
+        <a href="/files/<%= ImportTemplate.user_excel_template %>">
+          <%= ImportTemplate::USER_EXCEL_TEMPLATE %></a>
+      </div>
+    </div>
+  </fieldset>
+</form>

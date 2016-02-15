@@ -4,7 +4,7 @@ class PartsController < ApplicationController
   # GET /parts
   # GET /parts.json
   def index
-    @parts = Part.all
+    @parts = Part.paginate(:page => params[:page], :per_page => 100)
   end
 
   # GET /parts/1
@@ -59,6 +59,39 @@ class PartsController < ApplicationController
       format.html { redirect_to parts_url, notice: 'Part was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def import
+    if request.post?
+      msg = Message.new
+      begin
+        file=params[:files][0]
+        fd = FileData.new(data: file, original_name: file.original_filename, path: $upload_data_file_path, path_name: "#{Time.now.strftime('%Y%m%d%H%M%S%L')}~#{file.original_filename}")
+        fd.save
+        msg = FileHandler::Excel::PartHandler.import(fd)
+      rescue => e
+        msg.content = e.message
+      end
+      render json: msg
+    end
+  end
+
+  def search
+    super { |query|
+      unless params[:part][:part_type_id].blank?
+        if type = PartType.find_by_nr(params[:part][:part_type_id])
+          query = query.unscope(where: :part_type_id).where(part_type_id: type.id)
+        end
+      end
+
+      unless params[:part][:color_id].blank?
+        if type = Color.find_by_nr(params[:part][:color_id])
+          query = query.unscope(where: :color_id).where(color_id: type.id)
+        end
+      end
+
+      query
+    }
   end
 
   private

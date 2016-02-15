@@ -4,7 +4,7 @@ class PartPositionsController < ApplicationController
   # GET /part_positions
   # GET /part_positions.json
   def index
-    @part_positions = PartPosition.all
+    @part_positions = PartPosition.paginate(:page => params[:page], :per_page => 100)
   end
 
   # GET /part_positions/1
@@ -59,6 +59,51 @@ class PartPositionsController < ApplicationController
       format.html { redirect_to part_positions_url, notice: 'Part position was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def import
+    if request.post?
+      msg = Message.new
+      begin
+        file=params[:files][0]
+        fd = FileData.new(data: file, original_name: file.original_filename, path: $upload_data_file_path, path_name: "#{Time.now.strftime('%Y%m%d%H%M%S%L')}~#{file.original_filename}")
+        fd.save
+        msg = FileHandler::Excel::PartPositionHandler.import(fd)
+      rescue => e
+        msg.content = e.message
+      end
+      render json: msg
+    end
+  end
+
+  def search
+    super { |query|
+      unless params[:part_position][:part_id].blank?
+        if part = Part.find_by_nr(params[:part_position][:part_id])
+          query = query.unscope(where: :part_id).where(part_id: part.id)
+        end
+      end
+
+      unless params[:part_position][:position_id].blank?
+        if part = Position.find_by_nr(params[:part_position][:position_id])
+          query = query.unscope(where: :position_id).where(position_id: part.id)
+        end
+      end
+
+      unless params[:part_position][:from_position_id].blank?
+        if part = Position.find_by_nr(params[:part_position][:from_position_id])
+          query = query.unscope(where: :from_position_id).where(from_position_id: part.id)
+        end
+      end
+
+      unless params[:part_position][:from_warehouse_id].blank?
+        if part = Warehouse.find_by_nr(params[:part_position][:from_warehouse_id])
+          query = query.unscope(where: :from_warehouse_id).where(from_warehouse_id: part.id)
+        end
+      end
+
+      query
+    }
   end
 
   private
