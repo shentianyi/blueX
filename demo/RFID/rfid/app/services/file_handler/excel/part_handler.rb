@@ -2,7 +2,7 @@ module FileHandler
   module Excel
     class PartHandler<Base
       HEADERS=[
-          :nr, :name, :description, :short_description, :part_type_id, :color_id, :measure_unit_id, :purchase_unit_id, :custom_nr, :cross_section, :weight
+          :nr, :name, :description, :short_description, :part_type_id, :color_id, :measure_unit_id, :purchase_unit_id, :custom_nr, :cross_section, :weight, :weight_range
       ]
 
       def self.import(file)
@@ -32,10 +32,14 @@ module FileHandler
                 row.delete(:measure_unit_id) if row[:measure_unit_id].blank?
                 row.delete(:purchase_unit_id) if row[:purchase_unit_id].blank?
 
-                s =Part.new(row)
-                unless s.save
-                  puts s.errors.to_json
-                  raise s.errors.to_json
+                if p=Part.find_by_nr(row[:nr])
+                  p.update_attributes(row)
+                else
+                  p =Part.new(row)
+                  unless p.save
+                    puts p.errors.to_json
+                    raise p.errors.to_json
+                  end
                 end
               end
             end
