@@ -25,18 +25,26 @@ namespace ScmClient.RFID
                 if (RFIDConfig.USE_DLL)
                 {
                     dd = new String(d.Skip(6).Take(38).ToArray()).Replace(" ", "");
-                }
-
-                if (messageRegex.Match(dd).Success)
-                {
-                    RFIDMessage msg = StringToMessage(labelRegex.Match(dd).Value);
-                    if (msg != null)
+                    if (messageRegex.Match(dd).Success)
                     {
-                        list.Add(msg);
+                        RFIDMessage msg = StringToMessage(new String(dd.Skip(0).Take(4).ToArray()));
+                        if (msg != null)
+                        {
+                            list.Add(msg);
+                        }
                     }
                 }
-
-
+                else
+                {
+                    if (messageRegex.Match(dd).Success)
+                    {
+                        RFIDMessage msg = StringToMessage(new String(dd.Skip(4).Take(4).ToArray()));
+                        if (msg != null)
+                        {
+                            list.Add(msg);
+                        }
+                    }
+                }
             }
             return list;
         }

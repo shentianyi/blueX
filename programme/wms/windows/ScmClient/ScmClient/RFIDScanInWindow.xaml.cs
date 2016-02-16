@@ -120,7 +120,8 @@ namespace ScmClient
             }
         }
 
-        private void closeDllCOM() {
+        private void closeDllCOM()
+        {
             int stopReadFlag = RFIDDll.ComStopReadMultiTag(g_selectCom);
             if (stopReadFlag == RFIDDll.STOP_READ_MULITTAG_SUCCESS)
             {

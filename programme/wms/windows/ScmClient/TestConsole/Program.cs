@@ -41,24 +41,27 @@ namespace TestConsole
             //Console.WriteLine(ddd);
 
             // Com.Open();
-            Console.WriteLine(Convert.ToString(1462, 16).PadLeft(4,'0'));
-            int value = 1462;
-            // Convert the decimal value to a hexadecimal value in string form.
-            string hexOutput = String.Format("{0:X}", value);
+            //Console.WriteLine(Convert.ToString(1462, 16).PadLeft(4, '0'));
+            //int value = 1462;
+            //// Convert the decimal value to a hexadecimal value in string form.
+            //string hexOutput = String.Format("{0:X}", value);
 
-            Console.WriteLine("Hexadecimal value of {0} is {1}", "1462", hexOutput);
+            //Console.WriteLine("Hexadecimal value of {0} is {1}", "1462", hexOutput);
 
-            Console.WriteLine("");
-       string     hexString = "05B6";
+            //Console.WriteLine("");
+            //string hexString = "05B6";
 
-            hexString = hexString.Replace(" ", "");
-            if ((hexString.Length % 2) != 0)
-                hexString += " ";
-            byte[] returnBytes = new byte[hexString.Length / 2];
-            for (int i = 0; i < returnBytes.Length; i++)
-                returnBytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
+            //hexString = hexString.Replace(" ", "");
+            //if ((hexString.Length % 2) != 0)
+            //    hexString += " ";
+            //byte[] returnBytes = new byte[hexString.Length / 2];
+            //for (int i = 0; i < returnBytes.Length; i++)
+            //    returnBytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
 
-            Console.WriteLine((char)returnBytes[1]);
+            //Console.WriteLine((char)returnBytes[1]);
+
+            RegexTest.Run();
+
             Console.Read();
 
         }

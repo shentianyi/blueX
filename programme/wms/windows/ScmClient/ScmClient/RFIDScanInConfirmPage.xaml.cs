@@ -5,6 +5,8 @@ using System.Windows.Controls;
 using ScmWcfService.Model;
 using ScmWcfService;
 using ScmWcfService.Model.Message;
+using System;
+using Brilliantech.Framwork.Utils.LogUtil;
 
 namespace ScmClient
 {
@@ -185,7 +187,10 @@ namespace ScmClient
                     //  showMessageBox("料车或料盒不存在，不可生成择货单！");
                 }
             }
-            catch { }
+            catch(Exception ex) {
+
+                LogUtil.Logger.Error(ex.Message); 
+            }
             this.canNext = true;
 
             showMessageBox("出库成功！");

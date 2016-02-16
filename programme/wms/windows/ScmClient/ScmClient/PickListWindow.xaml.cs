@@ -67,8 +67,8 @@ namespace ScmClient
                 else {
                     MessageBox.Show("扫描错误！料盒不存在！");
                 }
-
-                ScanTB.Text = string.Empty;
+                ScanTB.SelectAll();
+               // ScanTB.Text = string.Empty;
             }
         }
 
@@ -98,7 +98,8 @@ namespace ScmClient
 
         private void confirmBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("请确定?", "确定", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes) {
+            if (MessageBox.Show("请确定?", "确定", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
                 this.Close();
             }
         }
@@ -106,6 +107,14 @@ namespace ScmClient
         private bool valid()
         {
             return getValidCount() == this.pickItems.Count;
+        }
+
+        private void PreviewDG_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (PreviewDG.SelectedIndex > -1)
+            {
+                showWeight(PreviewDG.SelectedItem as PickItem);
+            }
         }
 
     }

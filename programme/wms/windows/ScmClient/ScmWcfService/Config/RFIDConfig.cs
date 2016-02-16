@@ -26,7 +26,7 @@ namespace ScmWcfService.Config
                 LabelRegex = config.Get("LabelRegex");
                 OrderCarLabelRegex = config.Get("OrderCarLabelRegex");
                 OrderBoxLabelRegex = config.Get("OrderBoxLabelRegex");
-
+                OutAutoLoadPick = bool.Parse(config.Get("OutAutoLoadPick"));
             }
             catch (Exception e)
             {
@@ -41,5 +41,6 @@ namespace ScmWcfService.Config
         public static string RFIDCOM { get; set; }
         public static int RFIDBaudRate { get; set; }
         public static int RFIDInterVal { get; set; }
+        public static bool OutAutoLoadPick { get; set; }
     }
 }

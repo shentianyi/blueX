@@ -19,6 +19,8 @@ using System.Windows.Forms;
 using ScmWcfService.Model;
 using ScmWcfService;
 using ScmWcfService.Model.Message;
+using ScmClient.Enum;
+using ScmWcfService.Config;
 
 namespace ScmClient
 {
@@ -104,6 +106,9 @@ namespace ScmClient
             {
                 this.orderCar = new OrderCar() { nr = carMsgList.First().Nr };
                 OrderCarLabel.Content = carMsgList.First().Nr;
+                if (parentWindow.type == RFIDScanType.OUT && RFIDConfig.OutAutoLoadPick) {
+                    loadCarPickItems();
+                }
             }
             else if (carMsgList.Count > 1)
             {
@@ -126,6 +131,28 @@ namespace ScmClient
             QtyLabel.Content = boxMsgList.Count;
         }
 
+        private void loadCarPickItems()
+        {
+            PickService ps = new PickService();
+            var msg = ps.GetPickItemByCarNr(OrderCarLabel.Content.ToString());
+
+            if (msg.http_error)
+            {
+                showMessageBox(msg.Message);
+            }
+            else if (!msg.Success)
+            {
+                showMessageBox(msg.Message);
+            }
+            else
+            {
+                var pickItems = msg.data;
+                foreach (PickItem pi in pickItems) {
+                    handleLabelString(pi.order_box_nr);
+                }
+            }
+        }
+
  
 
         private void refreshOrderBox(OrderBox orderBox = null)
@@ -140,20 +167,26 @@ namespace ScmClient
         {
             if (e.Key == Key.Enter && ScanTB.Text.Trim().Length > 0)
             {
-                RFIDMessage msg = Parser.StringToMessage(ScanTB.Text.Trim());
-                if (msg != null)
+                handleLabelString(ScanTB.Text.Trim());
+                ScanTB.SelectAll();
+            }
+        }
+
+
+        private void handleLabelString(string label) {
+            RFIDMessage msg = Parser.StringToMessage(label);
+            if (msg != null)
+            {
+                if (msg.Type == MessageType.CAR)
                 {
-                    if (msg.Type == MessageType.CAR)
-                    {
-                        this.carMsgList.Clear();
-                        addCarMessage(msg);
-                    }
-                    else if (msg.Type == MessageType.BOX)
-                    {
-                        addBoxMessage(msg);
-                    }
-                    ScanTB.Text = string.Empty;
+                    this.carMsgList.Clear();
+                    addCarMessage(msg);
                 }
+                else if (msg.Type == MessageType.BOX)
+                {
+                    addBoxMessage(msg);
+                }
+                //ScanTB.Text = string.Empty;
             }
         }
 

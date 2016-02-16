@@ -76,7 +76,7 @@
                         <StackPanel HorizontalAlignment="Left" Width="480">
                             <DataGrid  Name="PreviewDG" AutoGenerateColumns="False" 
                                IsReadOnly="True" Height="350" 
-                       Width="480" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                       Width="480" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" MouseDoubleClick="PreviewDG_MouseDoubleClick">
                                 <DataGrid.ColumnHeaderStyle>
                                     <Style TargetType="DataGridColumnHeader">
                                         <Setter Property="Foreground" Value="Black"/>

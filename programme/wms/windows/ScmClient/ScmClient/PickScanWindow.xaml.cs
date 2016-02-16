@@ -32,8 +32,13 @@ namespace ScmClient
 
         private void orderCarNrTB_KeyUp(object sender, KeyEventArgs e)
         {
+           
             if (e.Key == Key.Enter)
             {
+                object o1 = e.OriginalSource;
+                var o2 = e.InputSource;
+                var o3 = e.Source;
+                orderCarNrTB.SelectAll();
                 getPickItems();
             }
         }
@@ -52,13 +57,10 @@ namespace ScmClient
                 if (msg.http_error)
                 {
                     showMessageBox(msg.Message);
-                    orderCarNrTB.Text = string.Empty;
                 }
                 else if (!msg.Success)
                 {
                     showMessageBox(msg.Message);
-
-                    orderCarNrTB.Text = string.Empty;
                 }
                 else
                 {
