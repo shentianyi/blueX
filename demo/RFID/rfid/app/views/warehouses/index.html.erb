@@ -52,12 +52,10 @@
           <%= will_paginate @warehouse, :container => false %>
         </div>
 
-        <% if current_user.admin? %>
             <%= link_to '新建仓库', send("new_#{@model}_path"), :class => 'btn btn-primary',
                         :style => 'color:#fff;padding-top:10px;margin:10px 0 0 20px' %>
             <%= link_to '导入数据', import_warehouses_path, :class => 'btn btn-primary',
                         :style => 'color:#fff;padding-top:10px;margin-left:50px;margin-top:10px;' %>
-        <% end %>
       </div>
     </div>
 

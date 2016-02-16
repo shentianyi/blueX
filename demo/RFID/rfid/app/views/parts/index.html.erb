@@ -88,6 +88,7 @@
         <th>客户号</th>
         <th>截面</th>
         <th>重量</th>
+        <th>重量误差</th>
         <th colspan="3"></th>
       </tr>
       </thead>
@@ -105,6 +106,7 @@
             <td><%= part.custom_nr %></td>
             <td><%= part.cross_section %></td>
             <td><%= part.weight %></td>
+            <td><%= part.weight_range %></td>
             <td>
               <%= link_to '[详情]', part %>
               <% if current_user.can_edit %>

@@ -41,7 +41,8 @@
       part_position=PartPosition.create(part_id: part.id, position_id: position.id)
     end
 
-    nr= '%04d' % i.to_s
+    nr= '%03d' % i.to_s
+    nr="B#{nr}"
     unless order_box=OrderBox.find_by_nr(nr)
       order_box=OrderBox.create(nr:nr,rfid_nr:nr,quantity:i,part:part,
                                 warehouse:warehouse_produce,
