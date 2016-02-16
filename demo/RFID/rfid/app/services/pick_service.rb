@@ -37,6 +37,9 @@ class PickService
               quantity: item.quantity,
               status: PickStatus::PICKING
           )
+          if position=Position.where(warehouse_id: order_box.source_warehouse_id ,id:PartPosition.where(part_id: item.part_id).pluck(:position_id)).first
+            pick_item.position=position
+          end
           pick_item.order_item=item
           pick.pick_items<<pick_item
         end

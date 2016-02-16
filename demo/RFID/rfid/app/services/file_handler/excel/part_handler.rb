@@ -26,6 +26,8 @@ module FileHandler
                 row[:measure_unit_id] = Unit.find_by_nr(row[:measure_unit_id]).id unless row[:measure_unit_id].blank?
                 row[:purchase_unit_id] = Unit.find_by_nr(row[:purchase_unit_id]).id unless row[:purchase_unit_id].blank?
 
+                row.delete(:weight) if row[:weight].blank?
+                row.delete(:weight_range) if row[:weight_range].blank?
                 row.delete(:status) if row[:status].blank?
                 row.delete(:part_type_id) if row[:part_type_id].blank?
                 row.delete(:color_id) if row[:color_id].blank?

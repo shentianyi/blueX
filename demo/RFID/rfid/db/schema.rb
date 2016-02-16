@@ -101,21 +101,22 @@ ActiveRecord::Schema.define(version: 20160117114929) do
   create_table "order_box_types", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.float    "weight",      limit: 24,  default: 0.0
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
   create_table "order_boxes", force: :cascade do |t|
     t.string   "nr",                  limit: 255
     t.string   "rfid_nr",             limit: 255
-    t.integer  "status",              limit: 4,   default: 0
+    t.integer  "status",              limit: 4,   default: 100
     t.integer  "part_id",             limit: 4
     t.float    "quantity",            limit: 24
     t.integer  "warehouse_id",        limit: 4
     t.integer  "source_warehouse_id", limit: 4
     t.integer  "order_box_type_id",   limit: 4
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
     t.integer  "position_id",         limit: 4
   end
 
@@ -128,9 +129,9 @@ ActiveRecord::Schema.define(version: 20160117114929) do
     t.string   "nr",           limit: 255
     t.string   "rfid_nr",      limit: 255
     t.integer  "warehouse_id", limit: 4
-    t.integer  "status",       limit: 4,   default: 0
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.integer  "status",       limit: 4,   default: 100
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   add_index "order_cars", ["warehouse_id"], name: "index_order_cars_on_warehouse_id", using: :btree
@@ -138,15 +139,15 @@ ActiveRecord::Schema.define(version: 20160117114929) do
   create_table "order_items", force: :cascade do |t|
     t.integer  "order_id",       limit: 4
     t.integer  "user_id",        limit: 4
-    t.integer  "status",         limit: 4,   default: 0
+    t.integer  "status",         limit: 4,   default: 100
     t.float    "quantity",       limit: 24
     t.integer  "part_id",        limit: 4
     t.integer  "orderable_id",   limit: 4
     t.string   "orderable_type", limit: 255
     t.boolean  "is_emergency"
     t.string   "remarks",        limit: 255
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
   end
 
   add_index "order_items", ["order_id"], name: "index_order_items_on_order_id", using: :btree
@@ -157,12 +158,12 @@ ActiveRecord::Schema.define(version: 20160117114929) do
 
   create_table "orders", force: :cascade do |t|
     t.integer  "user_id",        limit: 4
-    t.integer  "status",         limit: 4,   default: 0
+    t.integer  "status",         limit: 4,   default: 100
     t.integer  "orderable_id",   limit: 4
     t.string   "orderable_type", limit: 255
     t.string   "remarks",        limit: 255
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.integer  "warehouse_id",   limit: 4
     t.string   "nr",             limit: 255
   end
@@ -216,7 +217,7 @@ ActiveRecord::Schema.define(version: 20160117114929) do
 
   create_table "pick_items", force: :cascade do |t|
     t.integer  "pick_id",       limit: 4
-    t.integer  "status",        limit: 4,   default: 0
+    t.integer  "status",        limit: 4,   default: 100
     t.integer  "warehouse_id",  limit: 4
     t.integer  "position_id",   limit: 4
     t.float    "quantity",      limit: 24
@@ -224,8 +225,8 @@ ActiveRecord::Schema.define(version: 20160117114929) do
     t.boolean  "is_emergency"
     t.integer  "order_item_id", limit: 4
     t.string   "remarks",       limit: 255
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
   end
 
   add_index "pick_items", ["order_item_id"], name: "index_pick_items_on_order_item_id", using: :btree
@@ -246,11 +247,11 @@ ActiveRecord::Schema.define(version: 20160117114929) do
 
   create_table "picks", force: :cascade do |t|
     t.integer  "user_id",      limit: 4
-    t.integer  "status",       limit: 4,   default: 0
+    t.integer  "status",       limit: 4,   default: 100
     t.integer  "warehouse_id", limit: 4
     t.string   "remarks",      limit: 255
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.string   "nr",           limit: 255
   end
 
@@ -289,9 +290,12 @@ ActiveRecord::Schema.define(version: 20160117114929) do
     t.integer  "position_id",  limit: 4
     t.integer  "warehouse_id", limit: 4
     t.string   "remarks",      limit: 255
+    t.integer  "user_id",      limit: 4
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
+
+  add_index "storages", ["user_id"], name: "index_storages_on_user_id", using: :btree
 
   create_table "unit_groups", force: :cascade do |t|
     t.string   "nr",          limit: 255
@@ -371,6 +375,7 @@ ActiveRecord::Schema.define(version: 20160117114929) do
   add_foreign_key "picks", "users"
   add_foreign_key "picks", "warehouses"
   add_foreign_key "positions", "warehouses"
+  add_foreign_key "storages", "users"
   add_foreign_key "units", "unit_groups"
   add_foreign_key "warehouses", "locations"
 end
