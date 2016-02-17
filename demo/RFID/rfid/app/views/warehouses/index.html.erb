@@ -81,7 +81,7 @@
             <td><%= warehouse.description %></td>
             <td><%= warehouse.type %></td>
             <td><%= warehouse.parent.blank? ? '' : warehouse.parent.nr %></td>
-            <td><%= warehouse.location.nr %></td>
+            <td><%= warehouse.location.blank? ? '' : warehouse.location.nr %></td>
             <td>
               <%= link_to '[详情]', warehouse %>
               <% if current_user.can_edit %>

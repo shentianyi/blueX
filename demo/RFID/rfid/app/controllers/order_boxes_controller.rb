@@ -25,6 +25,7 @@ class OrderBoxesController < ApplicationController
   # POST /order_boxes.json
   def create
     @order_box = OrderBox.new(order_box_params)
+    @order_box.position=Position.find_by_id(params[:order_box][:position])
 
     respond_to do |format|
       if @order_box.save
@@ -42,6 +43,7 @@ class OrderBoxesController < ApplicationController
   def update
     respond_to do |format|
       if @order_box.update(order_box_params)
+        @order_box.position=Position.find_by_id(params[:order_box][:position])
         format.html { redirect_to @order_box, notice: 'Order box was successfully updated.' }
         format.json { render :show, status: :ok, location: @order_box }
       else
@@ -65,25 +67,25 @@ class OrderBoxesController < ApplicationController
     if request.post?
       msg = Message.new
 #      begin
-        file=params[:files][0]
-        fd = FileData.new(data: file, original_name: file.original_filename, path: $upload_data_file_path, path_name: "#{Time.now.strftime('%Y%m%d%H%M%S%L')}~#{file.original_filename}")
-        fd.save
-        msg = FileHandler::Excel::OrderBoxHandler.import(fd)
- #     rescue => e
-  #      msg.content = e.message
-   #   end
+      file=params[:files][0]
+      fd = FileData.new(data: file, original_name: file.original_filename, path: $upload_data_file_path, path_name: "#{Time.now.strftime('%Y%m%d%H%M%S%L')}~#{file.original_filename}")
+      fd.save
+      msg = FileHandler::Excel::OrderBoxHandler.import(fd)
+#     rescue => e
+#      msg.content = e.message
+#   end
       render json: msg
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_order_box
-      @order_box = OrderBox.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_order_box
+    @order_box = OrderBox.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def order_box_params
-      params.require(:order_box).permit(:nr, :rfid_nr, :status, :part_id, :quantity, :warehouse_id, :source_warehouse_id, :order_box_type_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def order_box_params
+    params.require(:order_box).permit(:nr, :rfid_nr, :status, :part_id, :quantity, :warehouse_id, :source_warehouse_id, :order_box_type_id)
+  end
 end

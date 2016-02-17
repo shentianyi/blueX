@@ -92,6 +92,7 @@
         <th>要货仓库</th>
         <th>出货仓库</th>
         <th>料盒类型</th>
+        <th>料盒所属库位号</th>
         <th con="3"></th>
       </tr>
       </thead>
@@ -107,6 +108,7 @@
             <td><%= order_box.warehouse.blank? ? '' : order_box.warehouse.nr %></td>
             <td><%= order_box.source_warehouse.blank? ? '' : order_box.source_warehouse.nr %></td>
             <td><%= order_box.order_box_type.blank? ? '' : order_box.order_box_type.name %></td>
+            <td><%= order_box.position.blank? ? '' : order_box.position.nr %></td>
             <td>
               <%= link_to '[详情]', order_box %>
               <% if current_user.can_edit %>

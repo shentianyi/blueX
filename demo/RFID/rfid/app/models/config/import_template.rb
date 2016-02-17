@@ -9,6 +9,9 @@ class ImportTemplate
   ORDER_BOX_EXCEL_TEMPLATE='order_box.xlsx'
   ORDER_BOX_TYPE_EXCEL_TEMPLATE='order_box_type.xlsx'
   ENTER_STORAGE_EXCEL_TEMPLATE='enter_storage.xlsx'
+  PART_TYPE_EXCEL_TEMPLATE='part_type.xlsx'
+  COLOR_EXCEL_TEMPLATE='color.xlsx'
+  UNIT_EXCEL_TEMPLATE='unit.xlsx'
 
 
   def self.method_missing(method_name, *args, &block)

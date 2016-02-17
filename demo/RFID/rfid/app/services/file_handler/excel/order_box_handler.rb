@@ -2,7 +2,7 @@ module FileHandler
   module Excel
     class OrderBoxHandler<Base
       HEADERS=[
-          :nr, :rfid_nr, :status, :part_id, :quantity, :warehouse_id, :source_warehouse_id, :order_box_type_id
+          :nr, :rfid_nr, :status, :part_id, :quantity, :warehouse_id, :source_warehouse_id, :order_box_type_id, :position_nr, :operator
       ]
 
       def self.import(file)
@@ -30,12 +30,26 @@ module FileHandler
               row[:order_box_type_id] = OrderBoxType.find_by_name(row[:order_box_type_id]).id unless row[:order_box_type_id].blank?
 
               row.delete(:status) if row[:status].blank?
+              position=Position.find_by_nr(row[:position_nr])
 
-              s =OrderBox.new(row)
-              unless s.save
-                puts s.errors.to_json
-                raise s.errors.to_json
+              if ob=OrderBox.find_by_nr(row[:nr])
+                if row[:operator].blank? || row[:operator]=='update'
+                  ob.position=position
+                  ob.update(row.except(:nr, :position_nr, :operator))
+                elsif row[:operator]=='delete'
+                  ob.destroy
+                end
+              else
+                if row[:operator].blank? || row[:operator]=='create'
+                  s =OrderBox.new(row.except(:position_nr, :operator))
+                  s.position=position
+                  unless s.save
+                    puts s.errors.to_json
+                    raise s.errors.to_json
+                  end
+                end
               end
+
             end
           end
           msg.result = true
@@ -93,9 +107,9 @@ module FileHandler
       def self.validate_row(row, line)
         msg = Message.new(contents: [])
 
-        if OrderBox.find_by_nr(row[:nr])
-          msg.contents<<"该料盒已存在"
-        end
+        # if OrderBox.find_by_nr(row[:nr])
+        #   msg.contents<<"该料盒已存在"
+        # end
 
         unless Part.find_by_nr(row[:part_id])
           msg.contents<<"该零件不存在"

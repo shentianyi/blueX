@@ -2,7 +2,7 @@ module FileHandler
   module Excel
     class OrderBoxTypeHandler<Base
       HEADERS=[
-          :name, :description, :weight
+          :name, :description, :weight, :operator
       ]
 
       def self.import(file)
@@ -21,11 +21,22 @@ module FileHandler
                   row[k] = book.cell(line, i+1).to_s.strip
                 end
 
-                s =OrderBoxType.new(row)
-                unless s.save
-                  puts s.errors.to_json
-                  raise s.errors.to_json
+                if p=OrderBoxType.find_by_name(row[:name])
+                  if row[:operator].blank? || row[:operator]=='update'
+                    p.update(row.except(:name, :operator))
+                  elsif row[:operator]=='delete'
+                    p.destroy
+                  end
+                else
+                  if row[:operator].blank? || row[:operator]=='create'
+                    s =OrderBoxType.new(row.except(:operator))
+                    unless s.save
+                      puts s.errors.to_json
+                      raise s.errors.to_json
+                    end
+                  end
                 end
+
               end
             end
             msg.result = true
@@ -78,9 +89,9 @@ module FileHandler
       def self.validate_row(row, line)
         msg = Message.new(contents: [])
 
-        if OrderBoxType.find_by_name(row[:name])
-          msg.contents<<"该料盒类型已存在"
-        end
+        # if OrderBoxType.find_by_name(row[:name])
+        #   msg.contents<<"该料盒类型已存在"
+        # end
 
         unless msg.result=(msg.contents.size==0)
           msg.content=msg.contents.join('/')

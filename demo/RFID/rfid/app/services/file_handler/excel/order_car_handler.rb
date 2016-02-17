@@ -2,7 +2,7 @@ module FileHandler
   module Excel
     class OrderCarHandler<Base
       HEADERS=[
-          :nr, :rfid_nr, :warehouse_id, :status
+          :nr, :rfid_nr, :warehouse_id, :status, :operator
       ]
 
       def self.import(file)
@@ -24,11 +24,22 @@ module FileHandler
 
                 row.delete(:status) if row[:status].blank?
 
-                s =OrderCar.new(row)
-                unless s.save
-                  puts s.errors.to_json
-                  raise s.errors.to_json
+                if p=OrderCar.find_by_nr(row[:nr])
+                  if row[:operator].blank? || row[:operator]=='update'
+                    p.update(row.except(:nr, :operator))
+                  elsif row[:operator]=='delete'
+                    p.destroy
+                  end
+                else
+                  if row[:operator].blank? || row[:operator]=='create'
+                    s =OrderCar.new(row.except(:operator))
+                    unless s.save
+                      puts s.errors.to_json
+                      raise s.errors.to_json
+                    end
+                  end
                 end
+
               end
             end
             msg.result = true
@@ -81,9 +92,9 @@ module FileHandler
       def self.validate_row(row, line)
         msg = Message.new(contents: [])
 
-        if OrderCar.find_by_nr(row[:nr])
-          msg.contents<<"该料车已存在"
-        end
+        # if OrderCar.find_by_nr(row[:nr])
+        #   msg.contents<<"该料车已存在"
+        # end
 
         unless row[:warehouse_id].blank?
           unless Warehouse.find_by_nr(row[:warehouse_id])

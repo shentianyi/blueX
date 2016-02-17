@@ -2,7 +2,7 @@ module FileHandler
   module Excel
     class WarehouseHandler<Base
       HEADERS=[
-          :nr, :name, :description, :type, :parent_id, :location_id
+          :nr, :name, :description, :type, :parent_id, :location_id, :operator
       ]
 
       def self.import(file)
@@ -23,11 +23,22 @@ module FileHandler
                 row[:location_id] = Location.find_by_nr(row[:location_id]).id
                 row[:parent_id] = Warehouse.find_by_nr(row[:parent_id]).id unless row[:parent_id].blank?
 
-                s =Warehouse.new(row)
-                unless s.save
-                  puts s.errors.to_json
-                  raise s.errors.to_json
+                if w=Warehouse.find_by_nr(row[:nr])
+                  if row[:operator].blank? || row[:operator]=='update'
+                    w.update(row.except(:nr, :operator))
+                  elsif row[:operator]=='delete'
+                    w.destroy
+                  end
+                else
+                  if row[:operator].blank? || row[:operator]=='create'
+                    s =Warehouse.new(row.except(:operator))
+                    unless s.save
+                      puts s.errors.to_json
+                      raise s.errors.to_json
+                    end
+                  end
                 end
+
               end
             end
             msg.result = true
