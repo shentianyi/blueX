@@ -4,7 +4,7 @@
                                                                     
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
 
-        Title="PickWeightWindow" Height="700" Width="800" Loaded="MetroWindow_Loaded" WindowStartupLocation="CenterScreen">
+        Title="PickWeightWindow" Height="600" Width="800" Loaded="MetroWindow_Loaded" WindowStartupLocation="CenterScreen">
 
 
     <Grid Background="#0078C1">

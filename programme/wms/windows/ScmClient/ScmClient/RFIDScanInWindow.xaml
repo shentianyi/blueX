@@ -8,7 +8,7 @@
                         
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
 
-        Title="RFIDScanInWindow" Height="700" Width="800" Loaded="Window_Loaded"
+        Title="RFIDScanInWindow" Height="600" Width="800" Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen" Closing="Window_Closing">
   
     <Grid Background="#0078C1">

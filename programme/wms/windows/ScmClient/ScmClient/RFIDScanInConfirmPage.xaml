@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:ScmClient"
       mc:Ignorable="d" 
       
-      d:DesignHeight="606" d:DesignWidth="790"
+      d:DesignHeight="600" d:DesignWidth="790"
       Title="RFIDScanInConfirmPage"
       Name="RFIDScanInConfirmPageName" Loaded="RFIDScanInConfirmPageName_Loaded">
     <Grid>

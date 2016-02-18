@@ -48,6 +48,12 @@ namespace ScmWcfService.Model
             }
         }
 
+        public string order_box_type_name {
+            get {
+                return this.order_box == null ? "" : this.order_box.box_type_name;
+            }
+        }
+
         public string positions_nr
         {
             get

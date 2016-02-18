@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Brilliantech.Framwork.Utils.ConfigUtil;
+using ScmWcfService.Model.Enum;
 
 namespace ScmWcfService.Config
 {
@@ -16,6 +17,7 @@ namespace ScmWcfService.Config
             {
                 config = new ConfigUtil("DOOR", "Ini/door.ini");
                 Enabled = bool.Parse(config.Get("Enabled"));
+                Type = (DoorType)int.Parse(config.Get("Type"));
                 SN = int.Parse(config.Get("SN"));
                 IP = config.Get("IP");
                 Port = int.Parse(config.Get("Port"));
@@ -28,6 +30,7 @@ namespace ScmWcfService.Config
         }
 
         public static bool Enabled { get; set; }
+        public static DoorType Type { get; set; }
         public static int SN { get; set; }
         public static string IP { get; set; }
         public static int Port { get; set; }

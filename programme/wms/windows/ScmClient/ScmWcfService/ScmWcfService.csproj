@@ -80,6 +80,7 @@
     <Compile Include="IOrderService.cs" />
     <Compile Include="IPickService.cs" />
     <Compile Include="IWarehouseService.cs" />
+    <Compile Include="Model\Enum\DoorType.cs" />
     <Compile Include="Model\Enum\OrderCarStatus.cs" />
     <Compile Include="Model\Enum\OrderBoxStatus.cs" />
     <Compile Include="Model\Enum\OrderStatus.cs" />

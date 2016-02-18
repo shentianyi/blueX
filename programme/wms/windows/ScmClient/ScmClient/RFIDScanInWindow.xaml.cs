@@ -79,23 +79,24 @@ namespace ScmClient
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (this.currentPage.Name == "RFIDScanInPickPageName")
-            {
-                this.NextBtn.Visibility = Visibility.Visible;
-                this.NextBtn.Content = "下一步";
-                this.BackBtn.Content = "取消";
-                if (RFIDConfig.USE_DLL)
-                {
-                    this.dllTimer.Enabled = true;
-                    this.dllTimer.Start();
-                }
-                this.currentPage = new RFIDScanInPage(this);
-                NaviFrame.NavigationService.Navigate(this.currentPage);
-            }
-            else
-            {
-                closeWindow();
-            }
+            closeWindow();
+            //if (this.currentPage.Name == "RFIDScanInPickPageName")
+            //{
+            //    this.NextBtn.Visibility = Visibility.Visible;
+            //    this.NextBtn.Content = "下一步";
+            //    this.BackBtn.Content = "取消";
+            //    if (RFIDConfig.USE_DLL)
+            //    {
+            //        this.dllTimer.Enabled = true;
+            //        this.dllTimer.Start();
+            //    }
+            //    this.currentPage = new RFIDScanInPage(this);
+            //    NaviFrame.NavigationService.Navigate(this.currentPage);
+            //}
+            //else
+            //{
+            //    closeWindow();
+            //}
         }
 
         private void closeWindow() {

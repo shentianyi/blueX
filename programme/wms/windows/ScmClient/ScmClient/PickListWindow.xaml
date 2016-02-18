@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                                                          xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
 
-        Height="700" Width="800"  WindowStartupLocation="CenterScreen"
+        Height="600" Width="800"  WindowStartupLocation="CenterScreen"
                        Closing="MetroWindow_Closing" Loaded="MetroWindow_Loaded">
 
 
@@ -88,6 +88,7 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn/>
                                     <DataGridTextColumn Header="料盒" Binding="{Binding Path=order_box_nr}"/>
+                                    <DataGridTextColumn Header="类型" Binding="{Binding Path=order_box_type_name}"/>
                                     <DataGridTextColumn Header="零件" Binding="{Binding Path=part_nr}"/>
                                     <DataGridTextColumn Header="数量" Binding="{Binding Path=quantity}"/>
                                     <DataGridTextColumn Header="库位" Binding="{Binding Path=positions_nr}"/>
