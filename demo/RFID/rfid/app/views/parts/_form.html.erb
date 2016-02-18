@@ -29,19 +29,19 @@
     </div>
     <div class="field">
       <%= f.label :part_type_id %><br>
-      <%= f.text_field :part_type_id %>
+      <%= f.select(:part_type_id, PartType.options, {include_blank: false}) %>
     </div>
     <div class="field">
       <%= f.label :color_id %><br>
-      <%= f.text_field :color_id %>
+      <%= f.select(:color_id, Color.options, {include_blank: false}) %>
     </div>
     <div class="field">
       <%= f.label :measure_unit_id %><br>
-      <%= f.number_field :measure_unit_id %>
+      <%= f.select(:measure_unit_id, Unit.options, {include_blank: false}) %>
     </div>
     <div class="field">
       <%= f.label :purchase_unit_id %><br>
-      <%= f.number_field :purchase_unit_id %>
+      <%= f.select(:purchase_unit_id, Unit.options, {include_blank: false}) %>
     </div>
     <div class="field">
       <%= f.label :custom_nr %><br>

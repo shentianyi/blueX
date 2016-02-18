@@ -2,7 +2,7 @@ module FileHandler
   module Excel
     class PositionHandler<Base
       HEADERS=[
-          :nr, :name, :description, :warehouse_id
+          :nr, :name, :description, :warehouse_id, :operator
       ]
 
       def self.import(file)
@@ -22,11 +22,22 @@ module FileHandler
                 end
                 row[:warehouse_id] = Warehouse.find_by_nr(row[:warehouse_id]).id unless row[:warehouse_id].blank?
 
-                s =Position.new(row)
-                unless s.save
-                  puts s.errors.to_json
-                  raise s.errors.to_json
+                if w=Position.find_by_nr(row[:nr])
+                  if row[:operator].blank? || row[:operator]=='update'
+                    w.update(row.except(:nr, :operator))
+                  elsif row[:operator]=='delete'
+                    w.destroy
+                  end
+                else
+                  if row[:operator].blank? || row[:operator]=='create'
+                    s =Position.new(row.except(:operator))
+                    unless s.save
+                      puts s.errors.to_json
+                      raise s.errors.to_json
+                    end
+                  end
                 end
+
               end
             end
             msg.result = true
@@ -79,9 +90,9 @@ module FileHandler
       def self.validate_row(row, line)
         msg = Message.new(contents: [])
 
-        if Position.find_by_nr(row[:nr])
-          msg.contents<<"该库位:#{row[:nr]}已存在"
-        end
+        # if Position.find_by_nr(row[:nr])
+        #   msg.contents<<"该库位:#{row[:nr]}已存在"
+        # end
 
         unless row[:warehouse_id].blank?
           unless Warehouse.find_by_nr(row[:warehouse_id])

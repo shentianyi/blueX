@@ -28,6 +28,8 @@
 
         <%= link_to '新建零件类型', send("new_#{@model}_path"), :class => 'btn btn-primary',
                     :style => 'color:#fff;padding-top:10px;margin:10px 0 0 20px' %>
+        <%= link_to '导入数据', import_colors_path, :class => 'btn btn-primary',
+                    :style => 'color:#fff;padding-top:10px;margin-left:50px;margin-top:10px;' %>
       </div>
     </div>
 

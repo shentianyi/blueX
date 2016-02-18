@@ -13,4 +13,7 @@ class Part < ActiveRecord::Base
     end
   end
 
+  def self.options
+    self.all.map { |r| [r.nr, r.id] }
+  end
 end

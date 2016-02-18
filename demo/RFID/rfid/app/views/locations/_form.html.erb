@@ -25,7 +25,7 @@
   </div>
   <div class="field">
     <%= f.label :parent_id %><br>
-    <%= f.number_field :parent_id %>
+    <%= f.select(:parent_id, Location.options, {include_blank: false}) %>
   </div>
   <div class="actions">
     <%= f.submit %>

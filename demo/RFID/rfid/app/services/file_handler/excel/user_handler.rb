@@ -2,7 +2,7 @@ module FileHandler
   module Excel
     class UserHandler<Base
       HEADERS=[
-          'nr', 'name', 'email', 'role_id', 'password', 'password_confirmation', 'can_edit', 'can_delete'
+          'nr', 'name', 'email', 'role_id', 'password', 'password_confirmation', 'can_edit', 'can_delete', 'operator'
       ]
 
       def self.import(file)
@@ -25,11 +25,22 @@ module FileHandler
                   row[k] = row[k].sub(/\.0/, '') if k=='password_confirmation'
                 end
 
-                s =User.new(row)
-                unless s.save
-                  puts s.errors.to_json
-                  raise s.errors.to_json
+                if u=User.find_by_nr(row['nr'])
+                  if row['operator'].blank? || row['operator']=='update'
+                    u.update(row.except('nr', 'operator'))
+                  elsif row['operator']=='delete'
+                    u.destroy
+                  end
+                else
+                  if row['operator'].blank? || row['operator']=='create'
+                    s =User.new(row.except('operator'))
+                    unless s.save
+                      puts s.errors.to_json
+                      raise s.errors.to_json
+                    end
+                  end
                 end
+
               end
             end
             msg.result = true

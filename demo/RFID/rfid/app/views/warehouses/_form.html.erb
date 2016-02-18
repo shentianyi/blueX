@@ -25,15 +25,15 @@
   </div>
   <div class="field">
     <%= f.label :type %><br>
-    <%= f.number_field :type %>
+    <%= f.text_field :type %>
   </div>
   <div class="field">
     <%= f.label :parent_id %><br>
-    <%= f.number_field :parent_id %>
+    <%= f.select(:parent_id, Warehouse.options, {include_blank: false}) %>
   </div>
   <div class="field">
     <%= f.label :location_id %><br>
-    <%= f.text_field :location_id %>
+    <%= f.select(:location_id, Location.options, {include_blank: false}) %>
   </div>
   <div class="actions">
     <%= f.submit %>

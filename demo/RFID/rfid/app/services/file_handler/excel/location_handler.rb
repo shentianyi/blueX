@@ -2,7 +2,7 @@ module FileHandler
   module Excel
     class LocationHandler<Base
       HEADERS=[
-          :nr, :name, :description, :parent_id
+          :nr, :name, :description, :parent_id, :operator
       ]
 
       def self.import(file)
@@ -14,7 +14,7 @@ module FileHandler
         if validate_msg.result
           #validate file
           begin
-            User.transaction do
+            Location.transaction do
               2.upto(book.last_row) do |line|
                 row = {}
                 HEADERS.each_with_index do |k, i|
@@ -22,11 +22,22 @@ module FileHandler
                 end
                 row[:parent_id] = Location.find_by_nr(row[:parent_id]).id unless row[:parent_id].blank?
 
-                s =Location.new(row)
-                unless s.save
-                  puts s.errors.to_json
-                  raise s.errors.to_json
+                if l=Location.find_by_nr(row[:nr])
+                  if row[:operator].blank? || row[:operator]=='update'
+                    l.update(row.except(:nr, :operator))
+                  elsif row[:operator]=='delete'
+                    l.destroy
+                  end
+                else
+                  if row[:operator].blank? || row[:operator]=='create'
+                    s =Location.new(row.except(:operator))
+                    unless s.save
+                      puts s.errors.to_json
+                      raise s.errors.to_json
+                    end
+                  end
                 end
+
               end
             end
             msg.result = true
@@ -79,9 +90,9 @@ module FileHandler
       def self.validate_row(row, line)
         msg = Message.new(contents: [])
 
-        if Location.find_by_nr(row[:nr])
-          msg.contents<<"该地点已存在"
-        end
+        # if Location.find_by_nr(row[:nr])
+        #   msg.contents<<"该地点已存在"
+        # end
 
         unless row[:parent_id].blank?
           unless Warehouse.find_by_nr(row[:parent_id])

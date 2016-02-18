@@ -21,11 +21,11 @@
   </div>
   <div class="field">
     <%= f.label :warehouse_id %><br>
-    <%= f.number_field :warehouse_id %>
+    <%= f.select(:warehouse_id, Warehouse.options, {include_blank: false}) %>
   </div>
   <div class="field">
     <%= f.label :status %><br>
-    <%= f.number_field :status %>
+    <%= f.select(:status, OrderCarStatus.menu, {include_blank: false}) %>
   </div>
   <div class="actions">
     <%= f.submit %>

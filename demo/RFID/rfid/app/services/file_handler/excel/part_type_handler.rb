@@ -1,9 +1,8 @@
 module FileHandler
   module Excel
-    class PartHandler<Base
+    class PartTypeHandler<Base
       HEADERS=[
-          :nr, :name, :description, :short_description, :part_type_id, :color_id, :measure_unit_id,
-          :purchase_unit_id, :custom_nr, :cross_section, :weight, :weight_range, :operator
+          :nr, :name, :description, :operator
       ]
 
       def self.import(file)
@@ -15,35 +14,22 @@ module FileHandler
         if validate_msg.result
           #validate file
           begin
-            Part.transaction do
+            PartType.transaction do
               2.upto(book.last_row) do |line|
                 row = {}
                 HEADERS.each_with_index do |k, i|
                   row[k] = book.cell(line, i+1).to_s.strip
                 end
-                row[:nr] = row[:nr].sub(/\.0/, '')
-                row[:part_type_id] = PartType.find_by_nr(row[:part_type_id]).id unless row[:part_type_id].blank?
-                row[:color_id] = Color.find_by_nr(row[:color_id]).id unless row[:color_id].blank?
-                row[:measure_unit_id] = Unit.find_by_nr(row[:measure_unit_id]).id unless row[:measure_unit_id].blank?
-                row[:purchase_unit_id] = Unit.find_by_nr(row[:purchase_unit_id]).id unless row[:purchase_unit_id].blank?
 
-                row.delete(:weight) if row[:weight].blank?
-                row.delete(:weight_range) if row[:weight_range].blank?
-                row.delete(:status) if row[:status].blank?
-                row.delete(:part_type_id) if row[:part_type_id].blank?
-                row.delete(:color_id) if row[:color_id].blank?
-                row.delete(:measure_unit_id) if row[:measure_unit_id].blank?
-                row.delete(:purchase_unit_id) if row[:purchase_unit_id].blank?
-
-                if p=Part.find_by_nr(row[:nr])
+                if pt=PartType.find_by_nr(row[:nr])
                   if row[:operator].blank? || row[:operator]=='update'
-                    p.update(row.except(:nr, :operator))
+                    pt.update(row.except(:nr, :operator))
                   elsif row[:operator]=='delete'
-                    p.destroy
+                    pt.destroy
                   end
                 else
                   if row[:operator].blank? || row[:operator]=='create'
-                    s =Part.new(row.except(:operator))
+                    s =PartType.new(row.except(:operator))
                     unless s.save
                       puts s.errors.to_json
                       raise s.errors.to_json
@@ -54,7 +40,7 @@ module FileHandler
               end
             end
             msg.result = true
-            msg.content = "导入零件信息成功！"
+            msg.content = "导入零件类型信息成功！"
           rescue => e
             puts e.backtrace
             msg.result = false
@@ -102,34 +88,6 @@ module FileHandler
 
       def self.validate_row(row, line)
         msg = Message.new(contents: [])
-
-        # if Part.find_by_nr(row[:nr])
-        #   msg.contents<<"该零件已存在"
-        # end
-
-        unless row[:part_type_id].blank?
-          unless PartType.find_by_nr(row[:part_type_id])
-            msg.contents<<"该零件类型不存在"
-          end
-        end
-
-        unless row[:color_id].blank?
-          unless Color.find_by_nr(row[:color_id])
-            msg.contents<<"该颜色不存在"
-          end
-        end
-
-        unless row[:measure_unit_id].blank?
-          unless Unit.find_by_nr(row[:measure_unit_id])
-            msg.contents<<"计量单位#{row[:measure_unit_id]}不存在"
-          end
-        end
-
-        unless row[:purchase_unit_id].blank?
-          unless Unit.find_by_nr(row[:purchase_unit_id])
-            msg.contents<<"计量单位#{row[:purchase_unit_id]}不存在"
-          end
-        end
 
         unless msg.result=(msg.contents.size==0)
           msg.content=msg.contents.join('/')
