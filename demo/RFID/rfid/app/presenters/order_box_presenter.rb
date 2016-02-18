@@ -51,14 +51,15 @@ class OrderBoxPresenter<Presenter
   end
 
 
-  def as_basic_info
+  def as_basic_info(with_type=false)
     {
         id: @order_box.id,
         nr: @order_box.nr,
         quantity: @order_box.quantity,
         status:@order_box.status,
         positions: StorageService.positions(@order_box.source_warehouse_id, @order_box.part_id).uniq.pluck(:nr),
-        weight: @order_box.order_box_type.weight || 0
+        weight: @order_box.order_box_type.weight || 0,
+        order_box_type: with_type ? OrderBoxTypePresenter.new(@order_box.order_box_type).as_basic_info : nil
     }
   end
 end

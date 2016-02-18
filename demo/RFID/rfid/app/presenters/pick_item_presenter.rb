@@ -31,7 +31,7 @@ class PickItemPresenter<Presenter
         id: @pick_item.id,
         status: @pick_item.status,
         quantity:@pick_item.quantity,
-        order_box: o.nil? ? nil :  OrderBoxPresenter.new(o).as_basic_info,
+        order_box: o.nil? ? nil :  OrderBoxPresenter.new(o).as_basic_info(true),
         part: PartPresenter.new(@pick_item.part).as_basic_info
     }
   end
