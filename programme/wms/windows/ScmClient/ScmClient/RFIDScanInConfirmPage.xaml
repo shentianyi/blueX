@@ -61,6 +61,8 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn/>
                             <DataGridTextColumn Header="料盒" Binding="{Binding Path=nr}"/>
+                            <DataGridTextColumn Header="类型" Binding="{Binding Path=box_type_name}"/>
+                            <DataGridTextColumn Header="状态" Binding="{Binding Path=status_display}"/>
                             <DataGridTextColumn Header="零件" Binding="{Binding Path=part_nr}"/>
                             <DataGridTextColumn Header="数量" Binding="{Binding Path=quantity}"/>
 

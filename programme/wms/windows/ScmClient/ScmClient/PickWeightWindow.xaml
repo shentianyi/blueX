@@ -49,6 +49,7 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Label FontSize="20" Content="零件:" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="#FAFAD2"></Label>
                     <Label Grid.Column="2" FontSize="30" Foreground="#FFD700" Margin="20 0 0 0"
@@ -61,28 +62,33 @@
                            HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFD700"
                            Content="SA 01 01 01" Name="positionLabel"></Label>
 
+                    <Label Grid.Row="2" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right" 
+                           Foreground="#FAFAD2" Content="单重:"></Label>
+                    <Label Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="20 0 0 0" Content="100"
+                           VerticalAlignment="Center" FontSize="30" Foreground="#FFD700" Name="unitWeightLabel"></Label>
+                    
 
-                    <Label Grid.Row="2" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center"
+                    <Label Grid.Row="3" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center"
                            Foreground="#FAFAD2" Content="数量:"></Label>
-                    <Label Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Name="qtyLabel"
+                    <Label Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" Name="qtyLabel"
                            Margin="20 0 0 0"  VerticalAlignment="Center" FontSize="30" Foreground="#FFD700" Content="300"></Label>
 
-                    <Label Grid.Row="3" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right" 
-                           Foreground="#FAFAD2" Content="重量:"></Label>
-                    <Label Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" Margin="20 0 0 0" Content="100"
+                    <Label Grid.Row="4" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right" 
+                           Foreground="#FAFAD2" Content="总重:"></Label>
+                    <Label Grid.Row="4" Grid.Column="2" HorizontalAlignment="Left" Margin="20 0 0 0" Content="100"
                            VerticalAlignment="Center" FontSize="30" Foreground="#FFD700" Name="standWeightLabel"></Label>
 
-                    <Label Grid.Row="4" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center"
+                    <Label Grid.Row="5" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center"
                            Foreground="#FAFAD2" Content="称重:"></Label>
-                    <TextBox Height="50" Width="150" Grid.Row="4" Grid.Column="2" Name="actualWeightTB"
+                    <TextBox Height="50" Width="150" Grid.Row="5" Grid.Column="2" Name="actualWeightTB"
                              HorizontalAlignment="Left" Margin="20 0 0 0"  VerticalAlignment="Center" Foreground="#FFA500" Padding="20 0 0 0" Text="" KeyUp="actualWeightTB_KeyUp" FocusableChanged="actualWeightTB_FocusableChanged"></TextBox>
-                    <Border Grid.Row="4" Grid.Column="1" Visibility="Hidden" Name="weightMsgBorder"
+                    <Border Grid.Row="5" Grid.Column="1" Visibility="Hidden" Name="weightMsgBorder"
                             Margin="0,0,64,0" CornerRadius="50" Width="100" Height="50" 
                             Padding="15" Background="Green" HorizontalAlignment="Right">
                         <TextBlock HorizontalAlignment="Center" Foreground="White" Name="weightMsgTB">通过</TextBlock>
                     </Border>
 
-                    <Button HorizontalAlignment="Left" Margin="3,0,0,0" Grid.Row="5"
+                    <Button HorizontalAlignment="Left" Margin="3,0,0,0" Grid.Row="6"
                             Grid.Column="1" Grid.RowSpan="2" Height="60" Width="150" 
                             FontFamily="Solomon_Sans_Bold" BorderThickness="1" Name="confirmBtn" Click="confirmBtn_Click">
                         <DockPanel>

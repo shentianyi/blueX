@@ -8,7 +8,8 @@ namespace ScmWcfService.Model.Enum
     public enum OrderBoxStatus
     {
         INIT = 100,
-        PICKING = 200
+        PICKING = 200,
+        PICKED=300
     }
 
     public class OrderBoxStatusDisplay
@@ -19,10 +20,13 @@ namespace ScmWcfService.Model.Enum
             switch (status)
             {
                 case OrderBoxStatus.INIT:
-                    result = "新建";
+                    result = "空闲";
                     break;
                 case OrderBoxStatus.PICKING:
-                    result = "择货";
+                    result = "择货中";
+                    break;
+                case OrderBoxStatus.PICKED:
+                    result = "已择货";
                     break;
                 default:
                     result = "N/A";

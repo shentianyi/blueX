@@ -31,6 +31,7 @@ namespace ScmWcfService.Config
                 CreatePickByCarAction = config.Get("CreatePickByCarAction");
                 MoveStorageByCarAction = config.Get("MoveStorageByCarAction");
                 GetPickItemByCarNrAction = config.Get("GetPickItemByCarNrAction");
+                WeightOrderBoxAction = config.Get("WeightOrderBoxAction");
             }
             catch (Exception e)
             {
@@ -71,5 +72,6 @@ namespace ScmWcfService.Config
         public static string CreatePickByCarAction { get; set; }
         public static string MoveStorageByCarAction { get; set; }
         public static string GetPickItemByCarNrAction { get; set; }
+        public static string WeightOrderBoxAction { get; set; }
     }
 }

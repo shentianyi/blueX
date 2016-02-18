@@ -84,5 +84,37 @@ namespace ScmWcfService
 
             return msg;
         }
+
+
+        public ResponseMessage<object> WeightOrderBox(int order_box_id, int pick_item_id, float weight)
+        {
+
+            var msg = new ResponseMessage<object>();
+            try
+            {
+                var client = new ApiClient();
+                var req = client.GenRequest(ApiConfig.WeightOrderBoxAction, Method.POST);
+                req.AddParameter("id", order_box_id);
+                req.AddParameter("pick_item_id", pick_item_id);
+                req.AddParameter("weight", weight);
+                var res = client.Execute(req);
+                Debug.WriteLine(res.Content);
+
+                msg = JsonUtil.parse<ResponseMessage<object>>(res.Content);
+            }
+            catch (WebFaultException<string> e)
+            {
+                msg.http_error = true;
+                msg.meta.error_message = e.Detail;
+            }
+            catch (Exception e)
+            {
+                msg.http_error = true;
+                msg.meta.error_message = "系统服务错误，请联系管理员";
+            }
+
+            return msg;
+
+        }
     }
 }

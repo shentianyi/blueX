@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using ScmWcfService.Model;
 using System.IO;
+using ScmWcfService;
 
 namespace ScmClient
 {
@@ -45,12 +46,13 @@ namespace ScmClient
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            minWeight=item.quantity*(item.part.weight*(1-item.part.weight_range))+item.order_box.weight;
-            maxWeight = item.quantity * (item.part.weight * (1 + item.part.weight_range)) + item.order_box.weight;
-            standWeight = item.part.weight * item.quantity + item.order_box.weight;
+            minWeight = item.quantity * (item.part.weight * (1 - item.part.weight_range));// +item.order_box.weight;
+            maxWeight = item.quantity * (item.part.weight * (1 + item.part.weight_range));// +item.order_box.weight;
+            standWeight = item.part.weight * item.quantity; //+ item.order_box.weight;
 
             partNrLabel.Content = item.part_nr;
             positionLabel.Content = item.positions_nr;
+            unitWeightLabel.Content = item.part.weight;
             qtyLabel.Content = item.quantity;
             
             standWeightLabel.Content =minWeight+"-("+ standWeight+")-"+maxWeight;
@@ -61,20 +63,8 @@ namespace ScmClient
                 string path =System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory ,"images\\" + item.part_nr + ".jpg");
                 if (File.Exists(path))
                 {
-
                     BitmapImage i = new BitmapImage(new Uri(path, UriKind.Absolute));
                     partImage.Source = i;
-
-                   //BitmapImage i = new BitmapImage();
-                   //i.BeginInit();
-                  
-                   //i.UriSource = new Uri(path, UriKind.Relative);
-                   //i.EndInit();
-                   //partImage.Source = i;
-
-                   //System.Drawing.Image image = System.Drawing.Image.FromFile(path);
-                   //Bitmap bit = new Bitmap(image);
-                   //partImage.Source=(ImageSource)image;
                 }
             }
             catch { }
@@ -94,12 +84,38 @@ namespace ScmClient
         {
             validateWeight();
             if (valid) {
+                weightOrderBox();       
                 this.Close();
             }
         }
 
-        private void validateWeight() {
 
+        private void weightOrderBox()
+        {
+            PickService ps = new PickService();
+
+            float weight = 0;
+            float.TryParse(actualWeightTB.Text.Trim(), out weight);
+
+            var msg = ps.WeightOrderBox(item.order_box.id, item.id, weight);
+
+            if (msg.http_error)
+            {
+                showMessageBox(msg.Message);
+            }
+            else if (!msg.Success)
+            {
+                showMessageBox(msg.Message);
+            }
+        }
+        
+        public void showMessageBox(string message)
+        {
+            System.Windows.Forms.MessageBox.Show(message);
+        }
+
+
+        private void validateWeight() {
             valid = false;
             float weight = 0;
             if (float.TryParse(actualWeightTB.Text.Trim(), out weight))
