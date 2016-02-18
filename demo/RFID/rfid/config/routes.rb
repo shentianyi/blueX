@@ -171,6 +171,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :settings
   # api routes
   mount ApplicationAPI => '/api'
 

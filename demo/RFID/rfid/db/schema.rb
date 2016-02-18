@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160117114929) do
+ActiveRecord::Schema.define(version: 20160218091310) do
 
   create_table "colors", force: :cascade do |t|
     t.string   "nr",          limit: 255
@@ -227,6 +227,7 @@ ActiveRecord::Schema.define(version: 20160117114929) do
     t.string   "remarks",       limit: 255
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
+    t.float    "weight",        limit: 24
   end
 
   add_index "pick_items", ["order_item_id"], name: "index_pick_items_on_order_item_id", using: :btree
@@ -271,15 +272,13 @@ ActiveRecord::Schema.define(version: 20160117114929) do
   add_index "positions", ["warehouse_id"], name: "index_positions_on_warehouse_id", using: :btree
 
   create_table "settings", force: :cascade do |t|
-    t.string   "var",         limit: 255,   null: false
-    t.text     "value",       limit: 65535
-    t.integer  "target_id",   limit: 4,     null: false
-    t.string   "target_type", limit: 255,   null: false
+    t.string   "code",       limit: 255
+    t.string   "name",       limit: 255
+    t.string   "value",      limit: 255
+    t.integer  "type",       limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "settings", ["target_type", "target_id", "var"], name: "index_settings_on_target_type_and_target_id_and_var", unique: true, using: :btree
 
   create_table "storages", force: :cascade do |t|
     t.integer  "part_id",      limit: 4

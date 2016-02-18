@@ -1,14 +1,17 @@
 class OrderBoxStatus<BaseStatus
   INIT=100
   PICKING=200
+  PICKED=300
   OTHER=500
 
   def self.display state
     case state
       when INIT
-        '初始化'
+        '空闲'
       when PICKING
         '进行中'
+      when PICKED
+        '已择货'
       else
         '未知状态'
     end

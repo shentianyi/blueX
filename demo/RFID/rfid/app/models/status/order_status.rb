@@ -8,7 +8,7 @@ class OrderStatus<BaseStatus
   def self.display state
     case state
       when INIT
-        '初始化'
+        '新建'
       when PICKING
         '进行中'
       when PICKED

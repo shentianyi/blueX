@@ -6,63 +6,11 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 # ActiveRecord::Base.transaction do
-
-  unless location=Location.find_by_nr('Leoni')
-    location= Location.create(nr: 'Leoni', name: 'Leoni')
+puts 'create setting regex...'
+Setting.transaction do
+  unless Setting.find_by_code(Setting::NO_NEED_WEIGHT_BOX_TYPES)
+    Setting.create(code: Setting::NO_NEED_WEIGHT_BOX_TYPES, value: 'P', name: '不需要称重扣减库存的料盒类型')
   end
-
-  unless warehouse_store=Warehouse.find_by_nr('MB_STORE')
-    warehouse_store=Warehouse.create(nr: 'MB_STORE', location: location)
-  end
-
-  unless warehouse_produce=Warehouse.find_by_nr('MB_PRODUCE')
-    warehouse_produce=Warehouse.create(nr: 'MB_PRODUCE', location: location)
-  end
-
-
-  unless order_box_type=OrderBoxType.find_by_name('BigBox')
-    order_box_type=OrderBoxType.create(name:'BigBox')
-  end
-
-  100.times do |i|
-    unless position=Position.find_by_nr("POSI#{i}")
-      position=Position.create(nr: "POSI#{i}", warehouse: warehouse_store)
-    end
-
-    unless position_produce=Position.find_by_nr("PRO_POSI#{i}")
-      position_produce=Position.create(nr: "PRO_POSI#{i}", warehouse: warehouse_produce)
-    end
-
-    unless part=Part.find_by_nr("PART#{i}")
-      part=Part.create(nr: "PART#{i}")
-    end
-
-    unless part_position=PartPosition.where(part_id: part.id, position_id: position.id).first
-      part_position=PartPosition.create(part_id: part.id, position_id: position.id)
-    end
-
-    nr= '%03d' % i.to_s
-    nr="B#{nr}"
-    unless order_box=OrderBox.find_by_nr(nr)
-      order_box=OrderBox.create(nr:nr,rfid_nr:nr,quantity:i,part:part,
-                                warehouse:warehouse_produce,
-                                position:position_produce,
-                                source_warehouse:warehouse_store,
-                                order_box_type:order_box_type)
-    else
-      if order_box.position.blank?
-        order_box.update_attributes(position:position_produce)
-      end
-    end
-  end
-
-  9.times do |i|
-    unless order_car=OrderCar.find_by_nr( "A00#{i}")
-      order_car=OrderCar.create(nr: "A00#{i}",rfid_nr:"A00#{i}", warehouse: warehouse_produce)
-    end
-  end
-
-
-
+end
 
 # end

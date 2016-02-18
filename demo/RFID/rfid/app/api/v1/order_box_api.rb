@@ -12,7 +12,7 @@ module V1
 
 
       params do
-        requires :nrs, type:String,desc: 'order box nrs'
+        requires :nrs, type: String, desc: 'order box nrs'
       end
       get :by_nrs do
         params[:nrs]=params[:nrs].split(',')
@@ -20,6 +20,14 @@ module V1
       end
 
 
+      params do
+        requires :id, type: Integer, desc: 'order box id'
+        requires :pick_item_id, type: Integer, desc: 'pick item id'
+        requires :weight, type: Float, desc: 'weight'
+      end
+      post :weight do
+        OrderBoxService.weight_box(params[:id], params[:pick_item_id], params[:weight])
+      end
 
     end
   end

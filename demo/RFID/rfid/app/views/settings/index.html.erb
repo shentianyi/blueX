@@ -1,0 +1,23 @@
+<table class="table table-bordered table-striped table-hover">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Code</th>
+    <th>Value</th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @settings.each do |setting| %>
+      <tr>
+        <td><%= setting.name %></td>
+        <td><%= setting.code %></td>
+        <td><%= setting.value %></td>
+        <td><%= link_to 'Edit', edit_setting_path(setting) %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>

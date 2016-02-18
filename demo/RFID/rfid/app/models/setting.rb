@@ -1,31 +1,24 @@
-#encoding: utf-8
-require 'base_class'
+class Setting < ActiveRecord::Base
+  validates :code, :value, presence: true
+  NO_NEED_WEIGHT_BOX_TYPES='not_need_weight_box_types'
 
-class Setting<CZ::BaseClass
-  attr_accessor :ios_app_version, :ios_app_update_is_option
-
-  def self.find
-    if $redis.exists(key)
-      cache=self.new($redis.hgetall key)
-      return cache
+  def self.method_missing(method_name, *args, &block)
+    if method_name.match(/\?$/)
+      if setting=Setting.where(code: method_name.to_s.sub(/\?$/,'')).first
+        return setting.value=='1'
+      else
+        super
+      end
+    elsif setting=Setting.where(code: method_name).first
+      return setting.value
+    else
+      super
     end
   end
 
-  def ios_app_version_is_old version
-    (version||default_app_version)<self.ios_app_version
+
+
+  def self.not_need_weight_box_type_values
+    self.not_need_weight_box_types.split(',')
   end
-
-
-  def self.key
-    'epm:admin:setting'
-  end
-
-  def save
-    $redis.hmset Setting.key, 'ios_app_version', self.ios_app_version, 'ios_app_update_is_option', self.ios_app_update_is_option
-  end
-
-  def default_app_version
-    '0.1'
-  end
-
 end

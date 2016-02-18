@@ -2,9 +2,12 @@ class WarehouseService
 
   def self.move_by_car user, params
     # begin
-      Storage.transaction do
-        PickService.validable_car_and_box(params) do |car, boxes|
-          boxes.each do |order_box|
+    Storage.transaction do
+      PickService.validable_car_and_box(params) do |car, boxes|
+        boxes.each do |order_box|
+          p order_box
+          p order_box.can_move_store?
+          if order_box.can_move_store?
             self.move({
                           user_id: user.id,
                           part_id: order_box.part_id,
@@ -16,15 +19,16 @@ class WarehouseService
                       })
             order_box.update_attributes(status: OrderBoxStatus::INIT)
           end
-          car.update_attributes(status: OrderCarStatus::INIT)
         end
-        {
-            meta: {
-                code: 200,
-                message: 'Move Success'
-            }
-        }
+        car.update_attributes(status: OrderCarStatus::INIT)
       end
+      {
+          meta: {
+              code: 200,
+              message: 'Move Success'
+          }
+      }
+    end
     # rescue => e
     #   {
     #       meta: {

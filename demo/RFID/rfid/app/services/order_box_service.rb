@@ -30,4 +30,19 @@ class OrderBoxService
 
   end
 
+  def self.weight_box(id,pick_item_id,weight)
+    if box=OrderBox.find_by_id(id)
+      box.update_attributes(status: OrderBoxStatus::PICKED)
+    end
+    if item=PickItem.find_by_id(pick_item_id)
+      item.update_attributes(status: PickItemStatus::PICKED,weight:weight)
+    end
+
+    {
+        meta: {
+            code: 200,
+            message: '称重成功'
+        }
+    }
+  end
 end

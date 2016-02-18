@@ -12,6 +12,10 @@ class OrderBox < ActiveRecord::Base
   validates_presence_of :nr, :message => "料盒编号编号不能为空!"
   validates_uniqueness_of :nr, :message => "料盒编号不能重复!"
 
+  def can_move_store?
+    self.status==OrderBoxStatus::PICKED || (self.status==OrderBoxStatus::PICKING && self.order_box_type && Setting.not_need_weight_box_type_values.include?(self.order_box_type.name))
+  end
+
   def set_default_position
     if self.position.blank?
       if p=self.warehouse.positions.where(nr:self.warehouse.nr).first
@@ -19,4 +23,6 @@ class OrderBox < ActiveRecord::Base
       end
     end
   end
+
+
 end

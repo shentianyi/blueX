@@ -6,9 +6,9 @@ class OrderCarStatus<BaseStatus
   def self.display state
     case state
       when INIT
-        '初始化'
+        '空闲'
       when PICKING
-        '进行中'
+        '择货中'
       else
         '未知状态'
     end
