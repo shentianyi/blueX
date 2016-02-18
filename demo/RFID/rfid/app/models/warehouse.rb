@@ -14,8 +14,9 @@ class Warehouse < ActiveRecord::Base
   after_save :create_position
 
   def create_position
-    position=Position.create({nr: "#{self.nr}_default"})
-    self.positions<<position
+    unless self.positions.where(nr: self.nr).first
+      self.positions.create(nr: self.nr)
+    end
   end
 
   def self.options

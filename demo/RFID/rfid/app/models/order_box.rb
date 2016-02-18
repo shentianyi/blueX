@@ -7,6 +7,16 @@ class OrderBox < ActiveRecord::Base
   belongs_to :order_box_type
   has_many :order_items, :as => :orderable
 
+  before_save :set_default_position
+
   validates_presence_of :nr, :message => "料盒编号编号不能为空!"
   validates_uniqueness_of :nr, :message => "料盒编号不能重复!"
+
+  def set_default_position
+    if self.position.blank?
+      if p=self.warehouse.positions.where(nr:self.warehouse.nr).first
+        self.position=p
+      end
+    end
+  end
 end

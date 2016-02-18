@@ -30,11 +30,12 @@ module FileHandler
               row[:order_box_type_id] = OrderBoxType.find_by_name(row[:order_box_type_id]).id unless row[:order_box_type_id].blank?
 
               row.delete(:status) if row[:status].blank?
-              position=Position.find_by_nr(row[:position_nr])
+              position=nil
+              position=Position.find_by_nr(row[:position_nr]) unless row[:position_nr].blank?
 
               if ob=OrderBox.find_by_nr(row[:nr])
                 if row[:operator].blank? || row[:operator]=='update'
-                  ob.position=position
+                  ob.position=position if position
                   ob.update(row.except(:nr, :position_nr, :operator))
                 elsif row[:operator]=='delete'
                   ob.destroy
@@ -42,7 +43,7 @@ module FileHandler
               else
                 if row[:operator].blank? || row[:operator]=='create'
                   s =OrderBox.new(row.except(:position_nr, :operator))
-                  s.position=position
+                  s.position=position  if position
                   unless s.save
                     puts s.errors.to_json
                     raise s.errors.to_json
