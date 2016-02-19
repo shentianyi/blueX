@@ -78,6 +78,23 @@ class OrderBoxesController < ApplicationController
     end
   end
 
+  def search
+p params[:order_box][:part_id]
+
+    super { |query|
+      unless params[:order_box][:part_id].blank?
+        if part = Part.find_by_nr(params[:order_box][:part_id])
+          query = query.unscope(where: :part_id).where(part_id: part.id)
+p '---------------------------'
+p part
+        end
+      end
+
+
+      query
+    }
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_order_box
