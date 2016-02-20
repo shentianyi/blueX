@@ -7,6 +7,7 @@ using ScmWcfService;
 using ScmWcfService.Model.Message;
 using System;
 using Brilliantech.Framwork.Utils.LogUtil;
+using ScmWcfService.Config;
 
 namespace ScmClient
 {
@@ -165,34 +166,40 @@ namespace ScmClient
         {
             try
             {
-                int qty = OrderBox.GetNotNullCount(this.orderBoxes);
-                if (this.orderCar != null && this.orderCar.id > 0 && qty == this.orderBoxes.Count && qty > 0)
+                if (this.orderCar != null && this.orderCar.id > 0)
                 {
+                    List<int> boxIds = null;
+                    if (RFIDConfig.OutAutoLoadPick == false)
+                    {
+                        int qty = OrderBox.GetNotNullCount(this.orderBoxes);
+                        if (qty == this.orderBoxes.Count && qty > 0) { 
+                        boxIds= OrderBox.GetAllIds(this.orderBoxes);
+                        }
+                    }
+
+
                     WarehouseService service = new WarehouseService();
-                    ResponseMessage<object> msg = service.MoveStorageByCar(this.orderCar.id, OrderBox.GetAllIds(this.orderBoxes));
+                    ResponseMessage<object> msg = service.MoveStorageByCarAndBoxes(this.orderCar.id, boxIds);
                     if (!msg.Success)
                     {
                         this.canNext = false;
-                        //   showMessageBox(msg.Message);
                     }
                     else
                     {
-                        // showMessageBox("出库成功！");
                         this.canNext = true;
                     }
                 }
                 else
                 {
                     this.canNext = false;
-                    //  showMessageBox("料车或料盒不存在，不可生成择货单！");
                 }
             }
-            catch(Exception ex) {
-
-                LogUtil.Logger.Error(ex.Message); 
+            catch (Exception ex)
+            {
+                LogUtil.Logger.Error(ex.Message);
             }
             this.canNext = true;
-
+                
             showMessageBox("出库成功！");
         }
 

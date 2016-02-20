@@ -86,7 +86,11 @@ namespace ScmWcfService
         }
 
 
-        public ResponseMessage<object> WeightOrderBox(int order_box_id, int pick_item_id, float weight)
+        public ResponseMessage<object> WeightOrderBox(int order_box_id, 
+            int pick_item_id, 
+            float weight,
+            float weight_qty,
+            bool weight_valid)
         {
 
             var msg = new ResponseMessage<object>();
@@ -97,6 +101,8 @@ namespace ScmWcfService
                 req.AddParameter("id", order_box_id);
                 req.AddParameter("pick_item_id", pick_item_id);
                 req.AddParameter("weight", weight);
+                req.AddParameter("weight_qty", weight_qty);
+                req.AddParameter("weight_valid", weight_valid);
                 var res = client.Execute(req);
                 Debug.WriteLine(res.Content);
 

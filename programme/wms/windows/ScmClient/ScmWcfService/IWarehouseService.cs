@@ -13,6 +13,6 @@ namespace ScmWcfService
     public interface IWarehouseService
     {
         [OperationContract]
-        ResponseMessage<object> MoveStorageByCar(int order_car_id, List<int> order_box_ids);
+        ResponseMessage<object> MoveStorageByCarAndBoxes(int order_car_id, List<int> order_box_ids=null);
     }
 }

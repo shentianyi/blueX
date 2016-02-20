@@ -7,6 +7,7 @@ using ScmWcfService.Config;
 using Brilliantech.Framwork.Utils.LogUtil;
 using ScmWcfService.Model.Enum;
 using ScmClient.ThridPart;
+using RestSharp;
 
 namespace ScmClient.RFID
 {
@@ -61,6 +62,17 @@ namespace ScmClient.RFID
                         }
 
                         singleController.CloseTcpip();
+                    }
+                    else if (DoorConfig.Type == DoorType.TrickSingle) {
+                        var client = new RestClient();
+                        client.Timeout = 10000;
+                        client.BaseUrl = "http://" + DoorConfig.IP+":"+DoorConfig.Port;
+
+                        client.Authenticator = new HttpBasicAuthenticator(DoorConfig.User, DoorConfig.Password);
+
+                        var req = new RestRequest("/cdor.cgi?open=1", Method.POST);
+                        client.Execute(req);
+
                     }
                 }
             }

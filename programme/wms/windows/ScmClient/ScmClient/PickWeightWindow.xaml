@@ -4,7 +4,7 @@
                                                                     
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
 
-        Title="PickWeightWindow" Height="600" Width="800" Loaded="MetroWindow_Loaded" WindowStartupLocation="CenterScreen">
+        Title="PickWeightWindow" Height="600" Width="800" Loaded="MetroWindow_Loaded" WindowStartupLocation="CenterScreen" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
 
 
     <Grid Background="#0078C1">
@@ -50,6 +50,7 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Label FontSize="20" Content="零件:" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="#FAFAD2"></Label>
                     <Label Grid.Column="2" FontSize="30" Foreground="#FFD700" Margin="20 0 0 0"
@@ -82,13 +83,25 @@
                            Foreground="#FAFAD2" Content="称重:"></Label>
                     <TextBox Height="50" Width="150" Grid.Row="5" Grid.Column="2" Name="actualWeightTB"
                              HorizontalAlignment="Left" Margin="20 0 0 0"  VerticalAlignment="Center" Foreground="#FFA500" Padding="20 0 0 0" Text="" KeyUp="actualWeightTB_KeyUp" FocusableChanged="actualWeightTB_FocusableChanged"></TextBox>
+                   
                     <Border Grid.Row="5" Grid.Column="1" Visibility="Hidden" Name="weightMsgBorder"
                             Margin="0,0,64,0" CornerRadius="50" Width="100" Height="50" 
                             Padding="15" Background="Green" HorizontalAlignment="Right">
                         <TextBlock HorizontalAlignment="Center" Foreground="White" Name="weightMsgTB">通过</TextBlock>
                     </Border>
 
-                    <Button HorizontalAlignment="Left" Margin="3,0,0,0" Grid.Row="6"
+
+                    <Label Grid.Row="6" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center"
+                           Foreground="#FAFAD2" Content="称重数量:"></Label>
+                    <!--<Label Grid.Row="6" Grid.Column="2" HorizontalAlignment="Left" Name="weightQtyLabel"
+                           Margin="20 0 0 0"  VerticalAlignment="Center" FontSize="30" Foreground="#FFD700" Content="0"></Label>-->
+                    <xctk:DecimalUpDown Width="150"  Grid.Row="6" Grid.Column="2" HorizontalAlignment="Left" 
+                    Name="weightQtyLabel"
+                           Margin="20 0 0 0" Minimum="0" DefaultValue="0" VerticalAlignment="Center" 
+                                        TextAlignment="Left" Text="0"
+                    FontSize="30" Foreground="#FFD700" FontWeight="Bold" ValueChanged="weightQtyLabel_ValueChanged" />
+                    
+                    <Button HorizontalAlignment="Left" Margin="3,0,0,0" Grid.Row="7"
                             Grid.Column="1" Grid.RowSpan="2" Height="60" Width="150" 
                             FontFamily="Solomon_Sans_Bold" BorderThickness="1" Name="confirmBtn" Click="confirmBtn_Click">
                         <DockPanel>

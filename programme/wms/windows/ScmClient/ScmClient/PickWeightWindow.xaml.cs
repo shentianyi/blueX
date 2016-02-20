@@ -14,6 +14,9 @@ using MahApps.Metro.Controls;
 using ScmWcfService.Model;
 using System.IO;
 using ScmWcfService;
+using ScmClient.Helper;
+using ScmClient.Enum;
+using ScmWcfService.Config;
 
 namespace ScmClient
 {
@@ -60,8 +63,8 @@ namespace ScmClient
 
             try
             {
-                string path =System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory ,"images\\" + item.part_nr + ".jpg");
-                if (File.Exists(path))
+                string path = PathHelper.GetImagePath(item.part_nr);
+                if (path != null)
                 {
                     BitmapImage i = new BitmapImage(new Uri(path, UriKind.Absolute));
                     partImage.Source = i;
@@ -82,8 +85,8 @@ namespace ScmClient
 
         private void confirmBtn_Click(object sender, RoutedEventArgs e)
         {
-            validateWeight();
-            if (valid) {
+           // validateWeight();
+            if (valid || (valid==false && BaseConfig.ForceWeightPass==false)) {
                 weightOrderBox();       
                 this.Close();
             }
@@ -97,7 +100,7 @@ namespace ScmClient
             float weight = 0;
             float.TryParse(actualWeightTB.Text.Trim(), out weight);
 
-            var msg = ps.WeightOrderBox(item.order_box.id, item.id, weight);
+            var msg = ps.WeightOrderBox(item.order_box.id, item.id, item.weight,item.weight_qty,item.weight_valid);
 
             if (msg.http_error)
             {
@@ -115,7 +118,8 @@ namespace ScmClient
         }
 
 
-        private void validateWeight() {
+        private void validateWeight()
+        {
             valid = false;
             float weight = 0;
             if (float.TryParse(actualWeightTB.Text.Trim(), out weight))
@@ -124,21 +128,23 @@ namespace ScmClient
 
                 if (weight >= minWeight && weight <= maxWeight)
                 {
+                    playSound(SoundType.SUCCESS);
                     this.item.weight_valid = true;
-
                     valid = true;
                     weightMsgBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Green"));
                     weightMsgTB.Text = "通过";
-
                 }
                 else
                 {
-
+                    playSound(SoundType.FAIL);
                     this.item.weight_valid = false;
-
                     weightMsgTB.Text = "失败";
                     weightMsgBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Red"));
                 }
+                int weight_qty= (int)Math.Round(weight / this.item.part.weight);
+                this.item.weight = weight;
+                this.item.weight_qty = weight_qty;
+                this.weightQtyLabel.Value = weight_qty;
 
                 this.parentWindow.RefreshData();
             }
@@ -151,8 +157,13 @@ namespace ScmClient
             actualWeightTB.SelectAll();
         }
 
-
-
+        private void playSound(SoundType type)
+        {
+            if (BaseConfig.PlayWeightSound)
+            {
+                SoundHelper.PlaySound(type);
+            }
+        }
 
         private void actualWeightTB_FocusableChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -162,6 +173,15 @@ namespace ScmClient
         private void okBtn_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void weightQtyLabel_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            this.item.weight_qty = (float)weightQtyLabel.Value;
+            this.parentWindow.RefreshData();
+
+
+           // MessageBox.Show(weightQtyLabel.Value.ToString());
         }
 
 

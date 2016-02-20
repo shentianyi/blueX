@@ -14,6 +14,8 @@ using ScmWcfService;
 using ScmWcfService.Model;
 using ScmWcfService.Model.Message;
 using ScmWcfService.Config;
+using ScmClient.Enum;
+using ScmClient.Helper;
 
 namespace ScmClient
 {
@@ -36,6 +38,8 @@ namespace ScmClient
                 new MenuWindow().Show();
                 this.Close();
             }
+
+           // SoundHelper.PlaySound(SoundType.FAIL);
         }
 
         /// <summary>

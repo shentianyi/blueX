@@ -22,6 +22,9 @@ namespace ScmWcfService.Config
                 IP = config.Get("IP");
                 Port = int.Parse(config.Get("Port"));
                 DoorNo = int.Parse(config.Get("DoorNo"));
+
+                User = config.Get("User");
+                Password = config.Get("Password");
             }
             catch (Exception e)
             {
@@ -35,5 +38,9 @@ namespace ScmWcfService.Config
         public static string IP { get; set; }
         public static int Port { get; set; }
         public static int DoorNo { get; set; }
+
+
+        public static string User { get; set; }
+        public static string Password { get; set; }
     }
 }

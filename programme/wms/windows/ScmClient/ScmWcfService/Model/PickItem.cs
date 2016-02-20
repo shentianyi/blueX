@@ -29,7 +29,16 @@ namespace ScmWcfService.Model
         public string created_at { get; set; }
 
         [DataMember]
+        public float weight{ get; set; }
+
+        [DataMember]
+        public float weight_qty { get; set; }
+
+
+        [DataMember]
         public bool weight_valid { get; set; }
+
+
 
 
         // partial for view

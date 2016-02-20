@@ -52,23 +52,26 @@ namespace ScmClient
 
 
 
-        private void showWeight(PickItem item) {
+        private void showWeight(PickItem item) 
+        {
             new PickWeightWindow(item,this).ShowDialog();
         }
 
         private void ScanTB_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter && ScanTB.Text.Trim().Length > 0) {
+            if (e.Key == Key.Enter && ScanTB.Text.Trim().Length > 0)
+            {
                 PickItem item = getPickItem(ScanTB.Text.Trim());
                 if (item != null)
                 {
                     showWeight(item);
                 }
-                else {
+                else
+                {
                     MessageBox.Show("扫描错误！料盒不存在！");
                 }
                 ScanTB.SelectAll();
-               // ScanTB.Text = string.Empty;
+                // ScanTB.Text = string.Empty;
             }
         }
 
@@ -114,6 +117,17 @@ namespace ScmClient
             if (PreviewDG.SelectedIndex > -1)
             {
                 showWeight(PreviewDG.SelectedItem as PickItem);
+            }
+        }
+
+        private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (MessageBox.Show("确定关闭？", "提醒", MessageBoxButton.YesNo, MessageBoxImage.Question,MessageBoxResult.No) == MessageBoxResult.Yes)
+            {
+                e.Cancel = false;
+            }
+            else {
+                e.Cancel = true;
             }
         }
 

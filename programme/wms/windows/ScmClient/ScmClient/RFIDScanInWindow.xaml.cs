@@ -196,6 +196,7 @@ namespace ScmClient
                     confirmPage.GenereatePick();
                     if (confirmPage.pick != null && confirmPage.canNext)
                     {
+                       // this.Close();
                         BackBtn.Content = "返回";
                         NextBtn.Visibility = Visibility.Hidden;
                         this.currentPage = new RFIDScanInPickPage(this, confirmPage.orderCar, confirmPage.orderBoxes, confirmPage.pick);
@@ -209,13 +210,14 @@ namespace ScmClient
                     {
                         new RFIDDoor().OpenDoor();
 
-                        BackBtn.Content = "取消";
-                        this.NextBtn.Visibility = Visibility.Visible;
-                        this.NextBtn.Content = "下一步";
-                        this.currentPage = new RFIDScanInPage(this);
-                        NaviFrame.NavigationService.Navigate(this.currentPage);
-                        this.dllTimer.Enabled = true;
-                        this.dllTimer.Start();
+                        this.Close();
+                        //BackBtn.Content = "取消";
+                        //this.NextBtn.Visibility = Visibility.Visible;
+                        //this.NextBtn.Content = "下一步";
+                        //this.currentPage = new RFIDScanInPage(this);
+                        //NaviFrame.NavigationService.Navigate(this.currentPage);
+                        //this.dllTimer.Enabled = true;
+                        //this.dllTimer.Start();
                     }
                 }
             }
@@ -226,7 +228,8 @@ namespace ScmClient
             System.Windows.Forms.MessageBox.Show(message);
         }
 
-        private void openCustomCom() {
+        private void openCustomCom() 
+        {
             try
             {
                 sp = new SerialPort(RFIDConfig.RFIDCOM, RFIDConfig.RFIDBaudRate);

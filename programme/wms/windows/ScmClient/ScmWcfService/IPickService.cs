@@ -28,7 +28,11 @@ namespace ScmWcfService
         ResponseMessage<List<PickItem>> GetPickItemByCarNr(string car_nr);
 
         [OperationContract]
-        ResponseMessage<object> WeightOrderBox(int order_box_id,int pick_item_id,float weight);
+        ResponseMessage<object> WeightOrderBox(int order_box_id,
+            int pick_item_id,
+            float weight,
+            float weight_qty,
+            bool weight_valid);
 
         
     }

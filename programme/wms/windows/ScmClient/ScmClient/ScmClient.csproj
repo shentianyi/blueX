@@ -50,6 +50,10 @@
     <Reference Include="n3kAdrtB">
       <HintPath>..\..\..\..\ThridPart\n3kAdrtB.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=104.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\ThridPart\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -69,12 +73,18 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\..\..\..\..\..\..\Visual Studio 2010\Extended WPF Toolkit Binaries\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Enum\SoundType.cs" />
+    <Compile Include="Helper\PathHelper.cs" />
+    <Compile Include="Helper\SoundHelper.cs" />
     <Compile Include="PickListWindow.xaml.cs">
       <DependentUpon>PickListWindow.xaml</DependentUpon>
     </Compile>
@@ -241,6 +251,13 @@
     <Resource Include="icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="sounds\keep.txt" />
+    <Content Include="sounds\fail.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sounds\success.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="ThridPart\EpcDll.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

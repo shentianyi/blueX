@@ -58,7 +58,14 @@ namespace ScmClient
             List<RFIDMessage> boxMsgs = (from msg in messages where msg.Type == MessageType.BOX select msg).ToList();
 
             addCarMessages(carMsgs);
-            addBoxMessages(boxMsgs);
+            if (parentWindow.type == RFIDScanType.OUT && RFIDConfig.OutAutoLoadPick)
+            {
+                //loadCarPickItems();
+            }
+            else
+            {
+                addBoxMessages(boxMsgs);
+            }
         }
 
 

@@ -77,6 +77,7 @@
     <Compile Include="Config\ApiConfig.cs" />
     <Compile Include="Config\RFIDConfig.cs" />
     <Compile Include="Config\DoorConfig.cs" />
+    <Compile Include="Config\BaseConfig.cs" />
     <Compile Include="IOrderService.cs" />
     <Compile Include="IPickService.cs" />
     <Compile Include="IWarehouseService.cs" />
@@ -125,6 +126,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ini\door.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Ini\base.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
