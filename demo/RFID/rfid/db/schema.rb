@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160218091310) do
+ActiveRecord::Schema.define(version: 20160220050149) do
 
   create_table "colors", force: :cascade do |t|
     t.string   "nr",          limit: 255
@@ -228,6 +228,8 @@ ActiveRecord::Schema.define(version: 20160218091310) do
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
     t.float    "weight",        limit: 24
+    t.float    "weight_qty",    limit: 24
+    t.boolean  "weight_valid"
   end
 
   add_index "pick_items", ["order_item_id"], name: "index_pick_items_on_order_item_id", using: :btree

@@ -37,7 +37,7 @@ class PickService
               quantity: item.quantity,
               status: PickStatus::PICKING
           )
-          if position=Position.where(warehouse_id: order_box.source_warehouse_id ,id:PartPosition.where(part_id: item.part_id).pluck(:position_id)).first
+          if position=Position.where(warehouse_id: order_box.source_warehouse_id, id: PartPosition.where(part_id: item.part_id).pluck(:position_id)).first
             pick_item.position=position
           end
           pick_item.order_item=item
@@ -64,16 +64,18 @@ class PickService
     # end
   end
 
-
   def self.validable_car_and_box params
     if car=OrderCar.find_by_id(params[:order_car_id])
       err_infos=[]
-      boxs=[]
-      params[:order_box_ids].each do |box_id|
-        unless box=OrderBox.find_by_id(box_id)
-          err_infos<<"料盒#{box_id}没有找到!"
+      boxs=nil
+      if params[:order_box_ids].present?
+        boxs=[]
+        params[:order_box_ids].each do |box_id|
+          unless box=OrderBox.find_by_id(box_id)
+            err_infos<<"料盒#{box_id}没有找到!"
+          end
+          boxs<<box
         end
-        boxs<<box
       end
 
       if err_infos.size==0

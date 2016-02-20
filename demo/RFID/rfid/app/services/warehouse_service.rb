@@ -4,20 +4,40 @@ class WarehouseService
     # begin
     Storage.transaction do
       PickService.validable_car_and_box(params) do |car, boxes|
-        boxes.each do |order_box|
-          p order_box
-          p order_box.can_move_store?
-          if order_box.can_move_store?
-            self.move({
-                          user_id: user.id,
-                          part_id: order_box.part_id,
-                          quantity: order_box.quantity,
-                          from_warehouse_id: order_box.source_warehouse_id,
-                          to_warehouse_id: order_box.warehouse_id,
-                          to_position_id: order_box.position_id,
-                          remarks: "RFID MOVE:#{order_box.nr}"
-                      })
-            order_box.update_attributes(status: OrderBoxStatus::INIT)
+        if boxes.present?
+          boxes.each do |order_box|
+            p order_box
+            p order_box.can_move_store?
+            if order_box.can_move_store?
+              self.move({
+                            user_id: user.id,
+                            part_id: order_box.part_id,
+                            quantity: order_box.quantity,
+                            from_warehouse_id: order_box.source_warehouse_id,
+                            to_warehouse_id: order_box.warehouse_id,
+                            to_position_id: order_box.position_id,
+                            remarks: "RFID MOVE:#{order_box.nr}"
+                        })
+              order_box.update_attributes(status: OrderBoxStatus::INIT)
+            end
+          end
+        else
+          if pick=Pick.by_order_car(car)
+            pick.pick_items.each do |item|
+              if item.can_move_store? && (order_box=item.order_box)
+                qty=item.status==PickItemStatus::PICKED ? item.weight_qty : item.order_box.quantity
+                self.move({
+                              user_id: user.id,
+                              part_id: item.part_id,
+                              quantity: qty,
+                              from_warehouse_id: order_box.source_warehouse_id,
+                              to_warehouse_id: order_box.warehouse_id,
+                              to_position_id: order_box.position_id,
+                              remarks: "RFID MOVE:#{order_box.nr}"
+                          })
+                order_box.update_attributes(status: OrderBoxStatus::INIT)
+              end
+            end
           end
         end
         car.update_attributes(status: OrderCarStatus::INIT)
@@ -29,14 +49,6 @@ class WarehouseService
           }
       }
     end
-    # rescue => e
-    #   {
-    #       meta: {
-    #           code: 400,
-    #           message: e.message
-    #       }
-    #   }
-    # end
   end
 
   def validate_fifo_time(fifo)

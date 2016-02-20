@@ -9,9 +9,9 @@ class PickItemStatus<BaseStatus
       when INIT
         '新建'
       when PICKING
-        '进行中'
+        '择货中'
       when PICKED
-        '完成'
+        '已择货'
       else
         '放弃'
     end

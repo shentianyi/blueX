@@ -24,9 +24,11 @@ module V1
         requires :id, type: Integer, desc: 'order box id'
         requires :pick_item_id, type: Integer, desc: 'pick item id'
         requires :weight, type: Float, desc: 'weight'
+        requires :weight_qty, type: Float, desc: 'weight qty'
+        requires :weight_valid, type: Boolean, desc: 'weight valid'
       end
       post :weight do
-        OrderBoxService.weight_box(params[:id], params[:pick_item_id], params[:weight])
+        OrderBoxService.weight_box(params)
       end
 
     end

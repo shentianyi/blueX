@@ -30,12 +30,18 @@ class OrderBoxService
 
   end
 
-  def self.weight_box(id,pick_item_id,weight)
+  def self.weight_box(params)
+
+    id=params[:id]
+    pick_item_id= params[:pick_item_id]
     if box=OrderBox.find_by_id(id)
       box.update_attributes(status: OrderBoxStatus::PICKED)
     end
     if item=PickItem.find_by_id(pick_item_id)
-      item.update_attributes(status: PickItemStatus::PICKED,weight:weight)
+      item.update_attributes(status: PickItemStatus::PICKED,
+                             weight: params[:weight],
+                             weight_qty: params[:weight_qty],
+                             weight_valid: params[:weight_valid])
     end
 
     {

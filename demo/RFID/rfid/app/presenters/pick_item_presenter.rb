@@ -32,7 +32,10 @@ class PickItemPresenter<Presenter
         status: @pick_item.status,
         quantity:@pick_item.quantity,
         order_box: o.nil? ? nil :  OrderBoxPresenter.new(o).as_basic_info(true),
-        part: PartPresenter.new(@pick_item.part).as_basic_info
+        part: PartPresenter.new(@pick_item.part).as_basic_info,
+        weight: @pick_item.weight.blank? ? 0 : @pick_item.weight,
+        weight_qty:  @pick_item.weight_qty.blank? ? 0 : @pick_item.weight_qty,
+        weight_valid:  @pick_item.weight_valid.blank? ? 0 : @pick_item.weight_valid
     }
   end
 

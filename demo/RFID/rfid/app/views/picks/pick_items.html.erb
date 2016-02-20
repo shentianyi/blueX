@@ -31,12 +31,16 @@
     <table class="table table-bordered table-striped">
       <thead>
       <tr>
-        <th>择货单号</th>
+        <th></th>
+        <th>料盒号</th>
+        <th>零件号</th>
+        <th>需求数量</th>
+        <th>重量</th>
+        <th>称重数量</th>
+        <th>重量合规</th>
         <th>状态</th>
         <th>仓库号</th>
         <th>库位号</th>
-        <th>数量</th>
-        <th>零件号</th>
         <th>是否加急</th>
         <th>需求项号</th>
         <th>备注</th>
@@ -47,12 +51,16 @@
       <tbody>
       <% @pick_items.each_with_index do |pick_item, i| %>
           <tr>
-            <td><%= pick_item.pick.nr %></td>
-            <td><%= PickStatus.display pick_item.status %></td>
+            <td><%=i+1%></td>
+            <td><%= pick_item.orderable_nr %></td>
+            <td><%= pick_item.part.blank? ? '' : pick_item.part.nr %></td>
+            <td><%= pick_item.quantity %></td>
+            <td><%= pick_item.weight %></td>
+            <td><%= pick_item.weight_qty %></td>
+            <td><%= pick_item.weight_valid %></td>
+            <td><%= PickItemStatus.display pick_item.status %></td>
             <td><%= pick_item.warehouse.blank? ? '' : pick_item.warehouse.nr %></td>
             <td><%= pick_item.position.blank? ? '' : pick_item.position.nr %></td>
-            <td><%= pick_item.quantity %></td>
-            <td><%= pick_item.part.blank? ? '' : pick_item.part.nr %></td>
             <td>
               <% if pick_item.is_emergency %>
                   <span class="label label-success">是</span>
