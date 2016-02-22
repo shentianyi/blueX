@@ -4,7 +4,8 @@
                                                          xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
 
         Height="600" Width="800"  WindowStartupLocation="CenterScreen"
-                       Closing="MetroWindow_Closing" Loaded="MetroWindow_Loaded" WindowStyle="SingleBorderWindow">
+                       Closing="MetroWindow_Closing" Loaded="MetroWindow_Loaded" 
+                      WindowStyle="SingleBorderWindow">
 
     <Window.Resources>
         <Style TargetType="DataGridCell">
@@ -13,9 +14,9 @@
                                             <DataTrigger Binding="{Binding weight_valid}" Value="False">
                                                 <Setter Property="Background" Value="Red"/>
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding weight_valid}" Value="True">
+                                            <!--<DataTrigger Binding="{Binding weight_valid}" Value="True">
                                                 <Setter Property="Background" Value="White"/>
-                                            </DataTrigger>
+                                            </DataTrigger>-->
                                         </Style.Triggers>
         </Style>
     </Window.Resources>

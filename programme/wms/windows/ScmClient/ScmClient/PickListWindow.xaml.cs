@@ -45,7 +45,8 @@ namespace ScmClient
         {
             OrderCarLabel.Content = this.carNr;
             QtyLabel.Content = this.pickItems.Count;
-            QtyValidLabel.Content = 0;
+            QtyValidLabel.Content = getValidCount();
+            
 
             PreviewDG.ItemsSource = this.pickItems;
         }
@@ -122,11 +123,13 @@ namespace ScmClient
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (MessageBox.Show("确定关闭？", "提醒", MessageBoxButton.YesNo, MessageBoxImage.Question,MessageBoxResult.No) == MessageBoxResult.Yes)
+            if (MessageBox.Show("确定关闭？", "提醒", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
             {
                 e.Cancel = false;
+                new MenuWindow().Show();
             }
-            else {
+            else
+            {
                 e.Cancel = true;
             }
         }
