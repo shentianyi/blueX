@@ -3,7 +3,7 @@ class Order < ActiveRecord::Base
   belongs_to :user
   belongs_to :warehouse
   has_many :order_items,:dependent => :destroy
-  has_many :pick_orders
+  has_many :pick_orders, :dependent => :destroy
 
   belongs_to :orderable, :polymorphic => true
 

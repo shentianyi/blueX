@@ -67,6 +67,7 @@
       <tr>
         <th>零件号</th>
         <th>库位号</th>
+        <th>仓库号</th>
         <th>安全库存</th>
         <th>默认源仓库</th>
         <th>默认源库位</th>
@@ -79,6 +80,7 @@
           <tr>
             <td><%= part_position.part.blank? ? '' : part_position.part.nr %></td>
             <td><%= part_position.position.blank? ? '' : part_position.position.nr %></td>
+            <td><%= part_position.position.blank? ? '' : part_position.position.warehouse.nr %></td>
             <td><%= part_position.safe_stock %></td>
             <td><%= part_position.from_warehouse.blank? ? '' : part_position.from_warehouse.nr %></td>
             <td><%= part_position.from_position.blank? ? '' : part_position.from_position.nr %></td>

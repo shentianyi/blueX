@@ -6,6 +6,9 @@ class Location < ActiveRecord::Base
   validates_uniqueness_of :nr, :message => "地点编号不能重复!"
 
   def self.options
-    self.all.map { |r| [r.nr, r.id] }
+    options=[]
+    options=self.all.map { |r| [r.nr, r.id] }
+    puts options
+    options<<['', '']
   end
 end

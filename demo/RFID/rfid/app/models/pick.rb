@@ -5,7 +5,7 @@ class Pick < ActiveRecord::Base
 
   has_many :pick_orders,:dependent => :destroy
 
-  has_many :orders, through: :pick_orders
+  has_many :orders, through: :pick_orders, :dependent => :destroy
 
   belongs_to :user
 

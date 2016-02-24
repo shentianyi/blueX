@@ -3,7 +3,7 @@ class OrderItem < ActiveRecord::Base
   belongs_to :user
   belongs_to :orderable, :polymorphic => true
   belongs_to :part
-  has_many :pick_items
+  has_many :pick_items, :dependent => :destroy
 
 
   def orderable_nr

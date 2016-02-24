@@ -4,8 +4,9 @@ class Warehouse < ActiveRecord::Base
 
   belongs_to :parent, class_name: 'Warehouse'
   belongs_to :location
-  has_many :positions
-  has_many :order_boxes
+  has_many :positions, :dependent => :destroy
+  has_many :order_boxes, :dependent => :destroy
+  has_many :order_cars, :dependent => :destroy
 
 
   validates_presence_of :nr, :message => "仓库编号不能为空!"

@@ -79,14 +79,14 @@ class OrderBoxesController < ApplicationController
   end
 
   def search
-p params[:order_box][:part_id]
+    p params[:order_box][:part_id]
 
     super { |query|
       unless params[:order_box][:part_id].blank?
         if part = Part.find_by_nr(params[:order_box][:part_id])
           query = query.unscope(where: :part_id).where(part_id: part.id)
-p '---------------------------'
-p part
+          p '---------------------------'
+          p part
         end
       end
 
