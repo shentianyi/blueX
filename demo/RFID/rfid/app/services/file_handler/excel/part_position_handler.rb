@@ -75,6 +75,7 @@ module FileHandler
           2.upto(book.last_row) do |line|
             row = {}
             HEADERS.each_with_index do |k, i|
+              puts "----------#{k}--------111-------#{row[k]}---------------------"
               row[k] = book.cell(line, i+1).to_s.strip
               if k.to_s=='part_id' || k.to_s=='old_part_id'
                 row[k]=row[k].sub(/\.0/, '')
