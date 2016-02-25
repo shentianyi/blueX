@@ -76,7 +76,7 @@ module FileHandler
             row = {}
             HEADERS.each_with_index do |k, i|
               row[k] = book.cell(line, i+1).to_s.strip
-              if k.to_s=='part_id'
+              if k.to_s=='part_id' || k.to_s=='old_part_id'
                 row[k]=row[k].sub(/\.0/, '')
               end
             end
@@ -102,25 +102,25 @@ module FileHandler
         msg = Message.new(contents: [])
 
         unless row[:part_id].blank?
-          if Part.find_by_nr(row[:part_id].sub(/\.0/, '')).blank?
+          if Part.find_by_nr(row[:part_id]).blank?
             msg.contents<<"零件号:#{row[:part_id]}不存在"
           end
         end
 
         unless row[:position_id].blank?
-          if Position.find_by_nr(row[:position_id].sub(/\.0/, '')).blank?
+          if Position.find_by_nr(row[:position_id]).blank?
             msg.contents<<"库位号:#{row[:position_id]}不存在"
           end
         end
 
         unless row[:old_part_id].blank?
-          if Part.find_by_nr(row[:old_part_id].sub(/\.0/, '')).blank?
+          if Part.find_by_nr(row[:old_part_id]).blank?
             msg.contents<<"旧零件号:#{row[:old_part_id]}不存在"
           end
         end
 
         unless row[:old_position_id].blank?
-          if Position.find_by_nr(row[:old_position_id].sub(/\.0/, '')).blank?
+          if Position.find_by_nr(row[:old_position_id]).blank?
             msg.contents<<"旧库位号:#{row[:old_position_id]}不存在"
           end
         end
