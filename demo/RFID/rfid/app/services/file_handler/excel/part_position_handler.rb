@@ -113,6 +113,18 @@ module FileHandler
           end
         end
 
+        unless row[:old_part_id].blank?
+          if Part.find_by_nr(row[:old_part_id]).blank?
+            msg.contents<<"旧零件号:#{row[:old_part_id]}不存在"
+          end
+        end
+
+        unless row[:old_position_id].blank?
+          if Position.find_by_nr(row[:old_position_id]).blank?
+            msg.contents<<"旧库位号:#{row[:old_position_id]}不存在"
+          end
+        end
+
         unless row[:from_warehouse_id].blank?
           if Warehouse.find_by_nr(row[:from_warehouse_id]).blank?
             msg.contents<<"默认源仓库:#{row[:from_warehouse_id]}不存在"
