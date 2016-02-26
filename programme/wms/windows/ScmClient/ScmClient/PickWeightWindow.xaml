@@ -4,7 +4,7 @@
                                                                     
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
 
-        Title="PickWeightWindow" Height="600" Width="800" Loaded="MetroWindow_Loaded" WindowStartupLocation="CenterScreen" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" Topmost="True">
+        Title="PickWeightWindow" Height="600" Width="800" Loaded="MetroWindow_Loaded" WindowStartupLocation="CenterScreen" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" Topmost="True" Closing="MetroWindow_Closing">
 
 
     <Grid Background="#0078C1">
@@ -32,9 +32,18 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Image Source="/images/scale.png" Name="partImage" Margin="20"></Image>
-
-
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Border Height="240" Width="240"  BorderThickness="0"
+                        BorderBrush="#FFD700" Name="partImageBorder">
+                <Image Source="/images/scale.png" Name="partImage" 
+                         Height="220" Width="220" Visibility="Visible">
+                </Image>
+</Border>
+                    <Label Content="皮重:" Name="netWeightLabel" Visibility="Hidden" FontSize="25" Foreground="#FFD700" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    
+                </Label>
+</StackPanel>
+                
                 <Grid Grid.Column="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
@@ -42,6 +51,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
@@ -81,8 +91,10 @@
 
                     <Label Grid.Row="5" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center"
                            Foreground="#FAFAD2" Content="称重:"></Label>
-                    <TextBox Height="50" Width="150" Grid.Row="5" Grid.Column="2" Name="actualWeightTB"
-                             HorizontalAlignment="Left" Margin="20 0 0 0"  VerticalAlignment="Center" Foreground="#FFA500" Padding="20 0 0 0" Text="" KeyUp="actualWeightTB_KeyUp" FocusableChanged="actualWeightTB_FocusableChanged"></TextBox>
+                    <TextBox Height="44" Width="150" Grid.Row="5" Grid.Column="2" Name="actualWeightTB"
+                             HorizontalAlignment="Left" Margin="20 0 0 0" 
+                             VerticalAlignment="Center" Foreground="#FFA500"
+                             Padding="20 0 0 0" Text="" KeyUp="actualWeightTB_KeyUp" FocusableChanged="actualWeightTB_FocusableChanged"></TextBox>
                    
                     <Border Grid.Row="5" Grid.Column="1" Visibility="Hidden" Name="weightMsgBorder"
                             Margin="0,0,64,0" CornerRadius="50" Width="100" Height="50" 
@@ -99,9 +111,14 @@
                     Name="weightQtyLabel"
                            Margin="20 0 0 0" Minimum="0" DefaultValue="0" VerticalAlignment="Center" 
                                         TextAlignment="Left" Text="0"
-                    FontSize="30" Foreground="#FFD700" FontWeight="Bold" ValueChanged="weightQtyLabel_ValueChanged" />
-                    
-                    <Button HorizontalAlignment="Left" Margin="3,0,0,0" Grid.Row="7"
+                    FontSize="28" Foreground="#FFD700" FontWeight="Bold" ValueChanged="weightQtyLabel_ValueChanged" />
+
+                    <Label Grid.Row="7" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center"
+                           Foreground="#FAFAD2" Content="提示:"></Label>
+                    <Label Grid.Row="7" Grid.Column="2" HorizontalAlignment="Left" Name="alertLabel"
+                           Margin="20 0 0 0"  VerticalAlignment="Center" FontSize="25" Foreground="Red" Content=""></Label>
+
+                    <Button HorizontalAlignment="Left" Margin="3,0,0,0" Grid.Row="8"
                             Grid.Column="1" Grid.RowSpan="2" Height="60" Width="150" 
                             FontFamily="Solomon_Sans_Bold" BorderThickness="1" Name="confirmBtn" Click="confirmBtn_Click">
                         <DockPanel>

@@ -19,6 +19,7 @@ namespace ScmWcfService.Config
                 PlayWeightSound = bool.Parse(config.Get("PlayWeightSound"));
                 PlayPickPositionVoice = bool.Parse(config.Get("PlayPickPositionVoice"));
                 ImageExtends = config.Get("ImageExtends").Split(',').ToList();
+                ForceNetWeight = bool.Parse(config.Get("ForceNetWeight"));
             }
             catch (Exception e)
             {
@@ -30,5 +31,6 @@ namespace ScmWcfService.Config
         public static bool PlayWeightSound { get; set; }
         public static bool PlayPickPositionVoice { get; set; }
         public static List<string> ImageExtends { get; set; }
+        public static bool ForceNetWeight { get; set; }
     }
 }

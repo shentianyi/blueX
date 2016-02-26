@@ -35,6 +35,12 @@ namespace ScmClient
 
         PickListWindow parentWindow;
 
+
+        // net weight
+        float net_weight = 0;
+        bool net_weighted = false;
+
+
         public PickWeightWindow()
         {
             InitializeComponent();
@@ -51,12 +57,21 @@ namespace ScmClient
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
 
-            if (BaseConfig.PlayPickPositionVoice)
+            VoiceHelper vh = new VoiceHelper();
+            vh.Text = new List<VoiceText>();
+            if (BaseConfig.ForceNetWeight)
             {
-                new VoiceHelper() { Text = this.item.positions_nr.Split(',').First(), Times = 2 }.Speak();
+                VoiceText vt1 = new VoiceText() { Text = "请去皮！" };
+                vh.Text.Add(vt1);
             }
+            if (BaseConfig.PlayPickPositionVoice && (!string.IsNullOrEmpty(this.item.positions_nr)))
+            {
+                VoiceText vt2 = new VoiceText() { Text = "库位：" + this.item.positions_nr };
 
-            new VoiceHelper() { Text = "请去皮!" }.Speak();
+                vh.Text.Add(vt2);
+                // new VoiceHelper() { Text = this.item.positions_nr, Times = 2 }.Speak();
+            }
+            vh.Speak();
 
             minWeight = item.quantity * (item.part.weight * (1 - item.part.weight_range));// +item.order_box.weight;
             maxWeight = item.quantity * (item.part.weight * (1 + item.part.weight_range));// +item.order_box.weight;
@@ -66,8 +81,8 @@ namespace ScmClient
             positionLabel.Content = item.positions_nr;
             unitWeightLabel.Content = item.part.weight;
             qtyLabel.Content = item.quantity;
-            
-            standWeightLabel.Content =minWeight+"-("+ standWeight+")-"+maxWeight;
+
+            standWeightLabel.Content = minWeight + "-(" + standWeight + ")-" + maxWeight;
             qtyLabel.Content = (int)Math.Round(minWeight / this.item.part.weight) + "-(" + item.quantity + ")-" + (int)Math.Round(maxWeight / this.item.part.weight);
             actualWeightTB.Focus();
 
@@ -96,7 +111,7 @@ namespace ScmClient
 
         private void confirmBtn_Click(object sender, RoutedEventArgs e)
         {
-           
+            validateWeightAndVoice();
         }
 
         private void validateWeightAndVoice() {
@@ -136,47 +151,83 @@ namespace ScmClient
 
         private void validateWeight()
         {
+            string alertMessage = "";
             valid = false;
             float weight = 0;
             if (float.TryParse(actualWeightTB.Text.Trim(), out weight))
             {
-                weightMsgBorder.Visibility = Visibility.Visible;
-                int weight_qty = (int)Math.Round(weight / this.item.part.weight);
-                this.item.weight = weight;
-                this.item.weight_qty = weight_qty;
-                this.weightQtyLabel.Value = weight_qty;
-
-                if (weight >= minWeight && weight <= maxWeight)
+                if (weight > 0)
                 {
-                    playSound(SoundType.SUCCESS);
-                    this.item.weight_valid = true;
-                    valid = true;
-                    weightMsgBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Green"));
-                    weightMsgTB.Text = "通过";
-
-                    this.parentWindow.RefreshData();
-                    new VoiceHelper() { Text = "合格" }.Speak();
-
-                }
-                else
-                {
-                    playSound(SoundType.FAIL);
-                    this.item.weight_valid = false;
-                    weightMsgTB.Text = "失败";
-                    weightMsgBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Red"));
-
-                    if (weight < minWeight)
+                    if (netWeighted())
                     {
-                        int mweight_qty = (int)Math.Round((standWeight - weight) / this.item.part.weight);
+                        weightMsgBorder.Visibility = Visibility.Visible;
+                        int weight_qty = (int)Math.Round(weight / this.item.part.weight);
+                        this.item.weight = weight;
+                        this.item.weight_qty = weight_qty;
+                        this.weightQtyLabel.Value = weight_qty;
 
-                        new VoiceHelper() { Text = "太轻，还差" + mweight_qty + "个" }.Speak();
+                        if (weight >= minWeight && weight <= maxWeight)
+                        {
+                            playSound(SoundType.SUCCESS);
+                            this.item.weight_valid = true;
+                            valid = true;
+                            weightMsgBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Green"));
+                            weightMsgTB.Text = "通过";
+
+                            this.parentWindow.RefreshData();
+                            new VoiceHelper("合格").Speak();
+                        }
+                        else
+                        {
+                            playSound(SoundType.FAIL);
+                            this.item.weight_valid = false;
+                            weightMsgTB.Text = "失败";
+                            weightMsgBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Red"));
+
+                            if (weight < minWeight)
+                            {
+                                int mweight_qty = (int)Math.Round((standWeight - weight) / this.item.part.weight);
+
+                                alertMessage = "太轻，还差" + mweight_qty + "个";
+                            }
+                            else if (weight > maxWeight)
+                            {
+                                int mweight_qty = (int)Math.Round((weight - standWeight) / this.item.part.weight);
+                                alertMessage = "太重，多了" + mweight_qty + "个";
+                            }
+                            new VoiceHelper(alertMessage).Speak();
+                            alertLabel.Content = alertMessage;
+                        }
                     }
-                    else if(weight>maxWeight) {
-                        int mweight_qty = (int)Math.Round(( weight-standWeight) / this.item.part.weight);
-                        new VoiceHelper() { Text = "太重，多了" + mweight_qty + "个" }.Speak();
+                    else
+                    {
+                        if (net_weight > 0)
+                        {
+                            alertMessage = "未去皮！";
+                            new VoiceHelper(alertMessage).Speak();
+                            alertLabel.Content = alertMessage;
+                        }
                     }
+                }
+
+                if ((!net_weighted) && weight > 0)
+                {
+                    net_weight = weight;
+                }
 
 
+                if (weight == 0 && net_weight > 0)
+                {
+                    alertMessage = "去皮成功！";
+                    new VoiceHelper(alertMessage).Speak();
+                    alertLabel.Content = alertMessage;
+
+                    partImageBorder.BorderThickness=new Thickness(10);
+                    netWeightLabel.Visibility = Visibility.Visible;
+                    netWeightLabel.Content = "皮重:" + net_weight;
+
+
+                    net_weighted = true;
                 }
 
 
@@ -188,6 +239,15 @@ namespace ScmClient
 
             actualWeightTB.Focus();
             actualWeightTB.SelectAll();
+        }
+
+        private bool netWeighted()
+        {
+            if (BaseConfig.ForceNetWeight)
+            {
+                return net_weighted;
+            }
+            return true;
         }
 
         private void playSound(SoundType type)
@@ -215,6 +275,13 @@ namespace ScmClient
 
 
            // MessageBox.Show(weightQtyLabel.Value.ToString());
+        }
+
+        private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            parentWindow.Activate();
+            parentWindow.ScanTB.Focus();
+            parentWindow.ScanTB.SelectAll();
         }
 
 

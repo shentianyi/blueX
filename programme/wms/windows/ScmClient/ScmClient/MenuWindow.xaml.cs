@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ScmClient.Enum;
 using MahApps.Metro.Controls;
+using Brilliantech.Framwork.Utils.LogUtil;
 
 namespace ScmClient
 {
@@ -24,6 +25,7 @@ namespace ScmClient
         public MenuWindow()
         {
             InitializeComponent();
+            LogUtil.Logger.Info("WMS Client 启动！");
         }
 
         private void RFIDScanInNaviBtn_Click(object sender, RoutedEventArgs e)

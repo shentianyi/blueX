@@ -7,32 +7,60 @@ using System.Threading;
 
 namespace ScmClient.Helper
 {
-    public class VoiceHelper
-    {
+    public class VoiceText {
         public string Text { get; set; }
         public int Times { get; set; }
-        public VoiceHelper() { Times = 1; }
+
+        public VoiceText() {
+            this.Times = 1;
+        }
+    }
+
+    public class VoiceHelper
+    {
+        public   List<VoiceText> Text { get; set; }
+       // public int Times { get; set; }
+        public VoiceHelper() { 
+        
+        }
+        public VoiceHelper(string text, int times = 1)
+        {
+            this.Text = new List<VoiceText>() { new VoiceText() { Text = text, Times = times } };
+          
+        }
 
         public   void Speak()
         {
             Thread inventoryThread = new Thread(speakT);//盘点线程
             inventoryThread.Start();
-
+         // speakT();
         }
         private void speakT()
         {
             try
             {
-                if (!string.IsNullOrEmpty(this.Text))
+                SpeechVoiceSpeakFlags SpFlags = SpeechVoiceSpeakFlags.SVSFPurgeBeforeSpeak;
+                SpVoice Voice = new SpVoice();
+                foreach (VoiceText vt in this.Text)
                 {
-                    SpeechVoiceSpeakFlags SpFlags = SpeechVoiceSpeakFlags.SVSFDefault;
-                    SpVoice Voice = new SpVoice();
-                    while (this.Times > 0)
+                    if (!string.IsNullOrEmpty(vt.Text))
                     {
-                        Voice.Speak(this.Text, SpFlags);
-                        this.Times -= 1;
+                        while (vt.Times > 0)
+                        {
+                            Voice.Speak(vt.Text, SpFlags);
+                            vt.Times -= 1;
+                        }
                     }
                 }
+                //if (!string.IsNullOrEmpty(this.Text))
+                //{
+                //    
+                //    while (this.Times > 0)
+                //    {
+                //        Voice.Speak(this.Text, SpFlags);
+                //        this.Times -= 1;
+                //    }
+                //}
             }
             catch { }
         }
