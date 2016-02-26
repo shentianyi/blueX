@@ -38,6 +38,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JW.UHF">
+      <HintPath>..\..\..\..\ThridPart\JW.UHF.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="RestSharp">
       <HintPath>..\..\..\..\ThridPart\RestSharp.dll</HintPath>
@@ -86,6 +89,7 @@
     <Compile Include="Model\Enum\OrderBoxStatus.cs" />
     <Compile Include="Model\Enum\OrderStatus.cs" />
     <Compile Include="Model\Enum\PickStatus.cs" />
+    <Compile Include="Model\Enum\RFIDReaderType.cs" />
     <Compile Include="Model\Warehouse.cs" />
     <Compile Include="Model\Part.cs" />
     <Compile Include="Model\OrderBoxType.cs" />
@@ -131,6 +135,9 @@
     <None Include="Ini\base.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Ini\rfid.ini.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\base\windows\Brilliantech.Framwork\Brilliantech.Framwork.csproj">

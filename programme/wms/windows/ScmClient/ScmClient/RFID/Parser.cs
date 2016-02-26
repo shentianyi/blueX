@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using ScmWcfService.Config;
+using ScmWcfService.Model.Enum;
 
 namespace ScmClient.RFID
 {
@@ -20,9 +21,9 @@ namespace ScmClient.RFID
             List<string> dataList = data.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
             foreach (string d in dataList)
             {
-                string dd = d.Replace(" ","");
+                string dd = d.Replace(" ", "");
 
-                if (RFIDConfig.USE_DLL)
+                if (RFIDConfig.ReaderType == RFIDReaderType.ZhaoWei)
                 {
                     dd = new String(d.Skip(6).Take(38).ToArray()).Replace(" ", "");
                 }

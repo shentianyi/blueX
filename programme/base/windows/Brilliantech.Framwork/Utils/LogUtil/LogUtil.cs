@@ -9,15 +9,17 @@ namespace Brilliantech.Framwork.Utils.LogUtil
 {
     public class LogUtil
     {
-        private static readonly ILog logger =
-           LogManager.GetLogger(typeof(LogUtil));
+        private static log4net.ILog logger;
 
         static LogUtil()
         {
-            XmlConfigurator.Configure(); 
+          //  log4net.Config.XmlConfigurator.Configure();
+            XmlConfigurator.Configure();
+
+            logger=LogManager.GetLogger(typeof(LogUtil));
         }
 
-        public static ILog Logger
+        public static log4net.ILog Logger
         {
             get { return LogUtil.logger; }
         }

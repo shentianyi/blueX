@@ -23,6 +23,9 @@ using ScmClient.Enum;
 using ScmWcfService.Config;
 using System.IO.Ports;
 using MahApps.Metro.Controls;
+using ScmWcfService.Model.Enum;
+using JW.UHF;
+using ScmClient.Helper; 
 
 namespace ScmClient
 {
@@ -34,11 +37,24 @@ namespace ScmClient
         private MenuWindow menuWindow; 
         private Page currentPage;
 
+        //zhaowei
         private System.Timers.Timer dllTimer;
         IntPtr g_selectCom = IntPtr.Zero;       //选择操作的串口句柄
 
-        public RFIDScanType type { get; set; }
+        //weijin
+        private JWReader jwReader = null;
+        private object lockObj = new object();//线程同步锁
+        private DateTime startTime;//启动时间 
+        private Queue<Tag> inventoryTagQueue = new Queue<Tag>();//盘点到Tag队列列表
+       // Dictionary<string, ListViewItem> tagList = new Dictionary<string, ListViewItem>();//Tag列表
+       // UInt64 actual_read_count = 0;//实际读取数量
+        private bool stopInventoryFlag = false;//是否停止盘点标志
+        private delegate void UHFOperDelegate();//UHF操作跨线程委托类
 
+
+
+
+        public RFIDScanType type { get; set; }
         SerialPort sp;
 
         public RFIDScanInWindow()
@@ -56,14 +72,134 @@ namespace ScmClient
         {
             this.currentPage = new RFIDScanInPage(this);
             NaviFrame.NavigationService.Navigate(this.currentPage);
-            if (RFIDConfig.USE_DLL)
+            if (RFIDConfig.ReaderType==RFIDReaderType.ZhaoWei)
             {
                 initTimer();
                 openDllCom();
             }
-            else {
+            else if (RFIDConfig.ReaderType == RFIDReaderType.WeiJin) {
+                #region 连接模块
+                Result result = Result.OK;
+                jwReader = new JWReader(RFIDConfig.RFIDCOM);
+
+                result = jwReader.RFID_Open();//连接UHF模块
+
+                if (result != Result.OK)
+                {
+                    #region 第二次尝试打开模块
+                    result = jwReader.RFID_Open();
+                    if (result != Result.OK)
+                    {
+                        LogUtil.Logger.Info("串口打开失败！");
+                        showMessageBox("RFID启动失败，请重启程序！");
+                    }
+                    else
+                    {
+                        LogUtil.Logger.Info("串口打开成功！");
+                    }
+                    #endregion
+                }
+                else 
+                {
+                    LogUtil.Logger.Info("串口打开成功！");
+                }
+                #endregion
+
+                #region 配置模块
+                RfidSetting rs = new RfidSetting();
+                rs.AntennaPort_List = new List<AntennaPort>();
+                foreach (string index in RFIDConfig.AntennaPort)
+                {
+                    AntennaPort ap = new AntennaPort();
+                    ap.AntennaIndex = int.Parse(index);
+                    ap.Power = RFIDConfig.AntennaPower;
+                    rs.AntennaPort_List.Add(ap);
+                }
+
+                rs.Inventory_Time = RFIDConfig.InventoryTime;
+
+                rs.Region_List = RFIDConfig.RegionListType;
+
+                rs.Speed_Mode = RFIDConfig.SpeedModeType;
+
+
+                rs.Tag_Group = new TagGroup();
+                rs.Tag_Group.SessionTarget = RFIDConfig.SessionTargetType; //SessionTarget.A;//A
+                // rs.Tag_Group.SearchMode = SearchMode.DUAL_TARGET;//SINGLE_TARGET
+                rs.Tag_Group.SearchMode = RFIDConfig.SearchModeType;//SearchMode.SINGLE_TARGET;
+                //  rs.Tag_Group.Session = Session.S0;//S0
+                rs.Tag_Group.Session = RFIDConfig.SessionType;//Session.S1;
+
+                result = jwReader.RFID_Set_Config(rs);
+                if (result != Result.OK)
+                {
+                    LogUtil.Logger.Info("RFID配置失败！");
+                    showMessageBox("RFID配置失败，请重启程序！");
+                }
+                else {
+                    LogUtil.Logger.Info("RFID配置成功！");
+                }
+
+                #endregion
+
+                stopInventoryFlag = false;
+
+                Thread inventoryThread = new Thread(inventory);//盘点线程
+                inventoryThread.Start();
+
+                Thread updateThread = new Thread(updateList);//更新列表线程
+                updateThread.Start();
+            }
+            else
+            {
                 openCustomCom();
             }
+        }
+
+        /// <summary>
+        /// 更新列表线程
+        /// </summary>
+        /// <param name="tags"></param>
+        private void updateList()
+        {
+            while (!stopInventoryFlag)//未停止
+            {
+                updateInventoryGridList();
+                Thread.Sleep(100);
+            }
+
+            DateTime dt = DateTime.Now;
+            while (true)
+            {
+                updateInventoryGridList();
+                //500毫秒内确定没有包了 防止线程提前结束 有些盘点包还没处理完 可保证该线程最后结束。
+                //if (inventoryTagQueue.Count == 0 && UtilHelper.DateDiffMillSecond(DateTime.Now, dt) > 5000)
+                //    break;
+            }
+
+        }
+
+        /// <summary>
+        /// 更新列表
+        /// </summary>
+        private void updateInventoryGridList()
+        {
+            UHFOperDelegate updateList = delegate()
+            {
+                while (inventoryTagQueue.Count > 0)
+                {
+                    Tag packet = inventoryTagQueue.Dequeue();
+                    String epc = packet.EPC;
+                    handleData(epc);
+
+                }//while循环
+            };
+
+           // this.Invoke(updateList);
+            this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate()
+                   {
+                       updateList();
+                   });
         }
 
         private void initTimer()
@@ -76,6 +212,42 @@ namespace ScmClient
             ((System.ComponentModel.ISupportInitialize)(this.dllTimer)).EndInit();
         }
 
+
+        /// <summary>
+        /// 数据上报
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void TagsReport(object sender, TagsEventArgs args)
+        {
+            Tag tag = args.tag;
+            inventoryTagQueue.Enqueue(tag);//回调函数事情越少越好。
+        }
+
+
+        /// <summary>
+        /// 盘点线程
+        /// </summary>
+        void inventory()
+        {
+            //盘点开始初始化动作
+            UHFOperDelegate modifyInventoryStart = delegate()
+            {
+                startTime = DateTime.Now;
+            };
+
+            jwReader.TagsReported += TagsReport;
+            //盘点
+            jwReader.RFID_Start_Inventory();
+
+            //盘点完毕处理动作
+            DateTime endTime = DateTime.Now;
+            UHFOperDelegate modifyInventoryStop = delegate()
+            {
+                this.stopInventoryFlag = true;
+            };
+
+        }
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -103,6 +275,23 @@ namespace ScmClient
             this.Close(); 
         }
 
+        private void closeJwReader()
+        {
+            Result result = Result.OK;
+
+            result = jwReader.RFID_Stop_Inventory();//停止当前UHF操作
+
+            result = jwReader.RFID_Close();//关闭模块连接
+            if (result == Result.OK)
+            {
+                LogUtil.Logger.Info("串口关闭成功！");
+            }
+            else {
+
+                LogUtil.Logger.Error("串口关闭失败！");
+            }
+        }
+
         private void closeCustomCOM()
         {
             try
@@ -110,13 +299,12 @@ namespace ScmClient
                 if (sp != null)
                 {
                     sp.Close();
-
-                    LogUtil.Logger.Error("Close COM Success");
+                    LogUtil.Logger.Info("串口关闭成功！");
                 }
             }
             catch (Exception e)
             {
-                LogUtil.Logger.Error("Close COM Error");
+                LogUtil.Logger.Error("串口关闭失败！");
                 LogUtil.Logger.Error(e.Message);
             }
         }
@@ -139,7 +327,7 @@ namespace ScmClient
             if (closeFlag == RFIDDll.CLOSE_COM_SUCCESS)
             {
                 g_selectCom = IntPtr.Zero;
-                LogUtil.Logger.Info("Close COM Success");
+                LogUtil.Logger.Info("串口关闭成功！");
             }
         
         }
@@ -236,14 +424,14 @@ namespace ScmClient
                 sp.Open();
                 sp.DataReceived += new SerialDataReceivedEventHandler(sp_DataReceived);
 
-                LogUtil.Logger.Info("Open COM Success");
+                LogUtil.Logger.Info("串口打开成功！");
             }
             catch (Exception e) {
                 if (sp.IsOpen) {
                     sp.Close();
                 }
 
-                LogUtil.Logger.Error("Open COM Error");
+                LogUtil.Logger.Error("串口打开失败！");
                 LogUtil.Logger.Error(e.Message);
             }
         }
@@ -252,52 +440,41 @@ namespace ScmClient
         {
             Byte[] recvbuf = new Byte[17];
             sp.Read(recvbuf, 0, recvbuf.Length);
-
-            //string data = System.Text.Encoding.Default.GetString(recvbuf);
-
-            //string data = Encoding.ASCII.GetString(recvbuf);
             string data = string.Empty;
             foreach (byte b in recvbuf)
             {
-                //string bb = b.ToString("X0");
-                //if (bb.Length == 1)
-                //{
-                //    bb = "0" + bb;
-                //}
-                //data += bb + " ";
-
                 data += b.ToString("X0").PadLeft(2, '0');
             }
-
-         // data=  Encoding.ASCII.GetString(recvbuf);  
 
             LogUtil.Logger.Info(recvbuf);
 
             LogUtil.Logger.Info(data); 
             if (recvbuf.Length != 0 && recvbuf.Length < 40960)
             {
+                handleData(data);
+            }
+        }
 
-            //    string data = System.Text.Encoding.Default.GetString(recvbuf);
-
-                LogUtil.Logger.Info("[接收到]" + data); 
-                List<RFIDMessage> messages = new List<RFIDMessage>();
-                messages = Parser.StringToList(data);
-                if (messages.Count > 0)
+        private void handleData(string data) 
+        {
+            LogUtil.Logger.Info("[接收到]" + data);
+            List<RFIDMessage> messages = new List<RFIDMessage>();
+            messages = Parser.StringToList(data);
+            if (messages.Count > 0)
+            {
+                this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate()
                 {
-                    this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate()
+                    LogUtil.Logger.Info(this.currentPage.Name);
+                    if (this.currentPage.Name == "RFIDScanInPageName")
                     {
-                        LogUtil.Logger.Info(this.currentPage.Name);
-                        if (this.currentPage.Name == "RFIDScanInPageName")
-                        {
-                            this.currentPage = new RFIDScanInListPage(this);
-                            NaviFrame.NavigationService.Navigate(this.currentPage);
-                        }
-                        if (this.currentPage.Name == "RFIDScanInListPageName")
-                        {
-                            ((RFIDScanInListPage)this.currentPage).ReceiveData(messages);
-                        }
-                    });
-                }
+                        this.currentPage = new RFIDScanInListPage(this);
+                        NaviFrame.NavigationService.Navigate(this.currentPage);
+                    }
+                    if (this.currentPage.Name == "RFIDScanInListPageName")
+                    {
+                        ((RFIDScanInListPage)this.currentPage).ReceiveData(messages);
+                    }
+                });
             }
         }
 
@@ -311,7 +488,7 @@ namespace ScmClient
             if (openFlag == RFIDDll.COM_OPEN_SUCCESS)
             {
                 Thread.Sleep(500);
-                LogUtil.Logger.Info("Open COM Success");
+                LogUtil.Logger.Info("串口打开成功！");
 
                 Byte[] recvbuf = new Byte[40];
                 int flag = RFIDDll.ComReadVersion(t_hCom, recvbuf);
@@ -343,14 +520,14 @@ namespace ScmClient
                 }
             }
             else {
-                LogUtil.Logger.Error("Open Com Error");
+                LogUtil.Logger.Error("串口打开失败！");
                 System.Windows.MessageBox.Show("RFID启动失败，请点击返回，重启程序！");
             }
         }
 
         public void StopTimer()
         {
-            if (RFIDConfig.USE_DLL)
+            if (RFIDConfig.ReaderType==RFIDReaderType.ZhaoWei)
             {
                 LogUtil.Logger.Info("Stop Timer Scan");
                 dllTimer.Stop();
@@ -370,42 +547,42 @@ namespace ScmClient
             if (flag == RFIDDll.GET_TAG_DATA_SUCCESS)
             {
                 string data = System.Text.Encoding.Default.GetString(recvbuf);
+                handleData(data);
+                //LogUtil.Logger.Info("[接收到]" + data);
 
-                LogUtil.Logger.Info("[接收到]" + data);
-
-                List<RFIDMessage> messages = new List<RFIDMessage>();
-                messages = Parser.StringToList(data);
-                if (messages.Count > 0)
-                {
-                    this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate()
-                    {
-                        LogUtil.Logger.Info(this.currentPage.Name);
-                        if (this.currentPage.Name == "RFIDScanInPageName")
-                        {
-                            this.currentPage = new RFIDScanInListPage(this);
-                            NaviFrame.NavigationService.Navigate(this.currentPage);
-                        } 
-                       if (this.currentPage.Name == "RFIDScanInListPageName")
-                       {
-                           ((RFIDScanInListPage)this.currentPage).ReceiveData(messages);
-                       }
-                    });
-                   // this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate()
-                   //{
-                      
-                   //});
-                }
+                //List<RFIDMessage> messages = new List<RFIDMessage>();
+                //messages = Parser.StringToList(data);
+                //if (messages.Count > 0)
+                //{
+                //    this.Dispatcher.Invoke(DispatcherPriority.Normal, (MethodInvoker)delegate()
+                //    {
+                //        LogUtil.Logger.Info(this.currentPage.Name);
+                //        if (this.currentPage.Name == "RFIDScanInPageName")
+                //        {
+                //            this.currentPage = new RFIDScanInListPage(this);
+                //            NaviFrame.NavigationService.Navigate(this.currentPage);
+                //        } 
+                //       if (this.currentPage.Name == "RFIDScanInListPageName")
+                //       {
+                //           ((RFIDScanInListPage)this.currentPage).ReceiveData(messages);
+                //       }
+                //    });
+                //}
             }
         }
 
-        
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (RFIDConfig.USE_DLL)
+            if (RFIDConfig.ReaderType == RFIDReaderType.ZhaoWei)
             {
                 closeDllCOM();
             }
-            else {
+            else if (RFIDConfig.ReaderType == RFIDReaderType.WeiJin) {
+                closeJwReader();
+            }
+            else
+            {
                 closeCustomCOM();
             }
             Thread.Sleep(500);

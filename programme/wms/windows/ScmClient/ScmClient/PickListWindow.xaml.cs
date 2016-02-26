@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using ScmWcfService.Model;
+using ScmClient.Helper;
 
 namespace ScmClient
 {
@@ -43,12 +44,16 @@ namespace ScmClient
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            new VoiceHelper() { Text="开始配料，请扫描料盒号!"}.Speak();
+
             OrderCarLabel.Content = this.carNr;
             QtyLabel.Content = this.pickItems.Count;
             QtyValidLabel.Content = getValidCount();
             
 
             PreviewDG.ItemsSource = this.pickItems;
+
+            ScanTB.Focus();
         }
 
 
@@ -69,8 +74,10 @@ namespace ScmClient
                 }
                 else
                 {
+                    new VoiceHelper() { Text = "扫描错误！料盒不存在！" }.Speak();
                     MessageBox.Show("扫描错误！料盒不存在！");
                 }
+                ScanTB.Focus();
                 ScanTB.SelectAll();
                 // ScanTB.Text = string.Empty;
             }

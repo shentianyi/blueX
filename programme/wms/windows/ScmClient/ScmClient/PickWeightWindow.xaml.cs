@@ -17,6 +17,7 @@ using ScmWcfService;
 using ScmClient.Helper;
 using ScmClient.Enum;
 using ScmWcfService.Config;
+using SpeechLib;
 
 namespace ScmClient
 {
@@ -49,6 +50,14 @@ namespace ScmClient
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
+
+            if (BaseConfig.PlayPickPositionVoice)
+            {
+                new VoiceHelper() { Text = this.item.positions_nr.Split(',').First(), Times = 2 }.Speak();
+            }
+
+            new VoiceHelper() { Text = "请去皮!" }.Speak();
+
             minWeight = item.quantity * (item.part.weight * (1 - item.part.weight_range));// +item.order_box.weight;
             maxWeight = item.quantity * (item.part.weight * (1 + item.part.weight_range));// +item.order_box.weight;
             standWeight = item.part.weight * item.quantity; //+ item.order_box.weight;
@@ -59,6 +68,7 @@ namespace ScmClient
             qtyLabel.Content = item.quantity;
             
             standWeightLabel.Content =minWeight+"-("+ standWeight+")-"+maxWeight;
+            qtyLabel.Content = (int)Math.Round(minWeight / this.item.part.weight) + "-(" + item.quantity + ")-" + (int)Math.Round(maxWeight / this.item.part.weight);
             actualWeightTB.Focus();
 
             try
@@ -71,23 +81,29 @@ namespace ScmClient
                 }
             }
             catch { }
-
         }
+
+       
 
         private void actualWeightTB_KeyUp(object sender, KeyEventArgs e)
         {
             if (Key.Enter == e.Key && actualWeightTB.Text.Trim().Length > 0) {
                 actualWeightTB.Text = actualWeightTB.Text.Trim();
                 actualWeightTB.SelectAll();
-                validateWeight();
+                validateWeightAndVoice();
             }
         }
 
         private void confirmBtn_Click(object sender, RoutedEventArgs e)
         {
-           // validateWeight();
-            if (valid || (valid==false && BaseConfig.ForceWeightPass==false)) {
-                weightOrderBox();       
+           
+        }
+
+        private void validateWeightAndVoice() {
+            validateWeight();
+            if (valid || (valid == false && BaseConfig.ForceWeightPass == false))
+            {
+                weightOrderBox();
                 this.Close();
             }
         }
@@ -125,6 +141,10 @@ namespace ScmClient
             if (float.TryParse(actualWeightTB.Text.Trim(), out weight))
             {
                 weightMsgBorder.Visibility = Visibility.Visible;
+                int weight_qty = (int)Math.Round(weight / this.item.part.weight);
+                this.item.weight = weight;
+                this.item.weight_qty = weight_qty;
+                this.weightQtyLabel.Value = weight_qty;
 
                 if (weight >= minWeight && weight <= maxWeight)
                 {
@@ -133,6 +153,10 @@ namespace ScmClient
                     valid = true;
                     weightMsgBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Green"));
                     weightMsgTB.Text = "通过";
+
+                    this.parentWindow.RefreshData();
+                    new VoiceHelper() { Text = "合格" }.Speak();
+
                 }
                 else
                 {
@@ -140,13 +164,22 @@ namespace ScmClient
                     this.item.weight_valid = false;
                     weightMsgTB.Text = "失败";
                     weightMsgBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Red"));
-                }
-                int weight_qty= (int)Math.Round(weight / this.item.part.weight);
-                this.item.weight = weight;
-                this.item.weight_qty = weight_qty;
-                this.weightQtyLabel.Value = weight_qty;
 
-                this.parentWindow.RefreshData();
+                    if (weight < minWeight)
+                    {
+                        int mweight_qty = (int)Math.Round((standWeight - weight) / this.item.part.weight);
+
+                        new VoiceHelper() { Text = "太轻，还差" + mweight_qty + "个" }.Speak();
+                    }
+                    else if(weight>maxWeight) {
+                        int mweight_qty = (int)Math.Round(( weight-standWeight) / this.item.part.weight);
+                        new VoiceHelper() { Text = "太重，多了" + mweight_qty + "个" }.Speak();
+                    }
+
+
+                }
+
+
             }
             else
             {

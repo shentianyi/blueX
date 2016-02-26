@@ -21,6 +21,7 @@ using System.Windows;
 // 则将该类型上的 ComVisible 特性设置为 true。
 [assembly: ComVisible(false)]
 
+[assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4.config", Watch = true)]
 //若要开始生成可本地化的应用程序，请在 
 //<PropertyGroup> 中的 .csproj 文件中
 //设置 <UICulture>CultureYouAreCodingWith</UICulture>。例如，如果您在源文件中

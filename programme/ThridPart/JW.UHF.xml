@@ -1,0 +1,2293 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JW.UHF</name>
+    </assembly>
+    <members>
+        <member name="T:JW.UHF.Channel">
+            <summary>
+            信道
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Channel.ChannnelToFrequency">
+            <summary>
+            频道转换为频率
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Channel.FrequencyToChannel">
+            <summary>
+            频率转换为频道
+            </summary>
+        </member>
+        <member name="T:JW.UHF.IParsePacket">
+            <summary>
+            数据处理类
+            </summary>
+        </member>
+        <member name="M:JW.UHF.IParsePacket.ProcessData">
+            <summary>
+            处理数据
+            </summary>
+        </member>
+        <member name="M:JW.UHF.ISendPacket.Assemble(JW.UHF.PacketType,System.Byte[])">
+            <summary>
+            发送
+            </summary>
+        </member>
+        <member name="M:JW.UHF.JWParsePacket.ProcessData">
+            <summary>
+            处理数据
+            </summary>
+        </member>
+        <member name="M:JW.UHF.JWParsePacket.loopProcessData">
+            <summary>
+            递归处理接收包数据
+            </summary>
+        </member>
+        <member name="M:JW.UHF.JWParsePacket.ErrorProcess">
+            <summary>
+            错误处理
+            </summary>
+        </member>
+        <member name="M:JW.UHF.LinuxEParsePacket.ProcessData">
+            <summary>
+            处理数据
+            </summary>
+        </member>
+        <member name="M:JW.UHF.LinuxEParsePacket.loopProcessData">
+            <summary>
+            递归处理接收包数据
+            </summary>
+        </member>
+        <member name="M:JW.UHF.LinuxEParsePacket.ErrorProcess(System.Byte[])">
+            <summary>
+            错误处理
+            </summary>
+        </member>
+        <member name="T:JW.UHF.CustomTraceListener3">
+            <summary>
+            自定义的控制台监听
+            </summary>
+        </member>
+        <member name="M:JW.UHF.CustomTraceListener3.Show">
+            <summary>
+            Creates a new console instance if the process is not attached to a console already.
+            </summary>
+        </member>
+        <member name="M:JW.UHF.CustomTraceListener3.Hide">
+            <summary>
+            If the process has a console attached to it, it will be detached and no longer visible. Writing to the System.Console is still possible, but no output will be shown.
+            </summary>
+        </member>
+        <member name="M:JW.UHF.CustomTraceListener3.Toggle">
+            <summary>
+            自动处理
+            </summary>
+        </member>
+        <member name="M:JW.UHF.CustomTraceListener3.WriteLine(System.Object)">
+            <summary>
+            写数据
+            </summary>
+            <param name="info"></param>
+        </member>
+        <member name="P:JW.UHF.CustomTraceListener3.HasConsole">
+            <summary>
+            是否存在控制台
+            </summary>
+        </member>
+        <member name="T:JW.UHF.IClient">
+            <summary>
+            客户端接口类
+            </summary>
+        </member>
+        <member name="M:JW.UHF.IClient.Send(System.Byte[])">
+            <summary>
+            发送数据
+            </summary>
+            <param name="sendData"></param>
+        </member>
+        <member name="M:JW.UHF.IClient.Receive">
+            <summary>
+            接收数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.IClient.Connect">
+            <summary>
+            连接
+            </summary>
+        </member>
+        <member name="M:JW.UHF.IClient.Disconnect">
+            <summary>
+            断开连接
+            </summary>
+        </member>
+        <member name="M:JW.UHF.IClient.SetParsePacket(JW.UHF.ReaderVersion)">
+            <summary>
+            处理包类
+            </summary>
+            <param name="rv"></param>
+        </member>
+        <member name="M:JW.UHF.IClient.IsAlive">
+            <summary>
+            是否可用
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.IClient.ClearReceiveBuffer">
+            <summary>
+            清空接收缓冲区
+            </summary>
+        </member>
+        <member name="T:JW.UHF.ILog">
+            <summary>
+            LOG实现类
+            </summary>
+        </member>
+        <member name="M:JW.UHF.ILog.Write(System.String)">
+            <summary>
+            Write
+            </summary>
+            <param name="str"></param>
+        </member>
+        <member name="M:JW.UHF.ILog.Write(System.String,System.Exception)">
+            <summary>
+            Write
+            </summary>
+            <param name="str"></param>
+            <param name="ex"></param>
+        </member>
+        <member name="M:JW.UHF.ILog.Write(System.String,System.Object[])">
+            <summary>
+            Write
+            </summary>
+            <param name="str"></param>
+            <param name="objs"></param>
+        </member>
+        <member name="T:JW.UHF.JWReader">
+            <summary>
+            读写器
+            </summary>
+        </member>
+        <member name="M:JW.UHF.JWReader.IP_Set_Address(System.String)">
+            <summary>
+            设置IP地址 (仅E方可用)
+            </summary>
+            <param name="ipAddress">ip地址</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.IP_Set_Port(System.Int32)">
+            <summary>
+            设置IP 端口 (仅E方可用)
+            </summary>
+            <param name="port">端口</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.IP_Set_SubNet_Mask(System.String)">
+            <summary>
+            设置子网掩码 (仅E方可用)
+            </summary>
+            <param name="subnetMask">子网掩码 如255.255.255.0</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.IP_Set_GateWay(System.String)">
+            <summary>
+            设置网关
+            </summary>
+            <param name="gateWay">网关 如192.168.100.1</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.SET_IP(JW.UHF.PacketType,System.String)">
+            <summary>
+            设置IP (仅E方可用)
+            </summary>
+            <param name="pt">包类型</param>
+            <param name="ipAddress">IP地址</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.IP_Set_DHCP(System.Boolean)">
+            <summary>
+            设置IP DHCP方式 (仅E方可用)
+            </summary>
+            <param name="enable">是否启用DHCP true:启用,false:停用</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.IP_Get_Configuration(JW.UHF.IPConfiguration@)">
+            <summary>
+            获取IP配置 (仅E方可用)
+            </summary>
+            <param name="ipConfiguration">IP配置信息</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.IP_Set_Configuration(JW.UHF.IPConfiguration)">
+            <summary>
+            配置IP (仅E方可用)
+            </summary>
+            <param name="ipConfiguration">IP配置信息</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.Storage_Get_Block_Count(System.UInt16@)">
+            <summary>
+            读Storage 块数量 (仅E方可用)
+            </summary>
+            <param name="count">块数量</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.Storage_Get_Block_Size(System.Byte@)">
+            <summary>
+            读Storage 块大小 (仅E方可用)
+            </summary>
+            <param name="size">块大小</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.Storage_Read_Block_Data(System.UInt16,System.String@)">
+            <summary>
+            读Storage 块数据 (仅E方可用)
+            </summary>
+            <param name="blockIndex">块位置</param>
+            <param name="readData">读出数据</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.Storage_Write_Block_Data(System.UInt16,System.String)">
+            <summary>
+            写Storage 块数据 (仅E方可用)
+            </summary>
+            <param name="blockIndex">块位置</param>
+            <param name="writeData">写入数据</param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.Storage_Set_Block_Size(System.Byte)">
+            <summary>
+            初始化Storage 块大小 (仅E方可用)
+            </summary>
+            <param name="size">块大小</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Read(JW.UHF.AccessParam,System.String@)">
+            <summary>
+            读操作
+            </summary>
+            <param name="ap">存取参数</param>
+            <param name="readData">读到数据</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_GroupRead(JW.UHF.AccessParam)">
+            <summary>
+            群读操作
+            </summary>
+            <param name="ap">存取参数</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_GroupRead(JW.UHF.AccessParam,System.Boolean)">
+            <summary>
+            群读操作
+            </summary>
+            <param name="ap">存取参数</param>
+            <param name="async">是否异步</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.SetAccessPassword(System.String)">
+            <summary>
+            设置存取密码
+            </summary>
+            <param name="accessPassword">存取密码</param>
+        </member>
+        <member name="M:JW.UHF.JWReader.Write(JW.UHF.AccessParam,System.String,JW.UHF.PacketType)">
+            <summary>
+            写处理
+            </summary>
+            <param name="ap">存取参数</param>
+            <param name="writeData">写入数据</param>
+            <param name="pt">包类型</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Write(JW.UHF.AccessParam,System.String)">
+            <summary>
+            写操作
+            </summary>
+            <param name="ap">存取参数</param>
+            <param name="writeData">写入数据</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Block_Write(JW.UHF.AccessParam,System.String)">
+            <summary>
+            块写操作
+            </summary>
+            <param name="ap">存取参数</param>
+            <param name="writeData">写入数据</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Lock(System.String)">
+            <summary>
+            锁操作
+            </summary>
+            <param name="lockPwd">锁密码</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_UnLock(System.String)">
+            <summary>
+            解锁操作
+            </summary>
+            <param name="lockPwd">锁密码</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.Permlock(JW.UHF.LockMemory,JW.UHF.PacketType)">
+            <summary>
+            永久锁
+            </summary>
+            <param name="lockMemory">锁内存</param>
+            <param name="pt">包类型</param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_PermLock(JW.UHF.LockMemory)">
+            <summary>
+            永久锁操作
+            </summary>
+            <param name="lockMemory">锁内存</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_PermUnLock(JW.UHF.LockMemory)">
+            <summary>
+            永久锁操作
+            </summary>
+            <param name="lockMemory">锁内存</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.PwdProcess(System.String,System.String,JW.UHF.PacketType,System.Boolean)">
+            <summary>
+            密码处理
+            </summary>
+            <param name="accessPwd">存取密码</param>
+            <param name="pwd">密码</param>
+            <param name="pt">包类型</param>
+            <param name="setAccess">是否设置密码</param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Kill(System.String,System.String)">
+            <summary>
+            灭活标签
+            </summary>
+            <param name="accessPwd">存取密码</param>
+            <param name="killPwd">灭活密码</param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Start_Inventory">
+            <summary>
+            开始盘点(同步模式)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Start_Inventory(JW.UHF.TagMode)">
+            <summary>
+            开始盘点(同步模式)
+            </summary>
+            <param name="tagMode">标签上报模式</param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Start_Inventory(JW.UHF.TagMode,System.Boolean)">
+            <summary>
+            开始盘点(异步模式)
+            </summary>
+            <param name="tagMode">标签上报模式</param>
+            <param name="async">是否异步,不阻塞</param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Start_Inventory(System.Boolean)">
+            <summary>
+            开始盘点(异步模式)
+            </summary>
+            <param name="async">是否异步,不阻塞</param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Stop_Inventory">
+            <summary>
+            停止盘点
+            </summary>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Fast_Read(JW.UHF.AccessParam,JW.UHF.Tag@)">
+            <summary>
+            快速读操作（同时读取EPC+数据区)
+            </summary>
+            <param name="ap">存取参数</param>
+            <param name="tag">读到数据</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Test_Channel(JW.UHF.ChannelPerformance,System.Collections.Generic.List{System.Int32}@)">
+            <summary>
+            设置自动侦测频率
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Get_Optimal_Channel(System.Collections.Generic.List{System.Int32}@)">
+            <summary>
+            获取最优频道
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Set_Antenna(System.Collections.Generic.List{JW.UHF.AntennaPort})">
+            <summary>
+            天线参数设定
+            </summary>
+            <param name="AntennaPortList">天线口参数列表</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Set_Inventory_Time(System.Int32)">
+            <summary>
+            设置盘点时间
+            </summary>
+            <param name="invTime">盘点时间</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Set_Inventory_Mode(JW.UHF.InventoryMode)">
+            <summary>
+            设置盘点模式
+            </summary>
+            <param name="mode">盘点模式</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Set_GPIO(JW.UHF.GPIOConfig)">
+            <summary>
+            GPIO设定
+            </summary>
+            <param name="gpioConfig">GPIO配置</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Set_GPO(JW.UHF.GPIOConfig)">
+            <summary>
+            GPO设定
+            </summary>
+            <param name="gpioConfig">GPO配置</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Set_GPI(JW.UHF.GPIOConfig)">
+            <summary>
+            GPI设定,必须停止盘点操作
+            </summary>
+            <param name="gpioConfig">GPI配置</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Set_RegionList(JW.UHF.RegionList)">
+            <summary>
+            工作区域
+            </summary>
+            <param name="region">工作区域</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Set_Fix_Frequency(System.Double)">
+            <summary>
+            设置定频
+            </summary>
+            <param name="frequency">频率值</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Set_Fix_Frequency(System.Int32,System.Int32,System.Double)">
+            <summary>
+            设置定频
+            </summary>
+            <param name="port">天线口</param>
+            <param name="power">天线功率</param>
+            <param name="frequency">频率</param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Get_FrequencyList(System.Collections.Generic.List{System.Double}@)">
+            <summary>
+            获取可用频道列表
+            </summary>
+            <param name="frequencyList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Set_SpeedMode(JW.UHF.SpeedMode)">
+            <summary>
+            设置传输速度
+            </summary>
+            <param name="speedMode">传输速度</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Set_Work_Mode(JW.UHF.WorkMode)">
+            <summary>
+            设置模块工作方式
+            </summary>
+            <param name="workMode">模块工作方式</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Get_Config(JW.UHF.RfidSetting@)">
+            <summary>
+            获取模块配置信息
+            </summary>
+            <param name="rs">模块配置信息</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Set_Config(JW.UHF.RfidSetting)">
+            <summary>
+            设置模块配置信息
+            </summary>
+            <param name="rs">模块配置信息</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Get_Firmware_Info(JW.UHF.FirmwareInfo@)">
+            <summary>
+            获取模块分位信息
+            </summary>
+            <param name="fi">模块分位信息</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Set_HeartBeat">
+            <summary>
+            设置心跳包
+            </summary>
+        </member>
+        <member name="M:JW.UHF.JWReader.Set_Running_Mode(JW.UHF.RunningMode)">
+            <summary>
+            设置运行模式
+            </summary>
+            <param name="_runMode">运行模式</param>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Set_Tag_Group(JW.UHF.TagGroup)">
+            <summary>
+            设置标签盘点群组
+            </summary>
+            <param name="tagGroup">盘点群组</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Set_RSSIFilter(JW.UHF.RSSIFilter)">
+            <summary>
+            设置接收灵敏度
+            </summary>
+            <param name="rssi">接收灵敏度值</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Set_Criteria(JW.UHF.RfidCriteria)">
+            <summary>
+            设置过滤
+            </summary>
+            <param name="criteria">过滤条件</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Clear_Criteria">
+            <summary>
+            清除过滤
+            </summary>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Get_Temperature(System.Int32@)">
+            <summary>
+            获取模块温度
+            </summary>
+            <param name="temperature">温度值</param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Check_Antenna(System.Int32)">
+            <summary>
+            检查天线是否接好
+            </summary>
+            <param name="antennaIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Read_Mac_Register(System.String,System.String@)">
+            <summary>
+            读Mac寄存器值
+            </summary>
+            <param name="address"></param>
+            <param name="readValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Write_Mac_Register(System.String,System.String)">
+            <summary>
+            写MAC寄存器值
+            </summary>
+            <param name="address"></param>
+            <param name="writeValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Read_OEM(System.String,System.String@)">
+            <summary>
+            读OEM寄存器值
+            </summary>
+            <param name="address"></param>
+            <param name="readValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Write_OEM(System.String,System.String)">
+            <summary>
+            写OEM寄存器值
+            </summary>
+            <param name="address"></param>
+            <param name="writeValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Set_QT(JW.UHF.QT)">
+            <summary>
+            QT设定
+            </summary>
+            <param name="qt">QT配置</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Set_DWellTime(System.Int32)">
+            <summary>
+            设置天线驻留时间
+            </summary>
+            <param name="dwellTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Set_Reverse_Power_Detect_Status(JW.UHF.ReversePowerDetectStatus)">
+            <summary>
+            设置Reverse Power Status
+            </summary>
+            <param name="rps"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Get_Reverse_Power_Detect_Status">
+            <summary>
+            获取Reverse Power Status
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Set_Signal_Threshold(System.Int32)">
+            <summary>
+            设置信号阈值
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Get_Signal_Threshold(System.Int32@)">
+            <summary>
+            获取信号阈值
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Set_Default_Write_Frequency(System.Double)">
+            <summary>
+            设置默认写频率
+            </summary>
+            <param name="frequency">频率</param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Get_Default_Write_Frequency(System.Double@)">
+            <summary>
+            获取默认写频率
+            </summary>
+            <param name="frequency">频率</param>
+            <returns></returns>
+        </member>
+        <member name="F:JW.UHF.JWReader.IsConnected">
+            <summary>
+            是否连接
+            </summary>
+        </member>
+        <member name="F:JW.UHF.JWReader.RFS_Type">
+            <summary>
+            无线射频标准
+            </summary>
+        </member>
+        <member name="F:JW.UHF.JWReader.sendQueue">
+            <summary>
+            发送队列
+            </summary>
+        </member>
+        <member name="F:JW.UHF.JWReader.LogHeader">
+            <summary>
+            日志头
+            </summary>
+        </member>
+        <member name="F:JW.UHF.JWReader.antennaPortExists">
+            <summary>
+            天线存在列表
+            </summary>
+        </member>
+        <member name="F:JW.UHF.JWReader.ProductType">
+            <summary>
+            产品类型
+            </summary>
+        </member>
+        <member name="F:JW.UHF.JWReader.ChipType">
+            <summary>
+            芯片类型
+            </summary>
+        </member>
+        <member name="F:JW.UHF.JWReader.TagList">
+            <summary>
+            标签列表
+            </summary>
+        </member>
+        <member name="M:JW.UHF.JWReader.NoticeKeepAliveEnd">
+            <summary>
+            通知结束心跳
+            </summary>
+        </member>
+        <member name="M:JW.UHF.JWReader.FireEvent(JW.UHF.TagsEventArgs)">
+            <summary>
+            触发标签盘点事件
+            </summary>
+            <param name="args">标签上报参数</param>
+        </member>
+        <member name="M:JW.UHF.JWReader.backGroundWorker_DoWork(System.Object,System.ComponentModel.DoWorkEventArgs)">
+            <summary>
+            标签上报事件
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="F:JW.UHF.JWReader.processFinish">
+            <summary>
+            处理完成事件
+            </summary>
+        </member>
+        <member name="M:JW.UHF.JWReader.FireGPIEvent(JW.UHF.GPIEvent)">
+            <summary>
+            触发GPI事件
+            </summary>
+            <param name="gpiEvent">GPI事件参数</param>
+        </member>
+        <member name="M:JW.UHF.JWReader.FireChannelResponseEvent(JW.UHF.ChannelTestEvent)">
+            <summary>
+            触发Channel事件
+            </summary>
+            <param name="channelEvent">channel事件参数</param>
+        </member>
+        <member name="M:JW.UHF.JWReader.FireCommandResponseEvent(System.Byte[])">
+            <summary>
+            触发响应事件
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="M:JW.UHF.JWReader.SetModelConfiguration(JW.UHF.RfidSetting)">
+            <summary>
+            模块配置
+            </summary>
+            <param name="_ms">模块配置参数</param>
+        </member>
+        <member name="M:JW.UHF.JWReader.SetFirmwareInfo(JW.UHF.FirmwareInfo)">
+            <summary>
+            分位信息
+            </summary>
+            <param name="_fi">分位信息参数</param>
+        </member>
+        <member name="M:JW.UHF.JWReader.SetReadData(System.String)">
+            <summary>
+            读到数据
+            </summary>
+            <param name="_readData">读到的数据</param>
+        </member>
+        <member name="M:JW.UHF.JWReader.SetFastReadData(JW.UHF.Tag)">
+            <summary>
+            读到数据
+            </summary>
+            <param name="_tag">读到的数据</param>
+        </member>
+        <member name="M:JW.UHF.JWReader.SetOptimalChannel(System.Collections.Generic.List{System.Int32})">
+            <summary>
+            设置最优频道
+            </summary>
+            <param name="optimalChannel"></param>
+        </member>
+        <member name="M:JW.UHF.JWReader.SetIPConfiguration(JW.UHF.IPConfiguration)">
+            <summary>
+            设置IP
+            </summary>
+            <param name="_ip">IP信息</param>
+        </member>
+        <member name="M:JW.UHF.JWReader.SetProductInfo(JW.UHF.ProductInfo)">
+            <summary>
+            设置产品信息
+            </summary>
+            <param name="_pi">产品信息</param>
+        </member>
+        <member name="M:JW.UHF.JWReader.#ctor(System.String)">
+            <summary>
+            新建串口 Reader 对象
+            </summary>
+            <param name="_comPort">COM口,如COM3</param>
+        </member>
+        <member name="M:JW.UHF.JWReader.#ctor(System.String,System.Int32,System.Int32)">
+            <summary>
+            新建串口 Reader 对象
+            </summary>
+            <param name="_comPort">COM口,如COM3</param>
+            <param name="baudRate">波特率</param>
+            <param name="flag">未来使用</param>
+        </member>
+        <member name="M:JW.UHF.JWReader.#ctor(System.String,System.Int32,System.Boolean,System.Boolean,System.Int32)">
+            <summary>
+            新建串口 Reader 对象
+            </summary>
+            <param name="_comPort">COM口,如COM3</param>
+            <param name="baudRate">波特率</param>
+            <param name="dtrEnable">Dtr</param>
+            <param name="rtsEnable">Rts</param>
+            <param name="flag">未来使用</param>
+        </member>
+        <member name="M:JW.UHF.JWReader.#ctor(System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            新建串口 Reader 对象
+            </summary>
+            <param name="_comPort">COM口,如COM3</param>
+            <param name="baudRate">波特率</param>
+            <param name="maxKeepAliveTime">最大保持时间</param>
+            <param name="flag">未来使用</param>
+        </member>
+        <member name="M:JW.UHF.JWReader.#ctor(System.String,System.Int32,System.Int32,System.Boolean,System.Boolean,System.Int32)">
+            <summary>
+            新建串口 Reader 对象
+            </summary>
+            <param name="_comPort">COM口,如COM3</param>
+            <param name="baudRate">波特率</param>
+            <param name="maxKeepAliveTime">最大保持时间</param>
+            <param name="dtrEnable">Dtr</param>
+            <param name="rtsEnable">Rts</param>
+            <param name="flag">未来使用</param>
+        </member>
+        <member name="M:JW.UHF.JWReader.#ctor(System.String,System.Int32)">
+            <summary>
+            新建TCP/IP Reader 对象(仅E方可用)
+            </summary>
+            <param name="_ip">IP地址 如192.168.100.168</param>
+            <param name="_port">端口号 如9761</param>
+        </member>
+        <member name="M:JW.UHF.JWReader.#ctor(System.String,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            新建TCP/IP Reader 对象(仅E方可用)
+            </summary>
+            <param name="_ip">IP地址 如192.168.100.168</param>
+            <param name="_port">端口号 如9761</param>
+            <param name="tcpAliveTime">tcp KeepAlive Time</param>
+            <param name="tcpAliveInterval">tcp AliveInterval</param>
+            <param name="connectTimeout">connectTimeout</param>
+        </member>
+        <member name="M:JW.UHF.JWReader.#ctor(System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            新建TCP/IP Reader 对象(仅E方可用)
+            </summary>
+            <param name="_ip">IP地址 如192.168.100.168</param>
+            <param name="_port">端口号 如9761</param>
+            <param name="tcpAliveTime">tcp层心跳检测</param>
+            <param name="tcpAliveInterval">tcp层心跳检测间隔</param>
+            <param name="connectTimeout">连接超时时间</param>
+            <param name="maxKeepAliveTime">最大心跳检测超时时间</param>
+        </member>
+        <member name="M:JW.UHF.JWReader.Finalize">
+            <summary>
+            析构函数
+            </summary>
+        </member>
+        <member name="M:JW.UHF.JWReader.Close">
+            <summary>
+            关闭与模块连接
+            </summary>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.PcToHost">
+            <summary>
+            将缓冲队列中指令发送出去
+            </summary>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Open">
+            <summary>
+            连接
+            </summary>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Close">
+            <summary>
+            断开连接
+            </summary>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Reset">
+            <summary>
+            重设模块设定 
+            </summary>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Get_Product_Info(JW.UHF.ProductInfo@)">
+            <summary>
+            获取产品信息 
+            </summary>
+            <param name="productInfo">产品信息</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.Get_ECube_FirmWare_Info(JW.UHF.FirmwareInfo@)">
+            <summary>
+            获取E转版分位信息
+            </summary>
+            <param name="fi">E转版分位信息</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.Save_Config">
+            <summary>
+            保存配置
+            </summary>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.Open_Buzzer">
+            <summary>
+            打开蜂鸣器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.Open_Buzzer(System.Int32)">
+            <summary>
+            打开蜂鸣器
+            </summary>
+            <param name="time"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.RFID_Get_ErrorCode">
+            <summary>
+            获取错误码
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.Send_Command(System.Byte[])">
+            <summary>
+            发送指令
+            </summary>
+            <param name="inputCommand">输入命令</param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.WakeUp">
+            <summary>
+            唤醒
+            </summary>
+        </member>
+        <member name="M:JW.UHF.JWReader.WakeUpInventory">
+            <summary>
+            唤醒盘点线程
+            </summary>
+        </member>
+        <member name="M:JW.UHF.JWReader.SendData(JW.UHF.PacketType,System.Byte[])">
+            <summary>
+            发送数据
+            </summary>
+            <param name="pt"></param>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.SendData(JW.UHF.PacketType,System.Byte[],System.Int32)">
+            <summary>
+            发送数据
+            </summary>
+            <param name="pt"></param>
+            <param name="data"></param>
+            <param name="timeout"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.JWReader.SendInnerData(JW.UHF.PacketType,System.Byte[],System.Int32)">
+            <summary>
+            其它发送数据
+            </summary>
+            <param name="pt"></param>
+            <param name="data"></param>
+            <param name="timeout"></param>
+            <returns></returns>
+        </member>
+        <member name="E:JW.UHF.JWReader.TagsReported">
+            <summary>
+            标签响应事件
+            </summary>
+        </member>
+        <member name="E:JW.UHF.JWReader.TagsArrayReported">
+            <summary>
+            标签群报响应事件
+            </summary>
+        </member>
+        <member name="E:JW.UHF.JWReader.gpiEventReported">
+            <summary>
+            GPI响应事件
+            </summary>
+        </member>
+        <member name="E:JW.UHF.JWReader.channelEventReported">
+            <summary>
+            Channel测试响应事件
+            </summary>
+        </member>
+        <member name="E:JW.UHF.JWReader.commandResponseEventReported">
+            <summary>
+            命令响应事件
+            </summary>
+        </member>
+        <member name="E:JW.UHF.JWReader.readerErrorEventReported">
+            <summary>
+            读写器异常事件
+            </summary>
+        </member>
+        <member name="E:JW.UHF.JWReader.keepAliveEventReported">
+            <summary>
+            keepAliveEventReported 事件上报
+            </summary>
+        </member>
+        <member name="T:JW.UHF.JWReader.TagsEventHandler">
+            <summary>
+            标签响应事件
+            </summary>
+            <param name="reader">读写器对象</param>
+            <param name="args">标签响应参数</param>
+        </member>
+        <member name="T:JW.UHF.JWReader.TagsEventArrayHandler">
+            <summary>
+            标签响应事件
+            </summary>
+            <param name="reader">读写器对象</param>
+            <param name="args">标签响应列表参数</param>
+        </member>
+        <member name="T:JW.UHF.JWReader.GPIEventHandler">
+            <summary>
+            GPI触发事件
+            </summary>
+            <param name="reader">读写器对象</param>
+            <param name="gpiEvent">GPI响应事件</param>
+        </member>
+        <member name="T:JW.UHF.JWReader.ChannelTestEventHandler">
+            <summary>
+            频道测试事件
+            </summary>
+            <param name="reader">读写器对象</param>
+            <param name="channelEvent">Channel测试响应事件</param>
+        </member>
+        <member name="T:JW.UHF.JWReader.CommandResponseEventHandler">
+            <summary>
+            命令响应事件Handler
+            </summary>
+            <param name="reader">读写器对象</param>
+            <param name="responseData">响应数据</param>
+        </member>
+        <member name="T:JW.UHF.JWReader.ReaderErrorEventHandler">
+            <summary>
+            Reader错误事件Handler
+            </summary>
+            <param name="reader">读写器对象</param>
+            <param name="result">异常结果</param>
+        </member>
+        <member name="T:JW.UHF.JWReader.KeepAliveEventHandler">
+            <summary>
+            KeepAlive 事件
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:JW.UHF.SDKLog.LogEnable(System.String)">
+            <summary>
+            判断日志是否可以打印
+            </summary>
+            <param name="enableLog"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.SDKLog.Debug(System.String)">
+            <summary>
+            DEBUG日志
+            </summary>
+            <param name="str"></param>
+        </member>
+        <member name="M:JW.UHF.SDKLog.Info(System.String)">
+            <summary>
+            INFO日志
+            </summary>
+            <param name="str"></param>
+        </member>
+        <member name="M:JW.UHF.SDKLog.Warn(System.String)">
+            <summary>
+            WARN日志
+            </summary>
+            <param name="str"></param>
+        </member>
+        <member name="M:JW.UHF.SDKLog.Print(System.String,System.Exception,System.String,System.String,System.Object[])">
+            <summary>
+            打印
+            </summary>
+            <param name="str"></param>
+            <param name="ex"></param>
+            <param name="enableLog"></param>
+            <param name="logLevel"></param>
+            <param name="objs"></param>
+        </member>
+        <member name="M:JW.UHF.SDKLog.Error(System.String)">
+            <summary>
+            ERROR日志
+            </summary>
+            <param name="str"></param>
+        </member>
+        <member name="M:JW.UHF.SerialClient.ReceiveThread">
+            <summary>
+            接收线程
+            </summary>
+        </member>
+        <member name="M:JW.UHF.SerialClient.ClearReceiveBuffer">
+            <summary>
+            清空Buffer
+            </summary>
+        </member>
+        <member name="T:JW.UHF.AccessParam">
+            <summary>
+            存取参数
+            </summary>
+        </member>
+        <member name="M:JW.UHF.AccessParam.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="F:JW.UHF.AccessParam.AccessPassword">
+            <summary>
+            存取密码
+            </summary>
+        </member>
+        <member name="F:JW.UHF.AccessParam.Bank">
+            <summary>
+            内存区域
+            </summary>
+        </member>
+        <member name="F:JW.UHF.AccessParam.OffSet">
+            <summary>
+            偏移量(Byte)
+            </summary>
+        </member>
+        <member name="F:JW.UHF.AccessParam.Count">
+            <summary>
+            长度(Byte)
+            </summary>
+        </member>
+        <member name="T:JW.UHF.AntennaPort">
+            <summary>
+            天线参数
+            </summary>
+        </member>
+        <member name="P:JW.UHF.AntennaPort.AntennaIndex">
+            <summary>
+            天线端口
+            </summary>
+        </member>
+        <member name="P:JW.UHF.AntennaPort.Power">
+            <summary>
+            功率
+            </summary>
+        </member>
+        <member name="P:JW.UHF.AntennaPort.Exist">
+            <summary>
+            是否存在
+            </summary>
+        </member>
+        <member name="T:JW.UHF.ByteBuffer">
+            <summary>
+            创建一个可变长的Byte数组方便Push数据和Pop数据
+            数组的最大长度为1024,超过会产生溢出
+            数组的最大长度由常量MAX_LENGTH设定
+            
+            注:由于实际需要,可能要从左到右取数据,所以这里
+            定义的Pop函数并不是先进后出的函数,而是从0开始.
+            
+            @Author: Red_angelX
+            </summary>
+        </member>
+        <member name="M:JW.UHF.ByteBuffer.#ctor">
+            <summary>
+            默认构造函数
+            </summary>
+        </member>
+        <member name="M:JW.UHF.ByteBuffer.#ctor(System.Byte[])">
+            <summary>
+            重载的构造函数,用一个Byte数组来构造
+            </summary>
+            <param name="bytes">用于构造ByteBuffer的数组</param>
+        </member>
+        <member name="M:JW.UHF.ByteBuffer.ToByteArray">
+            <summary>
+            获取ByteBuffer所生成的数组
+            长度必须小于 [MAXSIZE]
+            </summary>
+            <returns>Byte[]</returns>
+        </member>
+        <member name="M:JW.UHF.ByteBuffer.Initialize">
+            <summary>
+            初始化ByteBuffer的每一个元素,并把当前指针指向头一位
+            </summary>
+        </member>
+        <member name="M:JW.UHF.ByteBuffer.PushByteArray(System.Byte[])">
+            <summary>
+            向ByteBuffer压入数组
+            </summary>
+            <param name="ByteArray">数组</param>
+        </member>
+        <member name="M:JW.UHF.ByteBuffer.PopByteArray(System.Int32)">
+            <summary>
+            从ByteBuffer的当前位置弹出长度为Length的Byte数组,提升Length位
+            </summary>
+            <param name="Length">数组长度</param>
+            <returns>Length长度的byte数组</returns>
+        </member>
+        <member name="P:JW.UHF.ByteBuffer.Length">
+            <summary>
+            获取当前ByteBuffer的长度
+            </summary>
+        </member>
+        <member name="T:JW.UHF.ChannelPerformance">
+            <summary>
+            频道性能
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ChannelPerformance.Antenna_Port">
+            <summary>
+            天线端口
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ChannelPerformance.Antenna_Power">
+            <summary>
+            天线功率
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ChannelPerformance.Reverse_Power_Value">
+            <summary>
+            反向功率值
+            </summary>
+        </member>
+        <member name="T:JW.UHF.ChannelTestEvent">
+            <summary>
+            频道响应值
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ChannelTestEvent.Channel">
+            <summary>
+            频道
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ChannelTestEvent.Frequency">
+            <summary>
+            频率
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ChannelTestEvent.Forward_Power">
+            <summary>
+            前向功率
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ChannelTestEvent.Reverse_Power">
+            <summary>
+            反向功率
+            </summary>
+        </member>
+        <member name="T:JW.UHF.FirmwareInfo">
+            <summary>
+            分位信息
+            </summary>
+        </member>
+        <member name="P:JW.UHF.FirmwareInfo.Main_Version">
+            <summary>
+            主版本号
+            </summary>
+        </member>
+        <member name="P:JW.UHF.FirmwareInfo.Sub_Version">
+            <summary>
+            副版本号
+            </summary>
+        </member>
+        <member name="T:JW.UHF.GPIEventType">
+            <summary>
+            GPI事件类型
+            </summary>
+        </member>
+        <member name="F:JW.UHF.GPIEventType.Start_Inventory">
+            <summary>
+            开始盘点
+            </summary>
+        </member>
+        <member name="F:JW.UHF.GPIEventType.Stop_Inventory">
+            <summary>
+            停止盘点
+            </summary>
+        </member>
+        <member name="F:JW.UHF.GPIEventType.Hign_Slow">
+            <summary>
+            高到低
+            </summary>
+        </member>
+        <member name="F:JW.UHF.GPIEventType.Slow_Hign">
+            <summary>
+            低到高
+            </summary>
+        </member>
+        <member name="T:JW.UHF.GPIEvent">
+            <summary>
+            GPI事件
+            </summary>
+        </member>
+        <member name="F:JW.UHF.GPIEvent.Port">
+            <summary>
+            GPI口
+            </summary>
+        </member>
+        <member name="F:JW.UHF.GPIEvent.EventType">
+            <summary>
+            GPI事件类型
+            </summary>
+        </member>
+        <member name="F:JW.UHF.GPIEvent.TriggerValue">
+            <summary>
+            GPI触发器值
+            </summary>
+        </member>
+        <member name="T:JW.UHF.GPITriggerValue">
+            <summary>
+            GPI触发器值
+            </summary>
+        </member>
+        <member name="F:JW.UHF.GPITriggerValue.None">
+            <summary>
+            无动作
+            </summary>
+        </member>
+        <member name="F:JW.UHF.GPITriggerValue.Inventory">
+             <summary>
+            盘点 
+             </summary>
+        </member>
+        <member name="F:JW.UHF.GPITriggerValue.Input">
+            <summary>
+            输入信号
+            </summary>
+        </member>
+        <member name="F:JW.UHF.GPITriggerValue.Hign">
+            <summary>
+            高
+            </summary>
+        </member>
+        <member name="F:JW.UHF.GPITriggerValue.Low">
+            <summary>
+            低
+            </summary>
+        </member>
+        <member name="T:JW.UHF.GPOTriggerValue">
+            <summary>
+            GPO触发器值
+            </summary>
+        </member>
+        <member name="F:JW.UHF.GPOTriggerValue.Low">
+            <summary>
+            低触发
+            </summary>
+        </member>
+        <member name="F:JW.UHF.GPOTriggerValue.Hign">
+            <summary>
+            高触发
+            </summary>
+        </member>
+        <member name="T:JW.UHF.GPIOConfig">
+            <summary>
+            GPIO配置
+            </summary>
+        </member>
+        <member name="F:JW.UHF.GPIOConfig.GPI0_VALUE">
+            <summary>
+            GPI0 值
+            </summary>
+        </member>
+        <member name="F:JW.UHF.GPIOConfig.GPI1_VALUE">
+            <summary>
+            GPI1 值
+            </summary>
+        </member>
+        <member name="F:JW.UHF.GPIOConfig.GPO0_VALUE">
+            <summary>
+            GPO0 值
+            </summary>
+        </member>
+        <member name="F:JW.UHF.GPIOConfig.GPO1_VALUE">
+            <summary>
+            GPO1 值
+            </summary>
+        </member>
+        <member name="T:JW.UHF.IPConfiguration">
+            <summary>
+            IP配置信息
+            </summary>
+        </member>
+        <member name="M:JW.UHF.IPConfiguration.#ctor">
+            <summary>
+            IP配置构造函数
+            </summary>
+        </member>
+        <member name="F:JW.UHF.IPConfiguration.Dhcp">
+            <summary>
+            是否启用DHCP
+            </summary>
+        </member>
+        <member name="F:JW.UHF.IPConfiguration.IP">
+            <summary>
+            IP地址
+            </summary>
+        </member>
+        <member name="F:JW.UHF.IPConfiguration.Port">
+            <summary>
+            端口
+            </summary>
+        </member>
+        <member name="F:JW.UHF.IPConfiguration.SubNet_Mask">
+            <summary>
+            子网掩码
+            </summary>
+        </member>
+        <member name="F:JW.UHF.IPConfiguration.Gateway">
+            <summary>
+            网关
+            </summary>
+        </member>
+        <member name="T:JW.UHF.ProductInfo">
+            <summary>
+            产品信息
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ProductInfo.COMPANY_NO">
+            <summary>
+            公司编号
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ProductInfo.PRODUCT_DATE">
+            <summary>
+            生产日期
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ProductInfo.MODEL_TYPE">
+            <summary>
+            模块型号
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ProductInfo.CHIP_TYPE">
+            <summary>
+            芯片型号
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ProductInfo.MODEL_VERSION">
+            <summary>
+            模块版本
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ProductInfo.MODEL_SEQUENCE_NUMBER">
+            <summary>
+            模块序列号
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ProductInfo.ANTENNA_NUMBER">
+            <summary>
+            天线个数
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ProductInfo.ANTENNA_PORT_EXISTS_LIST">
+            <summary>
+            天线存在列表
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ProductInfo.PRODUCT_TYPE">
+            <summary>
+            产品类型
+            </summary>
+        </member>
+        <member name="T:JW.UHF.RfidCriteria">
+            <summary>
+            标签过滤条件
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RfidCriteria.Bank">
+            <summary>
+            内存区域
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RfidCriteria.OffSet">
+            <summary>
+            偏移量(bit)
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RfidCriteria.Count">
+            <summary>
+            位大小(bit)
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RfidCriteria.Mask">
+            <summary>
+            过滤数据
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RfidCriteria.Match">
+            <summary>
+            是否匹配
+            </summary>
+        </member>
+        <member name="T:JW.UHF.RSSIFilter">
+            <summary>
+            RSSI值过滤
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RSSIFilter.Enable">
+            <summary>
+            是否启用RSSI值过滤
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RSSIFilter.RSSIValue">
+            <summary>
+            RSSI值
+            </summary>
+        </member>
+        <member name="M:JW.UHF.RSSIFilter.#ctor">
+            <summary>
+            RSSI过滤构造函数
+            </summary>
+        </member>
+        <member name="T:JW.UHF.ProductType">
+            <summary>
+            产品类型
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ProductType.E">
+            <summary>
+            E方
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ProductType.R_U">
+            <summary>
+            R方或U方
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ProductType.L">
+            <summary>
+            Linux E Cube
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ProductType.UNKNOWN">
+            <summary>
+            未知
+            </summary>
+        </member>
+        <member name="T:JW.UHF.Session">
+            <summary>
+            Session会话
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Session.S0">
+            <summary>
+            标签在被盘点到后立即改变状态 如A状态到B状态后立即转为A状态
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Session.S1">
+            <summary>
+            标签在被盘点到停留0.5-5秒改变状态, 如A状态到B状态停留0.5-5秒后转为A状态
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Session.S2">
+            <summary>
+            标签在被盘点到停留5-60秒改变状态, 如A状态到B状态停留5-60秒后转为A状态
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Session.S3">
+            <summary>
+            与S2相同
+            </summary>
+        </member>
+        <member name="T:JW.UHF.SessionTarget">
+            <summary>
+            标签状态
+            </summary>
+        </member>
+        <member name="F:JW.UHF.SessionTarget.A">
+            <summary>
+            盘点A状态标签
+            </summary>
+        </member>
+        <member name="F:JW.UHF.SessionTarget.B">
+            <summary>
+            盘点B状态标签
+            </summary>
+        </member>
+        <member name="T:JW.UHF.SearchMode">
+            <summary>
+            查询模式
+            </summary>
+        </member>
+        <member name="F:JW.UHF.SearchMode.DUAL_TARGET">
+            <summary>
+            A和B状态都盘点
+            </summary>
+        </member>
+        <member name="F:JW.UHF.SearchMode.SINGLE_TARGET">
+            <summary>
+            仅盘点A状态
+            </summary>
+        </member>
+        <member name="F:JW.UHF.SearchMode.SINGLE_TARGET_WITH_SUPPRESSION">
+            <summary>
+            仅盘点A状态 且仅一次
+            </summary>
+        </member>
+        <member name="T:JW.UHF.MemoryBank">
+            <summary>
+            内存区域
+            </summary>
+        </member>
+        <member name="F:JW.UHF.MemoryBank.RESERVED">
+            <summary>
+            RESERVED区
+            </summary>
+        </member>
+        <member name="F:JW.UHF.MemoryBank.EPC">
+            <summary>
+            EPC区
+            </summary>
+        </member>
+        <member name="F:JW.UHF.MemoryBank.TID">
+            <summary>
+            TID区
+            </summary>
+        </member>
+        <member name="F:JW.UHF.MemoryBank.USER">
+            <summary>
+            User区
+            </summary>
+        </member>
+        <member name="T:JW.UHF.RegionList">
+            <summary>
+            工作区域
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RegionList.FCC">
+            <summary>
+            欧洲频段
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RegionList.CCC">
+            <summary>
+            中国频段
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RegionList.NCC">
+            <summary>
+            台湾频段
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RegionList.OPTIMAL">
+            <summary>
+            最优频段
+            </summary>
+        </member>
+        <member name="T:JW.UHF.SpeedMode">
+            <summary>
+            读取速率
+            </summary>
+        </member>
+        <member name="F:JW.UHF.SpeedMode.SPEED_FASTEST">
+            <summary>
+            快速
+            </summary>
+        </member>
+        <member name="F:JW.UHF.SpeedMode.SPEED_NORMAL">
+            <summary>
+            正常
+            </summary>
+        </member>
+        <member name="F:JW.UHF.SpeedMode.SPEED_POWERSAVE">
+            <summary>
+            慢速
+            </summary>
+        </member>
+        <member name="F:JW.UHF.SpeedMode.SPEED_FULL_POWER">
+            <summary>
+            满电工作
+            </summary>
+        </member>
+        <member name="T:JW.UHF.InventoryMode">
+            <summary>
+            盘点模式
+            </summary>
+        </member>
+        <member name="F:JW.UHF.InventoryMode.Continue">
+            <summary>
+            持续盘点
+            </summary>
+        </member>
+        <member name="F:JW.UHF.InventoryMode.OnlyOne">
+            <summary>
+            仅一个
+            </summary>
+        </member>
+        <member name="T:JW.UHF.TagMode">
+            <summary>
+            标签模式
+            </summary>
+        </member>
+        <member name="F:JW.UHF.TagMode.More">
+            <summary>
+            多次
+            </summary>
+        </member>
+        <member name="F:JW.UHF.TagMode.One">
+            <summary>
+            一次
+            </summary>
+        </member>
+        <member name="T:JW.UHF.WorkMode">
+            <summary>
+            工作模式
+            </summary>
+        </member>
+        <member name="F:JW.UHF.WorkMode.Slave">
+            <summary>
+            被动模式
+            </summary>
+        </member>
+        <member name="F:JW.UHF.WorkMode.Master">
+            <summary>
+            主动模式
+            </summary>
+        </member>
+        <member name="T:JW.UHF.RunningMode">
+            <summary>
+            运行模式
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RunningMode.API">
+            <summary>
+            API模式
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RunningMode.COMMAND">
+            <summary>
+            命令模式
+            </summary>
+        </member>
+        <member name="T:JW.UHF.TagReportMode">
+            <summary>
+            标签上报模式
+            </summary>
+        </member>
+        <member name="F:JW.UHF.TagReportMode.SINGLE">
+            <summary>
+            单标签上报
+            </summary>
+        </member>
+        <member name="F:JW.UHF.TagReportMode.MORE">
+            <summary>
+            多标签上报
+            </summary>
+        </member>
+        <member name="T:JW.UHF.LockMemory">
+            <summary>
+            锁区域
+            </summary>
+        </member>
+        <member name="F:JW.UHF.LockMemory.EPC">
+            <summary>
+            仅锁EPC区
+            </summary>
+        </member>
+        <member name="F:JW.UHF.LockMemory.User">
+            <summary>
+            仅锁USER区
+            </summary>
+        </member>
+        <member name="F:JW.UHF.LockMemory.All">
+            <summary>
+            锁EPC和USER区
+            </summary>
+        </member>
+        <member name="T:JW.UHF.RFSType">
+            <summary>
+            无线射频标准
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RFSType.ETSI">
+            <summary>
+            欧规
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RFSType.FCC">
+            <summary>
+            美规
+            </summary>
+        </member>
+        <member name="T:JW.UHF.QT">
+            <summary>
+            QT功能
+            </summary>
+        </member>
+        <member name="F:JW.UHF.QT.PUBLIC">
+            <summary>
+            公有区
+            </summary>
+        </member>
+        <member name="F:JW.UHF.QT.PRIVATE">
+            <summary>
+            私有区
+            </summary>
+        </member>
+        <member name="T:JW.UHF.ReversePowerDetectStatus">
+            <summary>
+            反向功率侦测状态
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ReversePowerDetectStatus.ON">
+            <summary>
+            打开
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ReversePowerDetectStatus.OFF">
+            <summary>
+            关闭
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ReversePowerDetectStatus.UnKnown">
+            <summary>
+            未知状态
+            </summary>
+        </member>
+        <member name="T:JW.UHF.ChipType">
+            <summary>
+            芯片型号
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ChipType.R500">
+            <summary>
+            R500--105
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ChipType.R1000">
+            <summary>
+            R1000--110
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ChipType.R2000">
+            <summary>
+            R2000--120
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ChipType.M100">
+            <summary>
+            M100--101
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ChipType.UnKnown">
+            <summary>
+            未知型号
+            </summary>
+        </member>
+        <member name="T:JW.UHF.ReaderVersion">
+            <summary>
+            读写器版本号
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ReaderVersion.V2">
+            <summary>
+            默认版本
+            </summary>
+        </member>
+        <member name="F:JW.UHF.ReaderVersion.V3">
+            <summary>
+            3.0版本
+            </summary>
+        </member>
+        <member name="T:JW.UHF.TagGroup">
+            <summary>
+            标签群组
+            </summary>
+        </member>
+        <member name="F:JW.UHF.TagGroup.Session">
+            <summary>
+            Session会话值
+            </summary>
+        </member>
+        <member name="F:JW.UHF.TagGroup.SessionTarget">
+            <summary>
+            标签状态 A Or B
+            </summary>
+        </member>
+        <member name="F:JW.UHF.TagGroup.SearchMode">
+            <summary>
+            查询模式
+            </summary>
+        </member>
+        <member name="T:JW.UHF.TagsEventArgs">
+            <summary>
+            标签响应事件参数
+            </summary>
+        </member>
+        <member name="F:JW.UHF.TagsEventArgs.tag">
+            <summary>
+            标签信息
+            </summary>
+        </member>
+        <member name="F:JW.UHF.TagsEventArgs.errorCode">
+            <summary>
+            错误码
+            </summary>
+        </member>
+        <member name="M:JW.UHF.Tool.IP_Setting(JW.UHF.IPConfiguration)">
+            <summary>
+            设置IP
+            </summary>
+            <param name="ipSetting"></param>
+        </member>
+        <member name="T:JW.UHF.RfidSetting">
+            <summary>
+            模块配置
+            </summary>
+        </member>
+        <member name="M:JW.UHF.RfidSetting.#ctor">
+            <summary>
+            模块配置构造函数
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RfidSetting.AntennaPort_List">
+            <summary>
+            天线参数配置
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RfidSetting.GPIO_Config">
+            <summary>
+            GPIO配置
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RfidSetting.Tag_Group">
+            <summary>
+            标签群组
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RfidSetting.RSSI_Filter">
+            <summary>
+            RSSI过滤配置
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RfidSetting.Inventory_Mode">
+            <summary>
+            盘点模式 仅
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RfidSetting.Speed_Mode">
+            <summary>
+            盘点速率
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RfidSetting.Inventory_Time">
+            <summary>
+            盘点时间
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RfidSetting.Region_List">
+            <summary>
+            工作区域
+            </summary>
+        </member>
+        <member name="F:JW.UHF.RfidSetting.Work_Mode">
+            <summary>
+            工作模式
+            </summary>
+        </member>
+        <member name="T:JW.UHF.NetClient">
+            <summary>
+            Net : 提供方法，对常用的网络操作进行封装
+            </summary>
+        </member>
+        <member name="M:JW.UHF.NetClient.ReceiveThread">
+            <summary>
+            接收线程
+            </summary>
+        </member>
+        <member name="M:JW.UHF.NetClient.Connect">
+            <summary>
+            连接使用 tcp 协议的服务端
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.NetClient.GetKeepAliveSetting(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            建立 keepalive 作業所需的輸入資料 
+            </summary>
+            <param name="onOff">是否啟用1:on ,0:off</param>
+            <param name="keepAliveTime">client靜止多久後才開始送偵測訊息(millisecond)</param>
+            <param name="keepAliveInterval">偵測間隔(millisecond)</param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.NetClient.Send(System.Byte[])">
+            <summary>
+            发送数据
+            </summary>
+            <param name="sendData">数据内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.NetClient.Receive">
+            <summary>
+            接收数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.NetClient.Disconnect">
+            <summary>
+            关闭Socket
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.NetClient.ClearReceiveBuffer">
+            <summary>
+            清空Buffer
+            </summary>
+        </member>
+        <member name="T:JW.UHF.Result">
+            <summary>
+            操作结果类
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.OK">
+            <summary>
+            OK
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Module_Is_Busy">
+            <summary>
+            设备忙
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Module_Is_Closed">
+            <summary>
+            设备已经关闭
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Module_Is_Already_Opened">
+            <summary>
+            设备已经打开
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Model_Not_Response">
+            <summary>
+            设备无响应
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Send_Instruct_Failure">
+            <summary>
+            发送指令失败
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Response_TimeOut">
+            <summary>
+            响应失败
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Connect_Failure">
+            <summary>
+            连接失败
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Disconnect_Failure">
+            <summary>
+            断开连接失败
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Reverse_Power_Too_Hign">
+            <summary>
+            反响功率过高
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Device_Is_Busy">
+            <summary>
+            SDK忙
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Write_Data_Is_Null">
+            <summary>
+            写数据失败
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Pwd_Is_Null">
+            <summary>
+            密码是空的
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Pwd_Length_Is_Error">
+            <summary>
+            密码长度错误
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Antenna_Not_Exists">
+            <summary>
+            天线不存在
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Wait_TimeOut">
+            <summary>
+            SDK等待超时
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Read_Data_Is_Empty">
+            <summary>
+            读到数据为空
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Sdk_Connect_TimeOut">
+            <summary>
+            SDK连接超时
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Interface_Not_Avaliable">
+            <summary>
+            接口不可用
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Antenna_Not_Configure">
+            <summary>
+            天线未配置
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Channel_Not_Supported">
+            <summary>
+            频道不可用
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Write_Data_Too_Long">
+            <summary>
+            写数据太长
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Network_Exception">
+            <summary>
+            网络异常
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Receive_Buffer_OverFlow">
+            <summary>
+            接收缓冲区溢出
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Parse_Packet_Data_Error">
+            <summary>
+            解析盘点包错误
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Serial_Exception">
+            <summary>
+            串口异常
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Antenna_Not_Connected">
+            <summary>
+            天线不存在
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Forward_Power_InSufficient">
+            <summary>
+            前向功率不足
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Device_Has_Disconnected">
+            <summary>
+            设备已经断开
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Param_Error">
+            <summary>
+            参数错误
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Result.Unknown_Exception">
+            <summary>
+            未知异常
+            </summary>
+        </member>
+        <member name="T:JW.UHF.Tag">
+            <summary>
+            标签信息
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Tag.DATA">
+            <summary>
+            快速读会同时返回EPC+DATA
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Tag.EPC">
+            <summary>
+            EPC值
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Tag.RSSI">
+            <summary>
+            RSSI值
+            </summary>
+        </member>
+        <member name="F:JW.UHF.Tag.PORT">
+            <summary>
+            天线口
+            </summary>
+        </member>
+        <member name="T:JW.UHF.Util">
+            <summary>
+            Util工具类
+            </summary>
+        </member>
+        <member name="M:JW.UHF.Util.Checksum(System.Byte[])">
+            <summary>
+            生成CRC校验值
+            </summary>
+            <param name="val"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.Util.ConvertIntToByte(System.Byte[],System.Int32)">
+            <summary>
+            整形转换为byte数组
+            </summary>
+            <param name="desi"></param>
+            <param name="source"></param>
+        </member>
+        <member name="M:JW.UHF.Util.ConvertByteToInt(System.Byte[],System.Boolean)">
+            <summary>
+            byte数组转换为整形
+            </summary>
+            <param name="bRefArr"></param>
+            <param name="little"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.Util.DateDiff(System.DateTime,System.DateTime)">
+            <summary>
+            返回两个时间的秒数
+            </summary>
+            <param name="endTime">结束时间</param>
+            <param name="startTime">开始时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.Util.DateDiffMillSecond(System.DateTime,System.DateTime)">
+            <summary>
+            返回两个时间的毫秒数
+            </summary>
+            <param name="endTime">结束时间</param>
+            <param name="startTime">开始时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:JW.UHF.Util.PrintCustomTrace(System.Object)">
+            <summary>
+            打印信息
+            </summary>
+            <param name="info"></param>
+        </member>
+        <member name="T:JW.UHF.CustomTraceListener">
+            <summary>
+            自定义的控制台监听
+            </summary>
+        </member>
+        <member name="M:JW.UHF.CustomTraceListener.Show">
+            <summary>
+            Creates a new console instance if the process is not attached to a console already.
+            </summary>
+        </member>
+        <member name="M:JW.UHF.CustomTraceListener.Hide">
+            <summary>
+            If the process has a console attached to it, it will be detached and no longer visible. Writing to the System.Console is still possible, but no output will be shown.
+            </summary>
+        </member>
+        <member name="M:JW.UHF.CustomTraceListener.Toggle">
+            <summary>
+            自动处理
+            </summary>
+        </member>
+        <member name="M:JW.UHF.CustomTraceListener.WriteLine(System.Object)">
+            <summary>
+            写数据
+            </summary>
+            <param name="info"></param>
+        </member>
+        <member name="P:JW.UHF.CustomTraceListener.HasConsole">
+            <summary>
+            是否存在控制台
+            </summary>
+        </member>
+    </members>
+</doc>
