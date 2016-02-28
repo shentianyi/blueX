@@ -24,5 +24,32 @@ class OrderBox < ActiveRecord::Base
     end
   end
 
+  def self.to_xlsx order_boxes
+    p = Axlsx::Package.new
 
+    wb = p.workbook
+    wb.add_worksheet(:name => "sheet1") do |sheet|
+      sheet.add_row ["序号", "编码", "RFID编号", "状态",	"零件号",	"数量",	"要货仓库号",	"出货仓库号",	"料盒类型",	"库位号"]
+      order_boxes.each_with_index { |order_box, index|
+        warehouse=Warehouse.find_by_id(order_box.warehouse_id)
+        source_warehouse=Warehouse.find_by_id(order_box.source_warehouse_id)
+        part=Part.find_by_id(order_box.part_id)
+        order_box_type = OrderBoxType.find_by_id(order_box.order_box_type_id)
+
+        sheet.add_row [
+                          index+1,
+                          order_box.nr,
+                          order_box.rfid_nr,
+                          OrderBoxStatus.display(order_box.status),
+                          part.blank? ? '' : part.nr,
+                          order_box.quantity,
+                          warehouse.blank? ? '' : warehouse.nr,
+                          source_warehouse.blank? ? '' : source_warehouse.nr,
+                          order_box_type.blank? ? '' : order_box_type.name,
+                          order_box.position.blank? ? '' : order_box.position.nr
+                      ]
+      }
+    end
+    p.to_stream.read
+  end
 end
