@@ -264,6 +264,17 @@ namespace ScmClient
             ScanTB.Text = string.Empty;
         }
 
+        private void RFIDScanInListPageName_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (BaseConfig.ShowOpenDoor)
+            {
+                OpenDoorBtn.Visibility = Visibility.Visible;
+            }
+            else {
+                OpenDoorBtn.Visibility = Visibility.Hidden;
+            }
+        }
+
 
     }
 }

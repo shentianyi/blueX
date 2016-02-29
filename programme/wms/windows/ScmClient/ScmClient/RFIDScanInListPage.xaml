@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="790"
       Title="RFIDScanInListPage"
-      Name="RFIDScanInListPageName">
+      Name="RFIDScanInListPageName" Loaded="RFIDScanInListPageName_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"></RowDefinition>
@@ -69,16 +69,16 @@
         </DockPanel>
 
         <DockPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Height="60" Width="160" FontFamily="Solomon_Sans_Bold" Margin="20 0 0 0 " Name="OpenDoorBtn"  Click="OpenDoorBtn_Click">
+            <Button Height="60" Width="130" FontFamily="Solomon_Sans_Bold" Margin="-50 0 0 0 " Name="OpenDoorBtn"  Click="OpenDoorBtn_Click">
                 <DockPanel>
                     <Image Height="18" Width="24"  Source="/images/confirm icon.png"/>
-                    <Label FontFamily="Solomon_Sans_Bold" FontSize="20" Margin="20 0 0 0">开门</Label>
+                    <Label FontFamily="Solomon_Sans_Bold" FontSize="20" Margin="10 0 0 0">开门</Label>
                 </DockPanel>
             </Button>
-            <Button Height="60" Width="160" FontFamily="Solomon_Sans_Bold" Margin="20 0 0 0 " Name="previewBtn" Click="previewBtn_Click">
+            <Button Height="60" Width="140" FontFamily="Solomon_Sans_Bold" Margin="10 0 0 0 " Name="previewBtn" Click="previewBtn_Click">
                 <DockPanel>
                     <Image Height="18" Width="24"  Source="/images/review icon.png"/>
-                    <Label FontFamily="Solomon_Sans_Bold" FontSize="20" Margin="20 0 0 0" Name="previewBtnLabel">预览</Label>
+                    <Label FontFamily="Solomon_Sans_Bold" FontSize="20" Margin="10 0 0 0" Name="previewBtnLabel">预览</Label>
                 </DockPanel>
             </Button>
         </DockPanel>

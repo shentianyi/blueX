@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,10 @@ namespace ScmWcfService.Config
                 PlayPickPositionVoice = bool.Parse(config.Get("PlayPickPositionVoice"));
                 ImageExtends = config.Get("ImageExtends").Split(',').ToList();
                 ForceNetWeight = bool.Parse(config.Get("ForceNetWeight"));
+                ShowOpenDoor = bool.Parse(config.Get("ShowOpenDoor"));
+                AutoWeightConfirm = bool.Parse(config.Get("AutoWeightConfirm"));
             }
+
             catch (Exception e)
             {
                 throw e;
@@ -32,5 +36,7 @@ namespace ScmWcfService.Config
         public static bool PlayPickPositionVoice { get; set; }
         public static List<string> ImageExtends { get; set; }
         public static bool ForceNetWeight { get; set; }
+        public static bool ShowOpenDoor { get; set; }
+        public static bool AutoWeightConfirm { get; set; }
     }
 }

@@ -105,21 +105,27 @@ namespace ScmClient
             if (Key.Enter == e.Key && actualWeightTB.Text.Trim().Length > 0) {
                 actualWeightTB.Text = actualWeightTB.Text.Trim();
                 actualWeightTB.SelectAll();
-                validateWeightAndVoice();
+                validateWeightAndVoice(0);
             }
         }
 
         private void confirmBtn_Click(object sender, RoutedEventArgs e)
         {
-            validateWeightAndVoice();
+            validateWeightAndVoice(1);
         }
 
-        private void validateWeightAndVoice() {
+        private void validateWeightAndVoice(int i)
+        {
             validateWeight();
             if (valid || (valid == false && BaseConfig.ForceWeightPass == false))
             {
                 weightOrderBox();
-                this.Close();
+                if (BaseConfig.AutoWeightConfirm) {
+                    this.Close();
+                }
+                else if (i == 1) {
+                    this.Close();
+                }
             }
         }
 
