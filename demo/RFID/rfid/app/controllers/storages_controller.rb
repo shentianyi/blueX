@@ -4,7 +4,7 @@ class StoragesController < ApplicationController
   # GET /storages
   # GET /storages.json
   def index
-    @storages = Storage.paginate(:page => params[:page], :per_page => 100)
+    @storages = Storage.order(created_at: :desc).paginate(:page => params[:page], :per_page => 100)
   end
 
   # GET /storages/1

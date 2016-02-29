@@ -106,7 +106,7 @@
             <td><%= storage.package_nr %></td>
             <td><%= storage.position.blank? ? '' : storage.position.nr %></td>
             <td><%= storage.warehouse.blank? ? '' : storage.warehouse.nr %></td>
-            <td><%= storage.created_at.localtime %></td>
+            <td><%= storage.created_at %></td>
             <td><%= storage.remarks %></td>
             <td>
               <%= link_to '[详情]', storage %>
