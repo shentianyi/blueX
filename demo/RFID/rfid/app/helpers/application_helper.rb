@@ -28,7 +28,7 @@ module ApplicationHelper
         values=v.values.sort
         file_name=@model.pluralize+values[0]+"--"+values[1]+".xlsx"
         values[0]=Time.parse(values[0]).utc.to_s if values[0].is_date? & values[0].include?('-')
-        values[1]=Time.parse(values[1]).utc.to_s if values[1].is_date? & values[1].include?('-')
+        values[1]=(Time.parse(values[1]).utc-1.second).to_s if values[1].is_date? & values[1].include?('-')
         query=query.where(Hash[k, (values[0]..values[1])])
         v.each do |kk, vv|
           instance_variable_set("@#{k}_#{kk}", vv)

@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
     member do
       get :pick_items
+      get :pick_end_items
     end
   end
 

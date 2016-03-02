@@ -68,6 +68,7 @@
     <table class="table table-bordered table-striped table-hover">
       <thead>
       <tr>
+        <th>序号</th>
         <th>择货单号</th>
         <th>创建者</th>
         <th>创建日期</th>
@@ -79,14 +80,16 @@
       </thead>
 
       <tbody>
-      <% @picks.each do |pick| %>
+      <% @picks.each_with_index do |pick, index| %>
           <tr>
+            <td><%= index+@picks.offset+1 %>
             <td><%= pick.nr %></td>
             <td><%= pick.user.blank? ? '' : pick.user.nr %></td>
             <td><%= pick.created_at.localtime %></td>
             <td><%= PickStatus.display pick.status %></td>
             <td><%= pick.warehouse.blank? ? '' : pick.warehouse.nr %></td>
             <td><%= pick.remarks %></td>
+            <td><%= link_to '已择货清单列表', pick_end_items_pick_path(pick) %><span class="badge pull-right"><%= pick.pick_items.where(status: PickItemStatus::PICKED).count %></td>
             <td><%= link_to '清单列表', pick_items_pick_path(pick) %><span class="badge pull-right"><%= pick.pick_items.count %></td>
             <td><%= link_to '导出数据', {controller: 'picks', action: 'exports', id: pick} %></td>
             <td>

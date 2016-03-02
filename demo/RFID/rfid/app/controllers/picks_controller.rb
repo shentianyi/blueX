@@ -1,10 +1,10 @@
 class PicksController < ApplicationController
-  before_action :set_pick, only: [:show, :edit, :update, :destroy, :pick_items, :exports]
+  before_action :set_pick, only: [:show, :edit, :update, :destroy, :pick_end_items, :pick_items, :exports]
 
   # GET /picks
   # GET /picks.json
   def index
-    @picks = Pick.paginate(:page => params[:page], :per_page => 100)
+    @picks = Pick.order(created_at: :desc).paginate(:page => params[:page], :per_page => 100)
   end
 
   # GET /picks/1
@@ -64,6 +64,12 @@ class PicksController < ApplicationController
   def pick_items
     @pick_items = @pick.pick_items.paginate(:page => params[:page])
     @page_start=(params[:page].nil? ? 0 : (params[:page].to_i-1))*100
+  end
+
+  def pick_end_items
+    @pick_items = @pick.pick_items.where(status: PickItemStatus::PICKED).paginate(:page => params[:page])
+    @page_start=(params[:page].nil? ? 0 : (params[:page].to_i-1))*100
+    render :pick_items
   end
 
   def exports
