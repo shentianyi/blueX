@@ -67,6 +67,7 @@
     <table class="table table-bordered table-striped table-hover">
   <thead>
     <tr>
+      <th>序号</th>
       <th>需求单号</th>
       <th>创建者</th>
       <th>状态</th>
@@ -78,8 +79,9 @@
   </thead>
 
   <tbody>
-    <% @orders.each do |order| %>
+    <% @orders.each_with_index do |order, index| %>
       <tr>
+        <td><%= index+@orders.offset+1 %>
         <td><%= order.nr %></td>
         <td><%= order.user.blank? ? '' : order.user.nr %></td>
         <td><%= OrderStatus.display order.status %></td>

@@ -85,6 +85,7 @@
     <table class="table table-bordered table-striped table-hover">
       <thead>
       <tr>
+        <th>序号</th>
         <th>零件</th>
         <th>FIFO</th>
         <th>数量</th>
@@ -98,8 +99,9 @@
       </thead>
 
       <tbody>
-      <% @storages.each do |storage| %>
+      <% @storages.each_with_index do |storage, index| %>
           <tr>
+            <td><%= index+@storages.offset+1 %>
             <td><%= storage.part.blank? ? '' : storage.part.nr %></td>
             <td><%= storage.fifo.localtime unless storage.fifo.blank? %></td>
             <td><%= storage.quantity %></td>
