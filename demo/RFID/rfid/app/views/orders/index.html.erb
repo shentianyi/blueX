@@ -71,6 +71,7 @@
       <th>创建者</th>
       <th>状态</th>
       <th>料车编号</th>
+      <th>创建时间</th>
       <th>备注</th>
       <th colspan="3"></th>
     </tr>
@@ -83,6 +84,7 @@
         <td><%= order.user.blank? ? '' : order.user.nr %></td>
         <td><%= OrderStatus.display order.status %></td>
         <td><%= order.orderable.blank? ? '' : order.orderable.nr %></td>
+        <td><%= order.created_at.localtime %></td>
         <td><%= order.remarks %></td>
         <td><%= link_to '清单列表', order_items_order_path(order) %><span class="badge pull-right"><%= order.order_items.count %></td>
         <td><%= link_to '导出数据', {controller: 'orders', action: 'exports', id: order} %></td>
