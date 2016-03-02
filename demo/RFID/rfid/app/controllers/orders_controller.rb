@@ -98,6 +98,18 @@ class OrdersController < ApplicationController
     ["编号", "择货单号", "状态", "创建者", "数量", "零件号", "是否加急", "料盒编号", "备注"]
   end
 
+  def search
+    super { |query|
+      unless params[:order][:orderable_id].blank?
+        if order_car = OrderCar.find_by_nr(params[:order][:orderable_id])
+          query = query.unscope(where: :orderable_id).where(orderable_id: order_car.id)
+        end
+      end
+
+      query
+    }
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order
