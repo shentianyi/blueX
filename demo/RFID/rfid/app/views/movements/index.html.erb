@@ -139,7 +139,7 @@
             <td><%= movement.to_warehouse.blank? ? '' : movement.to_warehouse.nr %></td>
             <td><%= movement.move_type.blank? ? '' : movement.move_type.nr %></td>
             <td><%= movement.user.blank? ? '' : movement.user.nr %></td>
-            <td><%= movement.created_at %></td>
+            <td><%= movement.created_at.localtime %></td>
             <td><%= movement.remarks %></td>
 
             <td>
