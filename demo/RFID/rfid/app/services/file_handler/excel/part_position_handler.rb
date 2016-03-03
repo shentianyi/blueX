@@ -23,7 +23,7 @@ module FileHandler
                     row[k]=row[k].sub(/\.0/, '')
                   end
                 end
-                row[:part_id] = Part.find_by_nr(row[:part_id]).id unless row[:part_id].blank?
+                # row[:part_id] = Part.find_by_nr(row[:part_id]).id unless row[:part_id].blank?
                 row[:position_id] = Position.find_by_nr(row[:position_id]).id unless row[:position_id].blank?
                 row[:old_part_id] = Part.find_by_nr(row[:old_part_id]).id unless row[:old_part_id].blank?
                 row[:old_position_id] = Position.find_by_nr(row[:old_position_id]).id unless row[:old_position_id].blank?
@@ -37,7 +37,7 @@ module FileHandler
                     pp.destroy
                   end
                 else
-                  if row[:operator].blank? || row[:operator]=='create'
+                  if (row[:operator].blank? || row[:operator]=='create') && PartPosition.where(part_id: row[:part_id], position_id: row[:position_id]).blank?
                     s =PartPosition.new(row.except(:operator, :old_part_id, :old_position_id))
                     unless s.save
                       puts s.errors.to_json
