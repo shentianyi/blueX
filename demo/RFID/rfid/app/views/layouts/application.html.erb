@@ -7,21 +7,6 @@
   <%= csrf_meta_tags %>
 
   <style type="text/css">
-      .title {
-          margin-top: 2px;
-          margin-left: 10px;
-          width: 150px;
-          height: 40px;
-          font-size: 1.2em;
-          text-align: center;
-          padding-top: 10px;
-          border: 2px solid #999;
-          margin-bottom: 0;
-          border-bottom-color: transparent;
-          border-top-right-radius: 8px;
-          cursor: pointer;
-      }
-
       span {
           color: #000;
       }
@@ -30,42 +15,20 @@
           color: #000;
           font-size: 1.2em;
       }
-
-      /*用于增大字体*/
-      tr, td, b, label, .digg_pagination {
-          font-size: 1.05em;
-      }
-
-      #table_div {
-          position: absolute;
-          width: 85%;
-          height: 600px;
-          margin-bottom: 0;
-          overflow: auto;
-          /*border: 2px solid #000;*/
-          border-radius: 8px;
-      }
-
-      .table {
-          width: 100%;
-          white-space: nowrap;
-      }
   </style>
-
 </head>
 
-
-<body style="overflow-y:auto;width: 100%;">
-<div style="overflow: auto;">
+<body>
+<div>
   <%= render 'shares/head' %>
 </div>
 
-
-<div style="display: inline-flex; width: 100%;height: 900px;">
-  <div style="float: left;width: 12%;min-width: 200px;max-width: 220px;background-color: #424A5D;">
+<div>
+  <div>
     <%= render 'shares/left' %>
   </div>
-  <div style="float:right; width: 100%;background-color: #F2F2F2;">
+
+  <div style="min-height:850px;background-color: #F2F2F2;margin: 20px 20px 0 220px; border-left: 2px solid #999;">
     <%= yield %>
   </div>
 </div>

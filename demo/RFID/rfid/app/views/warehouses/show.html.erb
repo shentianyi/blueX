@@ -1,34 +1,49 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Nr:</strong>
-  <%= @warehouse.nr %>
-</p>
+<style>
+    .col-sm-4 {
+        font-size: 2em;
+    }
+</style>
 
-<p>
-  <strong>Name:</strong>
-  <%= @warehouse.name %>
-</p>
+<p class="title">仓库详情 <i>&#8593;</i></p>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 148px;"/>
 
-<p>
-  <strong>Description:</strong>
-  <%= @warehouse.description %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Nr:</strong>
+    <%= @warehouse.nr %>
+  </div>
 
-<p>
-  <strong>Type:</strong>
-  <%= @warehouse.type %>
-</p>
+  <div class="col-sm-4">
+    <strong>Name:</strong>
+    <%= @warehouse.name %>
+  </div>
 
-<p>
-  <strong>Parent:</strong>
-  <%= @warehouse.parent_id %>
-</p>
+  <div class="col-sm-4">
+    <strong>Description:</strong>
+    <%= @warehouse.description %>
+  </div>
+</div>
 
-<p>
-  <strong>Location:</strong>
-  <%= @warehouse.location %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Type:</strong>
+    <%= @warehouse.type %>
+  </div>
 
-<%= link_to 'Edit', edit_warehouse_path(@warehouse) %> |
-<%= link_to 'Back', warehouses_path %>
+  <div class="col-sm-4">
+    <strong>Parent:</strong>
+    <%= @warehouse.parent_id %>
+  </div>
+
+  <div class="col-sm-4">
+    <strong>Location:</strong>
+    <%= @warehouse.location %>
+  </div>
+</div>
+
+<div class="col-sm-12">
+  <%= link_to 'Edit', edit_warehouse_path(@warehouse), :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 20px;' %>
+  <%= link_to 'Back', warehouses_path, :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 20px;' %>
+</div>

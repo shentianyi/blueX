@@ -1,45 +1,72 @@
 <%= form_for(@storage) do |f| %>
-  <% if @storage.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@storage.errors.count, "error") %> prohibited this storage from being saved:</h2>
+    <% if @storage.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@storage.errors.count, "error") %> prohibited this storage from being saved:</h2>
 
-      <ul>
-      <% @storage.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @storage.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="col-sm-12">
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :part_id %><br>
+          <%= f.number_field :part_id %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :fifo %><br>
+          <%= f.text_field :fifo %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :quantity %><br>
+          <%= f.text_field :quantity %>
+        </div>
+      </div>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :part_id %><br>
-    <%= f.number_field :part_id %>
-  </div>
-  <div class="field">
-    <%= f.label :fifo %><br>
-    <%= f.text_field :fifo %>
-  </div>
-  <div class="field">
-    <%= f.label :quantity %><br>
-    <%= f.text_field :quantity %>
-  </div>
-  <div class="field">
-    <%= f.label :package_nr %><br>
-    <%= f.text_field :package_nr %>
-  </div>
-  <div class="field">
-    <%= f.label :uniq_nr %><br>
-    <%= f.text_field :uniq_nr %>
-  </div>
-  <div class="field">
-    <%= f.label :position_id %><br>
-    <%= f.number_field :position_id %>
-  </div>
-  <div class="field">
-    <%= f.label :warehouse_id %><br>
-    <%= f.number_field :warehouse_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="col-sm-12">
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :package_nr %><br>
+          <%= f.text_field :package_nr %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :uniq_nr %><br>
+          <%= f.text_field :uniq_nr %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :position_id %><br>
+          <%= f.number_field :position_id %>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-sm-12">
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :warehouse_id %><br>
+          <%= f.number_field :warehouse_id %>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <input type="submit" class="btn btn-primary" name="commit" value="更新Storage" style="margin: 20px;width: 200px;">
+    </div>
 <% end %>
+
+
+

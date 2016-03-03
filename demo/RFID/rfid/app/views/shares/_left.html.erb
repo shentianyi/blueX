@@ -1,23 +1,29 @@
 <style>
+    .LeftNav {
+        margin: 0 0 0 10px;
+        height: 830px;
+        background: #424A5D;
+        border-radius: 20px;
+        width: 200px;
+        position: fixed;
+    }
+
     .LeftNav > li > a {
         text-decoration: none;
     }
 
     .LeftNav > li > a :hover {
-        color: red;
+        color: white;
     }
-
 </style>
 
 <ul class="LeftNav" style="list-style: none">
-
   <li><a href="<%= locations_path %>"><h3>地点信息</h3></a></li>
   <li><a href="<%= warehouses_path %>"><h3>仓库信息</h3></a></li>
   <li><a href="<%= positions_path %>"><h3>库位信息</h3></a></li>
   <li style="height: 1px;margin: 0">
     <hr style="margin: 0"/>
   </li>
-
 
   <li><a href="<%= part_types_path %>"><h3>零件类型信息</h3></a></li>
   <li><a href="<%= colors_path %>"><h3>零件颜色信息</h3></a></li>
@@ -34,8 +40,6 @@
   <li style="height: 1px;margin: 0">
     <hr style="margin: 0"/>
   </li>
-
-
 
   <li><a href="<%= picks_path %>"><h3>择货单信息</h3></a></li>
   <li><a href="<%= orders_path %>"><h3>需求单信息</h3></a></li>

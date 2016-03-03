@@ -1,39 +1,56 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Part:</strong>
-  <%= @storage.part_id %>
-</p>
+<style>
+    .col-sm-4 {
+        font-size: 2em;
+    }
+</style>
 
-<p>
-  <strong>Fifo:</strong>
-  <%= @storage.fifo %>
-</p>
+<p class="title">库存详细列表 <i>&#8593;</i></p>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 148px;"/>
 
-<p>
-  <strong>Quantity:</strong>
-  <%= @storage.quantity %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Part:</strong>
+    <%= @storage.part_id %>
+  </div>
 
-<p>
-  <strong>Package nr:</strong>
-  <%= @storage.package_nr %>
-</p>
+  <div class="col-sm-4">
+    <strong>Fifo:</strong>
+    <%= @storage.fifo %>
+  </div>
 
-<p>
-  <strong>uniq_nr:</strong>
-  <%= @storage.uniq_nr %>
-</p>
+  <div class="col-sm-4">
+    <strong>Part:</strong>
+    <%= @storage.part_id %>
+  </div>
+</div>
 
-<p>
-  <strong>Position:</strong>
-  <%= @storage.position_id %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Package nr:</strong>
+    <%= @storage.package_nr %>
+  </div>
 
-<p>
-  <strong>Warehouse:</strong>
-  <%= @storage.warehouse_id %>
-</p>
+  <div class="col-sm-4">
+    <strong>uniq_nr:</strong>
+    <%= @storage.uniq_nr %>
+  </div>
 
-<%= link_to 'Edit', edit_storage_path(@storage) %> |
-<%= link_to 'Back', storages_path %>
+  <div class="col-sm-4">
+    <strong>Position:</strong>
+    <%= @storage.position_id %>
+  </div>
+</div>
+
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Warehouse:</strong>
+    <%= @storage.warehouse_id %>
+  </div>
+</div>
+
+<div class="col-sm-12">
+  <%= link_to 'Edit', edit_storage_path(@storage), :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;' %>
+  <%= link_to 'Back', storages_path, :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;' %>
+</div>

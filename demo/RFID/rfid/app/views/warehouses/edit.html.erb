@@ -1,6 +1,21 @@
-<h1>Editing Warehouse</h1>
+<style>
+    .field {
+        display: flex;
+    }
+
+    .field > label {
+        width: 100px;
+    }
+</style>
+
+<p class="title">编辑Warehouse <i>&#8593;</i></p>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 148px;"/>
+
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @warehouse %> |
-<%= link_to 'Back', warehouses_path %>
+<hr style="border-bottom: 2px solid #999;">
+<div style="display: flex;">
+  <%= link_to 'Show', @warehouse, :class => 'btn btn-primary', :style => 'margin:20px;width:200px;color:white;padding:10px;' %>
+  <%= link_to 'Back', warehouses_path, :class => 'btn btn-primary', :style => 'margin:20px;width:200px;color:white;padding:10px;' %>
+</div>
