@@ -8,12 +8,12 @@ class PartPosition < ActiveRecord::Base
   before_create :check_uniq
 
   def check_uniq
-    if part=Part.find_by_nr(self.part_id)
-      self.part_id=part.id
-    else
-      errors.add(:part_id, "该零件#{self.part_id}不存在")
-      return false
-    end
+    # if part=Part.find_by_nr(self.part_id)
+    #   self.part_id=part.id
+    # else
+    #   errors.add(:part_id, "该零件#{self.part_id}不存在")
+    #   return false
+    # end
 
     unless PartPosition.where(part_id: part.id, position_id: self.position_id).blank?
       errors.add(:part_id, "该零件#{part.nr}\位置#{Position.find_by_id(self.position_id).nr}对应信息已存在")
