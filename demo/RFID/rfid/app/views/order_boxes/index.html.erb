@@ -6,122 +6,124 @@
 </style>
 
 <p class="title">料盒列表 <i>&#8593;</i></p>
-<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 158px;"/>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 148px;"/>
 
-
-<div class="slide col-sm-12">
+<div class="slide">
   <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
-    <div class="col-sm-3">
+    <div class="col-sm-12">
+      <div class="col-sm-3">
            <span>料盒编号：
         <input type="text" name="order_box[nr]" value="<%= @nr %>"/>
         <input type="hidden" name="order_box[nr_fuzzy]"/>
       </span>
-    </div>
-    <div class="col-sm-3">
+      </div>
+      <div class="col-sm-3">
            <span>RFID编号：
         <input type="text" name="order_box[rfid_nr]" value="<%= @rfid_nr %>"/>
         <input type="hidden" name="order_box[rfid_nr_fuzzy]"/>
       </span>
-    </div>
-    <div class="col-sm-3">
+      </div>
+      <div class="col-sm-3">
            <span>零件号：
         <input type="text" name="order_box[part_id]" value="<%= @part_id %>"/>
       </span>
+      </div>
+      <div class="col-sm-3">
+           <span>状态：
+             <%= select_tag('order_box[status]', options_for_select(OrderBoxStatus.menu, @status), include_blank: true, :style => 'min-width:150px;"') %>
+      </span>
+      </div>
     </div>
 
-    <div class="col-sm-3">
-           <span>状态：
-             <%= select_tag('order_box[status]', options_for_select(OrderBoxStatus.menu, @status), include_blank: true) %>
-      </span>
-    </div>
-    <div class="col-sm-3">
+    <div class="col-sm-12" style="border-bottom: 2px solid #999;margin-top: 20px;">
+      <div class="col-sm-3">
           <span> 要货仓库：
             <%= select_tag('order_box[warehouse]', options_from_collection_for_select(Warehouse.all, 'id', 'nr', @warehouse), include_blank: true) %>
       </span>
-    </div>
-    <div class="col-sm-3">
+      </div>
+      <div class="col-sm-3">
           <span> 出货仓库：
             <%= select_tag('order_box[source_warehouse]', options_from_collection_for_select(Warehouse.all, 'id', 'nr', @source_warehouse), include_blank: true) %>
       </span>
-    </div>
-    <div class="col-sm-3">
+      </div>
+      <div class="col-sm-3">
           <span> 料盒类型：
-            <%= select_tag('order_box[order_box_type_id]', options_from_collection_for_select(OrderBoxType.all, 'id', 'name', @order_box_type_id), include_blank: true) %>
+            <%= select_tag('order_box[order_box_type_id]', options_from_collection_for_select(OrderBoxType.all, 'id', 'name', @order_box_type_id), include_blank: true, :style => 'min-width:100px;') %>
       </span>
-    </div>
-    <div class="col-sm-3">
-      <input style="margin: 0" type="submit" value="查 找" class="btn btn-primary" name="search"/>
-      <input style="margin: 0" type="submit" value="导出" class="btn btn-primary" name="download"/>
+      </div>
+      <div class="col-sm-3">
+        <input style="margin: -10px 0 0 0;" type="submit" value="查 找" class="btn btn-primary" name="search"/>
+        <input style="margin: -10px 0 0 20px;" type="submit" value="导出" class="btn btn-primary" name="download"/>
+      </div>
     </div>
   </form>
 </div>
 
-<hr style="border: 1px solid #000;">
-
-<div class="container">
-  <fieldset style="width: 80%;margin-top: 60px;border: 1px solid #ccc;">
-
-    <legend style="width: 100px;">料盒列表</legend>
-    <div style="display: inline-flex;">
-      <div class="trapezoid" style="margin: 0;">
-        <p style="padding-top: 20px;">料盒列表</p>
+<div style="display: inline-flex;">
+  <div class="trapezoid" style="margin: 20px 0 0 0;">
+    <p style="padding-top: 20px;">料盒列表</p>
+  </div>
+  <div style="display: inline-flex;">
+    <div class="digg_pagination" style="padding-top: 10px;padding-left: 10px;margin:10px 0 0 0;width: 400px;">
+      <div class="page_info">
+        <%= page_entries_info @order_box %>
       </div>
-      <div style="display: inline-flex;">
-        <div class="digg_pagination" style="padding-top: 10px;padding-left: 10px;">
-          <div class="page_info">
-            <%= page_entries_info @order_box %>
-          </div>
-          <%= will_paginate @order_box, :container => false %>
-        </div>
-
-        <%= link_to '新建料盒', send("new_#{@model}_path"), :class => 'btn btn-primary',
-                    :style => 'color:#fff;padding-top:10px;margin:10px 0 0 20px' %>
-        <%= link_to '导入数据', import_order_boxes_path, :class => 'btn btn-primary',
-                    :style => 'color:#fff;padding-top:10px;margin-left:50px;margin-top:10px;' %>
-      </div>
+      <%= will_paginate @order_box, :container => false %>
     </div>
-
-    <table class="table table-bordered table-striped table-hover">
-      <thead>
-      <tr>
-        <th>料盒</th>
-        <th>RFID 编号</th>
-        <th>状态</th>
-        <th>零件号</th>
-        <th>数量</th>
-        <th>要货仓库</th>
-        <th>出货仓库</th>
-        <th>料盒类型</th>
-        <th>料盒所属库位号</th>
-        <th con="3"></th>
-      </tr>
-      </thead>
-
-      <tbody>
-      <% @order_boxes.each do |order_box| %>
-          <tr>
-            <td><%= order_box.nr %></td>
-            <td><%= order_box.rfid_nr %></td>
-            <td><%= OrderBoxStatus.display order_box.status %></td>
-            <td><%= order_box.part.blank? ? '' : order_box.part.nr %></td>
-            <td><%= order_box.quantity %></td>
-            <td><%= order_box.warehouse.blank? ? '' : order_box.warehouse.nr %></td>
-            <td><%= order_box.source_warehouse.blank? ? '' : order_box.source_warehouse.nr %></td>
-            <td><%= order_box.order_box_type.blank? ? '' : order_box.order_box_type.name %></td>
-            <td><%= order_box.position.blank? ? '' : order_box.position.nr %></td>
-            <td>
-              <%= link_to '[详情]', order_box %>
-              <% if current_user.can_edit %>
-                  <%= link_to '[编辑]', edit_order_box_path(order_box) %>
-              <% end %>
-              <% if current_user.can_delete %>
-                  <%= link_to '[删除]', order_box, method: :delete, data: {confirm: '确定删除?'} %>
-              <% end %>
-            </td>
-          </tr>
-      <% end %>
-      </tbody>
-    </table>
-
-  </fieldset>
+    <div style="margin-left: 100px;">
+      <%= link_to '新建料盒', send("new_#{@model}_path"), :class => 'btn btn-primary',
+                  :style => 'color:#fff;padding-top:10px;margin:10px 0 0 20px' %>
+      <%= link_to '导入数据', import_order_boxes_path, :class => 'btn btn-primary',
+                  :style => 'color:#fff;padding-top:10px;margin-left:50px;margin-top:10px;' %>
+    </div>
+  </div>
 </div>
+
+<div class="table-show" style="overflow: auto;">
+  <table class="table table-bordered table-striped table-hover">
+    <thead>
+    <tr>
+      <th>料盒</th>
+      <th>RFID 编号</th>
+      <th>状态</th>
+      <th>零件号</th>
+      <th>数量</th>
+      <th>要货仓库</th>
+      <th>出货仓库</th>
+      <th>料盒类型</th>
+      <th>料盒所属库位号</th>
+      <th con="3"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @order_boxes.each do |order_box| %>
+        <tr>
+          <td><%= order_box.nr %></td>
+          <td><%= order_box.rfid_nr %></td>
+          <td><%= OrderBoxStatus.display order_box.status %></td>
+          <td><%= order_box.part.blank? ? '' : order_box.part.nr %></td>
+          <td><%= order_box.quantity %></td>
+          <td><%= order_box.warehouse.blank? ? '' : order_box.warehouse.nr %></td>
+          <td><%= order_box.source_warehouse.blank? ? '' : order_box.source_warehouse.nr %></td>
+          <td><%= order_box.order_box_type.blank? ? '' : order_box.order_box_type.name %></td>
+          <td><%= order_box.position.blank? ? '' : order_box.position.nr %></td>
+          <td>
+            <%= link_to '[详情]', order_box %>
+            <% if current_user.can_edit %>
+                <%= link_to '[编辑]', edit_order_box_path(order_box) %>
+            <% end %>
+            <% if current_user.can_delete %>
+                <%= link_to '[删除]', order_box, method: :delete, data: {confirm: '确定删除?'} %>
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    var ClientHeight = document.documentElement.clientHeight;
+    $('.table-show').css({height: (ClientHeight - 400) + 'px'});
+</script>

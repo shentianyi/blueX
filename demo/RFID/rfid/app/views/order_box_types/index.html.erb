@@ -6,10 +6,9 @@
 </style>
 
 <p class="title">料盒类型列表 <i>&#8593;</i></p>
-<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 158px;"/>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 148px;"/>
 
-
-<div class="slide col-sm-12">
+<div class="slide col-sm-12" style="border-bottom: 2px solid #999;">
   <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
     <div class="col-sm-3">
            <span>料盒类型：
@@ -18,65 +17,65 @@
       </span>
     </div>
     <div class="col-sm-3">
-      <input style="margin: 0" type="submit" value="查 找" class="btn btn-primary"/>
+      <input style="margin: -10px 0 0 0;width: 200px;" type="submit" value="查 找" class="btn btn-primary"/>
     </div>
   </form>
 </div>
 
-<hr style="border: 1px solid #000;">
-
-<div class="container">
-  <fieldset style="width: 80%;margin-top: 60px;border: 1px solid #ccc;">
-
-    <legend style="width: 100px;">料盒类型列表</legend>
-    <div style="display: inline-flex;">
-      <div class="trapezoid" style="margin: 0;">
-        <p style="padding-top: 20px;">料盒类型列表</p>
+<div style="display: inline-flex;">
+  <div class="trapezoid" style="margin: 20px 0 0 0;">
+    <p style="padding-top: 20px;">料盒类型</p>
+  </div>
+  <div style="display: inline-flex;">
+    <div class="digg_pagination" style="padding-top: 10px;padding-left: 10px;margin:10px 0 0 0;">
+      <div class="page_info">
+        <%= page_entries_info @order_box_types %>
       </div>
-      <div style="display: inline-flex;">
-        <div class="digg_pagination" style="padding-top: 10px;padding-left: 10px;">
-          <div class="page_info">
-            <%= page_entries_info @order_box_types %>
-          </div>
-          <%= will_paginate @order_box_types, :container => false %>
-        </div>
-
-        <%= link_to '新建料盒类型', send("new_#{@model}_path"), :class => 'btn btn-primary',
-                    :style => 'color:#fff;padding-top:10px;margin:10px 0 0 20px' %>
-        <%= link_to '导入数据', import_order_box_types_path, :class => 'btn btn-primary',
-                    :style => 'color:#fff;padding-top:10px;margin-left:50px;margin-top:10px;' %>
-      </div>
+      <%= will_paginate @order_box_types, :container => false %>
     </div>
 
-    <table class="table table-bordered table-striped table-hover">
-  <thead>
+    <div style="margin-top: 20px;margin-left: 200px;">
+      <%= link_to '新建料盒类型', send("new_#{@model}_path"), :class => 'btn btn-primary',
+                  :style => 'color:#fff;padding-top:10px;margin:-10px 0 0 20px;' %>
+      <%= link_to '导入数据', import_order_box_types_path, :class => 'btn btn-primary',
+                  :style => 'color:#fff;padding-top:10px;margin-left:50px;margin-top:-10px;' %>
+    </div>
+  </div>
+</div>
+
+<div class="table-show" style="overflow: auto;">
+  <table class="table table-bordered table-striped table-hover">
+    <thead>
     <tr>
       <th>料盒类型</th>
       <th>描述</th>
       <th>重量</th>
       <th colspan="3"></th>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     <% @order_box_types.each do |order_box_type| %>
-      <tr>
-        <td><%= order_box_type.name %></td>
-        <td><%= order_box_type.description %></td>
-        <td><%= order_box_type.weight %></td>
-        <td>
-          <%= link_to '[详情]', order_box_type %>
-          <% if current_user.can_edit %>
-              <%= link_to '[编辑]', edit_order_box_type_path(order_box_type) %>
-          <% end %>
-          <% if current_user.can_delete %>
-              <%= link_to '[删除]', order_box_type, method: :delete, data: {confirm: '确定删除?'} %>
-          <% end %>
-        </td>
-      </tr>
+        <tr>
+          <td><%= order_box_type.name %></td>
+          <td><%= order_box_type.description %></td>
+          <td><%= order_box_type.weight %></td>
+          <td>
+            <%= link_to '[详情]', order_box_type %>
+            <% if current_user.can_edit %>
+                <%= link_to '[编辑]', edit_order_box_type_path(order_box_type) %>
+            <% end %>
+            <% if current_user.can_delete %>
+                <%= link_to '[删除]', order_box_type, method: :delete, data: {confirm: '确定删除?'} %>
+            <% end %>
+          </td>
+        </tr>
     <% end %>
-  </tbody>
-</table>
-
-  </fieldset>
+    </tbody>
+  </table>
 </div>
+
+<script type="text/javascript" charset="utf-8">
+    var ClientHeight = document.documentElement.clientHeight;
+    $('.table-show').css({height: (ClientHeight - 400) + 'px'});
+</script>

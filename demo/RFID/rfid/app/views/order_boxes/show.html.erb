@@ -1,44 +1,59 @@
+<style>
+    .col-sm-4 {
+        font-size: 2em;
+    }
+</style>
 <p id="notice"><%= notice %></p>
+<p class="title">料盒列表 <i>&#8593;</i></p>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 148px;"/>
 
-<p>
-  <strong>Nr:</strong>
-  <%= @order_box.nr %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Nr:</strong>
+    <%= @order_box.nr %>
+  </div>
 
-<p>
-  <strong>Rfid nr:</strong>
-  <%= @order_box.rfid_nr %>
-</p>
+  <div class="col-sm-4">
+    <strong>Rfid nr:</strong>
+    <%= @order_box.rfid_nr %>
+  </div>
 
-<p>
-  <strong>Status:</strong>
-  <%= @order_box.status %>
-</p>
+  <div class="col-sm-4">
+    <strong>Status:</strong>
+    <%= @order_box.status %>
+  </div>
+</div>
 
-<p>
-  <strong>Part:</strong>
-  <%= @order_box.part_id %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Part:</strong>
+    <%= @order_box.part_id %>
+  </div>
 
-<p>
-  <strong>Quantity:</strong>
-  <%= @order_box.quantity %>
-</p>
+  <div class="col-sm-4">
+    <strong>Quantity:</strong>
+    <%= @order_box.quantity %>
+  </div>
 
-<p>
-  <strong>Warehouse:</strong>
-  <%= @order_box.warehouse %>
-</p>
+  <div class="col-sm-4" style="font-size: 1.5em;">
+    <strong>Warehouse:</strong>
+    <%= @order_box.warehouse %>
+  </div>
+</div>
 
-<p>
-  <strong>Source warehouse:</strong>
-  <%= @order_box.source_warehouse_id %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Source warehouse:</strong>
+    <%= @order_box.source_warehouse_id %>
+  </div>
 
-<p>
-  <strong>Order box type:</strong>
-  <%= @order_box.order_box_type_id %>
-</p>
+  <div class="col-sm-4">
+    <strong>Order box type:</strong>
+    <%= @order_box.order_box_type_id %>
+  </div>
+</div>
 
-<%= link_to 'Edit', edit_order_box_path(@order_box) %> |
-<%= link_to 'Back', order_boxes_path %>
+<div class="col-sm-12">
+  <%= link_to 'Edit', edit_order_box_path(@order_box), :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 0;' %>
+  <%= link_to 'Back', order_boxes_path, :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 20px;' %>
+</div>

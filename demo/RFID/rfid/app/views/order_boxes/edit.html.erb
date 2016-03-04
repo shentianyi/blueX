@@ -1,6 +1,17 @@
-<h1>Editing Order Box</h1>
+<style>
+    .field {
+        display: flex;
+    }
+
+    .field > label {
+        width: 150px;
+    }
+</style>
+<p class="title">料盒列表 <i>&#8593;</i></p>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 148px;"/>
 
 <%= render 'form' %>
+<hr style="border-bottom: 2px solid #999;">
 
-<%= link_to 'Show', @order_box %> |
-<%= link_to 'Back', order_boxes_path %>
+<%= link_to 'Show', @order_box, :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;margin:10px 0 0 20px;width:200px;' %>
+<%= link_to 'Back', order_boxes_path, :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;margin:10px 0 0 20px;width:200px;' %>

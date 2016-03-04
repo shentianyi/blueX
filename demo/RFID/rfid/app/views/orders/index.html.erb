@@ -6,80 +6,78 @@
 </style>
 
 <p class="title">需求单详细列表 <i>&#8593;</i></p>
-<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 158px;"/>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 148px;"/>
 
 
-<div class="slide col-sm-12">
+<div class="slide">
   <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
-    <div class="col-sm-3">
+    <div class="col-md-12">
+      <div class="col-sm-4">
             <span>需求单号：
               <input type="text" name="order[nr]" value="<%= @nr %>"/>
             </span>
-    </div>
-    <div class="col-sm-3">
+      </div>
+      <div class="col-sm-4">
             <span>创建者：
               <input type="text" name="order[user_id]" value="<%= @user_id %>"/>
             </span>
-    </div>
-    <div class="col-sm-3">
+      </div>
+      <div class="col-sm-4">
             <span>料车编号：
               <input type="text" name="order[orderable_id]" value="<%= @orderable_id %>"/>
             </span>
+      </div>
     </div>
-    <div class="col-sm-3">
+    <div class="col-md-12" style="border-bottom: 2px solid #999;margin: 20px 0 0 0;">
+      <div class="col-sm-4">
             <span>状态：
               <%= select_tag('order[status]', options_for_select(OrderStatus.menu, @status), include_blank: true) %>
             </span>
-    </div>
-    <div class="col-sm-4">
+      </div>
+      <div class="col-sm-4">
             <span>
               创建日期：
               <input type="text" name="order[created_at][start]" class="datetime-picker" value="<%= @created_at_start %>"/>
               ~  <input type="text" name="order[created_at][end]" class="datetime-picker" value="<%= @created_at_end %>"/>
             </span>
-    </div>
-    <div class="col-sm-3">
-      <input style="margin: 0" type="submit" value="查 找" class="btn btn-primary"/>
+      </div>
+      <div class="col-sm-4">
+        <input style="margin: -10px 0 10px 10px;" type="submit" value="查 找" class="btn btn-primary"/>
+      </div>
     </div>
   </form>
 </div>
 
-<hr style="border: 1px solid #000;">
-
-<div class="container">
-  <fieldset style="width: 80%;margin-top: 60px;border: 1px solid #ccc;">
-
-    <legend style="width: 200px;">需求单详细列表</legend>
-    <div style="display: inline-flex;">
-      <div class="trapezoid" style="margin: 0;">
-        <p style="padding-top: 20px;">需求单详细列表</p>
+<div style="display: inline-flex;">
+  <div class="trapezoid" style="margin: 20px 0 0 0;">
+    <p style="padding-top: 20px;">需求单详细</p>
+  </div>
+  <div style="display: inline-flex;">
+    <div class="digg_pagination" style="padding-top: 10px;padding-left: 10px;margin:20px 0 0 0;">
+      <div class="page_info">
+        <%= page_entries_info @order %>
       </div>
-      <div style="display: inline-flex;">
-        <div class="digg_pagination" style="padding-top: 10px;padding-left: 10px;">
-          <div class="page_info">
-            <%= page_entries_info @order %>
-          </div>
-          <%= will_paginate @order, :container => false %>
-        </div>
-      </div>
+      <%= will_paginate @order, :container => false %>
     </div>
+  </div>
+</div>
 
-    <table class="table table-bordered table-striped table-hover">
+<table class="table table-bordered table-striped table-hover">
   <thead>
-    <tr>
-      <th>序号</th>
-      <th>需求单号</th>
-      <th>创建者</th>
-      <th>状态</th>
-      <th>料车编号</th>
-      <th>创建时间</th>
-      <th>备注</th>
-      <th colspan="3"></th>
-    </tr>
+  <tr>
+    <th>序号</th>
+    <th>需求单号</th>
+    <th>创建者</th>
+    <th>状态</th>
+    <th>料车编号</th>
+    <th>创建时间</th>
+    <th>备注</th>
+    <th colspan="3"></th>
+  </tr>
   </thead>
 
   <tbody>
-    <% @orders.each_with_index do |order, index| %>
+  <% @orders.each_with_index do |order, index| %>
       <tr>
         <td><%= index+@orders.offset+1 %>
         <td><%= order.nr %></td>
@@ -88,7 +86,8 @@
         <td><%= order.orderable.blank? ? '' : order.orderable.nr %></td>
         <td><%= order.created_at.localtime %></td>
         <td><%= order.remarks %></td>
-        <td><%= link_to '清单列表', order_items_order_path(order) %><span class="badge pull-right"><%= order.order_items.count %></td>
+        <td><%= link_to '清单列表', order_items_order_path(order) %>
+          <span class="badge pull-right"><%= order.order_items.count %></td>
         <td><%= link_to '导出数据', {controller: 'orders', action: 'exports', id: order} %></td>
         <td>
           <%= link_to '[详情]', order %>
@@ -103,6 +102,3 @@
   <% end %>
   </tbody>
 </table>
-
-</fieldset>
-</div>

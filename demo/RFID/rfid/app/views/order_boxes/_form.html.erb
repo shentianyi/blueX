@@ -11,43 +11,70 @@
         </div>
     <% end %>
 
-    <div class="field">
-      <%= f.label :nr %><br>
-      <%= f.text_field :nr %>
+    <div class="col-sm-12">
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :nr %><br>
+          <%= f.text_field :nr %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :rfid_nr %><br>
+          <%= f.text_field :rfid_nr %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :status %><br>
+          <%= f.select(:status, OrderBoxStatus.menu, {include_blank: false}) %>
+        </div>
+      </div>
     </div>
-    <div class="field">
-      <%= f.label :rfid_nr %><br>
-      <%= f.text_field :rfid_nr %>
+
+    <div class="col-sm-12">
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :part_id %><br>
+          <%= f.select(:part_id, Part.options, {include_blank: false}) %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :quantity %><br>
+          <%= f.text_field :quantity %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :warehouse_id %><br>
+          <%= f.select(:warehouse_id, Warehouse.options, {include_blank: false}) %>
+        </div>
+      </div>
     </div>
-    <div class="field">
-      <%= f.label :status %><br>
-      <%= f.select(:status, OrderBoxStatus.menu, {include_blank: false}) %>
+
+    <div class="col-sm-12" style="border-bottom: 2px solid #999;">
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :source_warehouse_id %><br>
+          <%= f.select(:source_warehouse_id, Warehouse.options, {include_blank: false}) %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :order_box_type_id %><br>
+          <%= f.select(:order_box_type_id, OrderBoxType.options, {include_blank: false}, :style => 'min-width:100px;') %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :position %><br>
+          <%= f.select(:position, Position.options, {include_blank: false}) %>
+        </div>
+      </div>
     </div>
-    <div class="field">
-      <%= f.label :part_id %><br>
-      <%= f.select(:part_id, Part.options, {include_blank: false}) %>
-    </div>
-    <div class="field">
-      <%= f.label :quantity %><br>
-      <%= f.text_field :quantity %>
-    </div>
-    <div class="field">
-      <%= f.label :warehouse_id %><br>
-      <%= f.select(:warehouse_id, Warehouse.options, {include_blank: false}) %>
-    </div>
-    <div class="field">
-      <%= f.label :source_warehouse_id %><br>
-      <%= f.select(:source_warehouse_id, Warehouse.options, {include_blank: false}) %>
-    </div>
-    <div class="field">
-      <%= f.label :order_box_type_id %><br>
-      <%= f.select(:order_box_type_id, OrderBoxType.options, {include_blank: false}) %>
-    </div>
-    <div class="field">
-      <%= f.label :position %><br>
-      <%= f.select(:position, Position.options, {include_blank: false}) %>
-    </div>
+
     <div class="actions">
-      <%= f.submit %>
+      <input type="submit" class="btn btn-primary" name="commit" value="完成" style="margin: 30px 0 10px 20px;width: 200px;">
     </div>
 <% end %>

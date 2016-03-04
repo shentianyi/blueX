@@ -1,24 +1,38 @@
+<style>
+    .col-sm-4 {
+        font-size: 2em;
+    }
+</style>
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Nr:</strong>
-  <%= @order_car.nr %>
-</p>
+<p class="title">料车列表 <i>&#8593;</i></p>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 148px;"/>
 
-<p>
-  <strong>Rfid nr:</strong>
-  <%= @order_car.rfid_nr %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Nr:</strong>
+    <%= @order_car.nr %>
+  </div>
 
-<p>
-  <strong>Warehouse:</strong>
-  <%= @order_car.warehouse_id %>
-</p>
+  <div class="col-sm-4">
+    <strong>Rfid nr:</strong>
+    <%= @order_car.rfid_nr %>
+  </div>
 
-<p>
-  <strong>Status:</strong>
-  <%= @order_car.status %>
-</p>
+  <div class="col-sm-4">
+    <strong>Warehouse:</strong>
+    <%= @order_car.warehouse_id %>
+  </div>
+</div>
 
-<%= link_to 'Edit', edit_order_car_path(@order_car) %> |
-<%= link_to 'Back', order_cars_path %>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Status:</strong>
+    <%= @order_car.status %>
+  </div>
+</div>
+
+<div class="col-sm-12">
+  <%= link_to 'Edit', edit_order_car_path(@order_car), :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 0;' %>
+  <%= link_to 'Back', order_cars_path, :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 20px;' %>
+</div>
