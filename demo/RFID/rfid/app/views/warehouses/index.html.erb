@@ -37,14 +37,14 @@
     <p style="padding-top: 20px;">仓库列表</p>
   </div>
   <div style="display: inline-flex;">
-    <div class="digg_pagination" style="padding-top: 10px;padding-left: 10px;">
+    <div class="digg_pagination" style="padding-top: 10px;padding-left: 10px;margin:10px 0 0 0;">
       <div class="page_info">
         <%= page_entries_info @warehouse %>
       </div>
       <%= will_paginate @warehouse, :container => false %>
     </div>
 
-    <div style="margin-left: 200px;margin-top: 0px;">
+    <div style="margin-left: 100px;">
       <%= link_to '新建仓库', send("new_#{@model}_path"), :class => 'btn btn-primary',
                   :style => 'color:#fff;padding-top:10px;margin:10px 0 0 20px' %>
       <%= link_to '导入数据', import_warehouses_path, :class => 'btn btn-primary',
@@ -92,7 +92,7 @@
 
 <script type="text/javascript" charset="utf-8">
     var ClientHeight = document.documentElement.clientHeight;
-    $('.table-show').css({height: (ClientHeight - 400) + 'px'});
+    $('.table-show').css({maxHeight: '700px'});
 
     $('.LeftNav>li').children('a').children('h3').removeAttr('style');
     $('.LeftNav>li').children('a').children('h3').children('i').remove();

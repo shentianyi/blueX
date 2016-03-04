@@ -107,7 +107,8 @@
 
 <script type="text/javascript" charset="utf-8">
     var ClientHeight = document.documentElement.clientHeight;
-    $('.table-show').css({height: (ClientHeight - 400) + 'px'});
+    //    $('.table-show').css({height: (ClientHeight - 400) + 'px'});
+    $('.table-show').css({maxHeight: '700px'});
 
     $('.LeftNav>li').children('a').children('h3').removeAttr('style');
     $('.LeftNav>li').children('a').children('h3').children('i').remove();
