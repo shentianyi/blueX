@@ -111,4 +111,12 @@
 <script type="text/javascript" charset="utf-8">
     var ClientHeight = document.documentElement.clientHeight;
     $('.table-show').css({height: (ClientHeight - 400) + 'px'});
+
+    $('.LeftNav>li').children('a').children('h3').removeAttr('style');
+    $('.LeftNav>li').children('a').children('h3').children('i').remove();
+
+    $('.LeftNav>li')[14].children[0].children[0].style['color'] = 'red';
+
+    $('<i class="glyphicon glyphicon-hand-left" style="margin-left: 10px;color:red;"></i>').appendTo($('.LeftNav>li')[14].children[0].children[0]).ready(function () {
+    });
 </script>

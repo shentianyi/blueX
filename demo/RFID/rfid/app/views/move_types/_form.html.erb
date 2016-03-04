@@ -1,25 +1,32 @@
 <%= form_for(@move_type) do |f| %>
-  <% if @move_type.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@move_type.errors.count, "error") %> prohibited this move_type from being saved:</h2>
+    <% if @move_type.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@move_type.errors.count, "error") %> prohibited this move_type from being saved:</h2>
 
-      <ul>
-      <% @move_type.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @move_type.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="col-sm-12" style="border-bottom: 2px solid #999;">
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :nr %><br>
+          <%= f.text_field :nr %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :description %><br>
+          <%= f.text_field :description %>
+        </div>
+      </div>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :nr %><br>
-    <%= f.text_field :nr %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="actions">
+      <input type="submit" class="btn btn-primary" name="commit" value="完成" style="margin: 30px 0 10px 20px;width: 200px;">
+    </div>
 <% end %>

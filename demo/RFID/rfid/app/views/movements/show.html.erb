@@ -1,64 +1,87 @@
+<style>
+    .col-sm-4 {
+        font-size: 2em;
+    }
+</style>
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Part:</strong>
-  <%= @movement.part_id %>
-</p>
+<p class="title">库存移动记录列表 <i>&#8593;</i></p>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 148px;"/>
 
-<p>
-  <strong>Fifo:</strong>
-  <%= @movement.fifo %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Part:</strong>
+    <%= @movement.part_id %>
+  </div>
 
-<p>
-  <strong>Quantity:</strong>
-  <%= @movement.quantity %>
-</p>
+  <div class="col-sm-4">
+    <strong>Fifo:</strong>
+    <%= @movement.fifo %>
+  </div>
 
-<p>
-  <strong>Package nr:</strong>
-  <%= @movement.package_nr %>
-</p>
+  <div class="col-sm-4">
+    <strong>Quantity:</strong>
+    <%= @movement.quantity %>
+  </div>
+</div>
 
-<p>
-  <strong>Uniq:</strong>
-  <%= @movement.uniq %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Package nr:</strong>
+    <%= @movement.package_nr %>
+  </div>
 
-<p>
-  <strong>From position:</strong>
-  <%= @movement.from_position_id %>
-</p>
+  <div class="col-sm-4">
+    <strong>From position:</strong>
+    <%= @movement.from_position_id %>
+  </div>
 
-<p>
-  <strong>From warehouse:</strong>
-  <%= @movement.from_warehouse_id %>
-</p>
+  <div class="col-sm-4">
+    <strong>From warehouse:</strong>
+    <%= @movement.from_warehouse_id %>
+  </div>
+</div>
 
-<p>
-  <strong>To position:</strong>
-  <%= @movement.to_position_id %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>To position:</strong>
+    <%= @movement.to_position_id %>
+  </div>
 
-<p>
-  <strong>To warehouse:</strong>
-  <%= @movement.to_warehouse_id %>
-</p>
+  <div class="col-sm-4">
+    <strong>To warehouse:</strong>
+    <%= @movement.to_warehouse_id %>
+  </div>
 
-<p>
-  <strong>Move type:</strong>
-  <%= @movement.move_type_id %>
-</p>
+  <div class="col-sm-4">
+    <strong>Move type:</strong>
+    <%= @movement.move_type_id %>
+  </div>
+</div>
 
-<p>
-  <strong>User:</strong>
-  <%= @movement.user_id %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>User:</strong>
+    <%= @movement.user_id %>
+  </div>
 
-<p>
-  <strong>Remarks:</strong>
-  <%= @movement.remarks %>
-</p>
+  <div class="col-sm-4">
+    <strong>Remarks:</strong>
+    <%= @movement.remarks %>
+  </div>
+</div>
 
-<%= link_to 'Edit', edit_movement_path(@movement) %> |
-<%= link_to 'Back', movements_path %>
+<div class="col-sm-12">
+  <%= link_to 'Edit', edit_movement_path(@movement), :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 0;' %>
+  <%= link_to 'Back', movements_path, :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 20px;' %>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    $('.LeftNav>li').children('a').children('h3').removeAttr('style');
+    $('.LeftNav>li').children('a').children('h3').children('i').remove();
+
+    $('.LeftNav>li')[18].children[0].children[0].style['color'] = 'red';
+
+    $('<i class="glyphicon glyphicon-hand-left" style="margin-left: 10px;color:red;"></i>').appendTo($('.LeftNav>li')[18].children[0].children[0]).ready(function () {
+    });
+</script>

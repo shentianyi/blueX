@@ -6,87 +6,98 @@
 </style>
 
 <p class="title">员工列表 <i>&#8593;</i></p>
-<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 158px;"/>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 148px;"/>
 
 <% if current_user.admin? || current_user.manager? %>
 
-    <div class="slide col-sm-12">
+    <div class="slide">
       <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
-        <div class="col-sm-3">
+        <div class="col-sm-12" style="border-bottom: 2px solid #999;">
+          <div class="col-sm-4">
            <span>员工号：
         <input type="text" name="user[nr]" value="<%= @nr %>"/>
         <input type="hidden" name="user[nr_fuzzy]"/>
       </span>
-        </div>
-        <div class="col-sm-3">
+          </div>
+          <div class="col-sm-4">
           <span>  角色：
             <%= select_tag('user[role_id]', options_for_select(Role.menu, @role_id), include_blank: true) %>
       </span>
-        </div>
-        <div class="col-sm-3">
-          <input style="margin: 0" type="submit" value="查 找" class="btn btn-primary"/>
+          </div>
+          <div class="col-sm-4">
+            <input style="margin: -10px 0 0 0;width:200px;" type="submit" value="查 找" class="btn btn-primary"/>
+          </div>
         </div>
       </form>
     </div>
 
-    <hr style="border: 1px solid #000;">
-
-    <div class="container">
-      <fieldset style="width: 80%;margin-top: 60px;border: 1px solid #ccc;">
-
-        <legend style="width: 100px;">员工列表</legend>
-        <div style="display: inline-flex;">
-          <div class="trapezoid" style="margin: 0;">
-            <p style="padding-top: 20px;">员工列表</p>
+    <div style="display: inline-flex;">
+      <div class="trapezoid" style="margin: 20px 0 0 0;">
+        <p style="padding-top: 20px;">员工列表</p>
+      </div>
+      <div style="display: inline-flex;">
+        <div class="digg_pagination" style="padding-top: 10px;padding-left: 10px;margin:10px 0 0 0;">
+          <div class="page_info">
+            <%= page_entries_info @users %>
           </div>
-          <div style="display: inline-flex;">
-            <div class="digg_pagination" style="padding-top: 10px;padding-left: 10px;">
-              <div class="page_info">
-                <%= page_entries_info @users %>
-              </div>
-              <%= will_paginate @users, :container => false %>
-            </div>
-
-            <% if current_user.admin? %>
-                <%= link_to '新建员工', send("new_#{@model}_path"), :class => 'btn btn-primary',
-                            :style => 'color:#fff;padding-top:10px;margin:10px 0 0 20px' %>
-                <%= link_to '导入数据', import_users_path, :class => 'btn btn-primary',
-                            :style => 'color:#fff;padding-top:10px;margin-left:50px;margin-top:10px;' %>
-            <% end %>
-          </div>
+          <%= will_paginate @users, :container => false %>
         </div>
+
+        <div style="margin-left: 200px;margin-top: 10px;">
+          <% if current_user.admin? %>
+              <%= link_to '新建员工', send("new_#{@model}_path"), :class => 'btn btn-primary',
+                          :style => 'color:#fff;padding-top:10px;margin:10px 0 0 20px' %>
+              <%= link_to '导入数据', import_users_path, :class => 'btn btn-primary',
+                          :style => 'color:#fff;padding-top:10px;margin-left:50px;margin-top:10px;' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
 <% end %>
 
-<table class="table table-bordered table-striped table-hover">
-  <thead>
-  <tr>
-    <th>员工号</th>
-    <th>姓名</th>
-    <th>Email</th>
-    <th>角色</th>
-    <th colspan="3"></th>
-  </tr>
-  </thead>
+<div class="table-show" style="overflow: auto;">
+  <table class="table table-bordered table-striped table-hover">
+    <thead>
+    <tr>
+      <th>员工号</th>
+      <th>姓名</th>
+      <th>Email</th>
+      <th>角色</th>
+      <th colspan="3"></th>
+    </tr>
+    </thead>
 
-  <tbody>
-  <% @users.each do |user| %>
-      <tr>
-        <td><%= user.nr %></td>
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
-        <td><%= user.role %></td>
-        <td>
-          <%= link_to '[详情]', user_path(user) %>
-          <% if current_user.can_edit %>
-              <%= link_to '[编辑]', edit_user_path(user) %>
-          <% end %>
-          <% if current_user.can_delete %>
-              <%= link_to '[删除]', user, method: :delete, data: {confirm: '确定删除?'} %>
-          <% end %>
-        </td>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
-</fieldset>
+    <tbody>
+    <% @users.each do |user| %>
+        <tr>
+          <td><%= user.nr %></td>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td><%= user.role %></td>
+          <td>
+            <%= link_to '[详情]', user_path(user) %>
+            <% if current_user.can_edit %>
+                <%= link_to '[编辑]', edit_user_path(user) %>
+            <% end %>
+            <% if current_user.can_delete %>
+                <%= link_to '[删除]', user, method: :delete, data: {confirm: '确定删除?'} %>
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
 </div>
+
+<script type="text/javascript" charset="utf-8">
+    var ClientHeight = document.documentElement.clientHeight;
+    $('.table-show').css({height: (ClientHeight - 600) + 'px'});
+
+    $('.LeftNav>li').children('a').children('h3').removeAttr('style');
+    $('.LeftNav>li').children('a').children('h3').children('i').remove();
+
+    $('.LeftNav>li')[21].children[0].children[0].style['color'] = 'red';
+
+    $('<i class="glyphicon glyphicon-hand-left" style="margin-left: 10px;color:red;"></i>').appendTo($('.LeftNav>li')[21].children[0].children[0]).ready(function () {
+    });
+</script>

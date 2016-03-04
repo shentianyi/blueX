@@ -11,9 +11,18 @@
 </style>
 
 <div style="display: inline-flex;margin-top: 10px;">
-  <%= link_to "返回", users_path, :class => 'btn btn-primary', :style => 'color:#000; margin-left:5%;' %>
+  <%= link_to "返回", users_path, :class => 'btn btn-primary', :style => 'color:#fff; margin-left:20px;padding-top:10px;width:200px;' %>
   <h1 style="position: absolute;right: 20px;">员工信息<em>新增</em></h1>
 </div>
 <hr/>
 
 <%= render 'form' %>
+<script type="text/javascript" charset="utf-8">
+    $('.LeftNav>li').children('a').children('h3').removeAttr('style');
+    $('.LeftNav>li').children('a').children('h3').children('i').remove();
+
+    $('.LeftNav>li')[21].children[0].children[0].style['color'] = 'red';
+
+    $('<i class="glyphicon glyphicon-hand-left" style="margin-left: 10px;color:red;"></i>').appendTo($('.LeftNav>li')[21].children[0].children[0]).ready(function () {
+    });
+</script>

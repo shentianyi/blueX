@@ -86,3 +86,11 @@
   <% end %>
   </tbody>
 </table>
+
+<script type="text/javascript" charset="utf-8">
+    $('.LeftNav>li').children('a').children('h3').removeAttr('style');
+    $('.LeftNav>li').children('a').children('h3').children('i').remove();
+
+    $('.LeftNav>li:first-child').children('a').children('h3').css({color: 'red'});
+    $('.LeftNav>li:first-child').children('a').children('h3').append('<i class="glyphicon glyphicon-hand-left" style="margin-left: 10px;color:red;"></i>');
+</script>

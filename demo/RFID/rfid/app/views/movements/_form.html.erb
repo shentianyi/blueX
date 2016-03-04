@@ -1,65 +1,95 @@
 <%= form_for(@movement) do |f| %>
-  <% if @movement.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@movement.errors.count, "error") %> prohibited this movement from being saved:</h2>
+    <% if @movement.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@movement.errors.count, "error") %> prohibited this movement from being saved:</h2>
 
-      <ul>
-      <% @movement.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @movement.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="col-sm-12">
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :part_id %><br>
+          <%= f.number_field :part_id %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :fifo %><br>
+          <%= f.text_field :fifo %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :quantity %><br>
+          <%= f.text_field :quantity %>
+        </div>
+      </div>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :part_id %><br>
-    <%= f.number_field :part_id %>
-  </div>
-  <div class="field">
-    <%= f.label :fifo %><br>
-    <%= f.text_field :fifo %>
-  </div>
-  <div class="field">
-    <%= f.label :quantity %><br>
-    <%= f.text_field :quantity %>
-  </div>
-  <div class="field">
-    <%= f.label :package_nr %><br>
-    <%= f.text_field :package_nr %>
-  </div>
-  <div class="field">
-    <%= f.label :uniq %><br>
-    <%= f.text_field :uniq %>
-  </div>
-  <div class="field">
-    <%= f.label :from_position_id %><br>
-    <%= f.number_field :from_position_id %>
-  </div>
-  <div class="field">
-    <%= f.label :from_warehouse_id %><br>
-    <%= f.number_field :from_warehouse_id %>
-  </div>
-  <div class="field">
-    <%= f.label :to_position_id %><br>
-    <%= f.number_field :to_position_id %>
-  </div>
-  <div class="field">
-    <%= f.label :to_warehouse_id %><br>
-    <%= f.number_field :to_warehouse_id %>
-  </div>
-  <div class="field">
-    <%= f.label :move_type_id %><br>
-    <%= f.number_field :move_type_id %>
-  </div>
-  <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.number_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :remarks %><br>
-    <%= f.text_field :remarks %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="col-sm-12">
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :package_nr %><br>
+          <%= f.text_field :package_nr %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :from_position_id %><br>
+          <%= f.number_field :from_position_id %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :from_warehouse_id %><br>
+          <%= f.number_field :from_warehouse_id %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :to_position_id %><br>
+          <%= f.number_field :to_position_id %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :to_warehouse_id %><br>
+          <%= f.number_field :to_warehouse_id %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :move_type_id %><br>
+          <%= f.number_field :move_type_id %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-12" style="border-bottom: 2px solid #999;">
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :user_id %><br>
+          <%= f.number_field :user_id %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :remarks %><br>
+          <%= f.text_field :remarks %>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <input type="submit" class="btn btn-primary" name="commit" value="完成" style="margin: 30px 0 10px 20px;width: 200px;">
+    </div>
 <% end %>

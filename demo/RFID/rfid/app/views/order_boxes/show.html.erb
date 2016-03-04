@@ -57,3 +57,14 @@
   <%= link_to 'Edit', edit_order_box_path(@order_box), :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 0;' %>
   <%= link_to 'Back', order_boxes_path, :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 20px;' %>
 </div>
+
+<script type="text/javascript" charset="utf-8">
+    $('.LeftNav>li').children('a').children('h3').removeAttr('style');
+    $('.LeftNav>li').children('a').children('h3').children('i').remove();
+
+    $('.LeftNav>li')[12].children[0].children[0].style['color'] = 'red';
+
+    $('<i class="glyphicon glyphicon-hand-left" style="margin-left: 10px;color:red;"></i>').appendTo($('.LeftNav>li')[12].children[0].children[0]).ready(function () {
+    });
+</script>
+
