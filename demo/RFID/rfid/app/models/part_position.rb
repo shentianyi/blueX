@@ -1,25 +1,20 @@
 class PartPosition < ActiveRecord::Base
+  validates :part_id,presence:{message:'请填写正确的零件号'}
   belongs_to :part
   belongs_to :position
 
   belongs_to :from_position, class_name: 'Position'
   belongs_to :from_warehouse, class_name: 'Warehouse'
 
-  before_create :check_uniq
-
-  def check_uniq
-    # if part=Part.find_by_nr(self.part_id)
-    #   self.part_id=part.id
-    # else
-    #   errors.add(:part_id, "该零件#{self.part_id}不存在")
-    #   return false
-    # end
-
-    unless PartPosition.where(part_id: part.id, position_id: self.position_id).blank?
-      errors.add(:part_id, "该零件#{part.nr}\位置#{Position.find_by_id(self.position_id).nr}对应信息已存在")
-      return false
-    end
-  end
+  validates_uniqueness_of :part_id, :scope => :position_id
+  # before_create :check_uniq
+  #
+  # def check_uniq
+  #   unless PartPosition.where(part_id: part.id, position_id: self.position_id).blank?
+  #     errors.add(:part_id, "该零件#{part.nr}\位置#{Position.find_by_id(self.position_id).nr}对应信息已存在")
+  #     return false
+  #   end
+  # end
 
   def self.to_xlsx part_positions
     p = Axlsx::Package.new

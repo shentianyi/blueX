@@ -1,6 +1,6 @@
 class PartPositionsController < ApplicationController
   before_action :set_part_position, only: [:show, :edit, :update, :destroy]
-
+  before_action :parse_part_position_params, only: [:create, :update]
   # GET /part_positions
   # GET /part_positions.json
   def index
@@ -24,6 +24,7 @@ class PartPositionsController < ApplicationController
   # POST /part_positions
   # POST /part_positions.json
   def create
+    p part_position_params
     @part_position = PartPosition.new(part_position_params)
 
     respond_to do |format|
@@ -107,13 +108,21 @@ class PartPositionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_part_position
-      @part_position = PartPosition.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_part_position
+    @part_position = PartPosition.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def part_position_params
-      params.require(:part_position).permit(:part_id, :position_id, :safe_stock, :from_warehouse_id, :from_position_id)
+  def parse_part_position_params
+    if part= Part.find_by_nr(params[:part_position][:part_id])
+      params[:part_position][:part_id]=part.id
+    else
+      params[:part_position].delete(:part_id)
     end
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def part_position_params
+    params.require(:part_position).permit(:part_id, :part, :position_id, :position, :safe_stock, :from_warehouse_id, :from_position_id)
+  end
 end
