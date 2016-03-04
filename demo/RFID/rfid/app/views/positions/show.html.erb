@@ -1,24 +1,39 @@
+<style>
+    .col-sm-4, .col-sm-6 {
+        font-size: 2em;
+    }
+</style>
+
 <p id="notice"><%= notice %></p>
+<p class="title">库位列表 <i>&#8593;</i></p>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 148px;"/>
 
-<p>
-  <strong>Nr:</strong>
-  <%= @position.nr %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Nr:</strong>
+    <%= @position.nr %>
+  </div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @position.name %>
-</p>
+  <div class="col-sm-4">
+    <strong>Name:</strong>
+    <%= @position.name %>
+  </div>
 
-<p>
-  <strong>Description:</strong>
-  <%= @position.description %>
-</p>
+  <div class="col-sm-4">
+    <strong>Description:</strong>
+    <%= @position.description %>
+  </div>
+</div>
 
-<p>
-  <strong>Warehouse:</strong>
-  <%= @position.warehouse %>
-</p>
 
-<%= link_to 'Edit', edit_position_path(@position) %> |
-<%= link_to 'Back', positions_path %>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-6">
+    <strong>Warehouse:</strong>
+    <%= @position.warehouse %>
+  </div>
+</div>
+
+<div class="col-sm-12">
+  <%= link_to 'Edit', edit_position_path(@position), :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 0;' %>
+  <%= link_to 'Back', positions_path, :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 20px;' %>
+</div>

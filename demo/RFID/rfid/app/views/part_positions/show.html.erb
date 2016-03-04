@@ -1,29 +1,43 @@
+<style>
+    .col-sm-4 {
+        font-size: 2em;
+    }
+</style>
 <p id="notice"><%= notice %></p>
+<p class="title">零件位置列表 <i>&#8593;</i></p>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 148px;"/>
 
-<p>
-  <strong>Part:</strong>
-  <%= @part_position.part %>
-</p>
 
-<p>
-  <strong>Position:</strong>
-  <%= @part_position.position %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Part:</strong>
+    <%= @part_position.part %>
+  </div>
 
-<p>
-  <strong>Safe stock:</strong>
-  <%= @part_position.safe_stock %>
-</p>
+  <div class="col-sm-4">
+    <strong>Position:</strong>
+    <%= @part_position.position %>
+  </div>
 
-<p>
-  <strong>From warehouse:</strong>
-  <%= @part_position.from_warehouse_id %>
-</p>
+  <div class="col-sm-4">
+    <strong>Safe stock:</strong>
+    <%= @part_position.safe_stock %>
+  </div>
+</div>
 
-<p>
-  <strong>From position:</strong>
-  <%= @part_position.from_position_id %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>From warehouse:</strong>
+    <%= @part_position.from_warehouse_id %>
+  </div>
+  <div class="col-sm-4">
+    <strong>From position:</strong>
+    <%= @part_position.from_position_id %>
+  </div>
 
-<%= link_to 'Edit', edit_part_position_path(@part_position) %> |
-<%= link_to 'Back', part_positions_path %>
+</div>
+
+<div class="col-sm-12">
+  <%= link_to 'Edit', edit_part_position_path(@part_position), :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 0;' %>
+  <%= link_to 'Back', part_positions_path, :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 20px;' %>
+</div>

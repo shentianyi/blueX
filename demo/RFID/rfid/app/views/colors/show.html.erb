@@ -1,24 +1,36 @@
+<style>
+    .col-sm-4 {
+        font-size: 2em;
+    }
+</style>
+
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Nr:</strong>
-  <%= @color.nr %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Nr:</strong>
+    <%= @color.nr %>
+  </div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @color.name %>
-</p>
+  <div class="col-sm-4">
+    <strong>Name:</strong>
+    <%= @color.name %>
+  </div>
 
-<p>
-  <strong>Short name:</strong>
-  <%= @color.short_name %>
-</p>
+  <div class="col-sm-4">
+    <strong>Short name:</strong>
+    <%= @color.short_name %>
+  </div>
+</div>
 
-<p>
-  <strong>Description:</strong>
-  <%= @color.description %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Description:</strong>
+    <%= @color.description %>
+  </div>
+</div>
 
-<%= link_to 'Edit', edit_color_path(@color) %> |
-<%= link_to 'Back', colors_path %>
+<div class="col-sm-12">
+  <%= link_to 'Edit', edit_color_path(@color), :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 0;' %>
+  <%= link_to 'Back', colors_path, :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 20px;' %>
+</div>

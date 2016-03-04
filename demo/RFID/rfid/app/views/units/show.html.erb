@@ -1,29 +1,37 @@
+<style>
+    .col-sm-4 {
+        font-size: 2em;
+    }
+</style>
 <p id="notice"><%= notice %></p>
+<p class="title">零件单位列表 <i>&#8593;</i></p>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 148px;"/>
 
-<p>
-  <strong>Nr:</strong>
-  <%= @unit.nr %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Nr:</strong>
+    <%= @unit.nr %>
+  </div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @unit.name %>
-</p>
+  <div class="col-sm-4">
+    <strong>Name:</strong>
+    <%= @unit.name %>
+  </div>
 
-<p>
-  <strong>Short name:</strong>
-  <%= @unit.short_name %>
-</p>
+  <div class="col-sm-4">
+    <strong>Description:</strong>
+    <%= @unit.description %>
+  </div>
+</div>
 
-<p>
-  <strong>Description:</strong>
-  <%= @unit.description %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Unit group:</strong>
+    <%= @unit.unit_group_id %>
+  </div>
+</div>
 
-<p>
-  <strong>Unit group:</strong>
-  <%= @unit.unit_group_id %>
-</p>
-
-<%= link_to 'Edit', edit_unit_path(@unit) %> |
-<%= link_to 'Back', units_path %>
+<div class="col-sm-12">
+  <%= link_to 'Edit', edit_unit_path(@unit), :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 0;' %>
+  <%= link_to 'Back', units_path, :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 20px;' %>
+</div>

@@ -1,59 +1,80 @@
+<style>
+    .col-sm-4 {
+        font-size: 2em;
+    }
+</style>
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Nr:</strong>
-  <%= @part.nr %>
-</p>
+<p class="title">零件列表 <i>&#8593;</i></p>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 148px;"/>
 
-<p>
-  <strong>Name:</strong>
-  <%= @part.name %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Nr:</strong>
+    <%= @part.nr %>
+  </div>
 
-<p>
-  <strong>Description:</strong>
-  <%= @part.description %>
-</p>
+  <div class="col-sm-4">
+    <strong>Name:</strong>
+    <%= @part.name %>
+  </div>
 
-<p>
-  <strong>Short description:</strong>
-  <%= @part.short_description %>
-</p>
+  <div class="col-sm-4">
+    <strong>Description:</strong>
+    <%= @part.description %>
+  </div>
+</div>
 
-<p>
-  <strong>PartType:</strong>
-  <%= @part.part_type %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Short description:</strong>
+    <%= @part.short_description %>
+  </div>
 
-<p>
-  <strong>Color:</strong>
-  <%= @part.color %>
-</p>
+  <div class="col-sm-4">
+    <strong>PartType:</strong>
+    <%= @part.part_type %>
+  </div>
 
-<p>
-  <strong>Measure unit:</strong>
-  <%= @part.measure_unit_id %>
-</p>
+  <div class="col-sm-4">
+    <strong>Color:</strong>
+    <%= @part.color %>
+  </div>
+</div>
 
-<p>
-  <strong>Purchase unit:</strong>
-  <%= @part.purchase_unit_id %>
-</p>
 
-<p>
-  <strong>Custom nr:</strong>
-  <%= @part.custom_nr %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Measure unit:</strong>
+    <%= @part.measure_unit_id %>
+  </div>
 
-<p>
-  <strong>Cross section:</strong>
-  <%= @part.cross_section %>
-</p>
+  <div class="col-sm-4">
+    <strong>Purchase unit:</strong>
+    <%= @part.purchase_unit_id %>
+  </div>
 
-<p>
-  <strong>Weight:</strong>
-  <%= @part.weight %>
-</p>
+  <div class="col-sm-4">
+    <strong>Custom nr:</strong>
+    <%= @part.custom_nr %>
+  </div>
+</div>
 
-<%= link_to 'Edit', edit_part_path(@part) %> |
-<%= link_to 'Back', parts_path %>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+
+
+  <div class="col-sm-4">
+    <strong>Cross section:</strong>
+    <%= @part.cross_section %>
+  </div>
+
+  <div class="col-sm-4">
+    <strong>Weight:</strong>
+    <%= @part.weight %>
+  </div>
+</div>
+
+<div class="col-sm-12">
+  <%= link_to 'Edit', edit_part_path(@part), :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 0;' %>
+  <%= link_to 'Back', parts_path, :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 20px;' %>
+</div>

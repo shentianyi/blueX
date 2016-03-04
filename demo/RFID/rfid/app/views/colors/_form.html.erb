@@ -1,33 +1,47 @@
 <%= form_for(@color) do |f| %>
-  <% if @color.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@color.errors.count, "error") %> prohibited this color from being saved:</h2>
+    <% if @color.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@color.errors.count, "error") %> prohibited this color from being saved:</h2>
 
-      <ul>
-      <% @color.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @color.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="col-sm-12" style="border-bottom: 2px solid #999;">
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :nr %><br>
+          <%= f.text_field :nr %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :name %><br>
+          <%= f.text_field :name %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :short_name %><br>
+          <%= f.text_field :short_name %>
+        </div>
+      </div>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :nr %><br>
-    <%= f.text_field :nr %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :short_name %><br>
-    <%= f.text_field :short_name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="col-sm-12" style="border-bottom: 2px solid #999;margin-top: 20px;">
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :description %><br>
+          <%= f.text_field :description %>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <input type="submit" class="btn btn-primary" name="commit" value="完成" style="margin: 20px;width: 200px;">
+    </div>
 <% end %>

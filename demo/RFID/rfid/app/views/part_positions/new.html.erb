@@ -1,5 +1,17 @@
-<h1>New Part Position</h1>
+<p class="title">新建零件位置 <i>&#8593;</i></p>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 148px;"/>
+<style>
+    .field {
+        display: flex;
+    }
+
+    .field > label {
+        width: 150px;
+    }
+</style>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', part_positions_path %>
+<hr style="border-bottom: 2px solid #999;">
+
+<%= link_to 'Back', part_positions_path, :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:200px;margin:10px 0 0 20px;' %>

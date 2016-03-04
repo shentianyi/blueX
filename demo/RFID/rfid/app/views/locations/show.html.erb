@@ -1,24 +1,46 @@
+<style>
+    .location-show > p {
+        margin: 0 0 0 20px;
+        font-size: 1.5em;
+    }
+
+    .location-show > p > strong {
+        width: 100px;
+    }
+
+    .location-show > hr {
+        border-top: 1px solid #999;
+    }
+</style>
+
 <p id="notice"><%= notice %></p>
+<p class="title">地点详细 <i>&#8593;</i></p>
 
-<p>
-  <strong>Nr:</strong>
-  <%= @location.nr %>
-</p>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 148px;"/>
 
-<p>
-  <strong>Name:</strong>
-  <%= @location.name %>
-</p>
+<div class="location-show">
+  <p>
+    <strong>Nr:</strong>
+    <%= @location.nr %>
+  </p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @location.description %>
-</p>
+  <hr>
+  <p>
+    <strong>Name:</strong>
+    <%= @location.name %>
+  </p>
 
-<p>
-  <strong>Parent:</strong>
-  <%= @location.parent_id %>
-</p>
-
-<%= link_to 'Edit', edit_location_path(@location) %> |
-<%= link_to 'Back', locations_path %>
+  <hr>
+  <p>
+    <strong>Description:</strong>
+    <%= @location.description %>
+  </p>
+  <hr>
+  <p>
+    <strong>Parent:</strong>
+    <%= @location.parent_id %>
+  </p>
+  <hr>
+</div>
+<%= link_to 'Edit', edit_location_path(@location), :class => 'btn btn-primary', :style => 'margin:20px 0 0 20px;width:200px;padding-top:10px;' %>
+<%= link_to 'Back', locations_path, :class => 'btn btn-primary', :style => 'margin:20px 0 0 20px;width:200px;padding-top:10px;color:white;' %>

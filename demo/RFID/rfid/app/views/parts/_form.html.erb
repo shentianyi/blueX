@@ -11,55 +11,91 @@
         </div>
     <% end %>
 
-    <div class="field">
-      <%= f.label :nr %><br>
-      <%= f.text_field :nr %>
+    <div class="col-sm-12">
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :nr %><br>
+          <%= f.text_field :nr %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :name %><br>
+          <%= f.text_field :name %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :description %><br>
+          <%= f.text_field :description %>
+        </div>
+      </div>
     </div>
-    <div class="field">
-      <%= f.label :name %><br>
-      <%= f.text_field :name %>
+
+    <div class="col-sm-12">
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :short_description %><br>
+          <%= f.text_field :short_description %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :part_type_id %><br>
+          <%= f.select(:part_type_id, PartType.options, {include_blank: false}) %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :color_id %><br>
+          <%= f.select(:color_id, Color.options, {include_blank: false}) %>
+        </div>
+      </div>
     </div>
-    <div class="field">
-      <%= f.label :description %><br>
-      <%= f.text_field :description %>
+
+    <div class="col-sm-12">
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :measure_unit_id %><br>
+          <%= f.select(:measure_unit_id, Unit.options, {include_blank: false}) %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :purchase_unit_id %><br>
+          <%= f.select(:purchase_unit_id, Unit.options, {include_blank: false}) %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :custom_nr %><br>
+          <%= f.text_field :custom_nr %>
+        </div>
+      </div>
     </div>
-    <div class="field">
-      <%= f.label :short_description %><br>
-      <%= f.text_field :short_description %>
+
+    <div class="col-sm-12" style="border-bottom: 2px solid #999;">
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :cross_section %><br>
+          <%= f.text_field :cross_section %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :weight %><br>
+          <%= f.text_field :weight %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :weight_range %><br>
+          <%= f.text_field :weight_range %>
+        </div>
+      </div>
     </div>
-    <div class="field">
-      <%= f.label :part_type_id %><br>
-      <%= f.select(:part_type_id, PartType.options, {include_blank: false}) %>
-    </div>
-    <div class="field">
-      <%= f.label :color_id %><br>
-      <%= f.select(:color_id, Color.options, {include_blank: false}) %>
-    </div>
-    <div class="field">
-      <%= f.label :measure_unit_id %><br>
-      <%= f.select(:measure_unit_id, Unit.options, {include_blank: false}) %>
-    </div>
-    <div class="field">
-      <%= f.label :purchase_unit_id %><br>
-      <%= f.select(:purchase_unit_id, Unit.options, {include_blank: false}) %>
-    </div>
-    <div class="field">
-      <%= f.label :custom_nr %><br>
-      <%= f.text_field :custom_nr %>
-    </div>
-    <div class="field">
-      <%= f.label :cross_section %><br>
-      <%= f.text_field :cross_section %>
-    </div>
-    <div class="field">
-      <%= f.label :weight %><br>
-      <%= f.text_field :weight %>
-    </div>
-    <div class="field">
-      <%= f.label :weight_range %><br>
-      <%= f.text_field :weight_range %>
-    </div>
+
     <div class="actions">
-      <%= f.submit %>
+      <input type="submit" class="btn btn-primary" name="commit" value="完成" style="margin: 30px 0 10px 20px;width: 200px;">
     </div>
 <% end %>
