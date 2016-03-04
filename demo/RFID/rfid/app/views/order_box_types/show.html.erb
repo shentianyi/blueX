@@ -1,20 +1,30 @@
+<style>
+    .col-sm-4 {
+        font-size: 2em;
+    }
+</style>
 <p id="notice"><%= notice %></p>
+<p class="title">料盒类型列表 <i>&#8593;</i></p>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 148px;"/>
 
-<p>
-  <strong>Name:</strong>
-  <%= @order_box_type.name %>
-</p>
+<div class="col-sm-12" style="margin-top: 100px;border-bottom: 1px solid #000;">
+  <div class="col-sm-4">
+    <strong>Name:</strong>
+    <%= @order_box_type.name %>
+  </div>
 
-<p>
-  <strong>Description:</strong>
-  <%= @order_box_type.description %>
-</p>
+  <div class="col-sm-4">
+    <strong>Description:</strong>
+    <%= @order_box_type.description %>
+  </div>
 
+  <div class="col-sm-4">
+    <strong>Weight:</strong>
+    <%= @order_box_type.weight %>
+  </div>
+</div>
 
-<p>
-  <strong>Weight:</strong>
-  <%= @order_box_type.weight %>
-</p>
-
-<%= link_to 'Edit', edit_order_box_type_path(@order_box_type) %> |
-<%= link_to 'Back', order_box_types_path %>
+<div class="col-sm-12">
+  <%= link_to 'Edit', edit_order_box_type_path(@order_box_type), :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 0;' %>
+  <%= link_to 'Back', order_box_types_path, :class => 'btn btn-primary', :style => 'color:white;padding-top:10px;width:150px;margin:20px 0 0 20px;' %>
+</div>
