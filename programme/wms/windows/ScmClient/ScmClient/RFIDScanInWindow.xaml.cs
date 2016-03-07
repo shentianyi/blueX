@@ -577,6 +577,7 @@ namespace ScmClient
             if (RFIDConfig.ReaderType == RFIDReaderType.ZhaoWei)
             {
                 closeDllCOM();
+                Thread.Sleep(500);
             }
             else if (RFIDConfig.ReaderType == RFIDReaderType.WeiJin) {
                 closeJwReader();
@@ -585,7 +586,6 @@ namespace ScmClient
             {
                 closeCustomCOM();
             }
-            Thread.Sleep(500);
             new MenuWindow().Show();
         }
 

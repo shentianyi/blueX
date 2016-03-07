@@ -10,7 +10,7 @@ namespace ScmWcfService.Model
     public class PickItem
     {
         [DataMember]
-        public int id { get; set; }
+        public string id { get; set; }
          
 
         [DataMember]

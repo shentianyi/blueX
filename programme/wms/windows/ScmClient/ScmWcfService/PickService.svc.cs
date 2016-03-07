@@ -48,7 +48,7 @@ namespace ScmWcfService
             return msg;
         }
 
-        public ResponseMessage<Pick> CreatePickByOrderId(int order_id)
+        public ResponseMessage<Pick> CreatePickByOrderId(string order_id)
         {
             throw new NotImplementedException();
         }
@@ -87,7 +87,7 @@ namespace ScmWcfService
 
 
         public ResponseMessage<object> WeightOrderBox(int order_box_id, 
-            int pick_item_id, 
+            string pick_item_id, 
             float weight,
             float weight_qty,
             bool weight_valid)

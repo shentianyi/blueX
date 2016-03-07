@@ -23,17 +23,19 @@ namespace ScmClient
     /// </summary>
     public partial class MenuWindow : MetroWindow
     {
+        bool shutdown = true;
         public MenuWindow()
         {
             InitializeComponent();
             LogUtil.Logger.Info("WMS Client 启动！");
-          //List<RFIDMessage> messages = Parser.StringToList("A101");
-           // int c = messages.Count;
+            //List<RFIDMessage> messages = Parser.StringToList("A101");
+            // int c = messages.Count;
         }
 
         private void RFIDScanInNaviBtn_Click(object sender, RoutedEventArgs e)
         {
-            new RFIDScanInWindow(this,RFIDScanType.IN).Show();
+            new RFIDScanInWindow(this, RFIDScanType.IN).Show();
+            shutdown = false;
             this.Close();
         }
 
@@ -41,13 +43,16 @@ namespace ScmClient
         {
             //new RFIDScanOutWindow(this).Show();
             new RFIDScanInWindow(this, RFIDScanType.OUT).Show();
-            this.Hide();
-        }
-
-        private void Close(object sender, RoutedEventArgs e)
-        {
+            shutdown = false;
             this.Close();
         }
+
+        //private void Close(object sender, RoutedEventArgs e)
+        //{
+        //   // this.Close();
+        //    this.Show();
+        //    App.Current.Shutdown();
+        //}
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
@@ -60,7 +65,17 @@ namespace ScmClient
         private void PickBtn_Click(object sender, RoutedEventArgs e)
         {
             new PickScanWindow().Show();
+            shutdown = false;
             this.Close();
+        }
+
+ 
+        private void FirstMenuWindow_Closed(object sender, EventArgs e)
+        {
+  if (shutdown)
+            {
+                App.Current.Shutdown();
+            }
         }
     }
 }

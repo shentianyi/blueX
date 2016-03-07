@@ -8,6 +8,7 @@ using ScmWcfService.Model.Message;
 using System;
 using Brilliantech.Framwork.Utils.LogUtil;
 using ScmWcfService.Config;
+using ScmClient.Enum;
 
 namespace ScmClient
 {
@@ -57,6 +58,33 @@ namespace ScmClient
             validateOrderBoxNr();
         }
 
+
+        private void loadCarPickItems()
+        {
+            PickService ps = new PickService();
+            var msg = ps.GetPickItemByCarNr(OrderCarLabel.Content.ToString());
+
+            if (msg.http_error)
+            {
+                showMessageBox(msg.Message);
+            }
+            else if (!msg.Success)
+            {
+                showMessageBox(msg.Message);
+            }
+            else
+            {
+                var pickItems = msg.data;
+                    this.orderBoxes.Clear();
+                foreach (PickItem pi in pickItems)
+                {
+                    OrderBox ob = pi.order_box;
+                    ob.actual_quantity = pi.weight_qty;
+                    this.orderBoxes.Add(ob);
+                }
+            }
+        }
+
         /// <summary>
         /// 检查料车号是否存在
         /// </summary>
@@ -85,24 +113,33 @@ namespace ScmClient
         /// 检查料盒号是否存在
         /// </summary>
         private void validateOrderBoxNr()
-        { 
-            OrderService service = new OrderService();
-            ResponseMessage<List<OrderBox>> msg = service.GetOrderBoxByNrs(OrderBox.GetAllNrs(this.orderBoxes));
-            if (msg.http_error)
+        {
+            if (parentWindow.type == RFIDScanType.IN)
             {
-                showMessageBox(msg.Message);
-            }
-            else if (!msg.Success)
-            {
-                 
-            }
-            else
-            {
-                List<OrderBox> ob = msg.data;
-                if (ob.Count > 0)
+                OrderService service = new OrderService();
+                ResponseMessage<List<OrderBox>> msg = service.GetOrderBoxByNrs(OrderBox.GetAllNrs(this.orderBoxes));
+                if (msg.http_error)
                 {
-                    OrderBox.Updates(this.orderBoxes, ob);
+                    showMessageBox(msg.Message);
                 }
+                else if (!msg.Success)
+                {
+
+                }
+                else
+                {
+                    List<OrderBox> ob = msg.data;
+                    if (ob.Count > 0)
+                    {
+                        OrderBox.Updates(this.orderBoxes, ob);
+                    }
+                    setQtyLabel();
+                    this.PreviewDG.ItemsSource = null;
+                    this.PreviewDG.ItemsSource = this.orderBoxes;
+                }
+            }
+            else if(parentWindow.type==RFIDScanType.OUT) {
+                loadCarPickItems();
                 setQtyLabel();
                 this.PreviewDG.ItemsSource = null;
                 this.PreviewDG.ItemsSource = this.orderBoxes;

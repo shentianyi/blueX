@@ -45,6 +45,9 @@ namespace ScmWcfService.Model
         public float? quantity { get; set; }
 
         [DataMember]
+        public float actual_quantity { get; set; }
+
+        [DataMember]
         public float? stock { get; set; }
 
         [DataMember]

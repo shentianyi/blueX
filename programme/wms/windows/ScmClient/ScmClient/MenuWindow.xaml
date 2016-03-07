@@ -4,7 +4,7 @@
                                             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
 
         Height="400" Width="700" Title="菜单"  WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
-         Name="FirstMenuWindow">
+         Name="FirstMenuWindow" Closed="FirstMenuWindow_Closed">
 
 
     <Grid Background="#0078C1">

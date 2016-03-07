@@ -10,7 +10,7 @@ namespace ScmWcfService.Model
     public class OrderItem
     {
         [DataMember]
-        public int id { get; set; }
+        public string id { get; set; }
 
         [DataMember]
         public float quantity { get; set; }
@@ -23,7 +23,7 @@ namespace ScmWcfService.Model
 
 
         [DataMember]
-        public int orderable_id { get; set; }
+        public string orderable_id { get; set; }
 
         [DataMember]
         public string orderable_type { get; set; }

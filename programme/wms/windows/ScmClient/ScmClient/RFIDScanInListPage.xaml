@@ -10,7 +10,7 @@
       Name="RFIDScanInListPageName" Loaded="RFIDScanInListPageName_Loaded">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 

@@ -166,6 +166,7 @@ namespace ScmClient
                 {
                     if (netWeighted())
                     {
+                        weight = weight - net_weight;
                         weightMsgBorder.Visibility = Visibility.Visible;
                         int weight_qty = (int)Math.Round(weight / this.item.part.weight);
                         this.item.weight = weight;
@@ -179,9 +180,9 @@ namespace ScmClient
                             valid = true;
                             weightMsgBorder.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Green"));
                             weightMsgTB.Text = "通过";
-
+                            alertLabel.Content = "通过";
                             this.parentWindow.RefreshData();
-                            new VoiceHelper("合格").Speak();
+                            new VoiceHelper("通过").Speak();
                         }
                         else
                         {
@@ -219,22 +220,16 @@ namespace ScmClient
                 if ((!net_weighted) && weight > 0)
                 {
                     net_weight = weight;
-                }
-
-
-                if (weight == 0 && net_weight > 0)
-                {
                     alertMessage = "去皮成功！";
                     new VoiceHelper(alertMessage).Speak();
                     alertLabel.Content = alertMessage;
 
-                    partImageBorder.BorderThickness=new Thickness(10);
+                    partImageBorder.BorderThickness = new Thickness(10);
                     netWeightLabel.Visibility = Visibility.Visible;
                     netWeightLabel.Content = "皮重:" + net_weight;
-
-
                     net_weighted = true;
                 }
+
 
 
             }
@@ -288,6 +283,20 @@ namespace ScmClient
             parentWindow.Activate();
             parentWindow.ScanTB.Focus();
             parentWindow.ScanTB.SelectAll();
+        }
+
+        private void cleanNetWeightBtn_Click(object sender, RoutedEventArgs e)
+        {
+            net_weight = 0;
+            alertLabel.Content = "";
+
+            partImageBorder.BorderThickness = new Thickness(0);
+            netWeightLabel.Visibility = Visibility.Hidden;
+
+            net_weighted = false;
+
+            actualWeightTB.Focus();
+            actualWeightTB.SelectAll();
         }
 
 

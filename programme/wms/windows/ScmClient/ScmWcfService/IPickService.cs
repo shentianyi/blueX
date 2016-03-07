@@ -18,7 +18,7 @@ namespace ScmWcfService
         ResponseMessage<Pick> CreatePickByOrderCar(int order_car_id, List<int> order_box_ids);
 
         [OperationContract]
-        ResponseMessage<Pick> CreatePickByOrderId(int order_id);
+        ResponseMessage<Pick> CreatePickByOrderId(string order_id);
 
 
         [OperationContract]
@@ -29,7 +29,7 @@ namespace ScmWcfService
 
         [OperationContract]
         ResponseMessage<object> WeightOrderBox(int order_box_id,
-            int pick_item_id,
+            string pick_item_id,
             float weight,
             float weight_qty,
             bool weight_valid);
