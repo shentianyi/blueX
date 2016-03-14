@@ -55,34 +55,46 @@
   </div>
 </div>
 
-<table class="table table-bordered table-striped table-hover">
-  <thead>
-  <tr>
-    <th>地点编号</th>
-    <th>名称</th>
-    <th>描述</th>
-    <th>上级地点</th>
-    <th colspan="3"></th>
-  </tr>
-  </thead>
+<div class="table-show" style="overflow: auto;">
+  <table class="table table-bordered table-striped table-hover">
+    <thead>
+    <tr>
+      <th>地点编号</th>
+      <th>名称</th>
+      <th>描述</th>
+      <th>上级地点</th>
+      <th colspan="3"></th>
+    </tr>
+    </thead>
 
-  <tbody>
-  <% @locations.each do |location| %>
-      <tr>
-        <td><%= location.nr %></td>
-        <td><%= location.name %></td>
-        <td><%= location.description %></td>
-        <td><%= location.parent.blank? ? '' : location.parent.nr %></td>
-        <td>
-          <%= link_to '[详情]', location %>
-          <% if current_user.can_edit %>
-              <%= link_to '[编辑]', edit_location_path(location) %>
-          <% end %>
-          <% if current_user.can_delete %>
-              <%= link_to '[删除]', location, method: :delete, data: {confirm: '确定删除?'} %>
-          <% end %>
-        </td>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
+    <tbody>
+    <% @locations.each do |location| %>
+        <tr>
+          <td><%= location.nr %></td>
+          <td><%= location.name %></td>
+          <td><%= location.description %></td>
+          <td><%= location.parent.blank? ? '' : location.parent.nr %></td>
+          <td>
+            <%= link_to '[详情]', location %>
+            <% if current_user.can_edit %>
+                <%= link_to '[编辑]', edit_location_path(location) %>
+            <% end %>
+            <% if current_user.can_delete %>
+                <%= link_to '[删除]', location, method: :delete, data: {confirm: '确定删除?'} %>
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<script type="text/javascript" charset="utf-8">
+    var ClientHeight = document.documentElement.clientHeight;
+    $('.table-show').css({maxHeight: '700px'});
+
+    $('.LeftNav>li').children('a').children('h3').removeAttr('style');
+    $('.LeftNav>li').children('a').children('h3').children('i').remove();
+
+    $('.LeftNav>li:first-child').children('a').children('h3').css({color: 'red'});
+    $('.LeftNav>li:first-child').children('a').children('h3').append('<i class="glyphicon glyphicon-hand-left" style="margin-left: 10px;color:red;"></i>');
+</script>

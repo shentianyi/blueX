@@ -1,5 +1,25 @@
-<h1>New Location</h1>
+<style>
+    .field {
+        display: flex;
+    }
+
+    .field > label {
+        width: 100px;
+    }
+</style>
+
+<p class="title">新建地点<i>&#8593;</i></p>
+<hr style="border: 1px solid #999;margin-top: 0;padding-top: 0;margin-left: 148px;"/>
 
 <%= render 'form' %>
+<hr style="border-bottom: 2px solid #999;">
 
-<%= link_to 'Back', locations_path %>
+<%= link_to 'Back', locations_path, :class => 'btn btn-primary', :style => 'margin:10px 0 0 20px;padding-top:10px;color:white;width:200px;' %>
+
+<script type="text/javascript" charset="utf-8">
+    $('.LeftNav>li').children('a').children('h3').removeAttr('style');
+    $('.LeftNav>li').children('a').children('h3').children('i').remove();
+
+    $('.LeftNav>li:first-child').children('a').children('h3').css({color: 'red'});
+    $('.LeftNav>li:first-child').children('a').children('h3').append('<i class="glyphicon glyphicon-hand-left" style="margin-left: 10px;color:red;"></i>');
+</script>

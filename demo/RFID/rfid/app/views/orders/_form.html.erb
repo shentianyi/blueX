@@ -1,37 +1,53 @@
 <%= form_for(@order) do |f| %>
-  <% if @order.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+    <% if @order.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
 
-      <ul>
-      <% @order.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @order.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="col-sm-12">
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :user_id %><br>
+          <%= f.text_field :user_id %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :status %><br>
+          <%= f.number_field :status %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :orderable_id %><br>
+          <%= f.number_field :orderable_id %>
+        </div>
+      </div>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.text_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :status %><br>
-    <%= f.number_field :status %>
-  </div>
-  <div class="field">
-    <%= f.label :orderable_id %><br>
-    <%= f.number_field :orderable_id %>
-  </div>
-  <div class="field">
-    <%= f.label :orderable_type %><br>
-    <%= f.text_field :orderable_type %>
-  </div>
-  <div class="field">
-    <%= f.label :remarks %><br>
-    <%= f.text_field :remarks %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="col-sm-12" style="border-bottom: 2px solid #999;">
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :orderable_type %><br>
+          <%= f.text_field :orderable_type %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field">
+          <%= f.label :remarks %><br>
+          <%= f.text_field :remarks %>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <input type="submit" class="btn btn-primary" name="commit" value="完成" style="margin: 30px 0 10px 20px;width: 200px;">
+    </div>
 <% end %>
