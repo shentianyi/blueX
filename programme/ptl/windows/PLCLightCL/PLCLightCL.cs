@@ -21,7 +21,7 @@ namespace PLCLightCL
 
     public class PlcLight
     {
-        const int lightCount = 128;
+        const int lightCount = 48;
         static byte[] cmdPrefix = new byte[8] { 0x02, 0x31, 0x31, 0x30, 0x43, 0x38, 0x31, 0x36 };
         static byte[] cmdPostfix = new byte[3] { 0x03, 0x00, 0x00 };
 
@@ -208,9 +208,18 @@ namespace PLCLightCL
             cmd[cmd.Length - 2] = check[0];
             cmd[cmd.Length - 1] = check[1];
 
-            
-            sp.Write(cmd, 0, cmd.Length);
-
+            try
+            {
+                sp.Write(cmd, 0, cmd.Length);
+            }
+            catch (InvalidOperationException e) {
+                OpenCom(false);
+            }
+            catch (Exception e)
+            {
+                throw e;
+                // string ex = e.Message; 
+            }
            // string sssssss = "s";
 
         }
@@ -306,7 +315,7 @@ namespace PLCLightCL
             this.CloseCom();
         }
 
-        private void OpenCom()
+        private void OpenCom(bool throwEx=true)
         {
             try
             {
@@ -318,7 +327,10 @@ namespace PLCLightCL
             catch (Exception ex)
             {
                 LogUtil.Logger.Debug(ex.Message);
-                throw ex;
+                if (throwEx)
+                {
+                    throw ex;
+                }
             }
         }
 
