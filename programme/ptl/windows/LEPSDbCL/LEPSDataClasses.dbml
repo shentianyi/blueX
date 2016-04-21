@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="LEPS" Class="LEPSDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=svp37001.p37.leoni.local;Initial Catalog=LEPS;Persist Security Info=True;User ID=ASS_user" SettingsObjectName="LEPSDbCL.Properties.Settings" SettingsPropertyName="LEPSConnectionString" Provider="System.Data.SqlClient" />
+  <Function Name="COM_ASS.getHeadRecord" Method="getHeadRecord">
+    <Parameter Name="Workplace" Parameter="workplace" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="str_NodeName" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="str_ApplicationName" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="str_UserName" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="KSK" Parameter="kSK" Type="System.String" DbType="VarChar(20)" Direction="InOut" />
+    <Parameter Name="KSKType" Parameter="kSKType" Type="System.String" DbType="VarChar(10)" Direction="InOut" />
+    <Parameter Name="ANLIE" Parameter="aNLIE" Type="System.String" DbType="VarChar(20)" Direction="InOut" />
+    <Parameter Name="Steering" Parameter="steering" Type="System.String" DbType="VarChar(2)" Direction="InOut" />
+    <Parameter Name="Board" Parameter="board" Type="System.String" DbType="VarChar(5)" Direction="InOut" />
+    <Parameter Name="ProcessStatus" Parameter="processStatus" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="Result" Parameter="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="Manual_In" Parameter="manual_In" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="ErrorCode" Parameter="errorCode" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="bint_ErrorID" Type="System.Int64" DbType="BigInt" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="COM_ASS.setHeadRecord" Method="setHeadRecord">
+    <Parameter Name="KSK" Parameter="kSK" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="KSKType" Parameter="kSKType" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="ANLIE" Parameter="aNLIE" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="Steering" Parameter="steering" Type="System.String" DbType="VarChar(2)" />
+    <Parameter Name="WorkPlace" Parameter="workPlace" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="Board" Parameter="board" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="ProcessStatus" Parameter="processStatus" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Result" Parameter="result" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Manual_In" Parameter="manual_In" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ErrorCode" Parameter="errorCode" Type="System.Int32" DbType="Int" />
+    <Parameter Name="str_NodeName" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="str_ApplicationName" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="str_UserName" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="bint_ErrorID" Type="System.Int64" DbType="BigInt" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+</Database>

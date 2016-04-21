@@ -26,7 +26,7 @@ namespace PLCLightWPFTest
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            PlcLight light = new PlcLight("COM3", 9600);
+            PlcLightController light = new PlcLightController("COM3", 9600);
             
         }
     }

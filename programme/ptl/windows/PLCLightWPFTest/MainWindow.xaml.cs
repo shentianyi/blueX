@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PLCLightCL;
+ 
 
 namespace PLCLightWPFTest
 {
@@ -20,7 +21,7 @@ namespace PLCLightWPFTest
     /// </summary>
     public partial class MainWindow : Window
     {
-        PlcLight pl;
+        PlcLightController pl;
 
         public MainWindow()
         {
@@ -29,7 +30,13 @@ namespace PLCLightWPFTest
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            pl = new PlcLight("COM13");
+            List<string> coms = new List<string>();
+            for (int i = 0; i < 30; i++) {
+                coms.Add("COM" + (i + 1).ToString());
+            }
+            comboBox1.ItemsSource = coms;
+            comboBox1.SelectedIndex = 0;
+
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -67,6 +74,18 @@ namespace PLCLightWPFTest
         private void button5_Click(object sender, RoutedEventArgs e)
         {
             pl.Play(CommandType.ALL_OFF);
+        }
+
+        private void button6_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                pl = new PlcLightController(comboBox1.SelectedValue.ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
     }

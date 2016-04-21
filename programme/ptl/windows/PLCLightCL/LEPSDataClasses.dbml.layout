@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="LEPSDataClasses">
+  <DataContextMoniker Name="/LEPSDataClassesDataContext" />
+  <nestedChildShapes>
+    <classShape Id="7abaa2cf-832d-40ee-88c8-8a2bff9ed79c" absoluteBounds="0.875, 3.75, 2, 4.2458215332031246">
+      <DataClassMoniker Name="/LEPSDataClassesDataContext/LDat_PIC" />
+      <nestedChildShapes>
+        <elementListCompartment Id="42db4a97-a35f-474e-886a-35d2d70c6af7" absoluteBounds="0.89, 4.21, 1.9700000000000002, 3.685821533203125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="88cb8a67-599f-47ed-93bb-f2fbe545ad91" absoluteBounds="0.875, 0.875, 2, 2.3356245930989585">
+      <DataClassMoniker Name="/LEPSDataClassesDataContext/LDat_Basic_Modules" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0c112405-857a-41c1-8fc6-cb2462663e7a" absoluteBounds="0.89, 1.335, 1.9700000000000002, 1.7756245930989585" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

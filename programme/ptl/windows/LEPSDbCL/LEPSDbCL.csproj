@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7751F1B1-C4CC-490B-9FD8-15F332122A9A}</ProjectGuid>
+    <ProjectGuid>{5D106672-1195-467B-A660-2996CDED88DD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PLCLightCL</RootNamespace>
-    <AssemblyName>PLCLightCL</AssemblyName>
+    <RootNamespace>LEPSDbCL</RootNamespace>
+    <AssemblyName>LEPSDbCL</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,15 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Brilliantech.Framwork">
-      <HintPath>..\..\..\ThridPart\Brilliantech.Framwork.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\..\..\ThridPart\log4net.dll</HintPath>
-    </Reference>
-    <Reference Include="Nini">
-      <HintPath>..\..\..\ThridPart\Nini.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
@@ -50,21 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CusException\LEPSStartRequestException.cs" />
-    <Compile Include="CusException\LEPSCompleteRequestException.cs" />
-    <Compile Include="CusException\LEPSTimeOutException.cs" />
-    <Compile Include="Enum\LEPSAKMoudleResult.cs" />
-    <Compile Include="Enum\LEPSProcessStatus.cs" />
-    <Compile Include="Enum\LEPSResult.cs" />
-    <Compile Include="LEPSController.cs" />
+    <Compile Include="Tester.cs" />
     <Compile Include="LEPSDataClasses.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LEPSDataClasses.dbml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Harness.cs" />
-    <Compile Include="Model\HeadMessage.cs" />
-    <Compile Include="PlcLightController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
