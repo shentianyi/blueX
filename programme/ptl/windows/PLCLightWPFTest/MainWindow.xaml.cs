@@ -88,5 +88,10 @@ namespace PLCLightWPFTest
             }
         }
 
+        private void button7_Click(object sender, RoutedEventArgs e)
+        {
+            new SecondWindow().Show();
+        }
+
     }
 }

@@ -1,7 +1,15 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PLCLightWPFTest.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Board" Type="System.String" Scope="User">
+      <Value Profile="(Default)">TM101</Value>
+    </Setting>
+    <Setting Name="Line" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ASSEN11_03</Value>
+    </Setting>
+    <Setting Name="Workplace" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ASSEN11_03</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

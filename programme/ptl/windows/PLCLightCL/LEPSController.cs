@@ -154,7 +154,7 @@ namespace PLCLightCL
 
                 }
                 else {
-                    throw new LEPSStartRequestException();
+                 //   throw new LEPSStartRequestException();
                 }
             }
             return msg;
@@ -177,7 +177,7 @@ namespace PLCLightCL
             string nodename = string.Empty;
             long? bint_ErrorID = null;
             LEPSAKMoudleResult result = LEPSAKMoudleResult.NIK;
-            using (LEPSDataClassesDataContext dc = new LEPSDataClassesDataContext())
+            using (LEPSDataClassesDataContext dc = new LEPSDataClassesDataContext(this.dbConnectString))
             {
                 result = (LEPSAKMoudleResult)dc.ackLData_pic(ksk, line, workplace, module, scanCode, nodename, APP_NAME, USER_NAME, ref bint_ErrorID);
             }
@@ -257,7 +257,7 @@ namespace PLCLightCL
         /// <returns></returns>
         public List<string> GetBasicModule(string workplaceNr, string KSK) {
             List<string> basicModules = new List<string>();
-            using (LEPSDataClassesDataContext dc = new LEPSDataClassesDataContext())
+            using (LEPSDataClassesDataContext dc = new LEPSDataClassesDataContext(this.dbConnectString))
             {
                //basicModules= dc.LDat_Basic_Modules
                //    .Where(b => b.KSK.Equals(KSK) && b.Pickplace.Equals(workplaceNr))
@@ -279,7 +279,7 @@ namespace PLCLightCL
         /// <returns></returns>
         public List<string> GetModule(string workplaceNr, string KSK) {
             List<string> modules = new List<string>();
-            using (LEPSDataClassesDataContext dc = new LEPSDataClassesDataContext()) 
+            using (LEPSDataClassesDataContext dc = new LEPSDataClassesDataContext(this.dbConnectString)) 
             {
                 modules = dc.LDat_PIC.Where(m => m.KSK.Equals(KSK) && m.Pickplace.Equals(workplaceNr))
                     .Select(m => m.Module).Distinct().ToList();
@@ -293,7 +293,7 @@ namespace PLCLightCL
             int? processStatus, int? result, int? manual_In , int? errorCode ,
          ref   long? bint_ErrorID)
         {
-            using (LEPSDataClassesDataContext dc = new LEPSDataClassesDataContext())
+            using (LEPSDataClassesDataContext dc = new LEPSDataClassesDataContext(this.dbConnectString))
             {
               dc.setHeadRecord(ksk, kskType, anline, steering, workplace, board, processStatus, result, manual_In,
                     errorCode, nodename, appname, username,
@@ -310,7 +310,7 @@ namespace PLCLightCL
             ref long? bint_ErrorID
             )
         {
-            using (LEPSDataClassesDataContext dc = new LEPSDataClassesDataContext())
+            using (LEPSDataClassesDataContext dc = new LEPSDataClassesDataContext(this.dbConnectString))
             {
 
                 int i = dc.getHeadRecord(workplace, nodename, appname, username,

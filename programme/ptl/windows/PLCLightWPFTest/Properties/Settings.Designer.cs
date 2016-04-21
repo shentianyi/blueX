@@ -22,5 +22,41 @@ namespace PLCLightWPFTest.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("TM101")]
+        public string Board {
+            get {
+                return ((string)(this["Board"]));
+            }
+            set {
+                this["Board"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ASSEN11_03")]
+        public string Line {
+            get {
+                return ((string)(this["Line"]));
+            }
+            set {
+                this["Line"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ASSEN11_03")]
+        public string Workplace {
+            get {
+                return ((string)(this["Workplace"]));
+            }
+            set {
+                this["Workplace"] = value;
+            }
+        }
     }
 }

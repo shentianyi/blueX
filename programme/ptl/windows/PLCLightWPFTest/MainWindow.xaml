@@ -8,10 +8,11 @@
         <Label Content="index, split with ','" Height="28" HorizontalAlignment="Left" Margin="73,183,0,0" Name="label1" VerticalAlignment="Top" Width="138" />
         <Button Content="OFF" Height="57" HorizontalAlignment="Left" Margin="186,296,0,0" Name="button2" VerticalAlignment="Top" Width="108" Click="button2_Click" />
         <Button Content="ALL__OFF__BEFORE__ON" Height="57" HorizontalAlignment="Left" Margin="300,296,0,0" Name="button3" VerticalAlignment="Top" Width="131" Click="button3_Click" />
-        <Button Content="ALL ON" Height="57" HorizontalAlignment="Left" Margin="437,296,0,0" Name="button4" VerticalAlignment="Top" Width="117" Click="button4_Click" />
-        <Button Content="ALL OFF" Height="57" HorizontalAlignment="Left" Margin="557,296,0,0" Name="button5" VerticalAlignment="Top" Width="117" Click="button5_Click" />
+        <Button Content="ALL ON" Height="36" HorizontalAlignment="Left" Margin="629,317,0,0" Name="button4" VerticalAlignment="Top" Width="60" Click="button4_Click" />
+        <Button Content="ALL OFF" Height="57" HorizontalAlignment="Left" Margin="445,296,0,0" Name="button5" VerticalAlignment="Top" Width="117" Click="button5_Click" />
         <Label Content="COM" Height="28" HorizontalAlignment="Left" Margin="29,18,0,0" Name="label2" VerticalAlignment="Top" />
         <ComboBox Height="34" HorizontalAlignment="Right" Margin="0,12,518,0" Name="comboBox1" VerticalAlignment="Top" Width="110" />
         <Button Content="OK" Height="36" HorizontalAlignment="Left" Margin="227,11,0,0" Name="button6" VerticalAlignment="Top" Width="78" Click="button6_Click" />
+        <Button Content="LEPS" Height="34" HorizontalAlignment="Left" Margin="614,12,0,0" Name="button7" VerticalAlignment="Top" Width="75" Click="button7_Click" />
     </Grid>
 </Window>
