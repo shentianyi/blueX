@@ -9,7 +9,8 @@ class OrderBox < ActiveRecord::Base
 
   before_save :set_default_position
 
-  validates_presence_of :nr, :message => "料盒编号编号不能为空!"
+  validates_presence_of :nr, :message => "料盒类型不能为空!"
+  validates_presence_of :nr, :message => "料盒编号不能为空!"
   validates_uniqueness_of :nr, :message => "料盒编号不能重复!"
 
   def can_move_store?
