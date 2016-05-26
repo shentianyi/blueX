@@ -18,6 +18,7 @@ using ScmClient.Helper;
 using ScmClient.Enum;
 using ScmWcfService.Config;
 using SpeechLib;
+using ScmClient.Properties;
 
 namespace ScmClient
 {
@@ -89,10 +90,17 @@ namespace ScmClient
             try
             {
                 string path = PathHelper.GetImagePath(item.part_nr);
+                // using local image first
                 if (path != null)
                 {
                     BitmapImage i = new BitmapImage(new Uri(path, UriKind.Absolute));
                     partImage.Source = i;
+                }
+                else
+                {
+                    // using ftp images
+                    Uri u = new Uri(Settings.Default.FtpImageServer + "/"+item.part_nr + Settings.Default.ImageExt, UriKind.Absolute);
+                    partImage.Source = new BitmapImage(u);
                 }
             }
             catch { }

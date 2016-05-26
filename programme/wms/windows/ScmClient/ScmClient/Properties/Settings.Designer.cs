@@ -31,5 +31,29 @@ namespace ScmClient.Properties {
                 return ((string)(this["Token"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ftp://192.168.1.11/Images")]
+        public string FtpImageServer {
+            get {
+                return ((string)(this["FtpImageServer"]));
+            }
+            set {
+                this["FtpImageServer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(".jpg")]
+        public string ImageExt {
+            get {
+                return ((string)(this["ImageExt"]));
+            }
+            set {
+                this["ImageExt"] = value;
+            }
+        }
     }
 }

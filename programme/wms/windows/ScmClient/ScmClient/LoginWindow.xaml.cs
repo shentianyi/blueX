@@ -16,6 +16,7 @@ using ScmWcfService.Model.Message;
 using ScmWcfService.Config;
 using ScmClient.Enum;
 using ScmClient.Helper;
+using ScmClient.Properties;
 
 namespace ScmClient
 {
@@ -38,7 +39,11 @@ namespace ScmClient
                 new MenuWindow().Show();
                 this.Close();
             }
+           // Uri u=new Uri(Settings.Default.FtpImageServer+"/back"+Settings.Default.ImageExt, UriKind.Absolute);
 
+            //BitmapImage i = new BitmapImage(u);
+
+           // image1.Source = new BitmapImage(u);
            // SoundHelper.PlaySound(SoundType.FAIL);
         }
 

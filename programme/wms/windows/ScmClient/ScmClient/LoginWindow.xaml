@@ -32,6 +32,7 @@
         </Grid>
         <Grid Grid.Row="2">
             <Button x:Name="LoginBtn" FontFamily="宋体 Arial Comic Sans MS" Content="登录" FontSize="18" Width="150" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Click="LoginBtn_Click"/>
+            <!--<Image Height="110" HorizontalAlignment="Left" Margin="22,-70,0,0" Name="image1" Stretch="Fill" VerticalAlignment="Top" Width="97" />-->
         </Grid>
     </Grid>
 </Window>
