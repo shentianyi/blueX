@@ -87,8 +87,8 @@ namespace ScmClient
             qtyLabel.Content = (int)Math.Round(minWeight / this.item.part.weight) + "-(" + item.quantity + ")-" + (int)Math.Round(maxWeight / this.item.part.weight);
             actualWeightTB.Focus();
 
-            try
-            {
+            //try
+            //{
                 string path = PathHelper.GetImagePath(item.part_nr);
                 // using local image first
                 if (path != null)
@@ -99,22 +99,36 @@ namespace ScmClient
                 else
                 {
                     // using ftp images
-                    Uri u = new Uri(Settings.Default.FtpImageServer + "/"+item.part_nr + Settings.Default.ImageExt, UriKind.Absolute);
-                    partImage.Source = new BitmapImage(u);
+                    Uri u = new Uri(Settings.Default.FtpImageServer + "/" + item.part_nr + Settings.Default.ImageExt, UriKind.Absolute);
+
+                    try
+                    {
+                        partImage.Source = new BitmapImage(u);
+                    }
+                    catch { }
                 }
-            }
-            catch { }
+            //}
+            //catch(Exception ex) {
+              
+            //}
         }
 
        
 
         private void actualWeightTB_KeyUp(object sender, KeyEventArgs e)
         {
-            if (Key.Enter == e.Key && actualWeightTB.Text.Trim().Length > 0) {
-                actualWeightTB.Text = actualWeightTB.Text.Trim();
-                actualWeightTB.SelectAll();
-                validateWeightAndVoice(0);
-            }
+            //try
+            //{
+                if (Key.Enter == e.Key && actualWeightTB.Text.Trim().Length > 0)
+                {
+                    actualWeightTB.Text = actualWeightTB.Text.Trim();
+                    actualWeightTB.SelectAll();
+                    validateWeightAndVoice(0);
+                }
+            //}
+            //catch (Exception ex) {
+            //  //  MessageBox.Show(ex.Message);
+            //}
         }
 
         private void confirmBtn_Click(object sender, RoutedEventArgs e)
@@ -142,8 +156,8 @@ namespace ScmClient
         {
             PickService ps = new PickService();
 
-            float weight = 0;
-            float.TryParse(actualWeightTB.Text.Trim(), out weight);
+             float weight = 0;
+             float.TryParse(actualWeightTB.Text.Trim(), out weight);
 
             var msg = ps.WeightOrderBox(item.order_box.id, item.id, item.weight,item.weight_qty,item.weight_valid);
 
