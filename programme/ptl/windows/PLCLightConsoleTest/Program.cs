@@ -11,52 +11,62 @@ namespace PLCLightConsoleTest
     {
         static void Main(string[] args)
         {
-            string conn = "Data Source=svp37001.p37.leoni.local;Initial Catalog=LEPS;Persist Security Info=True;User ID=ASS_user;Password=ass_user";
-            //GetHeadRecord();
-            LEPSController lc = new LEPSController(conn);
-            string productLine = "ASSEN11";
-            string board = "BE001";
-            string workplace = "ASSEN11_03";
-            string ksk = "416T041901EN";
-           // string moduleNr = "WI-1502";
-            List<string> modules = new List<string>() { "WI-1502" };
-            //string productLine = "ASSPR11";
-            //string board = "TM101";
-            //string workplace = "ASSPR11_03";
-            //string ksk = "416T041901PR";
-            
-          //  List<string> modules = new List<string>() { "WI-0102", "WI-0201" };
-            //List<string> modules = lc.GetModule(workplace, ksk);
-
-            //List<string> basicmodules = lc.GetBasicModule(workplace, ksk);
-            //HeadMessage msg = lc.GetHarnessByWorkplace(workplace);
-            DateTime startTime = DateTime.Now;
-            Console.WriteLine(startTime);
-            // step 1
-            HeadMessage msg = lc.StartAndGetHarnessByBoard(board, workplace);
-            // lc.StartHarnessByBoard(board,workplace);
-            // lc.StartHarness(board,workplace, msg.KSK);
-            DateTime endTime = DateTime.Now;
-            Console.WriteLine(endTime);
-            //step 2
-            // HeadMessage msg1 = lc.GetHarnessByWorkplace(workplace);
-
-            //step 3
-            foreach (var moduleNr in modules)
-            {             
-              //  LEPSAKMoudleResult result = lc.AKBasicModule(productLine, workplace, ksk, moduleNr);
+            int[] arr = new int[112];
+            for (int i = 0; i < arr.Length; i++) {
+                arr[i] = i;
+            }
+            for (int i = 0; i < arr.Length / 8; i++) {
+                int[] arrt = arr.Skip(i * 8).Take(8).ToArray();
+                Console.WriteLine(string.Join(",", arrt));
             }
 
-            // step 4
-            DateTime endTime2 = DateTime.Now;
-          //  HeadMessage msg2 = lc.CompleteHarness(board, workplace, ksk);
-
-            Console.WriteLine(endTime2);
             Console.Read();
+          //  string conn = "Data Source=svp37001.p37.leoni.local;Initial Catalog=LEPS;Persist Security Info=True;User ID=ASS_user;Password=ass_user";
+          //  //GetHeadRecord();
+          //  LEPSController lc = new LEPSController(conn);
+          //  string productLine = "ASSEN11";
+          //  string board = "BE001";
+          //  string workplace = "ASSEN11_03";
+          //  string ksk = "416T041901EN";
+          // // string moduleNr = "WI-1502";
+          //  List<string> modules = new List<string>() { "WI-1502" };
+          //  //string productLine = "ASSPR11";
+          //  //string board = "TM101";
+          //  //string workplace = "ASSPR11_03";
+          //  //string ksk = "416T041901PR";
+            
+          ////  List<string> modules = new List<string>() { "WI-0102", "WI-0201" };
+          //  //List<string> modules = lc.GetModule(workplace, ksk);
+
+          //  //List<string> basicmodules = lc.GetBasicModule(workplace, ksk);
+          //  //HeadMessage msg = lc.GetHarnessByWorkplace(workplace);
+          //  DateTime startTime = DateTime.Now;
+          //  Console.WriteLine(startTime);
+          //  // step 1
+          //  HeadMessage msg = lc.StartAndGetHarnessByBoard(board, workplace);
+          //  // lc.StartHarnessByBoard(board,workplace);
+          //  // lc.StartHarness(board,workplace, msg.KSK);
+          //  DateTime endTime = DateTime.Now;
+          //  Console.WriteLine(endTime);
+          //  //step 2
+          //  // HeadMessage msg1 = lc.GetHarnessByWorkplace(workplace);
+
+          //  //step 3
+          //  foreach (var moduleNr in modules)
+          //  {             
+          //    //  LEPSAKMoudleResult result = lc.AKBasicModule(productLine, workplace, ksk, moduleNr);
+          //  }
+
+          //  // step 4
+          //  DateTime endTime2 = DateTime.Now;
+          ////  HeadMessage msg2 = lc.CompleteHarness(board, workplace, ksk);
+
+          //  Console.WriteLine(endTime2);
+          //  Console.Read();
         }
 
 
-        public  static void GetHeadRecord()
+        public static void GetHeadRecord()
         {
             LEPSDataClassesDataContext dc = new LEPSDataClassesDataContext();
             string workpalce = "ASSEN11_03";

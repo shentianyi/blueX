@@ -12,6 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PLCLightCL;
+using PLCLightCL.Light;
+using PLCLightCL.Enum;
  
 
 namespace PLCLightWPFTest
@@ -21,7 +23,9 @@ namespace PLCLightWPFTest
     /// </summary>
     public partial class MainWindow : Window
     {
-        PlcLightController pl;
+       // PlcLightController pl;
+
+        ILightController lightController;
 
         public MainWindow()
         {
@@ -41,20 +45,25 @@ namespace PLCLightWPFTest
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            pl.Play(CommandType.ON, GetIndexes());
+           // pl.Play(LightCmdType.ON, GetIndexes());
             // new SecondWindow().Show();
+            lightController.Play(LightCmdType.ON, GetIndexes());
         }
 
         private void button2_Click(object sender, RoutedEventArgs e)
         {
-            pl.Play(CommandType.OFF, GetIndexes());
+            //pl.Play(LightCmdType.OFF, GetIndexes());
+
+            lightController.Play(LightCmdType.OFF, GetIndexes());
         }
 
        
 
         private void button3_Click(object sender, RoutedEventArgs e)
         {
-            pl.Play(CommandType.ALL_OFF_BEFORE_ON, GetIndexes());
+            //pl.Play(LightCmdType.ALL_OFF_BEFORE_ON, GetIndexes());
+
+            lightController.Play(LightCmdType.ALL_OFF_BEFORE_ON, GetIndexes());
         }
         
         private List<int> GetIndexes()
@@ -69,18 +78,31 @@ namespace PLCLightWPFTest
 
         private void button4_Click(object sender, RoutedEventArgs e)
         {
-            pl.Play(CommandType.ALL_ON);
+           // pl.Play(LightCmdType.ALL_ON);
+
+            lightController.Play(LightCmdType.ALL_ON, GetIndexes());
         }
         private void button5_Click(object sender, RoutedEventArgs e)
         {
-            pl.Play(CommandType.ALL_OFF);
+           // pl.Play(LightCmdType.ALL_OFF);
+
+            lightController.Play(LightCmdType.ALL_OFF, GetIndexes());
         }
 
         private void button6_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                pl = new PlcLightController(comboBox1.SelectedValue.ToString());
+               // pl = new PlcLightController(comboBox1.SelectedValue.ToString());
+
+                if (controllerCB.SelectedIndex == 0)
+                {
+                    lightController = new RamLightController(comboBox1.SelectedValue.ToString());
+                }
+                else
+                {
+                    lightController = new PlcLightController(comboBox1.SelectedValue.ToString());
+                }
             }
             catch (Exception ex)
             {

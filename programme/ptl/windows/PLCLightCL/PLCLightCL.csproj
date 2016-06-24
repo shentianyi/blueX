@@ -56,15 +56,20 @@
     <Compile Include="Enum\LEPSAKMoudleResult.cs" />
     <Compile Include="Enum\LEPSProcessStatus.cs" />
     <Compile Include="Enum\LEPSResult.cs" />
+    <Compile Include="Enum\LightCmdType.cs" />
+    <Compile Include="Enum\LightControllerType.cs" />
     <Compile Include="LEPSController.cs" />
     <Compile Include="LEPSDataClasses.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LEPSDataClasses.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Light\ILightController.cs" />
+    <Compile Include="Light\LightController.cs" />
+    <Compile Include="Light\RamLightController.cs" />
     <Compile Include="Model\Harness.cs" />
     <Compile Include="Model\HeadMessage.cs" />
-    <Compile Include="PlcLightController.cs" />
+    <Compile Include="Light\PlcLightController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
