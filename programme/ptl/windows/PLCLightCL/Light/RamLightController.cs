@@ -48,7 +48,20 @@ namespace PLCLightCL.Light
             {
                 cmd[cmdPrefix.Length + i] = stateCmd[i];
             }
-            sp.Write(cmd, 0, cmd.Length);
+
+            try
+            {
+                sp.Write(cmd, 0, cmd.Length);
+            }
+            catch (InvalidOperationException e)
+            {
+                OpenCom(false);
+            }
+            catch (Exception e)
+            {
+                throw e;
+                // string ex = e.Message; 
+            }
         }
 
 

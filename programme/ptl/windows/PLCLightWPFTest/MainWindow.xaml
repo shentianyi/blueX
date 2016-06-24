@@ -12,12 +12,13 @@
         <Button Content="ALL OFF" Height="57" HorizontalAlignment="Left" Margin="445,296,0,0" Name="button5" VerticalAlignment="Top" Width="117" Click="button5_Click" />
         <Label Content="COM" Height="28" HorizontalAlignment="Left" Margin="29,18,0,0" Name="label2" VerticalAlignment="Top" />
         <ComboBox Height="34" HorizontalAlignment="Right" Margin="0,12,518,0" Name="comboBox1" VerticalAlignment="Top" Width="110" />
-        <Button Content="OK" Height="36" HorizontalAlignment="Left" Margin="435,13,0,0" Name="button6" VerticalAlignment="Top" Width="78" Click="button6_Click" />
+        <Button Content="OPEN" Height="36" HorizontalAlignment="Left" Margin="397,12,0,0" Name="button6" VerticalAlignment="Top" Width="78" Click="button6_Click" />
         <Button Content="LEPS" Height="34" HorizontalAlignment="Left" Margin="614,12,0,0" Name="button7" VerticalAlignment="Top" Width="75" Click="button7_Click" />
         <ComboBox Height="36" HorizontalAlignment="Left" Margin="277,12,0,0" Name="controllerCB" VerticalAlignment="Top" Width="114" SelectedIndex="0">
             <ComboBoxItem >RAM</ComboBoxItem>
             <ComboBoxItem >PLC</ComboBoxItem>
         </ComboBox>
         <Label Content="Controller" Height="28" HorizontalAlignment="Left" Margin="203,16,0,0" Name="label3" VerticalAlignment="Top" />
+        <Button Content="CLOSE" Height="36" HorizontalAlignment="Left" Margin="484,12,0,0" Name="button8" VerticalAlignment="Top" Width="78" Click="button8_Click" />
     </Grid>
 </Window>

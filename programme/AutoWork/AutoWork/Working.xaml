@@ -1,0 +1,111 @@
+﻿<Window x:Class="Working"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" Closing="Window_Closing">
+    <Grid Background="#0078C1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="7*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!--40%(86,32) 50%:(108,40)  60%(129,48)  70%:(151,56) 80%:(172,64) 90%:(194,72)-->
+            <Image Stretch="Fill" Height="48" Width="129" Margin="70,0,197,34" VerticalAlignment="Bottom" Source="/images/logo.png" RenderTransformOrigin="0.682,0.521"></Image>
+
+        </Grid>
+        <Grid Grid.Row="1">
+            <Canvas Margin="0,3,0,-3" >
+                <Image x:Name="image_wi" Height="319" Visibility="Collapsed" Canvas.Left="34" Canvas.Top="224" Width="732"/>
+                <MediaElement  x:Name="mediaplay" Visibility="Visible"  Height="234" Canvas.Left="35" Canvas.Top="245" Width="537" LoadedBehavior="Manual" UnloadedBehavior="Play"/>
+                <Button x:Name="button_finish" Height="50" Width="144" FontFamily="Solomon_Sans_Bold" BorderThickness="1" Canvas.Left="622" Canvas.Top="203" RenderTransformOrigin="0.736,0.5">
+                    <DockPanel>
+                        <Rectangle Width="20" Height="20" Fill="Green">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_thumbs_up}"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <Label FontFamily="Solomon_Sans_Bold" FontSize="20" Foreground="Green" Margin="20 0 0 0" Content="Finish"/>
+                    </DockPanel>
+                </Button>
+                <Button x:Name="button_material" Height="50" Width="144" FontFamily="Solomon_Sans_Bold" BorderThickness="1" Canvas.Left="622" Canvas.Top="271">
+                    <DockPanel>
+                        <Rectangle Width="20" Height="20" Fill="#FF6347">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_archive}"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <Label FontFamily="Solomon_Sans_Bold" FontSize="20" Foreground="#FF6347" Margin="20 0 0 0" Content="Material"/>
+                    </DockPanel>
+                </Button>
+                <Button x:Name="button_rework" Height="50" Width="144" FontFamily="Solomon_Sans_Bold" BorderThickness="1" Canvas.Left="622" Canvas.Top="338">
+                    <DockPanel>
+                        <Rectangle Width="20" Height="20" Fill="Red">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_undo}"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <Label FontFamily="Solomon_Sans_Bold" FontSize="20" Foreground="Red" Margin="20 0 0 0" Content="Rework"/>
+                    </DockPanel>
+                </Button>
+                <Image x:Name="image_Copy" Height="82" Canvas.Left="645" Canvas.Top="58" Width="96" Source="images/User.png" RenderTransformOrigin="0.573,0.5"/>
+                <Label x:Name="label_staffid" Content="5521100" Canvas.Left="645" Canvas.Top="160" Width="123" Foreground="White" FontSize="18.667"/>
+                <Label x:Name="station_name" Content="Preassembly-1&#xA;" Canvas.Left="612" Canvas.Top="10" RenderTransformOrigin="-0.401,0.778" Foreground="White" FontSize="24"/>
+                <Button x:Name="button_previousroutine" Style="{DynamicResource MetroCircleButtonStyle}" Height="60" Width="60" VerticalAlignment="Top" HorizontalAlignment="Right" Background="White" Canvas.Left="34" Canvas.Top="69">
+                    <Rectangle Width="38" Height="32" Fill="Green">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_arrow_left}"/>
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Button>
+                <Button x:Name="button_nextroutine" Style="{DynamicResource MetroCircleButtonStyle}" Height="60" Width="60" VerticalAlignment="Top" HorizontalAlignment="Left" Background="White" Canvas.Left="511" Canvas.Top="67">
+                    <Rectangle Width="38" Height="32" Fill="Green">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_arrow_right}"/>
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Button>
+                <TextBlock x:Name="textBlock_routinetext" Canvas.Left="34" TextWrapping="Wrap" Canvas.Top="121" Width="538" Height="74" Foreground="White" FontSize="26.667"/>
+                <Border BorderThickness="1" Height="562" Canvas.Left="602" Canvas.Top="9" Width="5" Background="White"/>
+                <Border BorderThickness="1" Height="5" Canvas.Left="10" Canvas.Top="61" Width="594" Background="White"/>
+                <Border BorderThickness="1" Height="5" Canvas.Left="10" Width="996" Background="White"/>
+                <Label x:Name="label_steps" Content="Step 1/5" Canvas.Left="104" Canvas.Top="70" Foreground="#FFF4FF16" FontSize="26.667" FontWeight="Bold"/>
+                <Label x:Name="label_normalhour" Content="24." Canvas.Left="364" Canvas.Top="65" Foreground="#FFF4FF16" FontSize="26.667" FontWeight="Bold" RenderTransformOrigin="1.857,0.624"/>
+                <Label x:Name="label_actual" Content="0" Canvas.Left="288" Canvas.Top="70" Foreground="#FFF4FF16" FontSize="26.667" FontWeight="Bold"/>
+                <Label x:Name="label_Copy2" Content="/" Canvas.Left="336" Canvas.Top="73" Foreground="#FFF4FF16" FontSize="26.667" FontWeight="Bold" RenderTransformOrigin="2.914,0.624"/>
+                <Label x:Name="label_Copy3" Content="秒" Canvas.Left="429" Canvas.Top="64" Foreground="#FFF4FF16" FontSize="26.667" FontWeight="Bold" RenderTransformOrigin="1.857,0.624"/>
+                <Label x:Name="laebl_wiid" FontSize="29.333" FontWeight="Bold" Foreground="White" Content="WI-0706" Height="51" Canvas.Left="34" Canvas.Top="9" Width="137"/>
+                <Label FontSize="14" Foreground="White" Content="台车号：" RenderTransformOrigin="3.619,0.714" Canvas.Left="234" Canvas.Top="23"/>
+                <Label x:Name="label_ordernr" FontSize="14" FontWeight="Bold" Foreground="White" Content="N/A" Canvas.Left="323" Canvas.Top="23"/>
+                <Label FontSize="14" Foreground="White" Content="台车号：" Canvas.Left="506" Canvas.Top="25"/>
+                <Label x:Name="label_cartNr" FontSize="14" Foreground="White" Content="" Canvas.Left="596" RenderTransformOrigin="6.084,1.571" Canvas.Top="25" Width="170"/>
+                <Button x:Name="button_video" Content="Video" Canvas.Left="496" Canvas.Top="207" Width="75"/>
+                <Button x:Name="button_text" Content="Text" Canvas.Left="391" Canvas.Top="207" Width="75"/>
+                <Button x:Name="button_hide" Content="Button" Canvas.Left="855" Canvas.Top="271" Width="0.1" Height="0.1"/>
+
+            </Canvas>
+        </Grid>
+
+        <!--Line-->
+        <!--<Line Grid.Row="2" DockPanel.Dock="Top" Stroke="#0096CF" StrokeThickness="1" X1="100" Y1="0" X2="600" Y2="0"></Line>-->
+        <Grid Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="444,17,396,17" Height="48" Width="176">
+            <DockPanel>
+                <Image DockPanel.Dock="Left" Height="48" Width="63" Source="/images/footer logo.png"></Image>
+                <Label DockPanel.Dock="Top" FontFamily="Solomon_Sans_SemiBold" Foreground="White" Margin="10 0 0 0">Powered by IF lab</Label>
+                <Label DockPanel.Dock="Bottom" FontFamily="Solomon_Sans_Light" FontSize="12" Foreground="White" Margin="10 0 0 0">www.if-tec.com</Label>
+            </DockPanel>
+
+        </Grid>
+    </Grid>
+</Window>

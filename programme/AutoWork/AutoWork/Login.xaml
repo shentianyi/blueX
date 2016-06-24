@@ -1,0 +1,53 @@
+﻿<Window x:Class="Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="800" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Grid Background="#0078C1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="7*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!--40%(86,32) 50%:(108,40)  60%(129,48)  70%:(151,56) 80%:(172,64) 90%:(194,72)-->
+            <Image Stretch="Fill" Height="48" Width="129" Margin="0" VerticalAlignment="Top" Source="/images/logo.png"></Image>
+
+        </Grid>
+        <Grid Grid.Row="1">
+            <Canvas Margin="10,10,10,0" >
+                <TextBox x:Name="textBox_station" Height="52" Canvas.Left="411" TextWrapping="Wrap" Text="Station Name" Canvas.Top="96" Width="287" FontSize="32" Foreground="#FFACA1A1"/>
+                <TextBox x:Name="textBox_operator" Height="52" Canvas.Left="411" TextWrapping="Wrap" Text=" Staff ID" Canvas.Top="227" Width="287" FontSize="32" Foreground="#FFACA1A1"/>
+                <Image Height="150" Width="106" Source="/images/forklift one.png" Canvas.Left="81" Canvas.Top="136"/>
+                <Button x:Name="button_confirm" FontFamily="Solomon_Sans_Bold" BorderThickness="1" Background="#FFFFFEFE" Height="88" Canvas.Left="540" Canvas.Top="326" Width="158">
+                    <DockPanel>
+                        <Image Height="30" Width="44"  Source="/images/confirm icon.png"/>
+                        <Label FontFamily="Solomon_Sans_Bold" FontSize="32" Margin="20 0 0 0" Content="确定" Foreground="#FF769371"/>
+                    </DockPanel>
+                </Button>
+                <Label x:Name="label" Content="站台号" Canvas.Left="258" Canvas.Top="103" FontSize="26.667" Foreground="White"/>
+                <Label x:Name="label_Copy" Content="员工号" Canvas.Left="258" Canvas.Top="234" RenderTransformOrigin="-0.268,0.375" FontSize="26.667" Background="{x:Null}" Foreground="White"/>
+
+            </Canvas>
+        </Grid>
+
+        <!--Line-->
+        <!--<Line Grid.Row="2" DockPanel.Dock="Top" Stroke="#0096CF" StrokeThickness="1" X1="100" Y1="0" X2="600" Y2="0"></Line>-->
+        <Grid Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <DockPanel>
+                <Image DockPanel.Dock="Left" Height="48" Width="63" Source="/images/footer logo.png"></Image>
+                <Label DockPanel.Dock="Top" FontFamily="Solomon_Sans_SemiBold" Foreground="White" Margin="10 0 0 0">Powered by IF lab</Label>
+                <Label DockPanel.Dock="Bottom" FontFamily="Solomon_Sans_Light" FontSize="12" Foreground="White" Margin="10 0 0 0">www.if-tec.com</Label>
+            </DockPanel>
+
+        </Grid>
+    </Grid>
+</Window>
+

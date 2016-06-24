@@ -9,5 +9,6 @@ namespace PLCLightCL.Light
     public interface ILightController
     {
         void Play(LightCmdType cmdType, List<int> indexes = null);
+        void Close();
     }
 }

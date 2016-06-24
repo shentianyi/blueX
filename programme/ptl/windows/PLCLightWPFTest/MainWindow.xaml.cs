@@ -115,5 +115,12 @@ namespace PLCLightWPFTest
             new SecondWindow().Show();
         }
 
+        private void button8_Click(object sender, RoutedEventArgs e)
+        {
+            if (lightController != null) {
+                lightController.Close();
+            }
+        }
+
     }
 }

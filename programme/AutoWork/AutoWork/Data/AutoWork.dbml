@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="AutoWork" Class="AutoWorkDataContext" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost\sqlexpress;Initial Catalog=AutoWork;Persist Security Info=True;User ID=sa" SettingsObjectName="AutoWork.MySettings" SettingsPropertyName="AutoWorkConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.ELabelOnForPartOnWorkstation" Member="ELabelOnForPartOnWorkstation">
+    <Type Name="ELabelOnForPartOnWorkstation">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="labelAddr" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="partNr" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="workstationId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Part_ELabelOnForPartOnWorkstation" Member="Part" ThisKey="partNr" OtherKey="partnr" Type="Part" IsForeignKey="true" />
+      <Association Name="WorkStation_ELabelOnForPartOnWorkstation" Member="WorkStation" ThisKey="workstationId" OtherKey="workstationId" Type="WorkStation" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.History" Member="History">
+    <Type Name="History">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="staffId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="routineId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="workStationId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="orderId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="workInstructionId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="routineNormalTime" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="actualTime" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="qualityCode" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Part" Member="Part">
+    <Type Name="Part">
+      <Column Name="partnr" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="partDesc" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="supplierNr" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="customerNr" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="images" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Association Name="Part_ELabelOnForPartOnWorkstation" Member="ELabelOnForPartOnWorkstation" ThisKey="partnr" OtherKey="partNr" Type="ELabelOnForPartOnWorkstation" />
+      <Association Name="Part_PartOnRoutine" Member="PartOnRoutine" ThisKey="partnr" OtherKey="partnr" Type="PartOnRoutine" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PartOnRoutine" Member="PartOnRoutine">
+    <Type Name="PartOnRoutine">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="routineId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="partnr" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Part_PartOnRoutine" Member="Part" ThisKey="partnr" OtherKey="partnr" Type="Part" IsForeignKey="true" />
+      <Association Name="Routine_PartOnRoutine" Member="Routine" ThisKey="routineId" OtherKey="routineId" Type="Routine" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Routine" Member="Routine">
+    <Type Name="Routine">
+      <Column Name="routineId" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="normalTime" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Routine_PartOnRoutine" Member="PartOnRoutine" ThisKey="routineId" OtherKey="routineId" Type="PartOnRoutine" />
+      <Association Name="Routine_RoutineOnWorkInsruction" Member="RoutineOnWorkInsruction" ThisKey="routineId" OtherKey="routineId" Type="RoutineOnWorkInsruction" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RoutineOnWorkInsruction" Member="RoutineOnWorkInsruction">
+    <Type Name="RoutineOnWorkInsruction">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="workInstructionId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="routineId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="video" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="sequence" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="picture" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Association Name="Routine_RoutineOnWorkInsruction" Member="Routine" ThisKey="routineId" OtherKey="routineId" Type="Routine" IsForeignKey="true" />
+      <Association Name="WorkInstruction_RoutineOnWorkInsruction" Member="WorkInstruction" ThisKey="workInstructionId" OtherKey="id" Type="WorkInstruction" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Staff" Member="Staff">
+    <Type Name="Staff">
+      <Column Name="id" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Training" Member="Training">
+    <Type Name="Training">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="staffId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="routineId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="workinstructionId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="normalHour" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="actualHour" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="score" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WorkInstruction" Member="WorkInstruction">
+    <Type Name="WorkInstruction">
+      <Column Name="id" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="WorkInstruction_RoutineOnWorkInsruction" Member="RoutineOnWorkInsruction" ThisKey="id" OtherKey="workInstructionId" Type="RoutineOnWorkInsruction" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RoutineOnWorkInstructionDetails" Member="RoutineOnWorkInstructionDetails">
+    <Type Name="RoutineOnWorkInstructionDetails">
+      <Column Name="routineId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="routineName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="routineDescription" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="normalTime" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="video" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="sequence" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="picture" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="workInstructionId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="workInstructionName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WorkStation" Member="WorkStations">
+    <Type Name="WorkStation">
+      <Column Name="workstationId" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="prodLine" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="projectNr" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="currentStaff" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="isLast" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="seq" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="WorkStation_ELabelOnForPartOnWorkstation" Member="ELabelOnForPartOnWorkstations" ThisKey="workstationId" OtherKey="workstationId" Type="ELabelOnForPartOnWorkstation" />
+      <Association Name="WorkStation_Order" Member="Orders" ThisKey="workstationId" OtherKey="workstationId" Type="Order" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[Order]" Member="Orders">
+    <Type Name="Order">
+      <Column Name="orderId" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="workstationId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="WorkStation_Order" Member="WorkStation" ThisKey="workstationId" OtherKey="workstationId" Type="WorkStation" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
