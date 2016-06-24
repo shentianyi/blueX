@@ -19,6 +19,7 @@ using ScmClient.Enum;
 using ScmWcfService.Config;
 using SpeechLib;
 using ScmClient.Properties;
+using Brilliantech.Framwork.Utils.LogUtil;
 
 namespace ScmClient
 {
@@ -57,38 +58,39 @@ namespace ScmClient
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-
-            VoiceHelper vh = new VoiceHelper();
-            vh.Text = new List<VoiceText>();
-            if (BaseConfig.ForceNetWeight)
+            try
             {
-                VoiceText vt1 = new VoiceText() { Text = "请去皮！" };
-                vh.Text.Add(vt1);
-            }
-            if (BaseConfig.PlayPickPositionVoice && (!string.IsNullOrEmpty(this.item.positions_nr)))
-            {
-                VoiceText vt2 = new VoiceText() { Text = "库位：" + this.item.positions_nr };
 
-                vh.Text.Add(vt2);
-                // new VoiceHelper() { Text = this.item.positions_nr, Times = 2 }.Speak();
-            }
-            vh.Speak();
+                VoiceHelper vh = new VoiceHelper();
+                vh.Text = new List<VoiceText>();
+                if (BaseConfig.ForceNetWeight)
+                {
+                    VoiceText vt1 = new VoiceText() { Text = "请去皮！" };
+                    vh.Text.Add(vt1);
+                }
+                if (BaseConfig.PlayPickPositionVoice && (!string.IsNullOrEmpty(this.item.positions_nr)))
+                {
+                    VoiceText vt2 = new VoiceText() { Text = "库位：" + this.item.positions_nr };
 
-            minWeight = item.quantity * (item.part.weight * (1 - item.part.weight_range));// +item.order_box.weight;
-            maxWeight = item.quantity * (item.part.weight * (1 + item.part.weight_range));// +item.order_box.weight;
-            standWeight = item.part.weight * item.quantity; //+ item.order_box.weight;
+                    vh.Text.Add(vt2);
+                    // new VoiceHelper() { Text = this.item.positions_nr, Times = 2 }.Speak();
+                }
+                vh.Speak();
 
-            partNrLabel.Content = item.part_nr;
-            positionLabel.Content = item.positions_nr;
-            unitWeightLabel.Content = item.part.weight;
-            qtyLabel.Content = item.quantity;
+                minWeight = item.quantity * (item.part.weight * (1 - item.part.weight_range));// +item.order_box.weight;
+                maxWeight = item.quantity * (item.part.weight * (1 + item.part.weight_range));// +item.order_box.weight;
+                standWeight = item.part.weight * item.quantity; //+ item.order_box.weight;
 
-            standWeightLabel.Content = minWeight + "-(" + standWeight + ")-" + maxWeight;
-            qtyLabel.Content = (int)Math.Round(minWeight / this.item.part.weight) + "-(" + item.quantity + ")-" + (int)Math.Round(maxWeight / this.item.part.weight);
-            actualWeightTB.Focus();
+                partNrLabel.Content = item.part_nr;
+                positionLabel.Content = item.positions_nr;
+                unitWeightLabel.Content = item.part.weight;
+                qtyLabel.Content = item.quantity;
 
-            //try
-            //{
+                standWeightLabel.Content = minWeight + "-(" + standWeight + ")-" + maxWeight;
+                qtyLabel.Content = (int)Math.Round(minWeight / this.item.part.weight) + "-(" + item.quantity + ")-" + (int)Math.Round(maxWeight / this.item.part.weight);
+                actualWeightTB.Focus();
+
+
                 string path = PathHelper.GetImagePath(item.part_nr);
                 // using local image first
                 if (path != null)
@@ -107,28 +109,34 @@ namespace ScmClient
                     }
                     catch { }
                 }
-            //}
-            //catch(Exception ex) {
-              
-            //}
+            }
+            catch (Exception ex) {
+                LogUtil.Logger.Error(ex.Message);
+            }
         }
 
        
 
         private void actualWeightTB_KeyUp(object sender, KeyEventArgs e)
         {
-            //try
-            //{
+            try
+            {
                 if (Key.Enter == e.Key && actualWeightTB.Text.Trim().Length > 0)
                 {
                     actualWeightTB.Text = actualWeightTB.Text.Trim();
                     actualWeightTB.SelectAll();
                     validateWeightAndVoice(0);
                 }
-            //}
-            //catch (Exception ex) {
-            //  //  MessageBox.Show(ex.Message);
-            //}
+
+            }
+            catch (Exception ex)
+            {
+
+                LogUtil.Logger.Error("[****************************weight exception*************************]");
+                LogUtil.Logger.Error(ex.Message);
+                LogUtil.Logger.Error(ex.StackTrace);
+                throw ex;
+            }
         }
 
         private void confirmBtn_Click(object sender, RoutedEventArgs e)
@@ -138,16 +146,29 @@ namespace ScmClient
 
         private void validateWeightAndVoice(int i)
         {
-            validateWeight();
-            if (valid || (valid == false && BaseConfig.ForceWeightPass == false))
+            try
             {
-                weightOrderBox();
-                if (BaseConfig.AutoWeightConfirm) {
-                    this.Close();
+                validateWeight();
+                if (valid || (valid == false && BaseConfig.ForceWeightPass == false))
+                {
+                    weightOrderBox();
+                    if (BaseConfig.AutoWeightConfirm)
+                    {
+                        this.Close();
+                    }
+                    else if (i == 1)
+                    {
+                        this.Close();
+                    }
                 }
-                else if (i == 1) {
-                    this.Close();
-                }
+            }
+            catch (Exception ex)
+            {
+
+                LogUtil.Logger.Error("[****************************weight exception*************************]");
+                LogUtil.Logger.Error(ex.Message);
+                LogUtil.Logger.Error(ex.StackTrace);
+                throw ex;
             }
         }
 

@@ -35,7 +35,7 @@
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Border Height="240" Width="240"  BorderThickness="0"
                         BorderBrush="#FFD700" Name="partImageBorder">
-                <Image Source="/images/scale.png" Name="partImage" 
+                <Image Source="/images/cancel icon.png" Name="partImage" 
                          Height="220" Width="220" Visibility="Visible">
                 </Image>
 </Border>
