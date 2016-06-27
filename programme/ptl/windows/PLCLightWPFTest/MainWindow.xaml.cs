@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using PLCLightCL;
 using PLCLightCL.Light;
 using PLCLightCL.Enum;
+using System.Threading;
  
 
 namespace PLCLightWPFTest
@@ -35,12 +36,13 @@ namespace PLCLightWPFTest
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             List<string> coms = new List<string>();
-            for (int i = 0; i < 30; i++) {
+            for (int i = 0; i < 30; i++)
+            {
                 coms.Add("COM" + (i + 1).ToString());
             }
             comboBox1.ItemsSource = coms;
             comboBox1.SelectedIndex = 0;
-
+            button8.IsEnabled = false;
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -69,9 +71,18 @@ namespace PLCLightWPFTest
         private List<int> GetIndexes()
         {
             List<int> indexes = new List<int>();
-            foreach (string s in textBox1.Text.Split(','))
+            if (findLightCB.IsChecked.Value)
             {
-                indexes.Add(int.Parse(s));
+               // indexes.Add(int.Parse(indexTB.Text));
+                foreach (var i in findListBox.Items) {
+                    indexes.Add(int.Parse(i.ToString()));
+                }
+            }
+            else {
+                foreach (string s in textBox1.Text.Split(','))
+                {
+                    indexes.Add(int.Parse(s));
+                }
             }
             return indexes;
         }
@@ -103,6 +114,8 @@ namespace PLCLightWPFTest
                 {
                     lightController = new PlcLightController(comboBox1.SelectedValue.ToString());
                 }
+                button8.IsEnabled = true;
+                button6.IsEnabled = false;
             }
             catch (Exception ex)
             {
@@ -119,6 +132,66 @@ namespace PLCLightWPFTest
         {
             if (lightController != null) {
                 lightController.Close();
+            }
+            button6.IsEnabled = true;
+            button8.IsEnabled = false;
+        }
+
+        private void onRB_Checked(object sender, RoutedEventArgs e)
+        {
+            findListBox.Items.Clear();
+            indexTB.Text = "-1";
+
+        }
+
+        private void prevBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = sender as Button;
+                int current = int.Parse(indexTB.Text);
+                int next = -1;
+                if (button.Name.Equals("prevBtn"))
+                {
+                    if (current > 0)
+                    {
+                        next = current - 1;
+
+                        //findListBox.Items.Add(next);
+                    }
+                }
+                else
+                {
+                    if (current < 111)
+                    {
+                        next = current + 1;
+
+                    }
+                }
+
+                if (next != -1)
+                {
+                    indexTB.Text = next.ToString();
+
+                    if (!keepCB.IsChecked.Value)
+                    {
+                        findListBox.Items.Clear();
+                    }
+
+                    findListBox.Items.Add(next);
+                }
+
+                if (onRB.IsChecked.Value)
+                {
+                    lightController.Play(LightCmdType.ALL_OFF_BEFORE_ON, GetIndexes());
+                }
+                else
+                {
+                    lightController.Play(LightCmdType.OFF, GetIndexes());
+                }
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message);
             }
         }
 
