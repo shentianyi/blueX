@@ -23,7 +23,7 @@ Imports System.Reflection
 Imports System.Runtime.Serialization
 
 
-<Global.System.Data.Linq.Mapping.DatabaseAttribute(Name:="AutoWork")>  _
+<Global.System.Data.Linq.Mapping.DatabaseAttribute(Name:="Autowork")>  _
 Partial Public Class AutoWorkDataContext
 	Inherits System.Data.Linq.DataContext
 	
@@ -80,22 +80,22 @@ Partial Public Class AutoWorkDataContext
     End Sub
   Partial Private Sub DeleteWorkInstruction(instance As WorkInstruction)
     End Sub
-  Partial Private Sub InsertWorkStation(instance As WorkStation)
-    End Sub
-  Partial Private Sub UpdateWorkStation(instance As WorkStation)
-    End Sub
-  Partial Private Sub DeleteWorkStation(instance As WorkStation)
-    End Sub
   Partial Private Sub InsertOrder(instance As [Order])
     End Sub
   Partial Private Sub UpdateOrder(instance As [Order])
     End Sub
   Partial Private Sub DeleteOrder(instance As [Order])
     End Sub
+  Partial Private Sub InsertWorkStation(instance As WorkStation)
+    End Sub
+  Partial Private Sub UpdateWorkStation(instance As WorkStation)
+    End Sub
+  Partial Private Sub DeleteWorkStation(instance As WorkStation)
+    End Sub
   #End Region
 	
 	Public Sub New()
-		MyBase.New(Global.AutoWork.MySettings.Default.AutoWorkConnectionString, mappingSource)
+		MyBase.New(Global.AutoWork.MySettings.Default.AutoworkConnectionString1, mappingSource)
 		OnCreated
 	End Sub
 	
@@ -179,15 +179,15 @@ Partial Public Class AutoWorkDataContext
 		End Get
 	End Property
 	
-	Public ReadOnly Property WorkStations() As System.Data.Linq.Table(Of WorkStation)
-		Get
-			Return Me.GetTable(Of WorkStation)
-		End Get
-	End Property
-	
 	Public ReadOnly Property Orders() As System.Data.Linq.Table(Of [Order])
 		Get
 			Return Me.GetTable(Of [Order])
+		End Get
+	End Property
+	
+	Public ReadOnly Property WorkStations() As System.Data.Linq.Table(Of WorkStation)
+		Get
+			Return Me.GetTable(Of WorkStation)
 		End Get
 	End Property
 End Class
@@ -1964,287 +1964,6 @@ Partial Public Class RoutineOnWorkInstructionDetails
 	End Property
 End Class
 
-<Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.WorkStation"),  _
- Global.System.Runtime.Serialization.DataContractAttribute()>  _
-Partial Public Class WorkStation
-	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	
-	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
-	
-	Private _workstationId As String
-	
-	Private _name As String
-	
-	Private _prodLine As String
-	
-	Private _projectNr As String
-	
-	Private _currentStaff As String
-	
-	Private _isLast As System.Nullable(Of Boolean)
-	
-	Private _seq As System.Nullable(Of Integer)
-	
-	Private _ELabelOnForPartOnWorkstations As EntitySet(Of ELabelOnForPartOnWorkstation)
-	
-	Private _Orders As EntitySet(Of [Order])
-	
-	Private serializing As Boolean
-	
-    #Region "可扩展性方法定义"
-    Partial Private Sub OnLoaded()
-    End Sub
-    Partial Private Sub OnValidate(action As System.Data.Linq.ChangeAction)
-    End Sub
-    Partial Private Sub OnCreated()
-    End Sub
-    Partial Private Sub OnworkstationIdChanging(value As String)
-    End Sub
-    Partial Private Sub OnworkstationIdChanged()
-    End Sub
-    Partial Private Sub OnnameChanging(value As String)
-    End Sub
-    Partial Private Sub OnnameChanged()
-    End Sub
-    Partial Private Sub OnprodLineChanging(value As String)
-    End Sub
-    Partial Private Sub OnprodLineChanged()
-    End Sub
-    Partial Private Sub OnprojectNrChanging(value As String)
-    End Sub
-    Partial Private Sub OnprojectNrChanged()
-    End Sub
-    Partial Private Sub OncurrentStaffChanging(value As String)
-    End Sub
-    Partial Private Sub OncurrentStaffChanged()
-    End Sub
-    Partial Private Sub OnisLastChanging(value As System.Nullable(Of Boolean))
-    End Sub
-    Partial Private Sub OnisLastChanged()
-    End Sub
-    Partial Private Sub OnseqChanging(value As System.Nullable(Of Integer))
-    End Sub
-    Partial Private Sub OnseqChanged()
-    End Sub
-    #End Region
-	
-	Public Sub New()
-		MyBase.New
-		Me.Initialize
-	End Sub
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_workstationId", DbType:="VarChar(50) NOT NULL", CanBeNull:=false, IsPrimaryKey:=true),  _
-	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=1)>  _
-	Public Property workstationId() As String
-		Get
-			Return Me._workstationId
-		End Get
-		Set
-			If (String.Equals(Me._workstationId, value) = false) Then
-				Me.OnworkstationIdChanging(value)
-				Me.SendPropertyChanging
-				Me._workstationId = value
-				Me.SendPropertyChanged("workstationId")
-				Me.OnworkstationIdChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_name", DbType:="VarChar(100) NOT NULL", CanBeNull:=false),  _
-	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=2)>  _
-	Public Property name() As String
-		Get
-			Return Me._name
-		End Get
-		Set
-			If (String.Equals(Me._name, value) = false) Then
-				Me.OnnameChanging(value)
-				Me.SendPropertyChanging
-				Me._name = value
-				Me.SendPropertyChanged("name")
-				Me.OnnameChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_prodLine", DbType:="VarChar(50) NOT NULL", CanBeNull:=false),  _
-	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=3)>  _
-	Public Property prodLine() As String
-		Get
-			Return Me._prodLine
-		End Get
-		Set
-			If (String.Equals(Me._prodLine, value) = false) Then
-				Me.OnprodLineChanging(value)
-				Me.SendPropertyChanging
-				Me._prodLine = value
-				Me.SendPropertyChanged("prodLine")
-				Me.OnprodLineChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_projectNr", DbType:="VarChar(50) NOT NULL", CanBeNull:=false),  _
-	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=4)>  _
-	Public Property projectNr() As String
-		Get
-			Return Me._projectNr
-		End Get
-		Set
-			If (String.Equals(Me._projectNr, value) = false) Then
-				Me.OnprojectNrChanging(value)
-				Me.SendPropertyChanging
-				Me._projectNr = value
-				Me.SendPropertyChanged("projectNr")
-				Me.OnprojectNrChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_currentStaff", DbType:="VarChar(50) NOT NULL", CanBeNull:=false),  _
-	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=5)>  _
-	Public Property currentStaff() As String
-		Get
-			Return Me._currentStaff
-		End Get
-		Set
-			If (String.Equals(Me._currentStaff, value) = false) Then
-				Me.OncurrentStaffChanging(value)
-				Me.SendPropertyChanging
-				Me._currentStaff = value
-				Me.SendPropertyChanged("currentStaff")
-				Me.OncurrentStaffChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_isLast", DbType:="Bit"),  _
-	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=6)>  _
-	Public Property isLast() As System.Nullable(Of Boolean)
-		Get
-			Return Me._isLast
-		End Get
-		Set
-			If (Me._isLast.Equals(value) = false) Then
-				Me.OnisLastChanging(value)
-				Me.SendPropertyChanging
-				Me._isLast = value
-				Me.SendPropertyChanged("isLast")
-				Me.OnisLastChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_seq", DbType:="Int"),  _
-	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=7)>  _
-	Public Property seq() As System.Nullable(Of Integer)
-		Get
-			Return Me._seq
-		End Get
-		Set
-			If (Me._seq.Equals(value) = false) Then
-				Me.OnseqChanging(value)
-				Me.SendPropertyChanging
-				Me._seq = value
-				Me.SendPropertyChanged("seq")
-				Me.OnseqChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.AssociationAttribute(Name:="WorkStation_ELabelOnForPartOnWorkstation", Storage:="_ELabelOnForPartOnWorkstations", ThisKey:="workstationId", OtherKey:="workstationId"),  _
-	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=8, EmitDefaultValue:=false)>  _
-	Public Property ELabelOnForPartOnWorkstations() As EntitySet(Of ELabelOnForPartOnWorkstation)
-		Get
-			If (Me.serializing  _
-						AndAlso (Me._ELabelOnForPartOnWorkstations.HasLoadedOrAssignedValues = false)) Then
-				Return Nothing
-			End If
-			Return Me._ELabelOnForPartOnWorkstations
-		End Get
-		Set
-			Me._ELabelOnForPartOnWorkstations.Assign(value)
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.AssociationAttribute(Name:="WorkStation_Order", Storage:="_Orders", ThisKey:="workstationId", OtherKey:="workstationId"),  _
-	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=9, EmitDefaultValue:=false)>  _
-	Public Property Orders() As EntitySet(Of [Order])
-		Get
-			If (Me.serializing  _
-						AndAlso (Me._Orders.HasLoadedOrAssignedValues = false)) Then
-				Return Nothing
-			End If
-			Return Me._Orders
-		End Get
-		Set
-			Me._Orders.Assign(value)
-		End Set
-	End Property
-	
-	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
-	
-	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-	
-	Protected Overridable Sub SendPropertyChanging()
-		If ((Me.PropertyChangingEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
-		End If
-	End Sub
-	
-	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
-		If ((Me.PropertyChangedEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-		End If
-	End Sub
-	
-	Private Sub attach_ELabelOnForPartOnWorkstations(ByVal entity As ELabelOnForPartOnWorkstation)
-		Me.SendPropertyChanging
-		entity.WorkStation = Me
-	End Sub
-	
-	Private Sub detach_ELabelOnForPartOnWorkstations(ByVal entity As ELabelOnForPartOnWorkstation)
-		Me.SendPropertyChanging
-		entity.WorkStation = Nothing
-	End Sub
-	
-	Private Sub attach_Orders(ByVal entity As [Order])
-		Me.SendPropertyChanging
-		entity.WorkStation = Me
-	End Sub
-	
-	Private Sub detach_Orders(ByVal entity As [Order])
-		Me.SendPropertyChanging
-		entity.WorkStation = Nothing
-	End Sub
-	
-	Private Sub Initialize()
-		Me._ELabelOnForPartOnWorkstations = New EntitySet(Of ELabelOnForPartOnWorkstation)(AddressOf Me.attach_ELabelOnForPartOnWorkstations, AddressOf Me.detach_ELabelOnForPartOnWorkstations)
-		Me._Orders = New EntitySet(Of [Order])(AddressOf Me.attach_Orders, AddressOf Me.detach_Orders)
-		OnCreated
-	End Sub
-	
-	<Global.System.Runtime.Serialization.OnDeserializingAttribute(),  _
-	 Global.System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)>  _
-	Public Sub OnDeserializing(ByVal context As StreamingContext)
-		Me.Initialize
-	End Sub
-	
-	<Global.System.Runtime.Serialization.OnSerializingAttribute(),  _
-	 Global.System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)>  _
-	Public Sub OnSerializing(ByVal context As StreamingContext)
-		Me.serializing = true
-	End Sub
-	
-	<Global.System.Runtime.Serialization.OnSerializedAttribute(),  _
-	 Global.System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)>  _
-	Public Sub OnSerialized(ByVal context As StreamingContext)
-		Me.serializing = false
-	End Sub
-End Class
-
 <Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.[Order]"),  _
  Global.System.Runtime.Serialization.DataContractAttribute()>  _
 Partial Public Class [Order]
@@ -2395,5 +2114,355 @@ Partial Public Class [Order]
 	 Global.System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)>  _
 	Public Sub OnDeserializing(ByVal context As StreamingContext)
 		Me.Initialize
+	End Sub
+End Class
+
+<Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.WorkStation"),  _
+ Global.System.Runtime.Serialization.DataContractAttribute()>  _
+Partial Public Class WorkStation
+	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	
+	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+	
+	Private _workstationId As String
+	
+	Private _name As String
+	
+	Private _prodLine As String
+	
+	Private _projectNr As String
+	
+	Private _currentStaff As String
+	
+	Private _isLast As System.Nullable(Of Boolean)
+	
+	Private _seq As System.Nullable(Of Integer)
+	
+	Private _lepsWorkstation As String
+	
+	Private _needStart As System.Nullable(Of Boolean)
+	
+	Private _needEnd As System.Nullable(Of Boolean)
+	
+	Private _ELabelOnForPartOnWorkstations As EntitySet(Of ELabelOnForPartOnWorkstation)
+	
+	Private _Orders As EntitySet(Of [Order])
+	
+	Private serializing As Boolean
+	
+    #Region "可扩展性方法定义"
+    Partial Private Sub OnLoaded()
+    End Sub
+    Partial Private Sub OnValidate(action As System.Data.Linq.ChangeAction)
+    End Sub
+    Partial Private Sub OnCreated()
+    End Sub
+    Partial Private Sub OnworkstationIdChanging(value As String)
+    End Sub
+    Partial Private Sub OnworkstationIdChanged()
+    End Sub
+    Partial Private Sub OnnameChanging(value As String)
+    End Sub
+    Partial Private Sub OnnameChanged()
+    End Sub
+    Partial Private Sub OnprodLineChanging(value As String)
+    End Sub
+    Partial Private Sub OnprodLineChanged()
+    End Sub
+    Partial Private Sub OnprojectNrChanging(value As String)
+    End Sub
+    Partial Private Sub OnprojectNrChanged()
+    End Sub
+    Partial Private Sub OncurrentStaffChanging(value As String)
+    End Sub
+    Partial Private Sub OncurrentStaffChanged()
+    End Sub
+    Partial Private Sub OnisLastChanging(value As System.Nullable(Of Boolean))
+    End Sub
+    Partial Private Sub OnisLastChanged()
+    End Sub
+    Partial Private Sub OnseqChanging(value As System.Nullable(Of Integer))
+    End Sub
+    Partial Private Sub OnseqChanged()
+    End Sub
+    Partial Private Sub OnlepsWorkstationChanging(value As String)
+    End Sub
+    Partial Private Sub OnlepsWorkstationChanged()
+    End Sub
+    Partial Private Sub OnneedStartChanging(value As System.Nullable(Of Boolean))
+    End Sub
+    Partial Private Sub OnneedStartChanged()
+    End Sub
+    Partial Private Sub OnneedEndChanging(value As System.Nullable(Of Boolean))
+    End Sub
+    Partial Private Sub OnneedEndChanged()
+    End Sub
+    #End Region
+	
+	Public Sub New()
+		MyBase.New
+		Me.Initialize
+	End Sub
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_workstationId", DbType:="VarChar(50) NOT NULL", CanBeNull:=false, IsPrimaryKey:=true),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=1)>  _
+	Public Property workstationId() As String
+		Get
+			Return Me._workstationId
+		End Get
+		Set
+			If (String.Equals(Me._workstationId, value) = false) Then
+				Me.OnworkstationIdChanging(value)
+				Me.SendPropertyChanging
+				Me._workstationId = value
+				Me.SendPropertyChanged("workstationId")
+				Me.OnworkstationIdChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_name", DbType:="VarChar(100) NOT NULL", CanBeNull:=false),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=2)>  _
+	Public Property name() As String
+		Get
+			Return Me._name
+		End Get
+		Set
+			If (String.Equals(Me._name, value) = false) Then
+				Me.OnnameChanging(value)
+				Me.SendPropertyChanging
+				Me._name = value
+				Me.SendPropertyChanged("name")
+				Me.OnnameChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_prodLine", DbType:="VarChar(50) NOT NULL", CanBeNull:=false),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=3)>  _
+	Public Property prodLine() As String
+		Get
+			Return Me._prodLine
+		End Get
+		Set
+			If (String.Equals(Me._prodLine, value) = false) Then
+				Me.OnprodLineChanging(value)
+				Me.SendPropertyChanging
+				Me._prodLine = value
+				Me.SendPropertyChanged("prodLine")
+				Me.OnprodLineChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_projectNr", DbType:="VarChar(50) NOT NULL", CanBeNull:=false),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=4)>  _
+	Public Property projectNr() As String
+		Get
+			Return Me._projectNr
+		End Get
+		Set
+			If (String.Equals(Me._projectNr, value) = false) Then
+				Me.OnprojectNrChanging(value)
+				Me.SendPropertyChanging
+				Me._projectNr = value
+				Me.SendPropertyChanged("projectNr")
+				Me.OnprojectNrChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_currentStaff", DbType:="VarChar(50) NOT NULL", CanBeNull:=false),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=5)>  _
+	Public Property currentStaff() As String
+		Get
+			Return Me._currentStaff
+		End Get
+		Set
+			If (String.Equals(Me._currentStaff, value) = false) Then
+				Me.OncurrentStaffChanging(value)
+				Me.SendPropertyChanging
+				Me._currentStaff = value
+				Me.SendPropertyChanged("currentStaff")
+				Me.OncurrentStaffChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_isLast", DbType:="Bit"),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=6)>  _
+	Public Property isLast() As System.Nullable(Of Boolean)
+		Get
+			Return Me._isLast
+		End Get
+		Set
+			If (Me._isLast.Equals(value) = false) Then
+				Me.OnisLastChanging(value)
+				Me.SendPropertyChanging
+				Me._isLast = value
+				Me.SendPropertyChanged("isLast")
+				Me.OnisLastChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_seq", DbType:="Int"),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=7)>  _
+	Public Property seq() As System.Nullable(Of Integer)
+		Get
+			Return Me._seq
+		End Get
+		Set
+			If (Me._seq.Equals(value) = false) Then
+				Me.OnseqChanging(value)
+				Me.SendPropertyChanging
+				Me._seq = value
+				Me.SendPropertyChanged("seq")
+				Me.OnseqChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_lepsWorkstation", DbType:="VarChar(50)"),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=8)>  _
+	Public Property lepsWorkstation() As String
+		Get
+			Return Me._lepsWorkstation
+		End Get
+		Set
+			If (String.Equals(Me._lepsWorkstation, value) = false) Then
+				Me.OnlepsWorkstationChanging(value)
+				Me.SendPropertyChanging
+				Me._lepsWorkstation = value
+				Me.SendPropertyChanged("lepsWorkstation")
+				Me.OnlepsWorkstationChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_needStart", DbType:="Bit"),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=9)>  _
+	Public Property needStart() As System.Nullable(Of Boolean)
+		Get
+			Return Me._needStart
+		End Get
+		Set
+			If (Me._needStart.Equals(value) = false) Then
+				Me.OnneedStartChanging(value)
+				Me.SendPropertyChanging
+				Me._needStart = value
+				Me.SendPropertyChanged("needStart")
+				Me.OnneedStartChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_needEnd", DbType:="Bit"),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=10)>  _
+	Public Property needEnd() As System.Nullable(Of Boolean)
+		Get
+			Return Me._needEnd
+		End Get
+		Set
+			If (Me._needEnd.Equals(value) = false) Then
+				Me.OnneedEndChanging(value)
+				Me.SendPropertyChanging
+				Me._needEnd = value
+				Me.SendPropertyChanged("needEnd")
+				Me.OnneedEndChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.AssociationAttribute(Name:="WorkStation_ELabelOnForPartOnWorkstation", Storage:="_ELabelOnForPartOnWorkstations", ThisKey:="workstationId", OtherKey:="workstationId"),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=11, EmitDefaultValue:=false)>  _
+	Public Property ELabelOnForPartOnWorkstations() As EntitySet(Of ELabelOnForPartOnWorkstation)
+		Get
+			If (Me.serializing  _
+						AndAlso (Me._ELabelOnForPartOnWorkstations.HasLoadedOrAssignedValues = false)) Then
+				Return Nothing
+			End If
+			Return Me._ELabelOnForPartOnWorkstations
+		End Get
+		Set
+			Me._ELabelOnForPartOnWorkstations.Assign(value)
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.AssociationAttribute(Name:="WorkStation_Order", Storage:="_Orders", ThisKey:="workstationId", OtherKey:="workstationId"),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=12, EmitDefaultValue:=false)>  _
+	Public Property Orders() As EntitySet(Of [Order])
+		Get
+			If (Me.serializing  _
+						AndAlso (Me._Orders.HasLoadedOrAssignedValues = false)) Then
+				Return Nothing
+			End If
+			Return Me._Orders
+		End Get
+		Set
+			Me._Orders.Assign(value)
+		End Set
+	End Property
+	
+	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+	
+	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+	
+	Protected Overridable Sub SendPropertyChanging()
+		If ((Me.PropertyChangingEvent Is Nothing)  _
+					= false) Then
+			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+		End If
+	End Sub
+	
+	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+		If ((Me.PropertyChangedEvent Is Nothing)  _
+					= false) Then
+			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+		End If
+	End Sub
+	
+	Private Sub attach_ELabelOnForPartOnWorkstations(ByVal entity As ELabelOnForPartOnWorkstation)
+		Me.SendPropertyChanging
+		entity.WorkStation = Me
+	End Sub
+	
+	Private Sub detach_ELabelOnForPartOnWorkstations(ByVal entity As ELabelOnForPartOnWorkstation)
+		Me.SendPropertyChanging
+		entity.WorkStation = Nothing
+	End Sub
+	
+	Private Sub attach_Orders(ByVal entity As [Order])
+		Me.SendPropertyChanging
+		entity.WorkStation = Me
+	End Sub
+	
+	Private Sub detach_Orders(ByVal entity As [Order])
+		Me.SendPropertyChanging
+		entity.WorkStation = Nothing
+	End Sub
+	
+	Private Sub Initialize()
+		Me._ELabelOnForPartOnWorkstations = New EntitySet(Of ELabelOnForPartOnWorkstation)(AddressOf Me.attach_ELabelOnForPartOnWorkstations, AddressOf Me.detach_ELabelOnForPartOnWorkstations)
+		Me._Orders = New EntitySet(Of [Order])(AddressOf Me.attach_Orders, AddressOf Me.detach_Orders)
+		OnCreated
+	End Sub
+	
+	<Global.System.Runtime.Serialization.OnDeserializingAttribute(),  _
+	 Global.System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)>  _
+	Public Sub OnDeserializing(ByVal context As StreamingContext)
+		Me.Initialize
+	End Sub
+	
+	<Global.System.Runtime.Serialization.OnSerializingAttribute(),  _
+	 Global.System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)>  _
+	Public Sub OnSerializing(ByVal context As StreamingContext)
+		Me.serializing = true
+	End Sub
+	
+	<Global.System.Runtime.Serialization.OnSerializedAttribute(),  _
+	 Global.System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)>  _
+	Public Sub OnSerialized(ByVal context As StreamingContext)
+		Me.serializing = false
 	End Sub
 End Class

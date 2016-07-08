@@ -55,15 +55,6 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("COM11")>  _
-    Public ReadOnly Property com() As String
-        Get
-            Return CType(Me("com"),String)
-        End Get
-    End Property
-    
-    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Configuration.DefaultSettingValueAttribute("7")>  _
     Public ReadOnly Property retryTimes() As String
         Get
@@ -117,6 +108,25 @@ Partial Friend NotInheritable Class MySettings
     Public ReadOnly Property AutoWorkConnectionString() As String
         Get
             Return CType(Me("AutoWorkConnectionString"),String)
+        End Get
+    End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("COM7")>  _
+    Public ReadOnly Property com() As String
+        Get
+            Return CType(Me("com"),String)
+        End Get
+    End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("Data Source=vm08;Initial Catalog=Autowork;User ID=sa;Password=brilliantech123@")>  _
+    Public ReadOnly Property AutoworkConnectionString1() As String
+        Get
+            Return CType(Me("AutoworkConnectionString1"),String)
         End Get
     End Property
 End Class

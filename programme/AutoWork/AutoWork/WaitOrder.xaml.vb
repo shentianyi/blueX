@@ -36,7 +36,9 @@ Public Class WaitOrder
 
         Try
 
-            Dim headMsg As Model.HeadMessage = lepsIntef.StartAndGetHarnessByBoard(Me.textBox_ordernr.Text, StaffSession.GetInstance.StationID)
+            Dim headMsg As Model.HeadMessage
+            headMsg = lepsIntef.StartAndGetHarnessByBoard(Me.textBox_ordernr.Text, StaffSession.GetInstance.StationID)
+            ''如果在第二站位此处出错，请修改StartAndGetHarnessByBoard为一个只获取信息的方法
             If headMsg Is Nothing Or headMsg.ProcessStatus <> 64 Then
                 MsgBox("与LEPS交互错误")
             Else

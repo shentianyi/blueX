@@ -135,9 +135,13 @@ Public Class Working
                 Dim order As Order = orderrepo.Single(Function(c) String.Compare(c.orderId, _header.KSK, True) = 0)
                 order.status = OrderStatus.Finish
                 orderrepo.SaveAll()
-                Dim lepsCl As LEPSController = New LEPSController(GlobalConfigs.LepsDb)
-                lepsCl.AKBasicModule(StaffSession.GetInstance.WorkStation.prodLine, StaffSession.GetInstance.StationID, _header.KSK, _wi.id)
-                lepsCl.CompleteHarness(_header.Board, StaffSession.GetInstance.StationID, _header.KSK)
+                ''根据预设，是否要跟LEPS交互
+                If StaffSession.GetInstance.WorkStation.needEnd = True Then
+                    Dim lepsCl As LEPSController = New LEPSController(GlobalConfigs.LepsDb)
+                    lepsCl.AKBasicModule(StaffSession.GetInstance.WorkStation.prodLine, StaffSession.GetInstance.WorkStation.lepsWorkstation, _header.KSK, _wi.id)
+                    lepsCl.CompleteHarness(_header.Board, StaffSession.GetInstance.StationID, _header.KSK)
+                End If
+
                 MsgBox("流程结束", MsgBoxStyle.Information)
             Catch ex As Exception
                 MsgBox("与LEPS通讯时发生错误", MsgBoxStyle.Critical)

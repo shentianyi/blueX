@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="AutoWork" Class="AutoWorkDataContext" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost\sqlexpress;Initial Catalog=AutoWork;Persist Security Info=True;User ID=sa" SettingsObjectName="AutoWork.MySettings" SettingsPropertyName="AutoWorkConnectionString" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Autowork" Class="AutoWorkDataContext" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=vm08;Initial Catalog=Autowork;User ID=sa" SettingsObjectName="AutoWork.MySettings" SettingsPropertyName="AutoworkConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.ELabelOnForPartOnWorkstation" Member="ELabelOnForPartOnWorkstation">
     <Type Name="ELabelOnForPartOnWorkstation">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -102,6 +102,14 @@
       <Column Name="workInstructionName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
+  <Table Name="dbo.[Order]" Member="Orders">
+    <Type Name="Order">
+      <Column Name="orderId" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="workstationId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="WorkStation_Order" Member="WorkStation" ThisKey="workstationId" OtherKey="workstationId" Type="WorkStation" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.WorkStation" Member="WorkStations">
     <Type Name="WorkStation">
       <Column Name="workstationId" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -111,16 +119,11 @@
       <Column Name="currentStaff" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="isLast" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="seq" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="lepsWorkstation" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="needStart" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="needEnd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="WorkStation_ELabelOnForPartOnWorkstation" Member="ELabelOnForPartOnWorkstations" ThisKey="workstationId" OtherKey="workstationId" Type="ELabelOnForPartOnWorkstation" />
       <Association Name="WorkStation_Order" Member="Orders" ThisKey="workstationId" OtherKey="workstationId" Type="Order" />
-    </Type>
-  </Table>
-  <Table Name="dbo.[Order]" Member="Orders">
-    <Type Name="Order">
-      <Column Name="orderId" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="workstationId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="status" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="WorkStation_Order" Member="WorkStation" ThisKey="workstationId" OtherKey="workstationId" Type="WorkStation" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
