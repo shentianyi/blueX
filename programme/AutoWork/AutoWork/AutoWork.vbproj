@@ -98,6 +98,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AutoWork.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Data\AutoWork.vb">
+      <DependentUpon>AutoWork.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Data\OrderStatus.vb" />
     <Compile Include="Data\DataContext.vb" />
     <Compile Include="Data\StaffSession.vb" />
@@ -214,7 +217,9 @@
     <Resource Include="Resources\Entypo.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

@@ -129,6 +129,17 @@ Partial Friend NotInheritable Class MySettings
             Return CType(Me("AutoworkConnectionString1"),String)
         End Get
     End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("Data Source=Charlot-PC\MSSQLSERVER20082;Initial Catalog=AutoWork;Persist Security"& _ 
+        " Info=True;User ID=sa")>  _
+    Public ReadOnly Property AutoWorkConnectionString2() As String
+        Get
+            Return CType(Me("AutoWorkConnectionString2"),String)
+        End Get
+    End Property
 End Class
 
 Namespace My

@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Autowork" Class="AutoWorkDataContext" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=vm08;Initial Catalog=Autowork;User ID=sa" SettingsObjectName="AutoWork.MySettings" SettingsPropertyName="AutoworkConnectionString1" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="AutoWork" Class="AutoWorkDataContext" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=Charlot-PC\MSSQLSERVER20082;Initial Catalog=AutoWork;Persist Security Info=True;User ID=sa" SettingsObjectName="AutoWork.MySettings" SettingsPropertyName="AutoWorkConnectionString2" Provider="System.Data.SqlClient" />
   <Table Name="dbo.ELabelOnForPartOnWorkstation" Member="ELabelOnForPartOnWorkstation">
     <Type Name="ELabelOnForPartOnWorkstation">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -124,6 +124,14 @@
       <Column Name="needEnd" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="WorkStation_ELabelOnForPartOnWorkstation" Member="ELabelOnForPartOnWorkstations" ThisKey="workstationId" OtherKey="workstationId" Type="ELabelOnForPartOnWorkstation" />
       <Association Name="WorkStation_Order" Member="Orders" ThisKey="workstationId" OtherKey="workstationId" Type="Order" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LepsWorkInstructionOnAW" Member="LepsWorkInstructionOnAW">
+    <Type Name="LepsWorkInstructionOnAW">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="workstationId" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="lepsWI" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="awWI" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

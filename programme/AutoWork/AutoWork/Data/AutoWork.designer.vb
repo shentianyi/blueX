@@ -23,7 +23,7 @@ Imports System.Reflection
 Imports System.Runtime.Serialization
 
 
-<Global.System.Data.Linq.Mapping.DatabaseAttribute(Name:="Autowork")>  _
+<Global.System.Data.Linq.Mapping.DatabaseAttribute(Name:="AutoWork")>  _
 Partial Public Class AutoWorkDataContext
 	Inherits System.Data.Linq.DataContext
 	
@@ -95,7 +95,7 @@ Partial Public Class AutoWorkDataContext
   #End Region
 	
 	Public Sub New()
-		MyBase.New(Global.AutoWork.MySettings.Default.AutoworkConnectionString1, mappingSource)
+		MyBase.New(Global.AutoWork.MySettings.Default.AutoWorkConnectionString2, mappingSource)
 		OnCreated
 	End Sub
 	
@@ -188,6 +188,12 @@ Partial Public Class AutoWorkDataContext
 	Public ReadOnly Property WorkStations() As System.Data.Linq.Table(Of WorkStation)
 		Get
 			Return Me.GetTable(Of WorkStation)
+		End Get
+	End Property
+	
+	Public ReadOnly Property LepsWorkInstructionOnAW() As System.Data.Linq.Table(Of LepsWorkInstructionOnAW)
+		Get
+			Return Me.GetTable(Of LepsWorkInstructionOnAW)
 		End Get
 	End Property
 End Class
@@ -2465,4 +2471,74 @@ Partial Public Class WorkStation
 	Public Sub OnSerialized(ByVal context As StreamingContext)
 		Me.serializing = false
 	End Sub
+End Class
+
+<Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.LepsWorkInstructionOnAW"),  _
+ Global.System.Runtime.Serialization.DataContractAttribute()>  _
+Partial Public Class LepsWorkInstructionOnAW
+	
+	Private _id As Integer
+	
+	Private _workstationId As String
+	
+	Private _lepsWI As String
+	
+	Private _awWI As String
+	
+	Public Sub New()
+		MyBase.New
+	End Sub
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_id", AutoSync:=AutoSync.Always, DbType:="Int NOT NULL IDENTITY", IsDbGenerated:=true),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=1)>  _
+	Public Property id() As Integer
+		Get
+			Return Me._id
+		End Get
+		Set
+			If ((Me._id = value)  _
+						= false) Then
+				Me._id = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_workstationId", DbType:="VarChar(50)"),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=2)>  _
+	Public Property workstationId() As String
+		Get
+			Return Me._workstationId
+		End Get
+		Set
+			If (String.Equals(Me._workstationId, value) = false) Then
+				Me._workstationId = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_lepsWI", DbType:="VarChar(50)"),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=3)>  _
+	Public Property lepsWI() As String
+		Get
+			Return Me._lepsWI
+		End Get
+		Set
+			If (String.Equals(Me._lepsWI, value) = false) Then
+				Me._lepsWI = value
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_awWI", DbType:="VarChar(50)"),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=4)>  _
+	Public Property awWI() As String
+		Get
+			Return Me._awWI
+		End Get
+		Set
+			If (String.Equals(Me._awWI, value) = false) Then
+				Me._awWI = value
+			End If
+		End Set
+	End Property
 End Class

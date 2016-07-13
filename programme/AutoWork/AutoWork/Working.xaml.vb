@@ -22,6 +22,7 @@ Public Class Working
     Private _isprepareTime = True
     Private _prepareTime = 0
     Private _header As HeadMessage
+    Private _lepsWiId As String
 
     Public Sub New(headMsg As PLCLightCL.Model.HeadMessage, workInstructionId As String)
 
@@ -32,13 +33,20 @@ Public Class Working
 
         Try
             _orderNr = headMsg.KSK
-            _wi = _svc.GetWIforOrderOnWorkStation(workInstructionId)
-            _wiRoutines = _svc.GetRoutinesofWi(_wi.id)
-            _wiRoutines = (From a In _wiRoutines Order By a.sequence).ToList
-            _currentSeq = _wiRoutines(0).sequence
-            _header = headMsg
+            _lepsWiId = workInstructionId
+            Dim dc As DataContext = New DataContext(GlobalConfigs.DbConnStr)
+            Dim awWI As LepsWorkInstructionOnAW = dc.Context.GetTable(Of LepsWorkInstructionOnAW).Where(Function(l) l.workstationId.Equals(StaffSession.GetInstance.WorkStation.workstationId) And l.lepsWI.Equals(_lepsWiId)).FirstOrDefault
+            If awWI IsNot Nothing Then
+                _wi = _svc.GetWIforOrderOnWorkStation(awWI.awWI)
+                _wiRoutines = _svc.GetRoutinesofWi(_wi.id)
+                _wiRoutines = (From a In _wiRoutines Order By a.sequence).ToList
+                _currentSeq = _wiRoutines(0).sequence
+                _header = headMsg
+            Else
+                MsgBox("没有维护LEPS与AutoWork的作业指导书对应关系, Leps作业指导书是:" & _lepsWiId, MsgBoxStyle.Critical)
+            End If
         Catch ex As Exception
-            MsgBox("开始流程失败，请通知管理人员", MsgBoxStyle.Critical)
+            MsgBox("开始流程失败，请通知管理人员" & ex.ToString, MsgBoxStyle.Critical)
         End Try
 
 
@@ -138,8 +146,8 @@ Public Class Working
                 ''根据预设，是否要跟LEPS交互
                 If StaffSession.GetInstance.WorkStation.needEnd = True Then
                     Dim lepsCl As LEPSController = New LEPSController(GlobalConfigs.LepsDb)
-                    lepsCl.AKBasicModule(StaffSession.GetInstance.WorkStation.prodLine, StaffSession.GetInstance.WorkStation.lepsWorkstation, _header.KSK, _wi.id)
-                    lepsCl.CompleteHarness(_header.Board, StaffSession.GetInstance.StationID, _header.KSK)
+                    lepsCl.AKBasicModule(StaffSession.GetInstance.WorkStation.prodLine, StaffSession.GetInstance.WorkStation.lepsWorkstation, _header.KSK, _lepsWiId)
+                    lepsCl.CompleteHarness(_header.Board, StaffSession.GetInstance.WorkStation.lepsWorkstation, _header.KSK)
                 End If
 
                 MsgBox("流程结束", MsgBoxStyle.Information)

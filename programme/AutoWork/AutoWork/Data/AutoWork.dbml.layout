@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 12.625" name="AutoWorkDataContext">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 16.25" name="AutoWorkDataContext">
   <DataContextMoniker Name="/AutoWorkDataContext" />
   <nestedChildShapes>
     <classShape Id="18249e73-de63-4f77-a88e-cffae0796d30" absoluteBounds="3.5, 7, 2, 1.5715458170572916">
@@ -70,7 +70,7 @@
         <classShapeMoniker Id="648c36ad-b0d3-4a43-8a43-03cce3981a1a" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 4.69026306152344); (3.5 : 4.69026306152344)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.75 : 4.69026306152344); (3.19791666666667 : 4.69026306152344 : JumpStart); (3.36458333333333 : 4.69026306152344 : JumpEnd); (3.5 : 4.69026306152344)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/AutoWorkDataContext/Routine/Routine_PartOnRoutine" />
       <nodes>
         <classShapeMoniker Id="d4fd1ff1-fbf3-4162-b53c-57e753efc7c3" />
@@ -109,19 +109,25 @@
         <elementListCompartment Id="b3b68be6-b235-4994-ac4b-9a950181935f" absoluteBounds="0.64000000000000012, 10.085, 1.9700000000000002, 2.1576639811197915" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.625 : 11.4848352050781); (3.59375 : 11.4848352050781); (3.59375 : 8.57154581705729)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.625 : 11.4848352050781); (3.59375 : 11.4848352050781); (3.59375 : 8.57154581705729)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/AutoWorkDataContext/WorkStation/WorkStation_ELabelOnForPartOnWorkstation" />
       <nodes>
         <classShapeMoniker Id="f1fe3130-2baf-4fca-86cd-394af6945e53" />
         <classShapeMoniker Id="18249e73-de63-4f77-a88e-cffae0796d30" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(0.65625 : 9.625); (0.65625 : 6.65625); (2.88541666666667 : 6.65625 : JumpStart); (3.05208333333333 : 6.65625 : JumpEnd); (6.875 : 6.65625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(0.65625 : 9.625); (0.65625 : 6.65625); (2.88541666666667 : 6.65625 : JumpStart); (3.05208333333333 : 6.65625 : JumpEnd); (6.875 : 6.65625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/AutoWorkDataContext/WorkStation/WorkStation_Order" />
       <nodes>
         <classShapeMoniker Id="f1fe3130-2baf-4fca-86cd-394af6945e53" />
         <classShapeMoniker Id="566249d3-53d0-4c33-a3d6-31b0a99e93d5" />
       </nodes>
     </associationConnector>
+    <classShape Id="adba67ab-d9cd-4f22-b9ec-4d8fcd47023a" absoluteBounds="1.25, 14.375, 2, 1.5715458170572916">
+      <DataClassMoniker Name="/AutoWorkDataContext/LepsWorkInstructionOnAW" />
+      <nestedChildShapes>
+        <elementListCompartment Id="90127b6d-6390-4bae-8d8a-57f9f626928d" absoluteBounds="1.2650000000000001, 14.835, 1.9700000000000002, 1.0115458170572915" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

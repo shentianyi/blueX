@@ -37,12 +37,12 @@ Public Class WaitOrder
         Try
 
             Dim headMsg As Model.HeadMessage
-            headMsg = lepsIntef.StartAndGetHarnessByBoard(Me.textBox_ordernr.Text, StaffSession.GetInstance.StationID)
+            headMsg = lepsIntef.StartAndGetHarnessByBoard(Me.textBox_ordernr.Text, StaffSession.GetInstance.WorkStation.lepsWorkstation)
             ''如果在第二站位此处出错，请修改StartAndGetHarnessByBoard为一个只获取信息的方法
             If headMsg Is Nothing Or headMsg.ProcessStatus <> 64 Then
                 MsgBox("与LEPS交互错误")
             Else
-                Dim wis As List(Of String) = lepsIntef.GetBasicModule(StaffSession.GetInstance.StationID, headMsg.KSK)
+                Dim wis As List(Of String) = lepsIntef.GetBasicModule(StaffSession.GetInstance.WorkStation.lepsWorkstation, headMsg.KSK)
                 If wis Is Nothing Or wis.Count = 0 Then
                     MsgBox("找不到作业指导书")
                 Else
@@ -57,6 +57,9 @@ Public Class WaitOrder
                         db1.SubmitChanges()
                     End If
                     db.SubmitChanges()
+
+                    MsgBox("LEPS作业指导书" & String.Join(";", wis.ToArray), MsgBoxStyle.Information)
+
                     Dim working As Working = New Working(headMsg, wis(0))
                     working.ShowDialog()
                 End If
