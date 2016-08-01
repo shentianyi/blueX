@@ -221,6 +221,13 @@ namespace ScmClient
         private void TagsReport(object sender, TagsEventArgs args)
         {
             Tag tag = args.tag;
+
+            LogUtil.Logger.Info("---------------------------------------------weijing start");
+           
+            LogUtil.Logger.Info(tag);
+
+            LogUtil.Logger.Info("---------------------------------------------weijing end");
+           
             inventoryTagQueue.Enqueue(tag);//回调函数事情越少越好。
         }
 
