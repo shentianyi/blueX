@@ -24,6 +24,10 @@ Public Class Working
     Private _header As HeadMessage
     Private _lepsWiId As String
 
+    Dim images As List(Of String) = New List(Of String)
+    Dim currentImageIndex As Integer = 0
+
+
     Public Sub New(headMsg As PLCLightCL.Model.HeadMessage, workInstructionId As String)
 
         ' 此调用是设计器所必需的。
@@ -95,7 +99,14 @@ Public Class Working
 
         Me.label_steps.Content = String.Format("Step {0} / {1}", _currentSeq + 1, _wiRoutines.Count)
         Me.label_normalhour.Content = _currentRoutine.normalTime
-        Dim imgPath As String = System.IO.Path.Combine(My.Application.Info.DirectoryPath, "Routines\Img\" & _currentRoutine.picture)
+        Me.images = _currentRoutine.picture.Split(",").ToList
+        Me.currentImageIndex = 0
+        Dim imgPath As String = System.IO.Path.Combine(My.Application.Info.DirectoryPath, "Routines\Img\" & Me.images.First())
+
+        Me.next_image_button.Visibility = Visibility.Collapsed
+        Me.prev_image_button.Visibility = Visibility.Collapsed
+
+
         Dim videoPath As String = System.IO.Path.Combine(My.Application.Info.DirectoryPath, "Routines\Video\" & _currentRoutine.video)
 
         Me.image_wi.Source = New BitmapImage(New Uri(imgPath, UriKind.RelativeOrAbsolute))
@@ -122,11 +133,19 @@ Public Class Working
     Private Sub button_text_Click(sender As Object, e As RoutedEventArgs) Handles button_text.Click
         Me.mediaplay.Visibility = Visibility.Collapsed
         Me.image_wi.Visibility = Visibility.Visible
+        Me.next_image_button.Visibility = Visibility.Visible
+        Me.prev_image_button.Visibility = Visibility.Visible
+
+
+        Me.SetImageNextPrevVisi()
         Me.button_hide.Focus()
     End Sub
 
     Private Sub button_video_Click(sender As Object, e As RoutedEventArgs) Handles button_video.Click
         Me.image_wi.Visibility = Visibility.Collapsed
+        Me.next_image_button.Visibility = Visibility.Collapsed
+        Me.prev_image_button.Visibility = Visibility.Collapsed
+
         Me.mediaplay.Visibility = Visibility.Visible
         mediaplay.Position = New TimeSpan(0)
         mediaplay.Play()
@@ -212,5 +231,54 @@ Public Class Working
         Catch ex As Exception
 
         End Try
+    End Sub
+
+    Private Sub image_button_MouseUp(sender As Object, e As MouseButtonEventArgs)
+        Dim l As Label = sender
+        If (l.Name.Equals("next_image_button")) Then
+
+            currentImageIndex += 1
+
+        Else
+
+            currentImageIndex -= 1
+        End If
+
+        SetImageNextPrevVisi()
+        Dim imgPath As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Routines\Img\" & images(currentImageIndex))
+        Me.image_wi.Source = New BitmapImage(New Uri(imgPath, UriKind.RelativeOrAbsolute))
+
+    End Sub
+
+    Private Sub SetImageNextPrevVisi()
+
+        If currentImageIndex <= 0 Then
+
+            currentImageIndex = 0
+            prev_image_button.Visibility = Visibility.Collapsed
+            next_image_button.Visibility = Visibility.Collapsed
+            If (images.Count > 1) Then
+
+                next_image_button.Visibility = Visibility.Visible
+
+            End If
+
+        ElseIf (currentImageIndex >= images.Count - 1) Then
+
+            currentImageIndex = images.Count - 1
+            next_image_button.Visibility = Visibility.Collapsed
+            prev_image_button.Visibility = Visibility.Collapsed
+            If (images.Count > 1) Then
+                prev_image_button.Visibility = Visibility.Visible
+            End If
+
+        ElseIf (currentImageIndex < images.Count) Then
+
+            If (images.Count > 1) Then
+
+                next_image_button.Visibility = Visibility.Visible
+                prev_image_button.Visibility = Visibility.Visible
+            End If
+        End If
     End Sub
 End Class
