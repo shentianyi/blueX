@@ -104,6 +104,9 @@
     <Compile Include="Data\OrderStatus.vb" />
     <Compile Include="Data\DataContext.vb" />
     <Compile Include="Data\StaffSession.vb" />
+    <Compile Include="ImageFullWindow.xaml.vb">
+      <DependentUpon>ImageFullWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Login.xaml.vb">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
@@ -123,6 +126,10 @@
     <Compile Include="Working.xaml.vb">
       <DependentUpon>Working.xaml</DependentUpon>
     </Compile>
+    <Page Include="ImageFullWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
