@@ -197,8 +197,8 @@ namespace PLCLightWPFTest
 
         private void button9_Click(object sender, RoutedEventArgs e)
         {
-
-            new ImagesWindow().Show();
+            new Menu().Show();
+            this.Close();
         }
     }
 }

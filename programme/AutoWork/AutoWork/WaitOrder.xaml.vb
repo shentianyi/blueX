@@ -1,7 +1,16 @@
 ﻿Imports PLCLightCL
 Imports KskPlugInSharedObject
+Imports System.ComponentModel
 
-Public Class WaitOrder
+Partial Public Class WaitOrder
+    Inherits Window
+    Public Sub New()
+        InitializeComponent()
+    End Sub
+
+
+
+    Dim goLogin As Boolean = True
     Private Sub textBox_ordernr_PreviewKeyUp(sender As Object, e As KeyEventArgs) Handles textBox_ordernr.PreviewKeyUp
         If e.Key = Key.Enter Then
             Me.textBox_ksknr.Focus()
@@ -61,7 +70,11 @@ Public Class WaitOrder
                     MsgBox("LEPS作业指导书" & String.Join(";", wis.ToArray), MsgBoxStyle.Information)
 
                     Dim working As Working = New Working(headMsg, wis(0))
-                    working.ShowDialog()
+                    goLogin = False
+                    Me.Close()
+                    working.Show()
+
+                    'working.ShowDialog()
                 End If
             End If
         Catch ex As Exception
@@ -80,11 +93,9 @@ Public Class WaitOrder
 
     End Sub
 
-    Private Sub WaitOrder_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-        Me.station_name.Content = StaffSession.GetInstance.StationID
-        label_staffid.Content = StaffSession.GetInstance.StaffId
-        init()
-    End Sub
+    'Private Sub WaitOrder_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+
+    'End Sub
 
     Private Sub textBox_ksknr_PreviewKeyUp(sender As Object, e As KeyEventArgs) Handles textBox_ksknr.PreviewKeyUp
 
@@ -99,4 +110,19 @@ Public Class WaitOrder
         End If
 
     End Sub
+
+    Private Sub WaitOrder_Closing(sender As Object, e As CancelEventArgs)
+        If goLogin Then
+            Dim login As New Login
+            login.Show()
+        End If
+    End Sub
+
+    Private Sub Window_Loaded(sender As Object, e As RoutedEventArgs)
+        Me.station_name.Content = StaffSession.GetInstance.StationID
+        label_staffid.Content = StaffSession.GetInstance.StaffId
+        init()
+    End Sub
+
+
 End Class

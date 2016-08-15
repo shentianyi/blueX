@@ -62,8 +62,17 @@
     <Compile Include="ImagesWindow.xaml.cs">
       <DependentUpon>ImagesWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Menu.xaml.cs">
+      <DependentUpon>Menu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SecondWindow.xaml.cs">
       <DependentUpon>SecondWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ShowClose1.xaml.cs">
+      <DependentUpon>ShowClose1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ShowClose2.xaml.cs">
+      <DependentUpon>ShowClose2.xaml</DependentUpon>
     </Compile>
     <Page Include="ImageFullWindow.xaml">
       <SubType>Designer</SubType>
@@ -85,7 +94,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Menu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SecondWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShowClose1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShowClose2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

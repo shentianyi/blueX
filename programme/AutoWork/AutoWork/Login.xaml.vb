@@ -1,5 +1,11 @@
-﻿Public Class Login
+﻿Partial Public Class Login
+    Inherits Window
+    Public Sub New()
+        InitializeComponent()
+    End Sub
+
     Public Shared session As StaffSession
+
 
 
     Private Sub confirm()
@@ -15,11 +21,17 @@
 
             StaffSession.Login(textBox_operator.Text, textBox_station.Text)
             StaffSession.GetInstance.WorkStation = workstation
-            Dim orderWindow As WaitOrder = New WaitOrder
-                orderWindow.ShowDialog()
-                init()
-            Else
-                MsgBox("请输入用户名和操作台号")
+
+            '' 
+            init()
+
+            Dim orderWindow As New WaitOrder()
+            orderWindow.Show()
+
+            Me.Close()
+
+        Else
+            MsgBox("请输入用户名和操作台号")
         End If
     End Sub
 
@@ -33,7 +45,7 @@
     End Sub
 
     Private Sub Login_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-        InitializeComponent()
+        '   InitializeComponent()
         init()
     End Sub
 

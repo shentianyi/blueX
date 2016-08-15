@@ -123,7 +123,8 @@ Partial Friend NotInheritable Class MySettings
     <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("Data Source=vm08;Initial Catalog=Autowork;User ID=sa;Password=brilliantech123@")>  _
+     Global.System.Configuration.DefaultSettingValueAttribute("Data Source=SVCNSKSK06;Initial Catalog=AutoWork;Persist Security Info=True;User I"& _ 
+        "D=sa;Password=Leoni2000")>  _
     Public ReadOnly Property AutoworkConnectionString1() As String
         Get
             Return CType(Me("AutoworkConnectionString1"),String)
@@ -133,11 +134,20 @@ Partial Friend NotInheritable Class MySettings
     <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("Data Source=Charlot-PC\MSSQLSERVER20082;Initial Catalog=AutoWork;Persist Security"& _ 
-        " Info=True;User ID=sa")>  _
+     Global.System.Configuration.DefaultSettingValueAttribute("Data Source=SVCNSKSK06;Initial Catalog=AutoWork;Persist Security Info=True;User I"& _ 
+        "D=sa;Password=Leoni2000")>  _
     Public ReadOnly Property AutoWorkConnectionString2() As String
         Get
             Return CType(Me("AutoWorkConnectionString2"),String)
+        End Get
+    End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+    Public ReadOnly Property SingleWorkPlace() As Boolean
+        Get
+            Return CType(Me("SingleWorkPlace"),Boolean)
         End Get
     End Property
 End Class

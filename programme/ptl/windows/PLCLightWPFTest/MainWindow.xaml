@@ -33,6 +33,6 @@
         <Button Content="NEXT    》" Height="148" HorizontalAlignment="Left" Margin="569,130,0,0" Name="nextBtn" VerticalAlignment="Top" Width="86" Click="prevBtn_Click" />
         <ListBox Height="148" HorizontalAlignment="Left" Margin="442,130,0,0" Name="findListBox" VerticalAlignment="Top" Width="120" />
         <CheckBox Content="KeepOn/OFF" Height="19" HorizontalAlignment="Left" Margin="617,101,0,0" Name="keepCB" VerticalAlignment="Top" Width="96" />
-        <Button x:Name="button9" Content="IMAGES" HorizontalAlignment="Left" Margin="617,54,0,0" VerticalAlignment="Top" Width="72" Height="38" Click="button9_Click"/>
+        <Button x:Name="button9" Content="Menu" HorizontalAlignment="Left" Margin="617,54,0,0" VerticalAlignment="Top" Width="72" Height="38" Click="button9_Click"/>
     </Grid>
 </Window>

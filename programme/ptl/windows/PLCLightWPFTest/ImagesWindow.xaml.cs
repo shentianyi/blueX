@@ -93,5 +93,10 @@ namespace PLCLightWPFTest
         {
             new ImageFullWindow(this).ShowDialog();
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            new Menu().Show();
+        }
     }
 }

@@ -225,6 +225,14 @@ Public Class Working
 
 
     Private Sub Window_Closing(sender As Object, e As ComponentModel.CancelEventArgs)
+        If My.Settings.SingleWorkPlace Then
+            Dim waitOrder As New WaitOrder
+            waitOrder.Show()
+        Else
+            Dim login As New Login
+            login.Show()
+        End If
+
         Try
             _lightController.Play(LightCmdType.ALL_OFF)
             _lightController.Close()
@@ -284,7 +292,7 @@ Public Class Working
 
     Private Sub image_wi_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles image_wi.MouseUp
         Try
-            Dim full As ImageFullWindow = New ImageFullWindow(Me)
+            Dim full As ImageFullWindow = New ImageFullWindow(me)
             full.ShowDialog()
         Catch ex As Exception
 
