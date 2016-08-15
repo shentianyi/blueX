@@ -85,7 +85,7 @@
                 <Label x:Name="label_actual" Content="0" Canvas.Left="288" Canvas.Top="70" Foreground="#FFF4FF16" FontSize="26.667" FontWeight="Bold"/>
                 <Label x:Name="label_Copy2" Content="/" Canvas.Left="336" Canvas.Top="73" Foreground="#FFF4FF16" FontSize="26.667" FontWeight="Bold" RenderTransformOrigin="2.914,0.624"/>
                 <Label x:Name="label_Copy3" Content="秒" Canvas.Left="429" Canvas.Top="64" Foreground="#FFF4FF16" FontSize="26.667" FontWeight="Bold" RenderTransformOrigin="1.857,0.624"/>
-                <Label x:Name="laebl_wiid" FontSize="29.333" FontWeight="Bold" Foreground="White" Content="WI-0706" Height="51" Canvas.Left="34" Canvas.Top="9" Width="137"/>
+                <Label x:Name="laebl_wiid" FontSize="27" FontWeight="Bold" Foreground="White" Content="WI-EN-0706" Height="51" Canvas.Left="20" Canvas.Top="9" Width="210"/>
                 <Label FontSize="14" Foreground="White" Content="KSK：" RenderTransformOrigin="3.619,0.714" Canvas.Left="234" Canvas.Top="23"/>
                 <Label x:Name="label_ordernr" FontSize="14" FontWeight="Bold" Foreground="White" Content="N/A" Canvas.Left="323" Canvas.Top="23"/>
                 <Label FontSize="14" Foreground="White" Content="台车：" Canvas.Left="467" Canvas.Top="25"/>

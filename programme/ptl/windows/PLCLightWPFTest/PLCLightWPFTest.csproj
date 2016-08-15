@@ -56,12 +56,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ImageFullWindow.xaml.cs">
+      <DependentUpon>ImageFullWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ImagesWindow.xaml.cs">
       <DependentUpon>ImagesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SecondWindow.xaml.cs">
       <DependentUpon>SecondWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="ImageFullWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ImagesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
