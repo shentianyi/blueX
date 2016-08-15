@@ -18,8 +18,8 @@ namespace PLCLightWPFTest
     /// </summary>
     public partial class ImagesWindow : Window
     {
-        List<string> images = new List<string>();
-        int currentImageIndex = 0;
+       public List<string> images = new List<string>();
+       public int currentImageIndex = 0;
         public ImagesWindow()
         {
             InitializeComponent();
@@ -36,7 +36,7 @@ namespace PLCLightWPFTest
             SetImageNextPrevVisi();
         }
 
-        private void image_button_MouseUp(object sender, MouseButtonEventArgs e)
+        public void image_button_MouseUp(object sender, MouseButtonEventArgs e)
         {
 
             Label l = sender as Label;
@@ -55,7 +55,7 @@ namespace PLCLightWPFTest
             
         }
 
-        private void SetImageNextPrevVisi()
+        public void SetImageNextPrevVisi()
         {
             if (currentImageIndex <= 0)
             {
@@ -87,6 +87,11 @@ namespace PLCLightWPFTest
                 }
             }
 
+        }
+
+        private void image_wi_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            new ImageFullWindow(this).ShowDialog();
         }
     }
 }

@@ -281,4 +281,13 @@ Public Class Working
             End If
         End If
     End Sub
+
+    Private Sub image_wi_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles image_wi.MouseUp
+        Try
+            Dim full As ImageFullWindow = New ImageFullWindow(Me)
+            full.ShowDialog()
+        Catch ex As Exception
+
+        End Try
+    End Sub
 End Class

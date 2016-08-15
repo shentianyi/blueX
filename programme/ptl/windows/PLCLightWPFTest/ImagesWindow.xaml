@@ -27,7 +27,7 @@
         </Grid>
         <Grid Grid.Row="1">
             <Canvas Margin="0,3,0,-3" >
-                <Image x:Name="image_wi" Height="234" Visibility="Collapsed" Canvas.Left="34" Canvas.Top="224" Width="537" Stretch="Fill"/>
+                <Image x:Name="image_wi" Height="234" Visibility="Collapsed" Canvas.Left="34" Canvas.Top="224" Width="537" Stretch="Fill" MouseUp="image_wi_MouseUp"/>
                 <MediaElement  x:Name="mediaplay" Visibility="Visible"  Height="234" Canvas.Left="35" Canvas.Top="233" Width="537" LoadedBehavior="Manual" UnloadedBehavior="Play"/>
                 <Button x:Name="button_finish" Height="50" Width="144" FontFamily="Solomon_Sans_Bold" BorderThickness="1" Canvas.Left="622" Canvas.Top="203" RenderTransformOrigin="0.736,0.5">
                     <DockPanel>

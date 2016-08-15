@@ -13,14 +13,27 @@ using System.Windows.Shapes;
 
 namespace PLCLightWPFTest
 {
+   
     /// <summary>
     /// ImageFullWindow.xaml 的交互逻辑
     /// </summary>
     public partial class ImageFullWindow : Window
     {
+        public ImagesWindow parentWindow;
         public ImageFullWindow()
         {
             InitializeComponent();
         }
+
+        public ImageFullWindow(ImagesWindow parentWindow)
+        {
+            InitializeComponent();
+            this.parentWindow = parentWindow;
+            try {
+                this.image.Source = parentWindow.image_wi.Source;
+            }catch(Exception e) { }
+        }
+
+
     }
 }
