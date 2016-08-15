@@ -98,9 +98,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AutoWork.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Data\AutoWork.vb">
+      <DependentUpon>AutoWork.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Data\OrderStatus.vb" />
     <Compile Include="Data\DataContext.vb" />
     <Compile Include="Data\StaffSession.vb" />
+    <Compile Include="ImageFullWindow.xaml.vb">
+      <DependentUpon>ImageFullWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Login.xaml.vb">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
@@ -120,6 +126,10 @@
     <Compile Include="Working.xaml.vb">
       <DependentUpon>Working.xaml</DependentUpon>
     </Compile>
+    <Page Include="ImageFullWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -214,7 +224,9 @@
     <Resource Include="Resources\Entypo.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

@@ -7,8 +7,9 @@ namespace ScmWcfService.Model.Enum
 {
     public enum DoorType
     {
-        Double=1,
-        Single=2,
-        TrickSingle=3
+        Double = 1,
+        Single = 2,
+        TrickSingle = 3,
+        V888 = 4
     }
 }

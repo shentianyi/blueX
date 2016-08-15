@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 11.75" name="AutoWorkDataContext">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 16.25" name="AutoWorkDataContext">
   <DataContextMoniker Name="/AutoWorkDataContext" />
   <nestedChildShapes>
     <classShape Id="18249e73-de63-4f77-a88e-cffae0796d30" absoluteBounds="3.5, 7, 2, 1.5715458170572916">
@@ -97,31 +97,37 @@
         <elementListCompartment Id="ac409cdf-e881-4283-bc6e-65b9a28edb60" absoluteBounds="4.765, 3.335, 1.9700000000000002, 1.966644287109375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="b5f06b6a-9bbb-47c1-978f-9f18d4ae8867" absoluteBounds="0.625, 9.375, 2, 2.1446048990885416">
-      <DataClassMoniker Name="/AutoWorkDataContext/WorkStation" />
-      <nestedChildShapes>
-        <elementListCompartment Id="82e624bc-32fa-42bb-ab2e-39b7cd611f23" absoluteBounds="0.64000000000000012, 9.835, 1.9700000000000002, 1.5846048990885415" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <associationConnector edgePoints="[(2.625 : 11.0733056640625); (3.59375 : 11.0733056640625); (3.59375 : 8.57154581705729)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/AutoWorkDataContext/WorkStation/WorkStation_ELabelOnForPartOnWorkstation" />
-      <nodes>
-        <classShapeMoniker Id="b5f06b6a-9bbb-47c1-978f-9f18d4ae8867" />
-        <classShapeMoniker Id="18249e73-de63-4f77-a88e-cffae0796d30" />
-      </nodes>
-    </associationConnector>
     <classShape Id="566249d3-53d0-4c33-a3d6-31b0a99e93d5" absoluteBounds="6.875, 6.5, 2, 1.3805261230468751">
       <DataClassMoniker Name="/AutoWorkDataContext/Order" />
       <nestedChildShapes>
         <elementListCompartment Id="3d1d3291-b0f9-4419-9ad2-92a919e80fd4" absoluteBounds="6.89, 6.96, 1.9700000000000002, 0.820526123046875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(0.65625 : 9.375); (0.65625 : 6.65625); (2.88541666666667 : 6.65625 : JumpStart); (3.05208333333333 : 6.65625 : JumpEnd); (6.875 : 6.65625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <classShape Id="f1fe3130-2baf-4fca-86cd-394af6945e53" absoluteBounds="0.625, 9.625, 2, 2.7176639811197916">
+      <DataClassMoniker Name="/AutoWorkDataContext/WorkStation" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b3b68be6-b235-4994-ac4b-9a950181935f" absoluteBounds="0.64000000000000012, 10.085, 1.9700000000000002, 2.1576639811197915" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.625 : 11.4848352050781); (3.59375 : 11.4848352050781); (3.59375 : 8.57154581705729)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AutoWorkDataContext/WorkStation/WorkStation_ELabelOnForPartOnWorkstation" />
+      <nodes>
+        <classShapeMoniker Id="f1fe3130-2baf-4fca-86cd-394af6945e53" />
+        <classShapeMoniker Id="18249e73-de63-4f77-a88e-cffae0796d30" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(0.65625 : 9.625); (0.65625 : 6.65625); (2.88541666666667 : 6.65625 : JumpStart); (3.05208333333333 : 6.65625 : JumpEnd); (6.875 : 6.65625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/AutoWorkDataContext/WorkStation/WorkStation_Order" />
       <nodes>
-        <classShapeMoniker Id="b5f06b6a-9bbb-47c1-978f-9f18d4ae8867" />
+        <classShapeMoniker Id="f1fe3130-2baf-4fca-86cd-394af6945e53" />
         <classShapeMoniker Id="566249d3-53d0-4c33-a3d6-31b0a99e93d5" />
       </nodes>
     </associationConnector>
+    <classShape Id="adba67ab-d9cd-4f22-b9ec-4d8fcd47023a" absoluteBounds="1.25, 14.375, 2, 1.5715458170572916">
+      <DataClassMoniker Name="/AutoWorkDataContext/LepsWorkInstructionOnAW" />
+      <nestedChildShapes>
+        <elementListCompartment Id="90127b6d-6390-4bae-8d8a-57f9f626928d" absoluteBounds="1.2650000000000001, 14.835, 1.9700000000000002, 1.0115458170572915" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

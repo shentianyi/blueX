@@ -56,9 +56,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ImageFullWindow.xaml.cs">
+      <DependentUpon>ImageFullWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ImagesWindow.xaml.cs">
+      <DependentUpon>ImagesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SecondWindow.xaml.cs">
       <DependentUpon>SecondWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="ImageFullWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ImagesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -106,6 +120,77 @@
       <Project>{7751F1B1-C4CC-490B-9FD8-15F332122A9A}</Project>
       <Name>PLCLightCL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\cancel icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\confirm icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\footer logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\forklift one.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\forklift two.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\QR.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\review icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\User.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Routines\Img\1.JPG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Routines\Img\2.JPG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Routines\Img\3.JPG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Routines\Img\4.JPG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Routines\Img\5.JPG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Routines\Img\6.JPG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Routines\Img\7.JPG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="Routines\Video\1.MOV">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Routines\Video\2.MOV">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Routines\Video\3.MOV">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Routines\Video\4.MOV">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Routines\Video\5.MOV">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Routines\Video\6.MOV">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Routines\Video\7.MOV">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

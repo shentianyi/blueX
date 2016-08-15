@@ -8,6 +8,7 @@ using Brilliantech.Framwork.Utils.LogUtil;
 using ScmWcfService.Model.Enum;
 using ScmClient.ThridPart;
 using RestSharp;
+using System.IO.Ports;
 
 namespace ScmClient.RFID
 {
@@ -72,6 +73,19 @@ namespace ScmClient.RFID
 
                         var req = new RestRequest("/cdor.cgi?open=1", Method.POST);
                         client.Execute(req);
+
+                    }
+                    else if (DoorConfig.Type == DoorType.V888)
+                    {
+                        byte[] cmd = new byte[6] { 0x7E, 0x06, 0x00, 0x55, 0x50, 0x7D };
+                        SerialPort sp = new SerialPort("COM1", 2400);
+                        sp.Parity = Parity.None;
+                        sp.DataBits = 8;
+                        sp.StopBits = StopBits.One;
+                        sp.Open();
+                        sp.Write(cmd, 0, cmd.Length);
+                        
+                        sp.Close();
 
                     }
                 }

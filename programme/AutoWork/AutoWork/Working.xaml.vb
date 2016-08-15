@@ -22,6 +22,11 @@ Public Class Working
     Private _isprepareTime = True
     Private _prepareTime = 0
     Private _header As HeadMessage
+    Private _lepsWiId As String
+
+    Dim images As List(Of String) = New List(Of String)
+    Dim currentImageIndex As Integer = 0
+
 
     Public Sub New(headMsg As PLCLightCL.Model.HeadMessage, workInstructionId As String)
 
@@ -32,13 +37,20 @@ Public Class Working
 
         Try
             _orderNr = headMsg.KSK
-            _wi = _svc.GetWIforOrderOnWorkStation(workInstructionId)
-            _wiRoutines = _svc.GetRoutinesofWi(_wi.id)
-            _wiRoutines = (From a In _wiRoutines Order By a.sequence).ToList
-            _currentSeq = _wiRoutines(0).sequence
-            _header = headMsg
+            _lepsWiId = workInstructionId
+            Dim dc As DataContext = New DataContext(GlobalConfigs.DbConnStr)
+            Dim awWI As LepsWorkInstructionOnAW = dc.Context.GetTable(Of LepsWorkInstructionOnAW).Where(Function(l) l.workstationId.Equals(StaffSession.GetInstance.WorkStation.workstationId) And l.lepsWI.Equals(_lepsWiId)).FirstOrDefault
+            If awWI IsNot Nothing Then
+                _wi = _svc.GetWIforOrderOnWorkStation(awWI.awWI)
+                _wiRoutines = _svc.GetRoutinesofWi(_wi.id)
+                _wiRoutines = (From a In _wiRoutines Order By a.sequence).ToList
+                _currentSeq = _wiRoutines(0).sequence
+                _header = headMsg
+            Else
+                MsgBox("没有维护LEPS与AutoWork的作业指导书对应关系, Leps作业指导书是:" & _lepsWiId, MsgBoxStyle.Critical)
+            End If
         Catch ex As Exception
-            MsgBox("开始流程失败，请通知管理人员", MsgBoxStyle.Critical)
+            MsgBox("开始流程失败，请通知管理人员" & ex.ToString, MsgBoxStyle.Critical)
         End Try
 
 
@@ -87,7 +99,14 @@ Public Class Working
 
         Me.label_steps.Content = String.Format("Step {0} / {1}", _currentSeq + 1, _wiRoutines.Count)
         Me.label_normalhour.Content = _currentRoutine.normalTime
-        Dim imgPath As String = System.IO.Path.Combine(My.Application.Info.DirectoryPath, "Routines\Img\" & _currentRoutine.picture)
+        Me.images = _currentRoutine.picture.Split(",").ToList
+        Me.currentImageIndex = 0
+        Dim imgPath As String = System.IO.Path.Combine(My.Application.Info.DirectoryPath, "Routines\Img\" & Me.images.First())
+
+        Me.next_image_button.Visibility = Visibility.Collapsed
+        Me.prev_image_button.Visibility = Visibility.Collapsed
+
+
         Dim videoPath As String = System.IO.Path.Combine(My.Application.Info.DirectoryPath, "Routines\Video\" & _currentRoutine.video)
 
         Me.image_wi.Source = New BitmapImage(New Uri(imgPath, UriKind.RelativeOrAbsolute))
@@ -114,11 +133,19 @@ Public Class Working
     Private Sub button_text_Click(sender As Object, e As RoutedEventArgs) Handles button_text.Click
         Me.mediaplay.Visibility = Visibility.Collapsed
         Me.image_wi.Visibility = Visibility.Visible
+        Me.next_image_button.Visibility = Visibility.Visible
+        Me.prev_image_button.Visibility = Visibility.Visible
+
+
+        Me.SetImageNextPrevVisi()
         Me.button_hide.Focus()
     End Sub
 
     Private Sub button_video_Click(sender As Object, e As RoutedEventArgs) Handles button_video.Click
         Me.image_wi.Visibility = Visibility.Collapsed
+        Me.next_image_button.Visibility = Visibility.Collapsed
+        Me.prev_image_button.Visibility = Visibility.Collapsed
+
         Me.mediaplay.Visibility = Visibility.Visible
         mediaplay.Position = New TimeSpan(0)
         mediaplay.Play()
@@ -135,9 +162,13 @@ Public Class Working
                 Dim order As Order = orderrepo.Single(Function(c) String.Compare(c.orderId, _header.KSK, True) = 0)
                 order.status = OrderStatus.Finish
                 orderrepo.SaveAll()
-                Dim lepsCl As LEPSController = New LEPSController(GlobalConfigs.LepsDb)
-                lepsCl.AKBasicModule(StaffSession.GetInstance.WorkStation.prodLine, StaffSession.GetInstance.StationID, _header.KSK, _wi.id)
-                lepsCl.CompleteHarness(_header.Board, StaffSession.GetInstance.StationID, _header.KSK)
+                ''根据预设，是否要跟LEPS交互
+                If StaffSession.GetInstance.WorkStation.needEnd = True Then
+                    Dim lepsCl As LEPSController = New LEPSController(GlobalConfigs.LepsDb)
+                    lepsCl.AKBasicModule(StaffSession.GetInstance.WorkStation.prodLine, StaffSession.GetInstance.WorkStation.lepsWorkstation, _header.KSK, _lepsWiId)
+                    lepsCl.CompleteHarness(_header.Board, StaffSession.GetInstance.WorkStation.lepsWorkstation, _header.KSK)
+                End If
+
                 MsgBox("流程结束", MsgBoxStyle.Information)
             Catch ex As Exception
                 MsgBox("与LEPS通讯时发生错误", MsgBoxStyle.Critical)
@@ -197,6 +228,64 @@ Public Class Working
         Try
             _lightController.Play(LightCmdType.ALL_OFF)
             _lightController.Close()
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub image_button_MouseUp(sender As Object, e As MouseButtonEventArgs)
+        Dim l As Label = sender
+        If (l.Name.Equals("next_image_button")) Then
+
+            currentImageIndex += 1
+
+        Else
+
+            currentImageIndex -= 1
+        End If
+
+        SetImageNextPrevVisi()
+        Dim imgPath As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Routines\Img\" & images(currentImageIndex))
+        Me.image_wi.Source = New BitmapImage(New Uri(imgPath, UriKind.RelativeOrAbsolute))
+
+    End Sub
+
+    Private Sub SetImageNextPrevVisi()
+
+        If currentImageIndex <= 0 Then
+
+            currentImageIndex = 0
+            prev_image_button.Visibility = Visibility.Collapsed
+            next_image_button.Visibility = Visibility.Collapsed
+            If (images.Count > 1) Then
+
+                next_image_button.Visibility = Visibility.Visible
+
+            End If
+
+        ElseIf (currentImageIndex >= images.Count - 1) Then
+
+            currentImageIndex = images.Count - 1
+            next_image_button.Visibility = Visibility.Collapsed
+            prev_image_button.Visibility = Visibility.Collapsed
+            If (images.Count > 1) Then
+                prev_image_button.Visibility = Visibility.Visible
+            End If
+
+        ElseIf (currentImageIndex < images.Count) Then
+
+            If (images.Count > 1) Then
+
+                next_image_button.Visibility = Visibility.Visible
+                prev_image_button.Visibility = Visibility.Visible
+            End If
+        End If
+    End Sub
+
+    Private Sub image_wi_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles image_wi.MouseUp
+        Try
+            Dim full As ImageFullWindow = New ImageFullWindow(Me)
+            full.ShowDialog()
         Catch ex As Exception
 
         End Try
