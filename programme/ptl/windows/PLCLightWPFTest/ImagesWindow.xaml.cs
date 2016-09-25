@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PLCLightWPFTest.Properties;
 
 namespace PLCLightWPFTest
 {
@@ -28,10 +29,10 @@ namespace PLCLightWPFTest
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             images = "1.JPG,2.JPG,3.JPG,4.JPG,5.JPG,6.JPG".Split(',').ToList();
-
-            string imgPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Routines\Img\" + images.First());
+             
+           
             currentImageIndex = 0;
-            this.image_wi.Source = new BitmapImage(new Uri(imgPath, UriKind.RelativeOrAbsolute));
+            this.image_wi.Source = new BitmapImage(new Uri(GetImagePath(images.First()), UriKind.RelativeOrAbsolute));
             this.image_wi.Visibility = Visibility.Visible;
             SetImageNextPrevVisi();
         }
@@ -50,11 +51,23 @@ namespace PLCLightWPFTest
             }
 
             SetImageNextPrevVisi();
-            string imgPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Routines\Img\" + images[currentImageIndex]);
-            this.image_wi.Source = new BitmapImage(new Uri(imgPath, UriKind.RelativeOrAbsolute));
+            this.image_wi.Source = new BitmapImage(new Uri(GetImagePath(images[currentImageIndex]), UriKind.RelativeOrAbsolute));
             
         }
 
+        public string GetImagePath(string fileName)
+        {
+            string imagePath = string.Empty;
+            if (Settings.Default.IsLocalImage)
+            {
+                imagePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Routines\Img\" + fileName);
+            }
+            else
+            {
+                imagePath = Settings.Default.FTPServer + fileName;
+            }
+            return imagePath;
+        }
         public void SetImageNextPrevVisi()
         {
             if (currentImageIndex <= 0)

@@ -113,7 +113,7 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("COM7")>  _
+     Global.System.Configuration.DefaultSettingValueAttribute("COM1")>  _
     Public ReadOnly Property com() As String
         Get
             Return CType(Me("com"),String)
@@ -148,6 +148,24 @@ Partial Friend NotInheritable Class MySettings
     Public ReadOnly Property SingleWorkPlace() As Boolean
         Get
             Return CType(Me("SingleWorkPlace"),Boolean)
+        End Get
+    End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("ftp://127.0.0.1")>  _
+    Public ReadOnly Property FTPServer() As String
+        Get
+            Return CType(Me("FTPServer"),String)
+        End Get
+    End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+    Public ReadOnly Property RemoteImage() As Boolean
+        Get
+            Return CType(Me("RemoteImage"),Boolean)
         End Get
     End Property
 End Class

@@ -101,15 +101,17 @@ Public Class Working
         Me.label_normalhour.Content = _currentRoutine.normalTime
         Me.images = _currentRoutine.picture.Split(",").ToList
         Me.currentImageIndex = 0
-        Dim imgPath As String = System.IO.Path.Combine(My.Application.Info.DirectoryPath, "Routines\Img\" & Me.images.First())
+        '    Dim imgPath As String = System.IO.Path.Combine(My.Application.Info.DirectoryPath, "Routines\Img\" & Me.images.First())
 
         Me.next_image_button.Visibility = Visibility.Collapsed
         Me.prev_image_button.Visibility = Visibility.Collapsed
 
 
         Dim videoPath As String = System.IO.Path.Combine(My.Application.Info.DirectoryPath, "Routines\Video\" & _currentRoutine.video)
-
-        Me.image_wi.Source = New BitmapImage(New Uri(imgPath, UriKind.RelativeOrAbsolute))
+        Try
+            Me.image_wi.Source = New BitmapImage(New Uri(getImagePath(Me.images.First()), UriKind.RelativeOrAbsolute))
+        Catch
+        End Try
         Me.mediaplay.Source = New Uri(videoPath, UriKind.Absolute)
         mediaplay.Play()
         timer.Start()
@@ -253,9 +255,11 @@ Public Class Working
         End If
 
         SetImageNextPrevVisi()
-        Dim imgPath As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Routines\Img\" & images(currentImageIndex))
-        Me.image_wi.Source = New BitmapImage(New Uri(imgPath, UriKind.RelativeOrAbsolute))
-
+        '  Dim imgPath As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Routines\Img\" & images(currentImageIndex))
+        Try
+            Me.image_wi.Source = New BitmapImage(New Uri(getImagePath(images(currentImageIndex)), UriKind.RelativeOrAbsolute))
+        Catch
+        End Try
     End Sub
 
     Private Sub SetImageNextPrevVisi()
@@ -292,10 +296,20 @@ Public Class Working
 
     Private Sub image_wi_MouseUp(sender As Object, e As MouseButtonEventArgs) Handles image_wi.MouseUp
         Try
-            Dim full As ImageFullWindow = New ImageFullWindow(me)
+            Dim full As ImageFullWindow = New ImageFullWindow(Me)
             full.ShowDialog()
         Catch ex As Exception
 
         End Try
     End Sub
+
+    Private Function getImagePath(filename As String) As String
+        Dim path As String = String.Empty
+        If (My.Settings.RemoteImage) Then
+            path = My.Settings.FTPServer & filename
+        Else
+            path = System.IO.Path.Combine(My.Application.Info.DirectoryPath, "Routines\Img\" & filename)
+        End If
+        Return path
+    End Function
 End Class
