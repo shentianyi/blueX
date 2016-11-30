@@ -3,19 +3,22 @@
   <Profiles />
   <Settings>
     <Setting Name="Board" Type="System.String" Scope="User">
-      <Value Profile="(Default)">TM101</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Workplace" Type="System.String" Scope="User">
-      <Value Profile="(Default)">ASSEN11_03</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Line" Type="System.String" Scope="User">
-      <Value Profile="(Default)">ASSEN11</Value>
-    </Setting>
-    <Setting Name="FTPServer" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">ftp://127.0.0.1/aw/Routines/</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="IsLocalImage" Type="System.Boolean" Scope="Application">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="FTPServer" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://127.0.0.1:9001/aw/images/</Value>
+    </Setting>
+    <Setting Name="lepsDb" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Data Source=svp37001.p37.leoni.local;Initial Catalog=LEPS;Persist Security Info=True;User ID=ASS_user;Password=ass_user;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -25,7 +25,7 @@ namespace PLCLightWPFTest.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("TM101")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string Board {
             get {
                 return ((string)(this["Board"]));
@@ -37,7 +37,7 @@ namespace PLCLightWPFTest.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ASSEN11_03")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string Workplace {
             get {
                 return ((string)(this["Workplace"]));
@@ -49,7 +49,7 @@ namespace PLCLightWPFTest.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ASSEN11")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string Line {
             get {
                 return ((string)(this["Line"]));
@@ -61,7 +61,16 @@ namespace PLCLightWPFTest.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ftp://127.0.0.1/aw/Routines/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsLocalImage {
+            get {
+                return ((bool)(this["IsLocalImage"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://127.0.0.1:9001/aw/images/")]
         public string FTPServer {
             get {
                 return ((string)(this["FTPServer"]));
@@ -70,10 +79,11 @@ namespace PLCLightWPFTest.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IsLocalImage {
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=svp37001.p37.leoni.local;Initial Catalog=LEPS;Persist Security Info=T" +
+            "rue;User ID=ASS_user;Password=ass_user;")]
+        public string lepsDb {
             get {
-                return ((bool)(this["IsLocalImage"]));
+                return ((string)(this["lepsDb"]));
             }
         }
     }

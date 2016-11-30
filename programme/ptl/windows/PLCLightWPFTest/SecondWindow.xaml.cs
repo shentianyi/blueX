@@ -21,7 +21,7 @@ namespace PLCLightWPFTest
     /// </summary>
     public partial class SecondWindow : Window
     {
-      static  string conn = "Data Source=svp37001.p37.leoni.local;Initial Catalog=LEPS;Persist Security Info=True;User ID=ASS_user;Password=ass_user";
+        static string conn = Settings.Default.lepsDb;
         //GetHeadRecord();
       LEPSController lc;
         List<string> modules = null;
@@ -33,45 +33,83 @@ namespace PLCLightWPFTest
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            lc = new LEPSController(conn);
+            try
+            {
+                lc = new LEPSController(conn);
 
-            boardTB.Text = Settings.Default.Board;
-            lineTB.Text = Settings.Default.Line;
-            workplaceTB.Text = Settings.Default.Workplace;
-
+                boardTB.Text = Settings.Default.Board;
+                lineTB.Text = Settings.Default.Line;
+                workplaceTB.Text = Settings.Default.Workplace;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void startBT_Click(object sender, RoutedEventArgs e)
         {
-            HeadMessage msg = lc.StartAndGetHarnessByBoard(boardTB.Text, workplaceTB.Text);
-            if (msg != null) {
-                kskTB.Text = msg.KSK;
+            try
+            {
+                HeadMessage msg = lc.StartAndGetHarnessByBoard(boardTB.Text, workplaceTB.Text);
+                if (msg != null) {
+                    kskTB.Text = msg.KSK;
+                    MessageBox.Show("Success! Plz go to next Step!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
         private void getModuleBtn_Click(object sender, RoutedEventArgs e)
         {
-            modules = new List<string>();
-            modules = lc.GetBasicModule(workplaceTB.Text, kskTB.Text);
-            string s = string.Empty;
-            foreach (string ss in modules) {
-                s +=ss+ ";";
+            try
+            {
+                modules = new List<string>();
+                modules = lc.GetBasicModule(workplaceTB.Text, kskTB.Text);
+                string s = string.Empty;
+                foreach (string ss in modules)
+                {
+                    s += ss + ";";
+                }
+                moduleLab.Content = s;
+                MessageBox.Show("Success! Plz go to next Step!");
             }
-            moduleLab.Content = s;
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void akBtn_Click(object sender, RoutedEventArgs e)
         {
-           
-            foreach (string ss in modules)
+            try
             {
-                lc.AKBasicModule(lineTB.Text, workplaceTB.Text, kskTB.Text,ss);
+                foreach (string ss in modules)
+                {
+                    lc.AKBasicModule(lineTB.Text, workplaceTB.Text, kskTB.Text, ss);
+                }
+                MessageBox.Show("Success! Plz go to next Step!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
         private void completeBtn_Click(object sender, RoutedEventArgs e)
         {
-            lc.CompleteHarness(boardTB.Text, workplaceTB.Text, kskTB.Text);
+            try
+            {
+                lc.CompleteHarness(boardTB.Text, workplaceTB.Text, kskTB.Text);
+                MessageBox.Show("Success! Plz go to next Step!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
 
