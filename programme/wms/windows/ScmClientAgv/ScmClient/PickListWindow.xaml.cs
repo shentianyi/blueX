@@ -142,5 +142,9 @@ namespace ScmClient
             }
         }
 
+        private void startAgvBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Start Agv ...");
+        }
     }
 }

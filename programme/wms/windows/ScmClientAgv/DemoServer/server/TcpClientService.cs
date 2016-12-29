@@ -7,8 +7,9 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+//using Brilliantech.Framwork.Utils.ConvertUtil;
 
-namespace DemoServer.server
+namespace TcpDemoWPF.message
 {
     public class TcpClientService
     {
@@ -46,10 +47,11 @@ namespace DemoServer.server
             int count = socket.Send(msg, msg.Length, 0);
             if (count == msg.Count())
             {
-                MessageBox.Show("发送数据" + count.ToString() + ":" + Encoding.Default.GetString(msg));
+                //MessageBox.Show("发送数据(长度" + count.ToString() + "):" + ScaleConvertor.HexBytesToString(msg));
                 rep.result = true;
                 rep.data = socket;
-            } else
+            }
+            else
             {
                 MessageBox.Show("发送失败！");
             }
