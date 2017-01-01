@@ -141,6 +141,8 @@
     <Compile Include="RFIDScanInPickPage.xaml.cs">
       <DependentUpon>RFIDScanInPickPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="service\TcpClientService.cs" />
+    <Compile Include="service\TcpMessage.cs" />
     <Compile Include="SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
     </Compile>
