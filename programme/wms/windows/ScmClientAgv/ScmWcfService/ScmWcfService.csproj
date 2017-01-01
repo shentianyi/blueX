@@ -19,6 +19,13 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +49,7 @@
       <HintPath>..\..\..\..\ThridPart\JW.UHF.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="RestSharp">
       <HintPath>..\..\..\..\ThridPart\RestSharp.dll</HintPath>
     </Reference>
@@ -66,6 +74,7 @@
   <ItemGroup>
     <Content Include="OrderService.svc" />
     <Content Include="PickService.svc" />
+    <Content Include="ProtocolService.svc" />
     <Content Include="UserService.svc" />
     <Content Include="WarehouseService.svc" />
     <Content Include="Web.config" />
@@ -81,8 +90,10 @@
     <Compile Include="Config\RFIDConfig.cs" />
     <Compile Include="Config\DoorConfig.cs" />
     <Compile Include="Config\BaseConfig.cs" />
+    <Compile Include="Config\ServerConfig.cs" />
     <Compile Include="IOrderService.cs" />
     <Compile Include="IPickService.cs" />
+    <Compile Include="IProtocolService.cs" />
     <Compile Include="IWarehouseService.cs" />
     <Compile Include="Model\Enum\DoorType.cs" />
     <Compile Include="Model\Enum\OrderCarStatus.cs" />
@@ -90,6 +101,8 @@
     <Compile Include="Model\Enum\OrderStatus.cs" />
     <Compile Include="Model\Enum\PickStatus.cs" />
     <Compile Include="Model\Enum\RFIDReaderType.cs" />
+    <Compile Include="Model\Message\ProtocolMessage.cs" />
+    <Compile Include="Model\Message\TcpMessage.cs" />
     <Compile Include="Model\Warehouse.cs" />
     <Compile Include="Model\Part.cs" />
     <Compile Include="Model\OrderBoxType.cs" />
@@ -99,6 +112,9 @@
     </Compile>
     <Compile Include="PickService.svc.cs">
       <DependentUpon>PickService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="ProtocolService.svc.cs">
+      <DependentUpon>ProtocolService.svc</DependentUpon>
     </Compile>
     <Compile Include="Provider\ApiClient.cs" />
     <Compile Include="Model\Message\ResponseMeta.cs" />
@@ -138,12 +154,16 @@
     <Content Include="Ini\rfid.ini.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Ini\server.ini" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\base\windows\Brilliantech.Framwork\Brilliantech.Framwork.csproj">
       <Project>{9B5F850A-5136-4095-8955-6C4F7747C48A}</Project>
       <Name>Brilliantech.Framwork</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -167,7 +187,6 @@
           <CustomServerUrl>
           </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
-          <EnableWcfTestClientForSVCDefaultValue>True</EnableWcfTestClientForSVCDefaultValue>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

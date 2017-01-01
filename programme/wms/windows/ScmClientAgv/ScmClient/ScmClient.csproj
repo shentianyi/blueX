@@ -105,6 +105,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AgvActionWindow.xaml.cs">
+      <DependentUpon>AgvActionWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Enum\SoundType.cs" />
     <Compile Include="Helper\LogHelper.cs" />
     <Compile Include="Helper\PathHelper.cs" />
@@ -147,6 +150,10 @@
       <DependentUpon>SettingWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ThridPart\SingleDoorTCPController.cs" />
+    <Page Include="AgvActionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

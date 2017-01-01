@@ -19,9 +19,9 @@ namespace ScmWcfService.Config
                 config = new ConfigUtil("SERVER", "Ini/server.ini");
 
                 agvHost = config.Get("AgvHost");
-                agvPort = config.Get("AgvPort");
+                agvPort = int.Parse(config.Get("AgvPort"));
                 ptlHost = config.Get("PtlHost");
-                ptlPort = config.Get("AgvPort");
+                ptlPort = int.Parse(config.Get("AgvPort"));
             }
             catch (Exception e)
             {
@@ -30,8 +30,8 @@ namespace ScmWcfService.Config
         }
 
         public static string agvHost { get; set; }
-        public static string agvPort { get; set; }
+        public static int agvPort { get; set; }
         public static string ptlHost { get; set; }
-        public static string ptlPort { get; set; }
+        public static int ptlPort { get; set; }
     }
 }

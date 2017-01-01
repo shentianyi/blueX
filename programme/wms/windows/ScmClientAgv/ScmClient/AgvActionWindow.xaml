@@ -1,0 +1,19 @@
+﻿<Window x:Class="ScmClient.AgvActionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ScmClient"
+        mc:Ignorable="d"
+        Title="AgvActionWindow" Height="500" Width="700"  WindowStartupLocation="CenterScreen" Closing="MetroWindow_Closing">
+    <Grid>
+        <Button x:Name="getInfoBtn" Content="定位小车：" HorizontalAlignment="Left" Margin="47,35,0,0" VerticalAlignment="Top" Width="59" RenderTransformOrigin="-0.587,0.083" Click="getInfoBtn_Click"/>
+        <Label x:Name="label" Content="" HorizontalAlignment="Left" Margin="111,33,0,0" VerticalAlignment="Top" Width="303"/>
+        <Button x:Name="readyBtn" Content="待机点" HorizontalAlignment="Left" Margin="47,77,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="startBtn" Content="启动牵引点" HorizontalAlignment="Left" Margin="151,77,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="finishBtn" Content="卸货点" HorizontalAlignment="Left" Margin="257,77,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="upBtn" Content="升起牵引" HorizontalAlignment="Left" Margin="47,123,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="downBtn" Content="降下牵引" HorizontalAlignment="Left" Margin="151,123,0,0" VerticalAlignment="Top" Width="75"/>
+
+    </Grid>
+</Window>
