@@ -1,24 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Runtime.Serialization;
+using System.Web;
 
 namespace ScmWcfService.Model
 {
     [DataContract]
-    public class Position
+    public class Modem
     {
         [DataMember]
         public string id { get; set; }
 
         [DataMember]
-        public string nr { get; set; }
+        public string name { get; set; }
 
         [DataMember]
-        public Led led { get; set; }
-
-        [DataMember]
-        public DockPoint dock_point { get; set; }
+        public string ip { get; set; }
     }
 }

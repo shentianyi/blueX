@@ -25,58 +25,46 @@ namespace ScmClient
     public partial class AgvActionWindow : Window
     {
         PickListWindow parentWindow;
+        int currentAgvPoint;
+
+        Socket socket = null;
+        ProtocolService tcs = new ProtocolService();
 
         public AgvActionWindow()
         {
             InitializeComponent();
         }
 
-        public AgvActionWindow(PickListWindow parentWindow)
+        public AgvActionWindow(PickListWindow parentWindow, int point)
         {
             InitializeComponent();
             this.parentWindow = parentWindow;
+            this.currentAgvPoint = point;
         }
 
         private void getInfoBtn_Click(object sender, RoutedEventArgs e)
         {
-            Socket socket = null;
-            //TcpClientService tcs = new TcpClientService();
-            ProtocolService tcs = new ProtocolService();
-            byte[] msg = new byte[] {
-                //0xFD, 0x13, 0x00, 0x07, 0x0F, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-                0xFD, 0x13, 0x00, 0x07, 0x0F, 0x01, 0x00, 0x50, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-
-                //0x01, 0x00, 0x00, 0x01, 0x02, 0x01, 0xC0, 0x01, 0x00, 0x1B, 0xFF, 0xFF, 0x00
-            };
-
-
-            MessageBox.Show(ScaleConvertor.HexBytesToString(msg));
             //string ip = "192.168.1.254";
             //int port = 9000;
             string ip = ServerConfig.agvHost;
             int port = ServerConfig.agvPort;
 
-            socket = tcs.ConnectServer(ip, port);
-
             if (socket == null)
             {
-                MessageBox.Show("服务器连接已断开....");
-                return;
+                socket = tcs.ConnectServer(ip, port);
+
+                if (socket == null)
+                {
+                    MessageBox.Show("服务器连接失败....");
+                    return;
+                }
             }
 
-            ProtocolMessage<Socket> rep = tcs.SendMessage(socket, msg);
+            ProtocolMessage<int> rep = tcs.GetAgvInfo(socket);
 
             if (rep.result)
             {
-                //MessageBox.Show("开始接收数据...");
-                //byte[] recvBytes = new byte[1024];
-                //int bytes = 0;
-                //bytes = rep.data.Receive(recvBytes, recvBytes.Length, 0);
-                //MessageBox.Show(ScaleConvertor.HexBytesToString(recvBytes));
-                //MessageBox.Show(Encoding.Default.GetString(recvBytes));
-                //rep.data.Shutdown(SocketShutdown.Both);
-                //rep.data.Close();
-                MessageBox.Show("结束通讯...");
+                currentAgvPoint = rep.data;
             }
             else
             {

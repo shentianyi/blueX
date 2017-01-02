@@ -1,4 +1,5 @@
-﻿using ScmWcfService.Config;
+﻿using Brilliantech.Framwork.Utils.ConvertUtil;
+using ScmWcfService.Config;
 using ScmWcfService.Model.Message;
 using System;
 using System.Collections.Generic;
@@ -51,19 +52,84 @@ namespace ScmWcfService
         {
             ProtocolMessage<Socket> rep = new ProtocolMessage<Socket>(false);
 
-            int count = socket.Send(msg, msg.Length, 0);
-            if (count == msg.Count())
+            if (socket == null)
             {
-                //MessageBox.Show("发送数据(长度" + count.ToString() + "):" + ScaleConvertor.HexBytesToString(msg));
-                rep.result = true;
-                rep.data = socket;
-            }
-            else
-            {
-                MessageBox.Show("发送失败！");
+                MessageBox.Show("与服务器连接断开！");
+                return null;
             }
 
-            return rep;
+            try
+            {
+                int count = socket.Send(msg, msg.Length, 0);
+                if (count == msg.Count())
+                {
+                    //MessageBox.Show("发送数据(长度" + count.ToString() + "):" + ScaleConvertor.HexBytesToString(msg));
+                    rep.result = true;
+                    rep.data = socket;
+                }
+                else
+                {
+                    MessageBox.Show("发送失败！");
+                }
+
+                return rep;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return null;
+        }
+
+
+        public ProtocolMessage<int> GetAgvInfo(Socket socket)
+        {
+            ProtocolMessage<int> rep = new ProtocolMessage<int>(false);
+            byte[] msg = new byte[]
+            {
+                0xFD, 0x13, 0x00, 0x07, 0x0F, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+            };
+
+            msg[4] = (byte)ServerConfig.agvCarNr;
+
+            if (socket == null)
+            {
+                MessageBox.Show("与服务器连接断开！");
+                return null;
+            }
+
+            try
+            {
+                int count = socket.Send(msg, msg.Length, 0);
+                if (count == msg.Count())
+                {
+                    //MessageBox.Show("发送数据(长度" + count.ToString() + "):" + ScaleConvertor.HexBytesToString(msg));
+
+                    //MessageBox.Show("开始接收数据...");
+                    byte[] recvBytes = new byte[1024];
+                    int bytes = 0;
+                    bytes = socket.Receive(recvBytes, recvBytes.Length, 0);
+                    //MessageBox.Show(ScaleConvertor.HexBytesToString(recvBytes));
+                    //MessageBox.Show(Encoding.Default.GetString(recvBytes));
+                    //MessageBox.Show("结束通讯...");
+
+                    rep.result = true;
+                    rep.data = ScaleConvertor.HexByteToDecimal(recvBytes[3]);
+                }
+                else
+                {
+                    MessageBox.Show("发送失败！");
+                }
+                
+                return rep;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return null;
         }
     }
 }

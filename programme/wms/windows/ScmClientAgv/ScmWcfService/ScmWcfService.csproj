@@ -95,14 +95,17 @@
     <Compile Include="IPickService.cs" />
     <Compile Include="IProtocolService.cs" />
     <Compile Include="IWarehouseService.cs" />
+    <Compile Include="Model\DockPoint.cs" />
     <Compile Include="Model\Enum\DoorType.cs" />
     <Compile Include="Model\Enum\OrderCarStatus.cs" />
     <Compile Include="Model\Enum\OrderBoxStatus.cs" />
     <Compile Include="Model\Enum\OrderStatus.cs" />
     <Compile Include="Model\Enum\PickStatus.cs" />
     <Compile Include="Model\Enum\RFIDReaderType.cs" />
+    <Compile Include="Model\Led.cs" />
     <Compile Include="Model\Message\ProtocolMessage.cs" />
     <Compile Include="Model\Message\TcpMessage.cs" />
+    <Compile Include="Model\Modem.cs" />
     <Compile Include="Model\Warehouse.cs" />
     <Compile Include="Model\Part.cs" />
     <Compile Include="Model\OrderBoxType.cs" />

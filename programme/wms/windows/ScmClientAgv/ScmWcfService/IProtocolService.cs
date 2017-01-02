@@ -21,5 +21,8 @@ namespace ScmWcfService
 
         [OperationContract]
         ProtocolMessage<Socket> SendMessage(Socket socket, byte[] msg);
+
+        [OperationContract]
+        ProtocolMessage<int> GetAgvInfo(Socket socket);
     }
 }
