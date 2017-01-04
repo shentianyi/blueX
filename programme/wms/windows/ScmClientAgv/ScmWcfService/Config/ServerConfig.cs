@@ -21,7 +21,7 @@ namespace ScmWcfService.Config
                 agvHost = config.Get("AgvHost");
                 agvPort = int.Parse(config.Get("AgvPort"));
                 ptlHost = config.Get("PtlHost");
-                ptlPort = int.Parse(config.Get("AgvPort"));
+                ptlPort = int.Parse(config.Get("PtlPort"));
                 agvCarNr = int.Parse(config.Get("AgvCarNr"));
             }
             catch (Exception e)

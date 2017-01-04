@@ -83,7 +83,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBox  Name="ScanTB" BorderBrush="#0e80b0" MinWidth="250" Margin="5"  Height="40" KeyUp="ScanTB_KeyUp" />
                                 <Button Content="称重" Height="40" Width="60" Name="countBtn" Click="countBtn_Click"/>
-                                <Button Content="启动AGV" Height="40" Width="60" Name="startAgvBtn" Margin="5" Click="startAgvBtn_Click" />
+                                <Button Content="启动AGV" Height="40" Width="60" Name="startAgvBtn" Margin="150,5,5,5" Click="startAgvBtn_Click" />
                             </StackPanel>
                         </StackPanel>
                         <StackPanel HorizontalAlignment="Left">

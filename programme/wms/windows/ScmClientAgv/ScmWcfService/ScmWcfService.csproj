@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="OrderService.svc" />
+    <Content Include="PathOptimizationService.svc" />
     <Content Include="PickService.svc" />
     <Content Include="ProtocolService.svc" />
     <Content Include="UserService.svc" />
@@ -92,6 +93,7 @@
     <Compile Include="Config\BaseConfig.cs" />
     <Compile Include="Config\ServerConfig.cs" />
     <Compile Include="IOrderService.cs" />
+    <Compile Include="IPathOptimizationService.cs" />
     <Compile Include="IPickService.cs" />
     <Compile Include="IProtocolService.cs" />
     <Compile Include="IWarehouseService.cs" />
@@ -112,6 +114,9 @@
     <Compile Include="Model\Position.cs" />
     <Compile Include="OrderService.svc.cs">
       <DependentUpon>OrderService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="PathOptimizationService.svc.cs">
+      <DependentUpon>PathOptimizationService.svc</DependentUpon>
     </Compile>
     <Compile Include="PickService.svc.cs">
       <DependentUpon>PickService.svc</DependentUpon>

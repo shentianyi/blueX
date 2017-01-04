@@ -36,6 +36,17 @@ namespace ScmClient
         List<PickItem> pickItems;
         string carNr;
         int currentAgvPoint = 0;
+        Socket socket = null;
+        Socket ptlSocket = null;
+        ProtocolService tcs = new ProtocolService();
+        private byte[] station_msg = new byte[] {
+                                                          //方向
+                0xFD, 0x13, 0x00, 0x07, 0x0F, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+            };
+
+        private byte[] ptl_msg = new byte[] {
+            0x01, 0x00, 0x00, 0x01, 0x02, 0x01, 0xC0, 0x01, 0x00, 0x02, 0xFF, 0xFF, 0x00
+        };
 
         public PickListWindow(string carNr,List<PickItem> pickItems)
         {
@@ -65,9 +76,11 @@ namespace ScmClient
 
 
 
-        private void showWeight(PickItem item) 
+        private void showWeight(PickItem item, Socket ptlSocket) 
         {
-            new PickWeightWindow(item,this).ShowDialog();
+            sendAgvAndPtlCmd(item);
+
+            new PickWeightWindow(ptlSocket, item, this).ShowDialog();
         }
 
         private void ScanTB_KeyUp(object sender, KeyEventArgs e)
@@ -77,7 +90,7 @@ namespace ScmClient
                 PickItem item = getPickItem(ScanTB.Text.Trim());
                 if (item != null)
                 {
-                    showWeight(item);
+                    showWeight(item, ptlSocket);
                 }
                 else
                 {
@@ -99,7 +112,7 @@ namespace ScmClient
         private void countBtn_Click(object sender, RoutedEventArgs e)
         {
             if (PreviewDG.SelectedIndex > -1) {
-                showWeight(PreviewDG.SelectedItem as PickItem);
+                showWeight(PreviewDG.SelectedItem as PickItem, ptlSocket);
             }
         }
 
@@ -131,12 +144,18 @@ namespace ScmClient
         {
             if (PreviewDG.SelectedIndex > -1)
             {
-                showWeight(PreviewDG.SelectedItem as PickItem);
+                showWeight(PreviewDG.SelectedItem as PickItem, ptlSocket);
             }
         }
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            //if (socket != null)
+            //{
+            //    socket.Shutdown(SocketShutdown.Both);
+            //    socket.Close();
+            //}
+
             if (MessageBox.Show("确定关闭？", "提醒", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
             {
                 e.Cancel = false;
@@ -147,13 +166,6 @@ namespace ScmClient
                 e.Cancel = true;
             }
         }
-
-        Socket socket = null;
-        ProtocolService tcs = new ProtocolService();
-        private byte[] station_msg = new byte[] {
-                                                          //方向
-                0xFD, 0x13, 0x00, 0x06, 0x0F, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-            };
 
         public int getAgvPoint()
         {
@@ -224,8 +236,44 @@ namespace ScmClient
             return;
         }
 
+        private void sendPtlCmd(byte[] msg)
+        {
+            if (ptlSocket == null)
+            {
+                ptlSocket = tcs.ConnectServer(ServerConfig.ptlHost, ServerConfig.ptlPort);
+
+                if (ptlSocket == null)
+                {
+                    MessageBox.Show("PTL服务器连接失败....");
+                    return;
+                }
+            }
+
+            ProtocolMessage<Socket> rep = tcs.SendMessage(ptlSocket, msg);
+
+            if (rep.result)
+            {
+                //MessageBox.Show("开始接收数据...");
+                //byte[] recvBytes = new byte[1024];
+                //int bytes = 0;
+                ////bytes = rep.data.Receive(recvBytes, recvBytes.Length, 0);
+                ////MessageBox.Show(ScaleConvertor.HexBytesToString(recvBytes));
+                ////MessageBox.Show(Encoding.Default.GetString(recvBytes));
+                ////rep.data.Shutdown(SocketShutdown.Both);
+                ////rep.data.Close();
+                MessageBox.Show("PTL结束通讯...");
+            }
+            else
+            {
+                MessageBox.Show("PTL发送失败...");
+            }
+
+            return;
+        }
+
         private void sendAgvAndPtlCmd(PickItem item)
         {
+            PathOptimizationService pos = new PathOptimizationService();
             //send agv cmd
             if (currentAgvPoint == 0)
             {
@@ -234,11 +282,12 @@ namespace ScmClient
 
             //TODO generate direction cmd 
             byte[] msg = station_msg;
-            msg[8] = 0x01;
 
-            if (item.order_box!=null && item.order_box.position_leds[0]!=null && item.order_box.position_leds[0].dock_point != null)
+            if (item.order_box != null && item.order_box.position_leds[0] != null && item.order_box.position_leds[0].dock_point.id != null)
             {
+                msg[8] = pos.GetBestDirection(currentAgvPoint, int.Parse(item.order_box.position_leds[0].dock_point.id));
                 msg[7] = (byte)(int.Parse(item.order_box.position_leds[0].dock_point.id));
+                MessageBox.Show(ScaleConvertor.HexBytesToString(msg));
                 sendDesStation(msg);
             }
             else
@@ -246,8 +295,40 @@ namespace ScmClient
                 MessageBox.Show("未找到停靠点信息,请联系管理员...");
             }
 
-            
+
             //TODO send ptl cmd
+            byte[] ptlMsg = ptl_msg;
+            
+
+            if (item.order_box != null && item.order_box.position_leds[0] != null
+                && item.order_box.position_leds[0].led.id != null
+                && item.order_box.position_leds[0].led.modem.id != null)
+            {
+                ptlMsg[0] = (byte)(int.Parse(item.order_box.position_leds[0].led.modem.id));
+                ptlMsg[4] = (byte)(int.Parse(item.order_box.position_leds[0].led.id));
+                ptlMsg[9] = (byte)(int.Parse(item.order_box.position_leds[0].led.id));
+                MessageBox.Show(ScaleConvertor.HexBytesToString(ptlMsg));
+                sendPtlCmd(ptlMsg);
+            }
+            else
+            {
+                MessageBox.Show("未找到择货位置信息,请联系管理员...");
+            }
+
+            if (item.order_box != null && item.order_box.box_led != null
+                    && item.order_box.box_led.id != null
+                    && item.order_box.box_led.modem.id != null)
+            {
+                ptlMsg[0] = (byte)(int.Parse(item.order_box.box_led.modem.id));
+                ptlMsg[4] = (byte)(int.Parse(item.order_box.box_led.id));
+                ptlMsg[9] = (byte)(int.Parse(item.order_box.box_led.id));
+                MessageBox.Show(ScaleConvertor.HexBytesToString(ptlMsg));
+                sendPtlCmd(ptlMsg);
+            }
+            else
+            {
+                MessageBox.Show("未找到料盒LED灯信息,请联系管理员...");
+            }
 
             return;
         }

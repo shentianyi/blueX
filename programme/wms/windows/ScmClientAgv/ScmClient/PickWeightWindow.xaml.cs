@@ -20,6 +20,9 @@ using ScmWcfService.Config;
 using SpeechLib;
 using ScmClient.Properties;
 using Brilliantech.Framwork.Utils.LogUtil;
+using System.Net.Sockets;
+using ScmWcfService.Model.Message;
+using Brilliantech.Framwork.Utils.ConvertUtil;
 
 namespace ScmClient
 {
@@ -36,7 +39,8 @@ namespace ScmClient
         bool valid=false;
 
         PickListWindow parentWindow;
-
+        Socket ptlSocket;
+        ProtocolService tcs = new ProtocolService();
 
         // net weight
         float net_weight = 0;
@@ -49,9 +53,10 @@ namespace ScmClient
         }
 
 
-        public PickWeightWindow(PickItem item,PickListWindow parentWindow)
+        public PickWeightWindow(Socket socket, PickItem item,PickListWindow parentWindow)
         {
             InitializeComponent();
+            this.ptlSocket = socket;
             this.item = item;
             this.parentWindow = parentWindow;
         }
@@ -197,12 +202,97 @@ namespace ScmClient
             System.Windows.Forms.MessageBox.Show(message);
         }
 
+        private byte[] ptl_msg = new byte[] {
+            0x01, 0x00, 0x00, 0x01, 0x02, 0x01, 0xC0, 0x01, 0x00, 0x02, 0xFF, 0xFF, 0x00
+        };
+
+        private byte[] generatePtlColorCmd(byte r, byte g, byte b)
+        {
+            byte[] ptlMsg = ptl_msg;
+
+
+            if (item.order_box != null && item.order_box.position_leds[0] != null
+                && item.order_box.position_leds[0].led.id != null
+                && item.order_box.position_leds[0].led.modem.id != null)
+            {
+                ptlMsg[0] = (byte)(int.Parse(item.order_box.position_leds[0].led.modem.id));
+                ptlMsg[4] = (byte)(int.Parse(item.order_box.position_leds[0].led.id));
+                ptlMsg[9] = (byte)(int.Parse(item.order_box.position_leds[0].led.id));
+                ptlMsg[10] = r;
+                ptlMsg[11] = g;
+                ptlMsg[12] = b;
+                MessageBox.Show(ScaleConvertor.HexBytesToString(ptlMsg));
+                sendPtlCmd(ptlMsg);
+            }
+            else
+            {
+                MessageBox.Show("未找到择货位置LED灯信息,请联系管理员...");
+                return null;
+            }
+
+            if (item.order_box != null && item.order_box.box_led != null
+                    && item.order_box.box_led.id != null
+                    && item.order_box.box_led.modem.id != null)
+            {
+                ptlMsg[0] = (byte)(int.Parse(item.order_box.box_led.modem.id));
+                ptlMsg[4] = (byte)(int.Parse(item.order_box.box_led.id));
+                ptlMsg[9] = (byte)(int.Parse(item.order_box.box_led.id));
+                ptlMsg[10] = r;
+                ptlMsg[11] = g;
+                ptlMsg[12] = b;
+                MessageBox.Show(ScaleConvertor.HexBytesToString(ptlMsg));
+                sendPtlCmd(ptlMsg);
+            }
+            else
+            {
+                MessageBox.Show("未找到料盒LED灯信息,请联系管理员...");
+                return null;
+            }
+
+            return ptlMsg;
+        }
+
+        private void sendPtlCmd(byte[] msg)
+        {
+            if (ptlSocket == null)
+            {
+                ptlSocket = tcs.ConnectServer(ServerConfig.ptlHost, ServerConfig.ptlPort);
+
+                if (ptlSocket == null)
+                {
+                    MessageBox.Show("PTL服务器连接失败....");
+                    return;
+                }
+            }
+
+            ProtocolMessage<Socket> rep = tcs.SendMessage(ptlSocket, msg);
+
+            if (rep.result)
+            {
+                //MessageBox.Show("开始接收数据...");
+                //byte[] recvBytes = new byte[1024];
+                //int bytes = 0;
+                ////bytes = rep.data.Receive(recvBytes, recvBytes.Length, 0);
+                ////MessageBox.Show(ScaleConvertor.HexBytesToString(recvBytes));
+                ////MessageBox.Show(Encoding.Default.GetString(recvBytes));
+                ////rep.data.Shutdown(SocketShutdown.Both);
+                ////rep.data.Close();
+                MessageBox.Show("PTL结束通讯...");
+            }
+            else
+            {
+                MessageBox.Show("PTL发送失败...");
+            }
+
+            return;
+        }
 
         private void validateWeight()
         {
             string alertMessage = "";
             valid = false;
             float weight = 0;
+
             if (float.TryParse(actualWeightTB.Text.Trim(), out weight))
             {
                 if (weight > 0)
@@ -226,6 +316,8 @@ namespace ScmClient
                             alertLabel.Content = "通过";
                             this.parentWindow.RefreshData();
                             new VoiceHelper("通过").Speak();
+                            
+                            generatePtlColorCmd(0x00, 0x00, 0x00);
                         }
                         else
                         {

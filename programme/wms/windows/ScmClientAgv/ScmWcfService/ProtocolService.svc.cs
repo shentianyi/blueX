@@ -115,7 +115,7 @@ namespace ScmWcfService
                     //MessageBox.Show("结束通讯...");
 
                     rep.result = true;
-                    rep.data = ScaleConvertor.HexByteToDecimal(recvBytes[3]);
+                    rep.data = ScaleConvertor.HexByteToDecimal(recvBytes[6]);
                 }
                 else
                 {
