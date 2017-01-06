@@ -1,4 +1,8 @@
-﻿Partial Public Class Login
+﻿
+Imports AutoWork.MsgLevel
+Imports AutoWork.MsgDialog
+
+Partial Public Class Login
     Inherits Window
     Public Sub New()
         InitializeComponent()
@@ -72,5 +76,15 @@
 
     Private Sub textBox_station_TextChanged(sender As Object, e As TextChangedEventArgs) Handles textBox_station.TextChanged
 
+    End Sub
+
+    Private Sub button_Click(sender As Object, e As RoutedEventArgs) Handles button.Click
+        Dim full As ImageFullWindow = New ImageFullWindow(Me)
+        full.Show()
+    End Sub
+
+    Private Sub button1_Click(sender As Object, e As RoutedEventArgs) Handles button1.Click
+        Dim msg As String = "上一次作业指导书为:123" & ", 本次为：" & "456"
+        CMsgDlg(MsgLevel.Warning, msg, True, Nothing, My.Settings.SameWIColseTime).ShowDialog()
     End Sub
 End Class

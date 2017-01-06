@@ -26,7 +26,7 @@
             <Canvas Margin="10,10,10,0" >
                 <TextBox x:Name="textBox_station" Height="52" Canvas.Left="411" TextWrapping="Wrap" Text="Station Name" Canvas.Top="96" Width="287" FontSize="32" Foreground="#FFACA1A1"/>
                 <TextBox x:Name="textBox_operator" Height="52" Canvas.Left="411" TextWrapping="Wrap" Text=" Staff ID" Canvas.Top="227" Width="287" FontSize="32" Foreground="#FFACA1A1"/>
-                <Image Height="150" Width="106" Source="/images/forklift one.png" Canvas.Left="81" Canvas.Top="136"/>
+                <Image Height="150" Width="106" Source="/images/forklift one.png" Canvas.Left="81" Canvas.Top="136" Name="image_wi"/>
                 <Button x:Name="button_confirm" FontFamily="Solomon_Sans_Bold" BorderThickness="1" Background="#FFFFFEFE" Height="88" Canvas.Left="540" Canvas.Top="326" Width="158">
                     <DockPanel>
                         <Image Height="30" Width="44"  Source="/images/confirm icon.png"/>
@@ -35,6 +35,8 @@
                 </Button>
                 <Label x:Name="label" Content="站台号" Canvas.Left="258" Canvas.Top="103" FontSize="26.667" Foreground="White"/>
                 <Label x:Name="label_Copy" Content="员工号" Canvas.Left="258" Canvas.Top="234" RenderTransformOrigin="-0.268,0.375" FontSize="26.667" Background="{x:Null}" Foreground="White"/>
+                <Button x:Name="button" Content="test image" Canvas.Left="134" Canvas.Top="360" Width="75" Visibility="Hidden"/>
+                <Button x:Name="button1" Content="test msg" Canvas.Left="258" Canvas.Top="360" Width="75" Visibility="Hidden"/>
 
             </Canvas>
         </Grid>

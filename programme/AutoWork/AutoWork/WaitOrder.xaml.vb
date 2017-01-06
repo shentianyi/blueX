@@ -1,6 +1,8 @@
 ﻿Imports PLCLightCL
 Imports KskPlugInSharedObject
 Imports System.ComponentModel
+Imports AutoWork.MsgLevel
+Imports AutoWork.MsgDialog
 
 Partial Public Class WaitOrder
     Inherits Window
@@ -68,6 +70,20 @@ Partial Public Class WaitOrder
                     db.SubmitChanges()
 
                     MsgBox("LEPS作业指导书" & String.Join(";", wis.ToArray), MsgBoxStyle.Information)
+
+                    '判断指导书是否重复
+                    If String.IsNullOrEmpty(My.Settings.LastLeps) Then
+                        My.Settings.LastLeps = wis(0)
+                    Else
+                        If Not My.Settings.LastLeps.Equals(wis(0)) Then
+                            Dim msg As String = "上一次作业指导书为:" & My.Settings.LastLeps + ", 本次为：" & wis(0)
+                            ' MessageBox.Show("上一次", MsgBoxStyle.Information)
+                            My.Settings.LastLeps = wis(0)
+                            CMsgDlg(MsgLevel.Warning, msg, True, Nothing, My.Settings.SameWIColseTime).ShowDialog()
+                        End If
+
+                    End If
+
 
                     Dim working As Working = New Working(headMsg, wis(0))
                     goLogin = False

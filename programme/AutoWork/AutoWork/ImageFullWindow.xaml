@@ -6,8 +6,11 @@
         xmlns:local="clr-namespace:AutoWork"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen" WindowState="Maximized"
-        Background="Transparent" >
+        Background="Transparent" WindowStyle="None">
     <Grid Background="Transparent">
-        <Image Name="image"/>
+        <Image Name="image" />
+        <Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="Transparent"
+                Height="100" Width="100" Opacity="0.05" Click="Button_Click"
+                Name="CloseBtn"></Button>
     </Grid>
 </Window>

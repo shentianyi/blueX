@@ -153,20 +153,56 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("ftp://127.0.0.1")>  _
+     Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+    Public ReadOnly Property RemoteImage() As Boolean
+        Get
+            Return CType(Me("RemoteImage"),Boolean)
+        End Get
+    End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("http://10.180.168.5:9000/aw/images/")>  _
     Public ReadOnly Property FTPServer() As String
         Get
             Return CType(Me("FTPServer"),String)
         End Get
     End Property
     
-    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-    Public ReadOnly Property RemoteImage() As Boolean
+     Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+    Public Property LastLeps() As String
         Get
-            Return CType(Me("RemoteImage"),Boolean)
+            Return CType(Me("LastLeps"),String)
         End Get
+        Set
+            Me("LastLeps") = value
+        End Set
+    End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("2")>  _
+    Public Property SameWIColseTime() As Integer
+        Get
+            Return CType(Me("SameWIColseTime"),Integer)
+        End Get
+        Set
+            Me("SameWIColseTime") = value
+        End Set
+    End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("#FFFF00")>  _
+    Public Property SameWIMsgWindowColor() As String
+        Get
+            Return CType(Me("SameWIMsgWindowColor"),String)
+        End Get
+        Set
+            Me("SameWIMsgWindowColor") = value
+        End Set
     End Property
 End Class
 
