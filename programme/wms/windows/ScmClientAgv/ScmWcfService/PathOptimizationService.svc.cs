@@ -300,19 +300,19 @@ namespace ScmWcfService
             {
                 if (destination > 0 && destination <= 5)
                 {
-                    direction = 0x01;
+                    direction = 0x02;
                 }
                 else if (destination >= 6 && destination <= 15)
                 {
-                    direction = 0x01;
+                    direction = 0x02;
                 }
                 else if (destination >= 16 && destination <= 20)
                 {
-                    direction = 0x01;
+                    direction = 0x02;
                 }
                 else if (destination >= 21 && destination <= 30)
                 {
-                    direction = 0x01;
+                    direction = 0x02;
                 }
                 else if (destination >= 31 && destination <= 35)
                 {
@@ -324,11 +324,11 @@ namespace ScmWcfService
                 }
                 else if (destination == 41)//启动牵引点
                 {
-                    direction = 0x01;
+                    direction = 0x02;
                 }
                 else if (destination == 42)//卸货点
                 {
-                    direction = 0x01;
+                    direction = 0x02;
                 }
             }
             else if (source == 41)//启动牵引点
@@ -351,7 +351,7 @@ namespace ScmWcfService
                 }
                 else if (destination >= 31 && destination <= 35)
                 {
-                    direction = 0x02;
+                    direction = 0x01;
                 }
                 else if (destination == 50)//待机点
                 {

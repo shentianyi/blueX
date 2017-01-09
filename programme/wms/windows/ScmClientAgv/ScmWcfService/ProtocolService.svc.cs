@@ -38,7 +38,7 @@ namespace ScmWcfService
                 //   Socket SocketTcp = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 tcpClient.Connect(new IPEndPoint(IPAddress.Parse(ip), port));
 
-                MessageBox.Show("连接服务器成功");
+                //MessageBox.Show("连接服务器成功");
                 return tcpClient;
             }
             catch (Exception ex)

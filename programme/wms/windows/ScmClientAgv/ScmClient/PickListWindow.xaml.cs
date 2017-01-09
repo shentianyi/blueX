@@ -19,6 +19,8 @@ using ScmClient.service;
 using Brilliantech.Framwork.Utils.ConvertUtil;
 using ScmWcfService;
 using ScmWcfService.Model.Message;
+using PLCLightCL.Light;
+using Brilliantech.Framwork.Utils.LogUtil;
 
 namespace ScmClient
 {
@@ -48,6 +50,8 @@ namespace ScmClient
             0x01, 0x00, 0x00, 0x01, 0x02, 0x01, 0xC0, 0x01, 0x00, 0x02, 0xFF, 0xFF, 0x00
         };
 
+        ILightController lightController;
+
         public PickListWindow(string carNr,List<PickItem> pickItems)
         {
             InitializeComponent();
@@ -57,6 +61,7 @@ namespace ScmClient
 
         private void MetroWindow_Closing(object sender, EventArgs e)
         {
+            lightController.Close();
             new MenuWindow().Show();
         }
 
@@ -70,6 +75,15 @@ namespace ScmClient
             
 
             PreviewDG.ItemsSource = this.pickItems;
+
+            try
+            {
+                lightController = new RamLightController(ServerConfig.ptlComPort);
+            }
+            catch (Exception ex)
+            {
+                LogUtil.Logger.Error(ex.Message);
+            }
 
             ScanTB.Focus();
         }
@@ -131,6 +145,19 @@ namespace ScmClient
         {
             if (MessageBox.Show("请确定?", "确定", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
+                PathOptimizationService pos = new PathOptimizationService();
+                //回到卸货点
+                byte[] msg = station_msg;
+                //cmd type
+                msg[05] = 0x01;
+                //direction
+                msg[8] = pos.GetBestDirection(currentAgvPoint, 42);
+                //point
+                msg[7] = 0x2A;
+                currentAgvPoint = 42;
+
+                sendDesStation(msg);
+
                 this.Close();
             }
         }
@@ -155,9 +182,10 @@ namespace ScmClient
             //    socket.Shutdown(SocketShutdown.Both);
             //    socket.Close();
             //}
-
+            
             if (MessageBox.Show("确定关闭？", "提醒", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
             {
+                //lightController.Close();
                 e.Cancel = false;
                 new MenuWindow().Show();
             }
@@ -226,7 +254,7 @@ namespace ScmClient
                 ////MessageBox.Show(Encoding.Default.GetString(recvBytes));
                 ////rep.data.Shutdown(SocketShutdown.Both);
                 ////rep.data.Close();
-                MessageBox.Show("结束通讯...");
+                //MessageBox.Show("结束通讯...");
             }
             else
             {
@@ -261,7 +289,7 @@ namespace ScmClient
                 ////MessageBox.Show(Encoding.Default.GetString(recvBytes));
                 ////rep.data.Shutdown(SocketShutdown.Both);
                 ////rep.data.Close();
-                MessageBox.Show("PTL结束通讯...");
+                //MessageBox.Show("PTL结束通讯...");
             }
             else
             {
@@ -283,11 +311,15 @@ namespace ScmClient
             //TODO generate direction cmd 
             byte[] msg = station_msg;
 
-            if (item.order_box != null && item.order_box.position_leds[0] != null && item.order_box.position_leds[0].dock_point.id != null)
+            if (item.order_box != null 
+                && item.order_box.position_leds.Count > 0
+                && item.order_box.position_leds[0] != null 
+                && item.order_box.position_leds[0].dock_point.id != null)
             {
                 msg[8] = pos.GetBestDirection(currentAgvPoint, int.Parse(item.order_box.position_leds[0].dock_point.id));
                 msg[7] = (byte)(int.Parse(item.order_box.position_leds[0].dock_point.id));
-                MessageBox.Show(ScaleConvertor.HexBytesToString(msg));
+                currentAgvPoint = int.Parse(item.order_box.position_leds[0].dock_point.id);
+                //MessageBox.Show(ScaleConvertor.HexBytesToString(msg));
                 sendDesStation(msg);
             }
             else
@@ -300,14 +332,15 @@ namespace ScmClient
             byte[] ptlMsg = ptl_msg;
             
 
-            if (item.order_box != null && item.order_box.position_leds[0] != null
+            if (item.order_box != null && item.order_box.position_leds.Count > 0
+                && item.order_box.position_leds[0] != null
                 && item.order_box.position_leds[0].led.id != null
                 && item.order_box.position_leds[0].led.modem.id != null)
             {
                 ptlMsg[0] = (byte)(int.Parse(item.order_box.position_leds[0].led.modem.id));
                 ptlMsg[4] = (byte)(int.Parse(item.order_box.position_leds[0].led.id));
                 ptlMsg[9] = (byte)(int.Parse(item.order_box.position_leds[0].led.id));
-                MessageBox.Show(ScaleConvertor.HexBytesToString(ptlMsg));
+                //MessageBox.Show(ScaleConvertor.HexBytesToString(ptlMsg));
                 sendPtlCmd(ptlMsg);
             }
             else
@@ -315,15 +348,17 @@ namespace ScmClient
                 MessageBox.Show("未找到择货位置信息,请联系管理员...");
             }
 
-            if (item.order_box != null && item.order_box.box_led != null
+            if (item.order_box != null && item.order_box.position_leds.Count > 0
+                    && item.order_box.box_led != null
                     && item.order_box.box_led.id != null
                     && item.order_box.box_led.modem.id != null)
             {
-                ptlMsg[0] = (byte)(int.Parse(item.order_box.box_led.modem.id));
-                ptlMsg[4] = (byte)(int.Parse(item.order_box.box_led.id));
-                ptlMsg[9] = (byte)(int.Parse(item.order_box.box_led.id));
-                MessageBox.Show(ScaleConvertor.HexBytesToString(ptlMsg));
-                sendPtlCmd(ptlMsg);
+                lightController.Play(PLCLightCL.Enum.LightCmdType.ON, new List<int>() { int.Parse(item.order_box.box_led.id) });
+                //ptlMsg[0] = (byte)(int.Parse(item.order_box.box_led.modem.id));
+                //ptlMsg[4] = (byte)(int.Parse(item.order_box.box_led.id));
+                //ptlMsg[9] = (byte)(int.Parse(item.order_box.box_led.id));
+                ////MessageBox.Show(ScaleConvertor.HexBytesToString(ptlMsg));
+                //sendPtlCmd(ptlMsg);
             }
             else
             {
@@ -386,6 +421,11 @@ namespace ScmClient
             //}
 
             //return;
+        }
+
+        private void bindLedBtn_Click(object sender, RoutedEventArgs e)
+        {
+            new BindWindow().ShowDialog();
         }
     }
 }

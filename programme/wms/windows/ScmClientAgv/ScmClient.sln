@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScmWcfService", "ScmWcfService\ScmWcfService.csproj", "{C93C0D82-867E-441C-9F9D-E39285F97D4A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PLCLightCL", "..\..\..\ptl\windows\PLCLightCL\PLCLightCL.csproj", "{7751F1B1-C4CC-490B-9FD8-15F332122A9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,18 @@ Global
 		{C93C0D82-867E-441C-9F9D-E39285F97D4A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C93C0D82-867E-441C-9F9D-E39285F97D4A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C93C0D82-867E-441C-9F9D-E39285F97D4A}.Release|x86.ActiveCfg = Release|Any CPU
+		{7751F1B1-C4CC-490B-9FD8-15F332122A9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7751F1B1-C4CC-490B-9FD8-15F332122A9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7751F1B1-C4CC-490B-9FD8-15F332122A9A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7751F1B1-C4CC-490B-9FD8-15F332122A9A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7751F1B1-C4CC-490B-9FD8-15F332122A9A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7751F1B1-C4CC-490B-9FD8-15F332122A9A}.Debug|x86.Build.0 = Debug|Any CPU
+		{7751F1B1-C4CC-490B-9FD8-15F332122A9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7751F1B1-C4CC-490B-9FD8-15F332122A9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7751F1B1-C4CC-490B-9FD8-15F332122A9A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7751F1B1-C4CC-490B-9FD8-15F332122A9A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7751F1B1-C4CC-490B-9FD8-15F332122A9A}.Release|x86.ActiveCfg = Release|Any CPU
+		{7751F1B1-C4CC-490B-9FD8-15F332122A9A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

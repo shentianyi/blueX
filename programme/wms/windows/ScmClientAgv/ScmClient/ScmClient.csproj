@@ -108,6 +108,9 @@
     <Compile Include="AgvActionWindow.xaml.cs">
       <DependentUpon>AgvActionWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BindWindow.xaml.cs">
+      <DependentUpon>BindWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Enum\SoundType.cs" />
     <Compile Include="Helper\LogHelper.cs" />
     <Compile Include="Helper\PathHelper.cs" />
@@ -153,6 +156,10 @@
     <Page Include="AgvActionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BindWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
@@ -302,6 +309,10 @@
       <Project>{9b5f850a-5136-4095-8955-6c4f7747c48a}</Project>
       <Name>Brilliantech.Framwork</Name>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\ptl\windows\PLCLightCL\PLCLightCL.csproj">
+      <Project>{7751f1b1-c4cc-490b-9fd8-15f332122a9a}</Project>
+      <Name>PLCLightCL</Name>
     </ProjectReference>
     <ProjectReference Include="..\ScmWcfService\ScmWcfService.csproj">
       <Project>{C93C0D82-867E-441C-9F9D-E39285F97D4A}</Project>

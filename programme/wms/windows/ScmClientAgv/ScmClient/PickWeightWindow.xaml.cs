@@ -23,6 +23,7 @@ using Brilliantech.Framwork.Utils.LogUtil;
 using System.Net.Sockets;
 using ScmWcfService.Model.Message;
 using Brilliantech.Framwork.Utils.ConvertUtil;
+using PLCLightCL.Light;
 
 namespace ScmClient
 {
@@ -46,7 +47,7 @@ namespace ScmClient
         float net_weight = 0;
         bool net_weighted = false;
 
-
+        ILightController lightController;
         public PickWeightWindow()
         {
             InitializeComponent();
@@ -114,6 +115,9 @@ namespace ScmClient
                     }
                     catch { }
                 }
+
+                lightController = new RamLightController(ServerConfig.ptlComPort);
+
             }
             catch (Exception ex) {
                 LogUtil.Logger.Error(ex.Message);
@@ -211,7 +215,8 @@ namespace ScmClient
             byte[] ptlMsg = ptl_msg;
 
 
-            if (item.order_box != null && item.order_box.position_leds[0] != null
+            if (item.order_box != null && item.order_box.position_leds.Count > 0
+                && item.order_box.position_leds[0] != null
                 && item.order_box.position_leds[0].led.id != null
                 && item.order_box.position_leds[0].led.modem.id != null)
             {
@@ -221,7 +226,7 @@ namespace ScmClient
                 ptlMsg[10] = r;
                 ptlMsg[11] = g;
                 ptlMsg[12] = b;
-                MessageBox.Show(ScaleConvertor.HexBytesToString(ptlMsg));
+                //MessageBox.Show(ScaleConvertor.HexBytesToString(ptlMsg));
                 sendPtlCmd(ptlMsg);
             }
             else
@@ -230,18 +235,20 @@ namespace ScmClient
                 return null;
             }
 
-            if (item.order_box != null && item.order_box.box_led != null
+            if (item.order_box != null && item.order_box.position_leds.Count > 0
+                    && item.order_box.box_led != null
                     && item.order_box.box_led.id != null
                     && item.order_box.box_led.modem.id != null)
             {
-                ptlMsg[0] = (byte)(int.Parse(item.order_box.box_led.modem.id));
-                ptlMsg[4] = (byte)(int.Parse(item.order_box.box_led.id));
-                ptlMsg[9] = (byte)(int.Parse(item.order_box.box_led.id));
-                ptlMsg[10] = r;
-                ptlMsg[11] = g;
-                ptlMsg[12] = b;
-                MessageBox.Show(ScaleConvertor.HexBytesToString(ptlMsg));
-                sendPtlCmd(ptlMsg);
+                lightController.Play(PLCLightCL.Enum.LightCmdType.OFF, new List<int>() { int.Parse(item.order_box.box_led.id) });
+                //ptlMsg[0] = (byte)(int.Parse(item.order_box.box_led.modem.id));
+                //ptlMsg[4] = (byte)(int.Parse(item.order_box.box_led.id));
+                //ptlMsg[9] = (byte)(int.Parse(item.order_box.box_led.id));
+                //ptlMsg[10] = r;
+                //ptlMsg[11] = g;
+                //ptlMsg[12] = b;
+                ////MessageBox.Show(ScaleConvertor.HexBytesToString(ptlMsg));
+                //sendPtlCmd(ptlMsg);
             }
             else
             {
@@ -277,7 +284,7 @@ namespace ScmClient
                 ////MessageBox.Show(Encoding.Default.GetString(recvBytes));
                 ////rep.data.Shutdown(SocketShutdown.Both);
                 ////rep.data.Close();
-                MessageBox.Show("PTL结束通讯...");
+                //MessageBox.Show("PTL结束通讯...");
             }
             else
             {
@@ -317,6 +324,7 @@ namespace ScmClient
                             this.parentWindow.RefreshData();
                             new VoiceHelper("通过").Speak();
                             
+                            //灭灯
                             generatePtlColorCmd(0x00, 0x00, 0x00);
                         }
                         else
@@ -418,6 +426,7 @@ namespace ScmClient
             parentWindow.Activate();
             parentWindow.ScanTB.Focus();
             parentWindow.ScanTB.SelectAll();
+            lightController.Close();
         }
 
         private void cleanNetWeightBtn_Click(object sender, RoutedEventArgs e)

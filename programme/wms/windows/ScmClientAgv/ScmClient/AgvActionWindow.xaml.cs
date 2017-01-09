@@ -27,6 +27,7 @@ namespace ScmClient
         PickListWindow parentWindow;
         int currentAgvPoint;
 
+        PathOptimizationService pos = new PathOptimizationService();
         Socket socket = null;
         ProtocolService tcs = new ProtocolService();
         private byte[] station_msg = new byte[] {
@@ -66,7 +67,7 @@ namespace ScmClient
 
             if (rep.result)
             {
-                MessageBox.Show("小车返回信息");
+                //MessageBox.Show("小车返回信息");
                 currentAgvPoint = rep.data;
                 label.Content = currentAgvPoint;
             }
@@ -103,7 +104,7 @@ namespace ScmClient
                 ////MessageBox.Show(Encoding.Default.GetString(recvBytes));
                 ////rep.data.Shutdown(SocketShutdown.Both);
                 ////rep.data.Close();
-                MessageBox.Show("结束通讯...");
+                //MessageBox.Show("结束通讯...");
             }
             else
             {
@@ -132,9 +133,11 @@ namespace ScmClient
             //cmd type
             msg[05] = 0x01;
             //direction
-            msg[8] = 0x01;
+            msg[8] = pos.GetBestDirection(currentAgvPoint, 50);
             //point
             msg[7] = 0x32;
+            //currentAgvPoint = ScaleConvertor.HexByteToDecimal(0x32);
+            currentAgvPoint = 50;
 
             sendDesStation(msg);
         }
@@ -145,11 +148,12 @@ namespace ScmClient
             //cmd type
             msg[05] = 0x01;
             //direction
-            msg[8] = 0x01;
+            msg[8] = pos.GetBestDirection(currentAgvPoint, 41); ;
             //point
             msg[7] = 0x29;
+            currentAgvPoint = 41;
 
-            sendDesStation(msg);
+            sendDesStation(msg); 
         }
 
         private void finishBtn_Click(object sender, RoutedEventArgs e)
@@ -158,9 +162,10 @@ namespace ScmClient
             //cmd type
             msg[05] = 0x01;
             //direction
-            msg[8] = 0x01;
+            msg[8] = pos.GetBestDirection(currentAgvPoint, 42);
             //point
             msg[7] = 0x2A;
+            currentAgvPoint = 42;
 
             sendDesStation(msg);
         }
