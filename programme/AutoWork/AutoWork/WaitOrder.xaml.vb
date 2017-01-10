@@ -69,8 +69,9 @@ Partial Public Class WaitOrder
                     End If
                     db.SubmitChanges()
 
-                    MsgBox("LEPS作业指导书" & String.Join(";", wis.ToArray), MsgBoxStyle.Information)
-
+                    Dim msg1 As String = "LEPS作业指导书" & String.Join(";", wis.ToArray)
+                    'MsgBox("LEPS作业指导书" & String.Join(";", wis.ToArray), MsgBoxStyle.Information)
+                    CMsgDlg(MsgLevel.Info, msg1, True, Nothing, My.Settings.SameWIColseTime).ShowDialog()
                     '判断指导书是否重复
                     If String.IsNullOrEmpty(My.Settings.LastLeps) Then
                         My.Settings.LastLeps = wis(0)
@@ -79,7 +80,7 @@ Partial Public Class WaitOrder
                             Dim msg As String = "上一次作业指导书为:" & My.Settings.LastLeps + ", 本次为：" & wis(0)
                             ' MessageBox.Show("上一次", MsgBoxStyle.Information)
                             My.Settings.LastLeps = wis(0)
-                            CMsgDlg(MsgLevel.Warning, msg, True, Nothing, My.Settings.SameWIColseTime).ShowDialog()
+                            CMsgDlg(MsgLevel.Warning, msg, True, Nothing).ShowDialog()
                         End If
 
                     End If

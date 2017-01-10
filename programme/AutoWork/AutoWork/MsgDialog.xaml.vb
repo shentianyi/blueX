@@ -86,6 +86,7 @@ Public Class MsgDialog
             Select Case level
                 Case MsgLevel.Info
                     imagePath = infoImage
+                    Me.Background = Brushes.LightBlue
                     Exit Select
                 Case MsgLevel.Mistake
                     imagePath = errorImage
