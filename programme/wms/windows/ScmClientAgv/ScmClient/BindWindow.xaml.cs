@@ -83,7 +83,27 @@ namespace ScmClient
             }
             return null;
         }
-         
+        /// <summary>
+        /// 通过当前的小灯tag查找下一个待绑定的灯
+        /// </summary>
+        /// <param name="curTag"></param>
+        /// <returns></returns>
+        private Button FindNextNotBindByTag(string curTag)
+        {
+            var cs = this.LightButtonGrid.Children;
+            foreach (var c in cs)
+            {
+                if (c is Button)
+                {
+                    var btn = c as Button;
+                    if (int.Parse((btn.Tag).ToString()) > int.Parse(curTag) && btn.Background == Brushes.Transparent)
+                    {
+                        return btn;
+                    }
+                }
+            }
+            return null;
+        }
 
         private void SetNotBindOff()
         {
@@ -146,19 +166,27 @@ namespace ScmClient
                     boxIdTB.Focus();
                     SetLightBinded(lightIdTB.Text);
                     SetNotBindOff();
-                    string tag = (int.Parse(lightIdTB.Text) + 1).ToString();
-                    if (int.Parse(tag) > this.LightButtonGrid.Children.Count)
+
+                    try
                     {
-                        MessageBox.Show("已经完成绑定！");
+                        var btn = FindNextNotBindByTag(lightIdTB.Text);
+                        if (btn != null)
+                        {
+                            string tag = btn.Tag.ToString();
+                            lightIdTB.Text = tag;
+                            SetLightWaitBind(lightIdTB.Text);
+                        }
+                        else
+                        {
+                            MessageBox.Show("已经完成绑定！");
+                        }
+                        boxIdTB.Clear();
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        lightIdTB.Text = tag;
-                        SetLightWaitBind(lightIdTB.Text);
+                        MessageBox.Show(ex.Message);
                     }
                 }
-     
-                boxIdTB.Clear();
             }
         }
 
@@ -170,10 +198,6 @@ namespace ScmClient
                 if(b!= null){
                     SetNotBindOff();
                     SetLightWaitBind(lightIdTB.Text);
-                    //if (b.Background == null)
-                    //{
-                    //    b.Background = Brushes.Yellow;
-                    //}
                     boxIdTB.Focus();
                 }else
                 {
