@@ -235,12 +235,9 @@ namespace ScmClient
                 return null;
             }
 
-            if (item.order_box != null && item.order_box.position_leds.Count > 0
-                    && item.order_box.box_led != null
-                    && item.order_box.box_led.id != null
-                    && item.order_box.box_led.modem.id != null)
+            if (item.order_box != null && item.order_box.led_id != null)
             {
-                lightController.Play(PLCLightCL.Enum.LightCmdType.OFF, new List<int>() { int.Parse(item.order_box.box_led.id) });
+                lightController.Play(PLCLightCL.Enum.LightCmdType.OFF, new List<int>() { int.Parse(item.order_box.led_id) });
                 //ptlMsg[0] = (byte)(int.Parse(item.order_box.box_led.modem.id));
                 //ptlMsg[4] = (byte)(int.Parse(item.order_box.box_led.id));
                 //ptlMsg[9] = (byte)(int.Parse(item.order_box.box_led.id));

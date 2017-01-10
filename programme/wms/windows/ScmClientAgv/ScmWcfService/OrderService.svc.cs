@@ -51,7 +51,7 @@ namespace ScmWcfService
             try
             {
                 var client = new ApiClient();
-                var req = client.GenRequest(ApiConfig.BindBoxAndLedAction);
+                var req = client.GenRequest(ApiConfig.BindBoxAndLedAction, RestSharp.Method.POST);
                 req.AddParameter("id", nr);
                 req.AddParameter("led_id", led);
                 var res = client.Execute(req);

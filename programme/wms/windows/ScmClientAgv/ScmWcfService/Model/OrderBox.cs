@@ -59,6 +59,9 @@ namespace ScmWcfService.Model
         [DataMember]
         public List<Position> position_leds { get; set; }
 
+        [DataMember]
+        public string led_id { get; set; }
+
 
         // partial for view
         public string box_type_name { get { return this.order_box_type == null ? "" : this.order_box_type.name; } }

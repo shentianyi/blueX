@@ -131,35 +131,33 @@ namespace ScmClient
 
             if (e.Key == Key.Enter)
             {
-                boxIdTB.Focus();
-                SetLightBinded(lightIdTB.Text);
-                SetNotBindOff();
-                string tag = (int.Parse(lightIdTB.Text) + 1).ToString();
-                if (int.Parse(tag) > this.LightButtonGrid.Children.Count)
+                //bind
+                var msg = os.BindBoxAndLed(boxIdTB.Text, lightIdTB.Text);
+                if (msg.http_error)
                 {
-                    MessageBox.Show("已经完成绑定！");
+                    MessageBox.Show(msg.Message);
+                }
+                else if (!msg.Success)
+                {
+                    MessageBox.Show(msg.meta.message);
                 }
                 else
                 {
-                    lightIdTB.Text = tag;
-                    SetLightWaitBind(lightIdTB.Text);
-
-                    //bind
-                    var msg = os.BindBoxAndLed(boxIdTB.Text, lightIdTB.Text);
-                    if (msg.http_error)
+                    boxIdTB.Focus();
+                    SetLightBinded(lightIdTB.Text);
+                    SetNotBindOff();
+                    string tag = (int.Parse(lightIdTB.Text) + 1).ToString();
+                    if (int.Parse(tag) > this.LightButtonGrid.Children.Count)
                     {
-                        MessageBox.Show(msg.Message);
-                    }
-                    else if (!msg.Success)
-                    {
-                        MessageBox.Show(msg.Message);
+                        MessageBox.Show("已经完成绑定！");
                     }
                     else
                     {
-                        MessageBox.Show("OK");
+                        lightIdTB.Text = tag;
+                        SetLightWaitBind(lightIdTB.Text);
                     }
-                        
                 }
+     
                 boxIdTB.Clear();
             }
         }
