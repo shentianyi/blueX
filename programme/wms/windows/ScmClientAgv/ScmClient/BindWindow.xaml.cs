@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using ScmWcfService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -126,7 +127,9 @@ namespace ScmClient
 
         private void boxIdTB_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Enter)
+            OrderService os = new OrderService();
+
+            if (e.Key == Key.Enter)
             {
                 boxIdTB.Focus();
                 SetLightBinded(lightIdTB.Text);
@@ -140,6 +143,22 @@ namespace ScmClient
                 {
                     lightIdTB.Text = tag;
                     SetLightWaitBind(lightIdTB.Text);
+
+                    //bind
+                    var msg = os.BindBoxAndLed(boxIdTB.Text, lightIdTB.Text);
+                    if (msg.http_error)
+                    {
+                        MessageBox.Show(msg.Message);
+                    }
+                    else if (!msg.Success)
+                    {
+                        MessageBox.Show(msg.Message);
+                    }
+                    else
+                    {
+                        MessageBox.Show("OK");
+                    }
+                        
                 }
                 boxIdTB.Clear();
             }
@@ -151,10 +170,12 @@ namespace ScmClient
             {
                 Button b = FindByTag(lightIdTB.Text);
                 if(b!= null){
-                    if (b.Background == null)
-                    {
-                        b.Background = Brushes.Yellow;
-                    }
+                    SetNotBindOff();
+                    SetLightWaitBind(lightIdTB.Text);
+                    //if (b.Background == null)
+                    //{
+                    //    b.Background = Brushes.Yellow;
+                    //}
                     boxIdTB.Focus();
                 }else
                 {

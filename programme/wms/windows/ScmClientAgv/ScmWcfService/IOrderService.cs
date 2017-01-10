@@ -37,5 +37,8 @@ namespace ScmWcfService
         [OperationContract]
         ResponseMessage<Order> CreateOrderByOrderCar(int order_car_id,List<int> order_box_ids);
 
+        [OperationContract]
+        ResponseMessage<object> BindBoxAndLed(string nr, string led);
+
     }
 }

@@ -7,6 +7,10 @@
         mc:Ignorable="d"
         Background="SkyBlue"
         Title="BindWindow" Height="600" Width="800" Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style TargetType="Button">
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="329*"/>

@@ -19,5 +19,8 @@ namespace ScmWcfService.Model.Message
         public int code { get; set; }
         [DataMember]
         public string error_message { get; set; }
+
+        [DataMember]
+        public string message { get; set; }
     }
 }

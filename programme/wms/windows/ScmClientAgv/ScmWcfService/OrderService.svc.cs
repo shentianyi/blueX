@@ -17,6 +17,61 @@ namespace ScmWcfService
     // 注意: 使用“重构”菜单上的“重命名”命令，可以同时更改代码、svc 和配置文件中的类名“OrderService”。
     public class OrderService : IOrderService
     {
+        public ResponseMessage<Order> CreateOrderByLed(string ip, string led_id, int qty)
+        {
+            var msg = new ResponseMessage<Order>();
+            try
+            {
+                var client = new ApiClient();
+                var req = client.GenRequest(ApiConfig.BindBoxAndLedAction);
+                req.AddParameter("ip", ip);
+                req.AddParameter("led_id", led_id);
+                req.AddParameter("qty", qty);
+                var res = client.Execute(req);
+                Debug.WriteLine(res.Content);
+                msg = JsonUtil.parse<ResponseMessage<Order>>(res.Content);
+            }
+            catch (WebFaultException<string> e)
+            {
+                msg.http_error = true;
+                msg.meta.error_message = e.Detail;
+            }
+            catch (Exception e)
+            {
+                msg.http_error = true;
+                msg.meta.error_message = "系统服务错误，请联系管理员";
+            }
+
+            return msg;
+        }
+
+        public ResponseMessage<object> BindBoxAndLed(string nr, string led)
+        {
+            var msg = new ResponseMessage<object>();
+            try
+            {
+                var client = new ApiClient();
+                var req = client.GenRequest(ApiConfig.BindBoxAndLedAction);
+                req.AddParameter("id", nr);
+                req.AddParameter("led_id", led);
+                var res = client.Execute(req);
+                Debug.WriteLine(res.Content);
+                msg = JsonUtil.parse<ResponseMessage<object>>(res.Content);
+            }
+            catch (WebFaultException<string> e)
+            {
+                msg.http_error = true;
+                msg.meta.error_message = e.Detail;
+            }
+            catch (Exception e)
+            {
+                msg.http_error = true;
+                msg.meta.error_message = "系统服务错误，请联系管理员";
+            }
+
+            return msg;
+        }
+
         public ResponseMessage<OrderCar> GetOrderCarByNr(string nr)
         {
             var msg = new ResponseMessage<OrderCar>();
@@ -54,7 +109,7 @@ namespace ScmWcfService
             try
             {
                 var client = new ApiClient();
-                var req = client.GenRequest(ApiConfig.GetOrderBoxByNrAction);
+                var req = client.GenRequest(ApiConfig.GetOrderBoxByNrAction, RestSharp.Method.POST);
                 req.AddParameter("nr", nr);
                 var res = client.Execute(req);
                 Debug.WriteLine(res.Content);
