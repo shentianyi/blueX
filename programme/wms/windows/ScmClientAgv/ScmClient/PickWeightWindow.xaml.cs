@@ -242,7 +242,14 @@ namespace ScmClient
 
             if (item.order_box != null && item.order_box.led_id != null)
             {
-                lightController.Play(PLCLightCL.Enum.LightCmdType.OFF, new List<int> { int.Parse(item.order_box.led_id) });
+                if (lightController == null)
+                {
+                    MessageBox.Show("未找到COM口,请检查...");
+                }else
+                {
+                    lightController.Play(PLCLightCL.Enum.LightCmdType.OFF, new List<int> { int.Parse(item.order_box.led_id) });
+                }
+                
                 //ptlMsg[0] = (byte)(int.Parse(item.order_box.box_led.modem.id));
                 //ptlMsg[4] = (byte)(int.Parse(item.order_box.box_led.id));
                 //ptlMsg[9] = (byte)(int.Parse(item.order_box.box_led.id));
