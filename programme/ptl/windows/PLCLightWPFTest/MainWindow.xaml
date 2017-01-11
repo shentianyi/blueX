@@ -1,38 +1,46 @@
 ﻿<Window x:Class="PLCLightWPFTest.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="406" Width="735" Loaded="Window_Loaded">
+        Title="MainWindow" Height="600" Width="800" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" >
     <Grid>
-        <Button Content="ON" Height="57" HorizontalAlignment="Left" Margin="59,296,0,0" Name="button1" VerticalAlignment="Top" Width="121" Click="button1_Click" />
+        <Button Content="ON" Height="57" HorizontalAlignment="Left" Margin="42,329,0,0" Name="button1" VerticalAlignment="Top" Width="122" Click="button1_Click" />
         <TextBox Height="192" HorizontalAlignment="Left"
-                 Margin="42,98,0,0" Name="textBox1" VerticalAlignment="Top" Width="268" Text="1,2,3,4,5,6" TextWrapping="Wrap" />
-        <Label Content="index, split with ','" Height="28" HorizontalAlignment="Left" Margin="42,262,0,0" Name="label1" VerticalAlignment="Top" Width="173" />
-        <Button Content="OFF" Height="57" HorizontalAlignment="Left" Margin="186,296,0,0" Name="button2" VerticalAlignment="Top" Width="108" Click="button2_Click" />
-        <Button Content="ALL__OFF__BEFORE__ON" Height="57" HorizontalAlignment="Left" Margin="300,296,0,0" Name="button3" VerticalAlignment="Top" Width="131" Click="button3_Click" />
-        <Button Content="ALL ON" Height="36" HorizontalAlignment="Left" Margin="629,317,0,0" Name="button4" VerticalAlignment="Top" Width="60" Click="button4_Click" />
-        <Button Content="ALL OFF" Height="57" HorizontalAlignment="Left" Margin="445,296,0,0" Name="button5" VerticalAlignment="Top" Width="117" Click="button5_Click" />
+                 Margin="42,118,0,0" Name="textBox1" VerticalAlignment="Top" Width="268" Text="1,2,3,4,5,6" TextWrapping="Wrap" />
+        <Label Content="index, split with ','" Height="28" HorizontalAlignment="Left" Margin="42,282,0,0" Name="label1" VerticalAlignment="Top" Width="173" />
+        <Button Content="OFF" Height="57" HorizontalAlignment="Left" Margin="182,330,0,0" Name="button2" VerticalAlignment="Top" Width="108" Click="button2_Click" />
+        <Button Content="ALL__OFF__BEFORE__ON" Height="57" HorizontalAlignment="Left" Margin="296,330,0,0" Name="button3" VerticalAlignment="Top" Width="131" Click="button3_Click" />
+        <Button Content="ALL ON" Height="36" HorizontalAlignment="Left" Margin="625,351,0,0" Name="button4" VerticalAlignment="Top" Width="60" Click="button4_Click" />
+        <Button Content="ALL OFF" Height="57" HorizontalAlignment="Left" Margin="441,330,0,0" Name="button5" VerticalAlignment="Top" Width="117" Click="button5_Click" />
         <Label Content="COM" Height="28" HorizontalAlignment="Left" Margin="29,18,0,0" Name="label2" VerticalAlignment="Top" />
-        <ComboBox Height="34" HorizontalAlignment="Right" Margin="0,12,518,0" Name="comboBox1" VerticalAlignment="Top" Width="110" />
-        <Button Content="OPEN" Height="36" HorizontalAlignment="Left" Margin="397,12,0,0" Name="button6" VerticalAlignment="Top" Width="78" Click="button6_Click" />
-        <Button Content="LEPS" Height="34" HorizontalAlignment="Left" Margin="614,12,0,0" Name="button7" VerticalAlignment="Top" Width="75" Click="button7_Click" />
-        <ComboBox Height="36" HorizontalAlignment="Left" Margin="277,12,0,0" Name="controllerCB" VerticalAlignment="Top" Width="114" SelectedIndex="0">
+        <ComboBox Height="34" HorizontalAlignment="Right" Margin="0,12,608,0" Name="comboBox1" VerticalAlignment="Top" Width="110" />
+        <Button Content="OPEN" Height="36" HorizontalAlignment="Left" Margin="307,12,0,0" Name="button6" VerticalAlignment="Top" Width="78" Click="button6_Click" />
+        <Button Content="LEPS" Height="34" HorizontalAlignment="Left" Margin="152,452,0,0" Name="button7" VerticalAlignment="Top" Width="75" Click="button7_Click" />
+        <ComboBox Height="36" HorizontalAlignment="Left" Margin="187,12,0,0" Name="controllerCB" VerticalAlignment="Top" Width="114" SelectedIndex="0">
             <ComboBoxItem >RAM</ComboBoxItem>
+            <ComboBoxItem >CAN</ComboBoxItem>
             <ComboBoxItem >PLC</ComboBoxItem>
         </ComboBox>
-        <Label Content="Controller" Height="28" HorizontalAlignment="Left" Margin="203,16,0,0" Name="label3" VerticalAlignment="Top" />
-        <Button Content="CLOSE" Height="36" HorizontalAlignment="Left" Margin="484,12,0,0" Name="button8" VerticalAlignment="Top" Width="78" Click="button8_Click" />
-        <Label Content="custom area:" Height="28" HorizontalAlignment="Left" Margin="42,70,0,0" Name="label4" VerticalAlignment="Top" />
-        <Label Content="find light index area:" Height="28" HorizontalAlignment="Left" Margin="335,70,0,0" Name="label5" VerticalAlignment="Top" />
-        <CheckBox Content="" Height="16" HorizontalAlignment="Left" Margin="466,76,0,0" Name="findLightCB" VerticalAlignment="Top" />
-        <Label Content="from index:" Height="28" HorizontalAlignment="Left" Margin="335,96,0,0" Name="label6" VerticalAlignment="Top" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="416,98,0,0" Name="indexTB" Text="-1" VerticalAlignment="Top" Width="80" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="14" />
-        <RadioButton GroupName="findstatus" IsChecked="True" Content="ON" Height="16" Click="onRB_Checked" HorizontalAlignment="Left" Margin="515,101,0,0" Name="onRB" VerticalAlignment="Top" />
-        <RadioButton GroupName="findstatus"  Click="onRB_Checked" Content="OFF" Height="16" HorizontalAlignment="Left" Margin="569,101,0,0" Name="offRB" VerticalAlignment="Top" />
-        <Label Content="." Height="236" HorizontalAlignment="Left" Margin="316,54,0,0" Name="label7" VerticalAlignment="Top" Width="4" Foreground="#FF1818E8" Background="#FF2020E2" />
-        <Button Content="《  PREV" Height="148" HorizontalAlignment="Left" Margin="345,130,0,0" Name="prevBtn" VerticalAlignment="Top" Width="86" Click="prevBtn_Click" />
-        <Button Content="NEXT    》" Height="148" HorizontalAlignment="Left" Margin="569,130,0,0" Name="nextBtn" VerticalAlignment="Top" Width="86" Click="prevBtn_Click" />
-        <ListBox Height="148" HorizontalAlignment="Left" Margin="442,130,0,0" Name="findListBox" VerticalAlignment="Top" Width="120" />
-        <CheckBox Content="KeepOn/OFF" Height="19" HorizontalAlignment="Left" Margin="617,101,0,0" Name="keepCB" VerticalAlignment="Top" Width="96" />
-        <Button x:Name="button9" Content="Menu" HorizontalAlignment="Left" Margin="617,54,0,0" VerticalAlignment="Top" Width="72" Height="38" Click="button9_Click"/>
+        <Button Content="CLOSE" Height="36" HorizontalAlignment="Left" Margin="394,12,0,0" Name="button8" VerticalAlignment="Top" Width="78" Click="button8_Click" />
+        <Label Content="custom area:" Height="28" HorizontalAlignment="Left" Margin="42,90,0,0" Name="label4" VerticalAlignment="Top" />
+        <Label Content="find light index area:" Height="28" HorizontalAlignment="Left" Margin="335,90,0,0" Name="label5" VerticalAlignment="Top" />
+        <CheckBox Content="" Height="16" HorizontalAlignment="Left" Margin="466,96,0,0" Name="findLightCB" VerticalAlignment="Top" />
+        <Label Content="from index:" Height="28" HorizontalAlignment="Left" Margin="335,116,0,0" Name="label6" VerticalAlignment="Top" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="416,118,0,0" Name="indexTB" Text="-1" VerticalAlignment="Top" Width="80" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="14" />
+        <RadioButton GroupName="findstatus" IsChecked="True" Content="ON" Height="16" Click="onRB_Checked" HorizontalAlignment="Left" Margin="515,121,0,0" Name="onRB" VerticalAlignment="Top" />
+        <RadioButton GroupName="findstatus"  Click="onRB_Checked" Content="OFF" Height="16" HorizontalAlignment="Left" Margin="569,121,0,0" Name="offRB" VerticalAlignment="Top" />
+        <Label Content="." Height="236" HorizontalAlignment="Left" Margin="316,74,0,0" Name="label7" VerticalAlignment="Top" Width="4" Foreground="#FF1818E8" Background="#FF2020E2" />
+        <Button Content="《  PREV" Height="148" HorizontalAlignment="Left" Margin="345,150,0,0" Name="prevBtn" VerticalAlignment="Top" Width="86" Click="prevBtn_Click" />
+        <Button Content="NEXT    》" Height="148" HorizontalAlignment="Left" Margin="569,150,0,0" Name="nextBtn" VerticalAlignment="Top" Width="86" Click="prevBtn_Click" />
+        <ListBox Height="148" HorizontalAlignment="Left" Margin="442,150,0,0" Name="findListBox" VerticalAlignment="Top" Width="120" />
+        <CheckBox Content="KeepOn/OFF" Height="19" HorizontalAlignment="Left" Margin="617,121,0,0" Name="keepCB" VerticalAlignment="Top" Width="96" />
+        <Button x:Name="button9" Content="Menu" HorizontalAlignment="Left" Margin="59,451,0,0" VerticalAlignment="Top" Width="72" Height="38" Click="button9_Click" RenderTransformOrigin="0.778,0.711"/>
+        <Label x:Name="label" Content="TCPServer" HorizontalAlignment="Left" Margin="29,46,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tcpServer" HorizontalAlignment="Left" Height="19" Margin="102,51,0,0"
+                 TextWrapping="Wrap" Text="192.168.1.100:6001:1" VerticalAlignment="Top" Width="180" ToolTip="格式为：TCP服务器IP:TCP服务器端口:CANID"/>
+        <Label x:Name="countLab" Content="切换次数" HorizontalAlignment="Left" Margin="495,408,0,0" VerticalAlignment="Top" Width="64"/>
+        <Button x:Name="autoOFFONBtn" Content="自动全部亮灭切换" HorizontalAlignment="Left" Margin="564,402,0,0" VerticalAlignment="Top" Width="121" Height="38" Click="autoOFFONBtn_Click"/>
+        <Label x:Name="label8" Content="间隔(毫秒)" HorizontalAlignment="Left" Margin="365,408,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="timerInterval" HorizontalAlignment="Left" Height="23" Margin="429,408,0,0" TextWrapping="Wrap" Text="1000" VerticalAlignment="Top" Width="63"/>
+        <Button x:Name="binglightBtn" Content="BindLight" HorizontalAlignment="Left" Margin="533,12,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="binglightBtn_Click"/>
     </Grid>
 </Window>

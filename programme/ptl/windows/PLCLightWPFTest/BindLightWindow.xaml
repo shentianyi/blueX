@@ -1,0 +1,21 @@
+﻿<Window x:Class="PLCLightWPFTest.BindLightWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PLCLightWPFTest"
+        mc:Ignorable="d"
+        Title="BindLightWindow" Height="325" Width="568" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Label x:Name="label3" Content="part:" HorizontalAlignment="Left" Margin="120,123,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="partTB" HorizontalAlignment="Left" Height="23" Margin="171,126,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164" KeyUp="partTB_KeyUp"/>
+        <Label x:Name="label9" Content="workplace:" HorizontalAlignment="Left" Margin="93,88,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="workpalceTB" HorizontalAlignment="Left" Height="23" Margin="171,91,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="162"/>
+        <Label x:Name="label10" Content="lightId:" HorizontalAlignment="Left" Margin="108,153,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.26,0.462"/>
+        <TextBox x:Name="lightIdTB" HorizontalAlignment="Left" Height="23" Margin="169,156,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="162"  KeyUp="partTB_KeyUp"/>
+        <Button x:Name="button" Content="OK" HorizontalAlignment="Left" Margin="189,210,0,0" VerticalAlignment="Top" Width="82" Height="41" Click="button_Click"/>
+        <Label x:Name="label" Content="controllType:" HorizontalAlignment="Left" Margin="79,60,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.325,0.423"/>
+        <Label x:Name="controllTypeLab" Content="Label" HorizontalAlignment="Left" Margin="171,60,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

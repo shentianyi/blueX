@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9B5F850A-5136-4095-8955-6C4F7747C48A}</ProjectGuid>
+    <ProjectGuid>{DD8809A0-CE74-4631-847F-057BB2ADC7F4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Brilliantech.Framwork</RootNamespace>
-    <AssemblyName>Brilliantech.Framwork</AssemblyName>
+    <RootNamespace>CanLightServiceLib</RootNamespace>
+    <AssemblyName>CanLightServiceLib</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,17 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>ThirdPart\log4net.dll</HintPath>
+    <Reference Include="log4net">
+      <HintPath>..\..\ThridPart\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Nini, Version=1.1.0.0, Culture=neutral, PublicKeyToken=691faec150a7fa7b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>ThirdPart\Nini.dll</HintPath>
+    <Reference Include="Nini">
+      <HintPath>..\..\ThridPart\Nini.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,14 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\FileStruct.cs" />
+    <Compile Include="CanLightTcpServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\ConfigUtil\ConfigUtil.cs" />
-    <Compile Include="Utils\ConvertUtil\ScaleConvertor.cs" />
-    <Compile Include="Utils\EnumUtil\EnumUtil.cs" />
-    <Compile Include="Utils\FtpUtil\FtpUtil.cs" />
-    <Compile Include="Utils\JsonUtil\JsonUtil.cs" />
-    <Compile Include="Utils\LogUtil\LogUtil.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\base\windows\Brilliantech.Framwork\Brilliantech.Framwork.csproj">
+      <Project>{9b5f850a-5136-4095-8955-6c4f7747c48a}</Project>
+      <Name>Brilliantech.Framwork</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

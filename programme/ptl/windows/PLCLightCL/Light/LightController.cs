@@ -25,7 +25,7 @@ namespace PLCLightCL.Light
         public LightController(string com, int baundRate = 9600) {
             this.com = com;
             this.baundRate = baundRate;
-            this.OpenCom();
+            this.Open();
         }
 
         public LightController(string com, int baundRate = 9600,int lightCount=48):this(com,baundRate)
@@ -33,8 +33,8 @@ namespace PLCLightCL.Light
             this.lightCount = lightCount;
             this.previousLightStates = this.GetInitLightStates();
         }
-
-        public  void Play(LightCmdType cmdType, List<int> indexes = null)
+   
+        public virtual  void Play(LightCmdType cmdType, List<int> indexes = null)
         {
             //throw new NotImplementedException();
             // init light state from previous light states
@@ -44,22 +44,7 @@ namespace PLCLightCL.Light
                 lightStates[i] = previousLightStates[i];
             }
 
-            // validate light index
-            if (this.ValidateIndexCmds.Contains(cmdType))
-            {
-                if (indexes == null || indexes.Count == 0)
-                {
-                    throw new IndexOutOfRangeException("No Light Index!");
-                }
-                foreach (int i in indexes)
-                {
-                    if (i < 0 || i >= lightCount)
-                    {
-                        throw new IndexOutOfRangeException("light index out of range, should between 0 and 127");
-                    }
-                }
-                indexes = indexes.Distinct().ToList();
-            }
+            indexes = ValidateIndexes(cmdType,indexes);
 
             // switch cmd type
             switch (cmdType)
@@ -195,12 +180,12 @@ namespace PLCLightCL.Light
         /// <summary>
         /// close plc light
         /// </summary>
-        public void Close()
+        public virtual void Close()
         {
             this.CloseCom();
         }
 
-        protected void OpenCom(bool throwEx = true)
+        protected virtual void Open(bool throwEx = true)
         {
             try
             {
@@ -233,6 +218,28 @@ namespace PLCLightCL.Light
             {
                 LogUtil.Logger.Debug(ex.Message);
             }
+        }
+
+
+        protected List<int> ValidateIndexes(LightCmdType cmdType,List<int> indexes)
+        {
+            // validate light index
+            if (this.ValidateIndexCmds.Contains(cmdType))
+            {
+                if (indexes == null || indexes.Count == 0)
+                {
+                    throw new IndexOutOfRangeException("No Light Index!");
+                }
+                foreach (int i in indexes)
+                {
+                    if (i < 0 || i >= lightCount)
+                    {
+                        throw new IndexOutOfRangeException("light index out of range, should between 0 and 127");
+                    }
+                }
+                indexes = indexes.Distinct().ToList();
+            }
+            return indexes;
         }
     }
 }

@@ -55,7 +55,7 @@ namespace PLCLightCL.Light
             }
             catch (InvalidOperationException e)
             {
-                OpenCom(false);
+                Open(false);
             }
             catch (Exception e)
             {

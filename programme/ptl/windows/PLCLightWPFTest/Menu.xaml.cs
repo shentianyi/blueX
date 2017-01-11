@@ -10,6 +10,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Brilliantech.Framwork.Utils.LogUtil;
+using CanLightServiceLib;
 
 namespace PLCLightWPFTest
 {
@@ -32,6 +34,11 @@ namespace PLCLightWPFTest
         {  this.Close();
             new ShowClose1().Show();
           
+        }
+
+        private void button2_Click(object sender, RoutedEventArgs e)
+        {
+            new CanServerWindow().Show();
         }
     }
 }

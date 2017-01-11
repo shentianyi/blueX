@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="AutoWork" Class="AutoWorkDbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=Charlot-PC\MSSQLSERVER20082;Initial Catalog=AutoWork;Persist Security Info=True;User ID=sa" SettingsObjectName="PLCLightWPFTest.Properties.Settings" SettingsPropertyName="AutoWorkConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.ELabelOnForPartOnWorkstation" Member="ELabelOnForPartOnWorkstation">
+    <Type Name="ELabelOnForPartOnWorkstation">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="labelAddr" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="partNr" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="workstationId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="controlType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

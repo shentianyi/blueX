@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Brilliantech.Framwork">
-      <HintPath>..\..\..\ThridPart\Brilliantech.Framwork.dll</HintPath>
-    </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\..\ThridPart\log4net.dll</HintPath>
     </Reference>
@@ -64,6 +61,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LEPSDataClasses.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Light\CanLightController.cs" />
     <Compile Include="Light\ILightController.cs" />
     <Compile Include="Light\LightController.cs" />
     <Compile Include="Light\RamLightController.cs" />
@@ -96,6 +94,12 @@
     <None Include="LEPSDataClasses.dbml.layout">
       <DependentUpon>LEPSDataClasses.dbml</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\base\windows\Brilliantech.Framwork\Brilliantech.Framwork.csproj">
+      <Project>{9b5f850a-5136-4095-8955-6c4f7747c48a}</Project>
+      <Name>Brilliantech.Framwork</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

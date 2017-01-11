@@ -116,7 +116,7 @@ namespace PLCLightCL.Light
                 sp.Write(cmd, 0, cmd.Length);
             }
             catch (InvalidOperationException e) {
-                OpenCom(false);
+                Open(false);
             }
             catch (Exception e)
             {

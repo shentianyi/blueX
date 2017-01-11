@@ -37,8 +37,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ThridPart\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -56,6 +61,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BindLightWindow.xaml.cs">
+      <DependentUpon>BindLightWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CanServerWindow.xaml.cs">
+      <DependentUpon>CanServerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Data\AutoWorkDb.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AutoWorkDb.dbml</DependentUpon>
+    </Compile>
     <Compile Include="ImageFullWindow.xaml.cs">
       <DependentUpon>ImageFullWindow.xaml</DependentUpon>
     </Compile>
@@ -74,6 +90,14 @@
     <Compile Include="ShowClose2.xaml.cs">
       <DependentUpon>ShowClose2.xaml</DependentUpon>
     </Compile>
+    <Page Include="BindLightWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CanServerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ImageFullWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -125,11 +149,22 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Data\AutoWorkDb.dbml.layout">
+      <DependentUpon>AutoWorkDb.dbml</DependentUpon>
+    </None>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="Data\AutoWorkDb.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>AutoWorkDb.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="log4.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -137,6 +172,14 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\AutoWork\CanLightServiceLib\CanLightServiceLib.csproj">
+      <Project>{dd8809a0-ce74-4631-847f-057bb2adc7f4}</Project>
+      <Name>CanLightServiceLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\base\windows\Brilliantech.Framwork\Brilliantech.Framwork.csproj">
+      <Project>{9b5f850a-5136-4095-8955-6c4f7747c48a}</Project>
+      <Name>Brilliantech.Framwork</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PLCLightCL\PLCLightCL.csproj">
       <Project>{7751F1B1-C4CC-490B-9FD8-15F332122A9A}</Project>
       <Name>PLCLightCL</Name>
@@ -212,6 +255,9 @@
     <Content Include="Routines\Video\7.MOV">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AutoWork", "AutoWork\AutoWork.vbproj", "{489FE91F-A6C3-4620-B8F6-3FD79A2A008B}"
 EndProject
@@ -18,6 +18,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{072DD38C-A28D-4179-817A-FA63DDAAF5AF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PLCLightWPFTest", "..\ptl\windows\PLCLightWPFTest\PLCLightWPFTest.csproj", "{85D4FA47-6F35-4EE7-B752-75747E4CB26E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CanLightServiceLib", "CanLightServiceLib\CanLightServiceLib.csproj", "{DD8809A0-CE74-4631-847F-057BB2ADC7F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brilliantech.Framwork", "..\base\windows\Brilliantech.Framwork\Brilliantech.Framwork.csproj", "{9B5F850A-5136-4095-8955-6C4F7747C48A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +85,22 @@ Global
 		{85D4FA47-6F35-4EE7-B752-75747E4CB26E}.Release|Any CPU.ActiveCfg = Release|x86
 		{85D4FA47-6F35-4EE7-B752-75747E4CB26E}.Release|x86.ActiveCfg = Release|x86
 		{85D4FA47-6F35-4EE7-B752-75747E4CB26E}.Release|x86.Build.0 = Release|x86
+		{DD8809A0-CE74-4631-847F-057BB2ADC7F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD8809A0-CE74-4631-847F-057BB2ADC7F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD8809A0-CE74-4631-847F-057BB2ADC7F4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DD8809A0-CE74-4631-847F-057BB2ADC7F4}.Debug|x86.Build.0 = Debug|Any CPU
+		{DD8809A0-CE74-4631-847F-057BB2ADC7F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD8809A0-CE74-4631-847F-057BB2ADC7F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD8809A0-CE74-4631-847F-057BB2ADC7F4}.Release|x86.ActiveCfg = Release|Any CPU
+		{DD8809A0-CE74-4631-847F-057BB2ADC7F4}.Release|x86.Build.0 = Release|Any CPU
+		{9B5F850A-5136-4095-8955-6C4F7747C48A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B5F850A-5136-4095-8955-6C4F7747C48A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B5F850A-5136-4095-8955-6C4F7747C48A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9B5F850A-5136-4095-8955-6C4F7747C48A}.Debug|x86.Build.0 = Debug|Any CPU
+		{9B5F850A-5136-4095-8955-6C4F7747C48A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B5F850A-5136-4095-8955-6C4F7747C48A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B5F850A-5136-4095-8955-6C4F7747C48A}.Release|x86.ActiveCfg = Release|Any CPU
+		{9B5F850A-5136-4095-8955-6C4F7747C48A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

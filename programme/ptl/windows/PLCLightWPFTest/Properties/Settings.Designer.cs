@@ -86,5 +86,26 @@ namespace PLCLightWPFTest.Properties {
                 return ((string)(this["lepsDb"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=Charlot-PC\\MSSQLSERVER20082;Initial Catalog=AutoWork;Persist Security" +
+            " Info=True;User ID=sa;Password=123456@")]
+        public string AutoWorkConnectionString {
+            get {
+                return ((string)(this["AutoWorkConnectionString"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=Charlot-PC\\MSSQLSERVER20082;Initial Catalog=AutoWork;Persist Security" +
+            " Info=True;User ID=sa;Password=123456@")]
+        public string awDb {
+            get {
+                return ((string)(this["awDb"]));
+            }
+        }
     }
 }

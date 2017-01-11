@@ -15,7 +15,7 @@ using PLCLightCL;
 using PLCLightCL.Light;
 using PLCLightCL.Enum;
 using System.Threading;
- 
+using Brilliantech.Framwork.Utils.LogUtil;
 
 namespace PLCLightWPFTest
 {
@@ -89,15 +89,22 @@ namespace PLCLightWPFTest
 
         private void button4_Click(object sender, RoutedEventArgs e)
         {
-           // pl.Play(LightCmdType.ALL_ON);
-
+            // pl.Play(LightCmdType.ALL_ON);
+            IncresCount();
             lightController.Play(LightCmdType.ALL_ON, GetIndexes());
         }
+        int count = 0;
         private void button5_Click(object sender, RoutedEventArgs e)
         {
-           // pl.Play(LightCmdType.ALL_OFF);
-
+            // pl.Play(LightCmdType.ALL_OFF);
+            IncresCount();
             lightController.Play(LightCmdType.ALL_OFF, GetIndexes());
+        }
+
+        public void IncresCount()
+        {
+            count++;
+            countLab.Content = count;
         }
 
         private void button6_Click(object sender, RoutedEventArgs e)
@@ -109,6 +116,9 @@ namespace PLCLightWPFTest
                 if (controllerCB.SelectedIndex == 0)
                 {
                     lightController = new RamLightController(comboBox1.SelectedValue.ToString());
+                }else if (controllerCB.SelectedIndex == 1)
+                {
+                    lightController = new CanLightController(tcpServer.Text.Split(':')[0], int.Parse(tcpServer.Text.Split(':')[1]), int.Parse(tcpServer.Text.Split(':')[2]));
                 }
                 else
                 {
@@ -162,10 +172,20 @@ namespace PLCLightWPFTest
                 }
                 else
                 {
-                    if (current < 111)
+                    if (controllerCB.SelectedIndex == 1)
                     {
-                        next = current + 1;
+                        if (current < 255)
+                        {
+                            next = current + 1;
+                        }
+                    }
+                    else
+                    {
+                        if (current < 111)
+                        {
+                            next = current + 1;
 
+                        }
                     }
                 }
 
@@ -191,6 +211,7 @@ namespace PLCLightWPFTest
                 }
             }
             catch (Exception ex) {
+                LogUtil.Logger.Error(ex.Message, ex);
                 MessageBox.Show(ex.Message);
             }
         }
@@ -198,7 +219,52 @@ namespace PLCLightWPFTest
         private void button9_Click(object sender, RoutedEventArgs e)
         {
             new Menu().Show();
-            this.Close();
+            // this.Close();
+
+
+        }
+
+        System.Timers.Timer t;
+        int c = 0;
+        private void autoOFFONBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (t != null)
+            {
+                t.Stop();
+                t = null;
+            }
+            else
+            {
+                t = new System.Timers.Timer();
+                t.Interval = int.Parse(timerInterval.Text);
+                t.Elapsed += T_Elapsed;
+                t.Enabled = true;
+                t.Start();
+            }
+        }
+
+        private void T_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            t.Stop();
+            this.Dispatcher.Invoke(new Action(() => {
+
+                if (c % 2 == 0)
+                {
+                    button4_Click(null, null);
+                }
+                else
+                {
+                    button5_Click(null, null);
+                }
+                c++;
+
+            }));
+            t.Start();
+        }
+
+        private void binglightBtn_Click(object sender, RoutedEventArgs e)
+        {
+            new BindLightWindow((this.controllerCB.SelectedItem.ToString()).Split(':')[1].Trim()).Show();
         }
     }
 }
