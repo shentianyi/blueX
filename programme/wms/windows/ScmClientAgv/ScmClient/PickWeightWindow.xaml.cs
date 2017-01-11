@@ -210,7 +210,7 @@ namespace ScmClient
             0x01, 0x00, 0x00, 0x01, 0x02, 0x01, 0xC0, 0x01, 0x00, 0x02, 0xFF, 0xFF, 0x00
         };
 
-        private byte[] generatePtlColorCmd(byte r, byte g, byte b)
+        private void generatePtlColorCmd(byte r, byte g, byte b)
         {
             byte[] ptlMsg = ptl_msg;
 
@@ -232,12 +232,12 @@ namespace ScmClient
             else
             {
                 MessageBox.Show("未找到择货位置LED灯信息,请联系管理员...");
-                return null;
+                //return null;
             }
 
             if (item.order_box != null && item.order_box.led_id != null)
             {
-                lightController.Play(PLCLightCL.Enum.LightCmdType.OFF, new List<int>() { int.Parse(item.order_box.led_id) });
+                lightController.Play(PLCLightCL.Enum.LightCmdType.OFF, new List<int> { int.Parse(item.order_box.led_id) });
                 //ptlMsg[0] = (byte)(int.Parse(item.order_box.box_led.modem.id));
                 //ptlMsg[4] = (byte)(int.Parse(item.order_box.box_led.id));
                 //ptlMsg[9] = (byte)(int.Parse(item.order_box.box_led.id));
@@ -250,10 +250,10 @@ namespace ScmClient
             else
             {
                 MessageBox.Show("未找到料盒LED灯信息,请联系管理员...");
-                return null;
+                //return null;
             }
 
-            return ptlMsg;
+            return;
         }
 
         private void sendPtlCmd(byte[] msg)
@@ -411,8 +411,12 @@ namespace ScmClient
 
         private void weightQtyLabel_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            this.item.weight_qty = (float)weightQtyLabel.Value;
-            this.parentWindow.RefreshData();
+            if (this.item != null)
+            {
+                this.item.weight_qty = (float)weightQtyLabel.Value;
+                this.parentWindow.RefreshData();
+            }
+            
 
 
            // MessageBox.Show(weightQtyLabel.Value.ToString());
@@ -423,7 +427,7 @@ namespace ScmClient
             parentWindow.Activate();
             parentWindow.ScanTB.Focus();
             parentWindow.ScanTB.SelectAll();
-            lightController.Close();
+            //lightController.Close();
         }
 
         private void cleanNetWeightBtn_Click(object sender, RoutedEventArgs e)

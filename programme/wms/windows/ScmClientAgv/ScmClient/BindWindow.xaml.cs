@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.Controls;
 using PLCLightCL.Light;
 using ScmWcfService;
+using ScmWcfService.Config;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,20 @@ namespace ScmClient
     /// </summary>
     public partial class BindWindow : Window
     {
+        PickListWindow parentWindow;
+        ILightController lc = null;
+
         public BindWindow()
         {
             InitializeComponent();
         }
 
-        ILightController lc;
+        public BindWindow(PickListWindow parentWindow, ILightController lc)
+        {
+            InitializeComponent();
+            this.parentWindow = parentWindow;
+            this.lc = lc;
+        }
 
         private Dictionary<string, string> bindList = new Dictionary<string, string>();
         /// <summary>
@@ -38,7 +47,7 @@ namespace ScmClient
         /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-             lc = new RamLightController("COM3");
+             //lc = new RamLightController(ServerConfig.ptlComPort);
             SetNotBindOff();
             boxIdTB.Focus();
             var cs = this.LightButtonGrid.Children;

@@ -350,7 +350,7 @@ namespace ScmClient
 
             if (item.order_box != null && item.order_box.led_id != null)
             {
-                lightController.Play(PLCLightCL.Enum.LightCmdType.ON, new List<int>() { int.Parse(item.order_box.led_id) });
+                lightController.Play(PLCLightCL.Enum.LightCmdType.ON, new List<int> { int.Parse(item.order_box.led_id) });
                 //ptlMsg[0] = (byte)(int.Parse(item.order_box.box_led.modem.id));
                 //ptlMsg[4] = (byte)(int.Parse(item.order_box.box_led.id));
                 //ptlMsg[9] = (byte)(int.Parse(item.order_box.box_led.id));
@@ -422,7 +422,7 @@ namespace ScmClient
 
         private void bindLedBtn_Click(object sender, RoutedEventArgs e)
         {
-            new BindWindow().ShowDialog();
+            new BindWindow(this, lightController).ShowDialog();
         }
     }
 }
