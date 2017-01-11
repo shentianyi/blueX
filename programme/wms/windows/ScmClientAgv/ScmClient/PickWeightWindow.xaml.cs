@@ -54,11 +54,12 @@ namespace ScmClient
         }
 
 
-        public PickWeightWindow(Socket socket, PickItem item,PickListWindow parentWindow)
+        public PickWeightWindow(ILightController lc, Socket socket, PickItem item,PickListWindow parentWindow)
         {
             InitializeComponent();
             this.ptlSocket = socket;
             this.item = item;
+            this.lightController = lc;
             this.parentWindow = parentWindow;
         }
 
@@ -116,7 +117,7 @@ namespace ScmClient
                     catch { }
                 }
 
-                lightController = new RamLightController(ServerConfig.ptlComPort);
+                //lightController = new RamLightController(ServerConfig.ptlComPort);
 
             }
             catch (Exception ex) {
@@ -130,6 +131,7 @@ namespace ScmClient
         {
             try
             {
+
                 if (Key.Enter == e.Key && actualWeightTB.Text.Trim().Length > 0)
                 {
                     actualWeightTB.Text = actualWeightTB.Text.Trim();
@@ -227,7 +229,10 @@ namespace ScmClient
                 ptlMsg[11] = g;
                 ptlMsg[12] = b;
                 //MessageBox.Show(ScaleConvertor.HexBytesToString(ptlMsg));
-                sendPtlCmd(ptlMsg);
+                if (ServerConfig.PtlSwitch == 1)
+                {
+                    sendPtlCmd(ptlMsg);
+                }
             }
             else
             {

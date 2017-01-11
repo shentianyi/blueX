@@ -24,6 +24,8 @@ namespace ScmWcfService.Config
                 ptlPort = int.Parse(config.Get("PtlPort"));
                 agvCarNr = int.Parse(config.Get("AgvCarNr"));
                 ptlComPort = config.Get("PtlComPort");
+                PtlSwitch = int.Parse(config.Get("PtlSwitch"));
+                AgvSwitch = int.Parse(config.Get("AgvSwitch"));
             }
             catch (Exception e)
             {
@@ -37,5 +39,8 @@ namespace ScmWcfService.Config
         public static int ptlPort { get; set; }
         public static int agvCarNr { get; set; }
         public static string ptlComPort { get; set; }
+
+        public static int PtlSwitch { get; set; }
+        public static int AgvSwitch { get; set; }
     }
 }

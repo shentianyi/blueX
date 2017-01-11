@@ -94,7 +94,7 @@ namespace ScmClient
         {
             sendAgvAndPtlCmd(item);
 
-            new PickWeightWindow(ptlSocket, item, this).ShowDialog();
+            new PickWeightWindow(lightController, ptlSocket, item, this).ShowDialog();
         }
 
         private void ScanTB_KeyUp(object sender, KeyEventArgs e)
@@ -145,18 +145,20 @@ namespace ScmClient
         {
             if (MessageBox.Show("请确定?", "确定", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                PathOptimizationService pos = new PathOptimizationService();
-                //回到卸货点
-                byte[] msg = station_msg;
-                //cmd type
-                msg[05] = 0x01;
-                //direction
-                msg[8] = pos.GetBestDirection(currentAgvPoint, 42);
-                //point
-                msg[7] = 0x2A;
-                currentAgvPoint = 42;
-
-                sendDesStation(msg);
+                if (ServerConfig.AgvSwitch == 1)
+                {
+                    PathOptimizationService pos = new PathOptimizationService();
+                    //回到卸货点
+                    byte[] msg = station_msg;
+                    //cmd type
+                    msg[05] = 0x01;
+                    //direction
+                    msg[8] = pos.GetBestDirection(currentAgvPoint, 42);
+                    //point
+                    msg[7] = 0x2A;
+                    currentAgvPoint = 42;
+                    sendDesStation(msg);
+                }
 
                 this.Close();
             }
@@ -303,28 +305,31 @@ namespace ScmClient
         {
             PathOptimizationService pos = new PathOptimizationService();
             //send agv cmd
-            if (currentAgvPoint == 0)
+            if (ServerConfig.AgvSwitch == 1)
             {
-                currentAgvPoint = getAgvPoint();
-            }
+                if (currentAgvPoint == 0)
+                {
+                    currentAgvPoint = getAgvPoint();
+                }
 
-            //TODO generate direction cmd 
-            byte[] msg = station_msg;
+                //TODO generate direction cmd 
+                byte[] msg = station_msg;
 
-            if (item.order_box != null 
-                && item.order_box.position_leds.Count > 0
-                && item.order_box.position_leds[0] != null 
-                && item.order_box.position_leds[0].dock_point.id != null)
-            {
-                msg[8] = pos.GetBestDirection(currentAgvPoint, int.Parse(item.order_box.position_leds[0].dock_point.id));
-                msg[7] = (byte)(int.Parse(item.order_box.position_leds[0].dock_point.id));
-                currentAgvPoint = int.Parse(item.order_box.position_leds[0].dock_point.id);
-                //MessageBox.Show(ScaleConvertor.HexBytesToString(msg));
-                sendDesStation(msg);
-            }
-            else
-            {
-                MessageBox.Show("未找到停靠点信息,请联系管理员...");
+                if (item.order_box != null
+                    && item.order_box.position_leds.Count > 0
+                    && item.order_box.position_leds[0] != null
+                    && item.order_box.position_leds[0].dock_point.id != null)
+                {
+                    msg[8] = pos.GetBestDirection(currentAgvPoint, int.Parse(item.order_box.position_leds[0].dock_point.id));
+                    msg[7] = (byte)(int.Parse(item.order_box.position_leds[0].dock_point.id));
+                    currentAgvPoint = int.Parse(item.order_box.position_leds[0].dock_point.id);
+                    //MessageBox.Show(ScaleConvertor.HexBytesToString(msg));
+                    sendDesStation(msg);
+                }
+                else
+                {
+                    MessageBox.Show("未找到停靠点信息,请联系管理员...");
+                }
             }
 
 
@@ -341,7 +346,10 @@ namespace ScmClient
                 ptlMsg[4] = (byte)(int.Parse(item.order_box.position_leds[0].led.id));
                 ptlMsg[9] = (byte)(int.Parse(item.order_box.position_leds[0].led.id));
                 //MessageBox.Show(ScaleConvertor.HexBytesToString(ptlMsg));
-                sendPtlCmd(ptlMsg);
+                if (ServerConfig.PtlSwitch == 1)
+                {
+                    sendPtlCmd(ptlMsg);
+                }
             }
             else
             {
