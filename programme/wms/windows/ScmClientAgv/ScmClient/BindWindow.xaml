@@ -22,54 +22,66 @@
             <RowDefinition Height="116*"/>
         </Grid.RowDefinitions>
         <Grid  Name="LightButtonGrid">
-            <Button x:Name="R10" Content="led1" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R11" Content="led2" HorizontalAlignment="Left" Margin="120,20,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R12" Content="led3" HorizontalAlignment="Left" Margin="230,20,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R13" Content="led4" HorizontalAlignment="Left" Margin="340,20,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R14" Content="led5" HorizontalAlignment="Left" Margin="450,20,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R15" Content="led6" HorizontalAlignment="Left" Margin="560,20,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R20" Content="led7" HorizontalAlignment="Left" Margin="20,60,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R21" Content="led8" HorizontalAlignment="Left" Margin="120,60,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R22" Content="led9" HorizontalAlignment="Left" Margin="230,60,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R23" Content="led10" HorizontalAlignment="Left" Margin="340,60,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R24" Content="led11" HorizontalAlignment="Left" Margin="450,60,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R25" Content="led12" HorizontalAlignment="Left" Margin="560,60,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R30" Content="led13" HorizontalAlignment="Left" Margin="20,100,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R31" Content="led14" HorizontalAlignment="Left" Margin="120,100,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R32" Content="led15" HorizontalAlignment="Left" Margin="230,100,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R33" Content="led16" HorizontalAlignment="Left" Margin="340,100,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R34" Content="led17" HorizontalAlignment="Left" Margin="450,100,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R35" Content="led18" HorizontalAlignment="Left" Margin="560,100,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R40" Content="led19" HorizontalAlignment="Left" Margin="20,140,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R41" Content="led20" HorizontalAlignment="Left" Margin="120,140,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R42" Content="led21" HorizontalAlignment="Left" Margin="230,140,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R43" Content="led22" HorizontalAlignment="Left" Margin="340,140,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R44" Content="led23" HorizontalAlignment="Left" Margin="450,140,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="R45" Content="led24" HorizontalAlignment="Left" Margin="560,140,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-            <Button x:Name="L10" Content="led1" HorizontalAlignment="Left" Margin="20,360,0,-206" Width="75" Height="22"/>
-            <Button x:Name="L11" Content="led2" HorizontalAlignment="Left" Margin="130,360,0,-206" Width="75" Height="22"/>
-            <Button x:Name="L12" Content="led3" HorizontalAlignment="Left" Margin="230,360,0,-206" Width="75" Height="22"/>
-            <Button x:Name="L13" Content="led4" HorizontalAlignment="Left" Margin="340,360,0,-206" Width="75" Height="22"/>
-            <Button x:Name="L14" Content="led5" HorizontalAlignment="Left" Margin="450,360,0,-206" Width="75" Height="22"/>
-            <Button x:Name="L15" Content="led6" HorizontalAlignment="Left" Margin="560,360,0,-206" Width="75" Height="22"/>
-            <Button x:Name="L20" Content="led7" HorizontalAlignment="Left" Margin="20,410,0,-256" Width="75" Height="22"/>
-            <Button x:Name="L21" Content="led8" HorizontalAlignment="Left" Margin="130,410,0,-256" Width="75" Height="22"/>
-            <Button x:Name="L22" Content="led9" HorizontalAlignment="Left" Margin="230,410,0,-256" Width="75" Height="22"/>
-            <Button x:Name="L23" Content="led10" HorizontalAlignment="Left" Margin="340,410,0,-256" Width="75" Height="22"/>
-            <Button x:Name="L24" Content="led11" HorizontalAlignment="Left" Margin="450,410,0,-256" Width="75" Height="22"/>
-            <Button x:Name="L25" Content="led12" HorizontalAlignment="Left" Margin="560,410,0,-256" Width="75" Height="22"/>
-            <Button x:Name="L30" Content="led13" HorizontalAlignment="Left" Margin="20,460,0,-306" Width="75" Height="22"/>
-            <Button x:Name="L31" Content="led14" HorizontalAlignment="Left" Margin="130,460,0,-306" Width="75" Height="22"/>
-            <Button x:Name="L32" Content="led15" HorizontalAlignment="Left" Margin="230,460,0,-306" Width="75" Height="22"/>
-            <Button x:Name="L33" Content="led16" HorizontalAlignment="Left" Margin="340,460,0,-306" Width="75" Height="22"/>
-            <Button x:Name="L34" Content="led17" HorizontalAlignment="Left" Margin="450,460,0,-306" Width="75" Height="22"/>
-            <Button x:Name="L35" Content="led18" HorizontalAlignment="Left" Margin="560,460,0,-306" Width="75" Height="22"/>
-            <Button x:Name="L40" Content="led19" HorizontalAlignment="Left" Margin="20,510,0,-356" Width="75" Height="22"/>
-            <Button x:Name="L41" Content="led20" HorizontalAlignment="Left" Margin="130,510,0,-356" Width="75" Height="22"/>
-            <Button x:Name="L42" Content="led21" HorizontalAlignment="Left" Margin="230,510,0,-356" Width="75" Height="22"/>
-            <Button x:Name="L43" Content="led22" HorizontalAlignment="Left" Margin="340,510,0,-356" Width="75" Height="22"/>
-            <Button x:Name="L44" Content="led23" HorizontalAlignment="Left" Margin="450,510,0,-356" Width="75" Height="22"/>
-            <Button x:Name="L45" Content="led24" HorizontalAlignment="Left" Margin="560,510,0,-356" Width="75" Height="22"/>
+            <Button x:Name="R10" Content="led1" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R11" Content="led2" HorizontalAlignment="Left" Margin="100,20,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R12" Content="led3" HorizontalAlignment="Left" Margin="180,20,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R13" Content="led4" HorizontalAlignment="Left" Margin="260,20,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R14" Content="led5" HorizontalAlignment="Left" Margin="340,20,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R15" Content="led6" HorizontalAlignment="Left" Margin="420,20,0,0" VerticalAlignment="Top" Width="50" Height="22" />
+            <Button x:Name="R16" Content="led7" HorizontalAlignment="Left" Margin="500,20,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R17" Content="led8" HorizontalAlignment="Left" Margin="580,20,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R20" Content="led9" HorizontalAlignment="Left" Margin="20,60,0,0" VerticalAlignment="Top"   Width="50" Height="22"/>
+            <Button x:Name="R21" Content="led10" HorizontalAlignment="Left" Margin="100,60,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R22" Content="led11" HorizontalAlignment="Left" Margin="180,60,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R23" Content="led12" HorizontalAlignment="Left" Margin="260,60,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R24" Content="led13" HorizontalAlignment="Left" Margin="340,60,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R25" Content="led14" HorizontalAlignment="Left" Margin="420,60,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R26" Content="led15" HorizontalAlignment="Left" Margin="500,60,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R27" Content="led16" HorizontalAlignment="Left" Margin="580,60,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R30" Content="led17" HorizontalAlignment="Left" Margin="20,100,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R31" Content="led18" HorizontalAlignment="Left" Margin="100,100,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R32" Content="led19" HorizontalAlignment="Left" Margin="180,100,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R33" Content="led20" HorizontalAlignment="Left" Margin="260,100,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R34" Content="led21" HorizontalAlignment="Left" Margin="340,100,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R35" Content="led22" HorizontalAlignment="Left" Margin="420,100,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R36" Content="led23" HorizontalAlignment="Left" Margin="500,100,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R37" Content="led24" HorizontalAlignment="Left" Margin="580,100,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
+            <Button x:Name="R40" Content="led25" HorizontalAlignment="Left" Margin="20,140,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
+            <Button x:Name="R41" Content="led26" HorizontalAlignment="Left" Margin="120,140,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
+            <Button x:Name="R42" Content="led27" HorizontalAlignment="Left" Margin="230,140,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
+            <Button x:Name="R43" Content="led28" HorizontalAlignment="Left" Margin="340,140,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
+            <Button x:Name="R44" Content="led29" HorizontalAlignment="Left" Margin="450,140,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
+            <Button x:Name="R45" Content="led30" HorizontalAlignment="Left" Margin="560,140,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
+            <Button x:Name="L10" Content="led1" HorizontalAlignment="Left" Margin="20,360,0,-206"  Width="50" Height="22"/>
+            <Button x:Name="L11" Content="led2" HorizontalAlignment="Left" Margin="100,360,0,-206" Width="50" Height="22"/>
+            <Button x:Name="L12" Content="led3" HorizontalAlignment="Left" Margin="180,360,0,-206" Width="50" Height="22"/>
+            <Button x:Name="L13" Content="led4" HorizontalAlignment="Left" Margin="260,360,0,-206" Width="50" Height="22"/>
+            <Button x:Name="L14" Content="led5" HorizontalAlignment="Left" Margin="340,360,0,-206" Width="50" Height="22"/>
+            <Button x:Name="L15" Content="led6" HorizontalAlignment="Left" Margin="420,360,0,-206" Width="50" Height="22"/>
+            <Button x:Name="L16" Content="led7" HorizontalAlignment="Left" Margin="500,360,0,-206" Width="50" Height="22"/>
+            <Button x:Name="L17" Content="led8" HorizontalAlignment="Left" Margin="580,360,0,-206" Width="50" Height="22"/>
+            <Button x:Name="L20" Content="led9" HorizontalAlignment="Left" Margin="20,410,0,-256"  Width="50" Height="22"/>
+            <Button x:Name="L21" Content="led10" HorizontalAlignment="Left" Margin="100,410,0,-256" Width="50" Height="22"/>
+            <Button x:Name="L22" Content="led11" HorizontalAlignment="Left" Margin="180,410,0,-256" Width="50" Height="22"/>
+            <Button x:Name="L23" Content="led12" HorizontalAlignment="Left" Margin="260,410,0,-256" Width="50" Height="22"/>
+            <Button x:Name="L24" Content="led13" HorizontalAlignment="Left" Margin="340,410,0,-256" Width="50" Height="22"/>
+            <Button x:Name="L25" Content="led14" HorizontalAlignment="Left" Margin="420,410,0,-256" Width="50" Height="22"/>
+            <Button x:Name="L26" Content="led15" HorizontalAlignment="Left" Margin="500,410,0,-256" Width="50" Height="22"/>
+            <Button x:Name="L27" Content="led16" HorizontalAlignment="Left" Margin="580,410,0,-256" Width="50" Height="22"/>
+            <Button x:Name="L30" Content="led17" HorizontalAlignment="Left" Margin="20,460,0,-306"  Width="50" Height="22"/>
+            <Button x:Name="L31" Content="led18" HorizontalAlignment="Left" Margin="100,460,0,-306" Width="50" Height="22"/>
+            <Button x:Name="L32" Content="led19" HorizontalAlignment="Left" Margin="180,460,0,-306" Width="50" Height="22"/>
+            <Button x:Name="L33" Content="led20" HorizontalAlignment="Left" Margin="260,460,0,-306" Width="50" Height="22"/>
+            <Button x:Name="L34" Content="led21" HorizontalAlignment="Left" Margin="340,460,0,-306" Width="50" Height="22"/>
+            <Button x:Name="L35" Content="led22" HorizontalAlignment="Left" Margin="420,460,0,-306" Width="50" Height="22"/>
+            <Button x:Name="L36" Content="led23" HorizontalAlignment="Left" Margin="500,460,0,-306" Width="50" Height="22"/>
+            <Button x:Name="L37" Content="led24" HorizontalAlignment="Left" Margin="580,460,0,-306" Width="50" Height="22"/>
+            <Button x:Name="L40" Content="led25" HorizontalAlignment="Left" Margin="20,510,0,-356"  Width="75" Height="22"/>
+            <Button x:Name="L41" Content="led26" HorizontalAlignment="Left" Margin="130,510,0,-356" Width="75" Height="22"/>
+            <Button x:Name="L42" Content="led27" HorizontalAlignment="Left" Margin="230,510,0,-356" Width="75" Height="22"/>
+            <Button x:Name="L43" Content="led28" HorizontalAlignment="Left" Margin="340,510,0,-356" Width="75" Height="22"/>
+            <Button x:Name="L44" Content="led29" HorizontalAlignment="Left" Margin="450,510,0,-356" Width="75" Height="22"/>
+            <Button x:Name="L45" Content="led30" HorizontalAlignment="Left" Margin="560,510,0,-356" Width="75" Height="22"/>
         </Grid>
         <TextBox x:Name="lightIdTB" HorizontalAlignment="Left" Margin="231,38,0,82" TextWrapping="Wrap" Text="" Width="199" IsReadOnly="False" Grid.Row="1" FontSize="20" Keyboard.KeyDown="lightIdTB_KeyDown"/>
 
