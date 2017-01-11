@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using PLCLightCL.Light;
 using ScmWcfService;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,10 @@ namespace ScmClient
         {
             InitializeComponent();
         }
-        
+
+        ILightController lc;
+
+        private Dictionary<string, string> bindList = new Dictionary<string, string>();
         /// <summary>
         /// window加载
         /// </summary>
@@ -34,10 +38,11 @@ namespace ScmClient
         /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+             lc = new RamLightController("COM3");
             SetNotBindOff();
             boxIdTB.Focus();
             var cs = this.LightButtonGrid.Children;
-            int i = 1;
+            int i = 0;
             foreach (var c in cs)
             {
                 if(c is Button)
@@ -48,7 +53,7 @@ namespace ScmClient
                     i++;
                 }
             }
-            lightIdTB.Text = "1";
+            lightIdTB.Text = "0";
             SetLightWaitBind(lightIdTB.Text);
         }
 
@@ -126,7 +131,9 @@ namespace ScmClient
             Button b = FindByTag(tag);
             if (b != null)
             {
+                // 按钮显示黄色，灯亮起。
                 b.Background = Brushes.Yellow;
+                //SendLightOnCmd(tag);
             }
         }
 
@@ -135,56 +142,85 @@ namespace ScmClient
             Button b = FindByTag(tag);
             if (b != null)
             {
+                // 按钮显示绿色，灯关闭。
                 b.Background = Brushes.Green;
+                SendLightOnCmd(tag);                                                               
+                //SendLightOffCmd(tag);
             }
         }
-
+        /// <summary>
+        /// 亮起小灯
+        /// </summary>
+        /// <param name="tag"></param>
         public void SendLightOnCmd(string tag)
         {
-
+            lc.Play(PLCLightCL.Enum.LightCmdType.ON,new List<int> { int.Parse(tag)});
         }
 
+        /// <summary>
+        /// 关闭小灯
+        /// </summary>
+        /// <param name="tag"></param>
+        public void SendLightOffCmd(string tag)
+        {
+            ILightController lc = new LightController();
+            lc.Play(PLCLightCL.Enum.LightCmdType.OFF, new List<int> { int.Parse(tag) });
+        }
 
         private void boxIdTB_KeyDown(object sender, KeyEventArgs e)
         {
-            OrderService os = new OrderService();
-
-            if (e.Key == Key.Enter)
+            // 验证是否已经绑定过
+            if (bindList.Values.Contains(boxIdTB.Text))
             {
-                //bind
-                var msg = os.BindBoxAndLed(boxIdTB.Text, lightIdTB.Text);
-                if (msg.http_error)
+                foreach(var binded in bindList)
                 {
-                    MessageBox.Show(msg.Message);
-                }
-                else if (!msg.Success)
-                {
-                    MessageBox.Show(msg.meta.message);
-                }
-                else
-                {
-                    boxIdTB.Focus();
-                    SetLightBinded(lightIdTB.Text);
-                    SetNotBindOff();
-
-                    try
+                    if (binded.Value.Equals(boxIdTB.Text))
                     {
-                        var btn = FindNextNotBindByTag(lightIdTB.Text);
-                        if (btn != null)
-                        {
-                            string tag = btn.Tag.ToString();
-                            lightIdTB.Text = tag;
-                            SetLightWaitBind(lightIdTB.Text);
-                        }
-                        else
-                        {
-                            MessageBox.Show("已经完成绑定！");
-                        }
-                        boxIdTB.Clear();
+                        MessageBox.Show("料盒" + boxIdTB.Text + "已经绑定到小灯" + binded.Key+",请重新选择！");
                     }
-                    catch (Exception ex)
+                }
+            }else
+            {
+                OrderService os = new OrderService();
+
+                if (e.Key == Key.Enter)
+                {
+                    //bind
+                    var msg = os.BindBoxAndLed(boxIdTB.Text, lightIdTB.Text);
+                    if (msg.http_error)
                     {
-                        MessageBox.Show(ex.Message);
+                        MessageBox.Show(msg.Message);
+                    }
+                    else if (!msg.Success)
+                    {
+                        MessageBox.Show(msg.meta.message);
+                    }
+                    else
+                    {
+                        boxIdTB.Focus();
+                        SetLightBinded(lightIdTB.Text);
+                        SetNotBindOff();
+                        // 绑定后将lightIdTB、boxIdTB存入字典中，以便验证
+                        bindList.Add(lightIdTB.Text, boxIdTB.Text);
+                        try
+                        {
+                            var btn = FindNextNotBindByTag(lightIdTB.Text);
+                            if (btn != null)
+                            {
+                                string tag = btn.Tag.ToString();
+                                lightIdTB.Text = tag;
+                                SetLightWaitBind(lightIdTB.Text);
+                            }
+                            else
+                            {
+                                MessageBox.Show("已经完成绑定！");
+                            }
+                            boxIdTB.Clear();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
                     }
                 }
             }
@@ -208,7 +244,14 @@ namespace ScmClient
 
         private void BindFinishBtn_Click(object sender, RoutedEventArgs e)
         {
+            lc.Play(PLCLightCL.Enum.LightCmdType.ALL_OFF);
              this.Close();
+                
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            lc.Close();
         }
     }
 }
