@@ -38,7 +38,7 @@ namespace ScmClient
         List<PickItem> pickItems;
         string carNr;
         int currentAgvPoint = 0;
-        Socket socket = null;
+        Socket agvSocket = null;
         Socket ptlSocket = null;
         ProtocolService tcs = new ProtocolService();
         private byte[] station_msg = new byte[] {
@@ -202,20 +202,20 @@ namespace ScmClient
             string ip = ServerConfig.agvHost;
             int port = ServerConfig.agvPort;
 
-            if (socket == null)
-            {
-                socket = tcs.ConnectServer(ip, port);
+            //if (agvSocket == null)
+            //{
+                agvSocket = tcs.ConnectServer(ip, port);
 
-                if (socket == null)
+                if (agvSocket == null)
                 {
                     MessageBox.Show("服务器连接失败....");
                     return 0;
                 }
-            }
+            //}
 
-            ProtocolMessage<int> rep = tcs.GetAgvInfo(socket);
+            ProtocolMessage<int> rep = tcs.GetAgvInfo(agvSocket);
 
-            if (rep.result)
+            if (rep != null && rep.result)
             {
                 return rep.data;
             }
@@ -224,29 +224,31 @@ namespace ScmClient
                 MessageBox.Show("发送失败...");
             }
 
+            if (agvSocket != null)
+            {
+                agvSocket.Close();
+            }
+
 
             return 0;
         }
 
         private void sendDesStation(byte[] msg)
         {
-            string ip = ServerConfig.agvHost;
-            int port = ServerConfig.agvPort;
+            //if (socket == null)
+            //{
+            agvSocket = tcs.ConnectServer(ServerConfig.agvHost, ServerConfig.agvPort);
 
-            if (socket == null)
-            {
-                socket = tcs.ConnectServer(ip, port);
-
-                if (socket == null)
+                if (agvSocket == null)
                 {
                     MessageBox.Show("服务器连接失败....");
                     return;
                 }
-            }
+            //}
 
-            ProtocolMessage<Socket> rep = tcs.SendMessage(socket, msg);
+            ProtocolMessage<Socket> rep = tcs.SendMessage(agvSocket, msg);
 
-            if (rep.result)
+            if (rep != null && rep.result)
             {
                 //MessageBox.Show("开始接收数据...");
                 //byte[] recvBytes = new byte[1024];
@@ -263,13 +265,18 @@ namespace ScmClient
                 MessageBox.Show("发送失败...");
             }
 
+            if (agvSocket != null)
+            {
+                agvSocket.Close();
+            }
+
             return;
         }
 
         private void sendPtlCmd(byte[] msg)
         {
-            if (ptlSocket == null)
-            {
+            //if (ptlSocket == null)
+            //{
                 ptlSocket = tcs.ConnectServer(ServerConfig.ptlHost, ServerConfig.ptlPort);
 
                 if (ptlSocket == null)
@@ -277,11 +284,11 @@ namespace ScmClient
                     MessageBox.Show("PTL服务器连接失败....");
                     return;
                 }
-            }
+            //}
 
             ProtocolMessage<Socket> rep = tcs.SendMessage(ptlSocket, msg);
 
-            if (rep.result)
+            if (rep != null && rep.result)
             {
                 //MessageBox.Show("开始接收数据...");
                 //byte[] recvBytes = new byte[1024];
@@ -296,6 +303,11 @@ namespace ScmClient
             else
             {
                 MessageBox.Show("PTL发送失败...");
+            }
+
+            if (ptlSocket != null)
+            {
+                ptlSocket.Close();
             }
 
             return;
@@ -339,12 +351,14 @@ namespace ScmClient
 
             if (item.order_box != null && item.order_box.position_leds.Count > 0
                 && item.order_box.position_leds[0] != null
-                && item.order_box.position_leds[0].led.id != null
-                && item.order_box.position_leds[0].led.modem.id != null)
+                && item.order_box.position_leds[0].led.nr != null
+                && item.order_box.position_leds[0].led.modem.nr != null)
             {
-                ptlMsg[0] = (byte)(int.Parse(item.order_box.position_leds[0].led.modem.id));
-                ptlMsg[4] = (byte)(int.Parse(item.order_box.position_leds[0].led.id));
-                ptlMsg[9] = (byte)(int.Parse(item.order_box.position_leds[0].led.id));
+                ptlMsg[0] = (byte)(int.Parse(item.order_box.position_leds[0].led.modem.nr));
+                ptlMsg[4] = (byte)(int.Parse(item.order_box.position_leds[0].led.nr));
+                ptlMsg[8] = 0x00;
+                ptlMsg[9] = 0x00;
+                //ptlMsg[9] = (byte)(int.Parse(item.order_box.position_leds[0].led.nr));
                 //MessageBox.Show(ScaleConvertor.HexBytesToString(ptlMsg));
                 if (ServerConfig.PtlSwitch == 1)
                 {
@@ -358,13 +372,16 @@ namespace ScmClient
 
             if (item.order_box != null && item.order_box.led_id != null)
             {
-                if (lightController==null)
+                if (ServerConfig.ButtonLedSwitch == 1)
                 {
-                    MessageBox.Show("未找到COM口,请检查...");
-                }
-                else
-                {
-                    lightController.Play(PLCLightCL.Enum.LightCmdType.ON, new List<int> { int.Parse(item.order_box.led_id) });
+                    if (lightController == null)
+                    {
+                        MessageBox.Show("未找到COM口,请检查...");
+                    }
+                    else
+                    {
+                        lightController.Play(PLCLightCL.Enum.LightCmdType.ON, new List<int> { int.Parse(item.order_box.led_id) });
+                    }
                 }
                 
                 //ptlMsg[0] = (byte)(int.Parse(item.order_box.box_led.modem.id));

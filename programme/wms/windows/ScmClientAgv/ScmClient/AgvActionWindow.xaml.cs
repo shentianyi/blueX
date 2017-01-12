@@ -65,7 +65,7 @@ namespace ScmClient
 
             ProtocolMessage<int> rep = tcs.GetAgvInfo(socket);
 
-            if (rep.result)
+            if (rep != null && rep.result)
             {
                 //MessageBox.Show("小车返回信息");
                 currentAgvPoint = rep.data;
@@ -94,7 +94,7 @@ namespace ScmClient
 
             ProtocolMessage<Socket> rep = tcs.SendMessage(socket, msg);
 
-            if (rep.result)
+            if (rep != null && rep.result)
             {
                 //MessageBox.Show("开始接收数据...");
                 //byte[] recvBytes = new byte[1024];

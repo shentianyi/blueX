@@ -26,6 +26,7 @@ namespace ScmWcfService.Config
                 ptlComPort = config.Get("PtlComPort");
                 PtlSwitch = int.Parse(config.Get("PtlSwitch"));
                 AgvSwitch = int.Parse(config.Get("AgvSwitch"));
+                ButtonLedSwitch = int.Parse(config.Get("ButtonLedSwitch"));
             }
             catch (Exception e)
             {
@@ -42,5 +43,6 @@ namespace ScmWcfService.Config
 
         public static int PtlSwitch { get; set; }
         public static int AgvSwitch { get; set; }
+        public static int ButtonLedSwitch { get; set; }
     }
 }

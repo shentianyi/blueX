@@ -13,6 +13,9 @@ namespace ScmWcfService.Model
         public string id { get; set; }
 
         [DataMember]
+        public string nr { get; set; }
+
+        [DataMember]
         public Modem modem { get; set; }
     }
 }

@@ -17,5 +17,7 @@ namespace ScmWcfService.Model
 
         [DataMember]
         public string ip { get; set; }
+        [DataMember]
+        public string nr { get; set; }
     }
 }
