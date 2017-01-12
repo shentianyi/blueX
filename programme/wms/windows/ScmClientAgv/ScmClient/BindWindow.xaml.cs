@@ -140,7 +140,7 @@ namespace ScmClient
             Button b = FindByTag(tag);
             if (b != null)
             {
-                // 按钮显示黄色，灯亮起。
+                // 按钮显示黄色。
                 b.Background = Brushes.Yellow;
                 //SendLightOnCmd(tag);
             }
@@ -151,7 +151,7 @@ namespace ScmClient
             Button b = FindByTag(tag);
             if (b != null)
             {
-                // 按钮显示绿色，灯关闭。
+                // 按钮显示绿色，灯亮起。
                 b.Background = Brushes.Green;
                 SendLightOnCmd(tag);                                                               
                 //SendLightOffCmd(tag);
