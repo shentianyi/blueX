@@ -17,7 +17,9 @@ Public Class Working
     Private _currentSeq As Integer = 0
     Private _svc As MainService = New MainService
     Private _currentRoutine As RoutineOnWorkInstructionDetails
-    Private _lightController As ILightController
+    'Private _lightController As ILightController
+    Private _lightHelper As LightHelper
+
     Private WithEvents timer As DispatcherTimer
     Private _isprepareTime = True
     Private _prepareTime = 0
@@ -71,7 +73,8 @@ Public Class Working
         If Me._wiRoutines IsNot Nothing Then
             If _wiRoutines.Count > seq Then
                 Try
-                    _lightController.Play(LightCmdType.ALL_OFF)
+                    '_lightController.Play(LightCmdType.ALL_OFF)
+                    _lightHelper.Play(LightCmdType.ALL_OFF, StaffSession.GetInstance.WorkStation.workstationId)
                 Catch ex As Exception
 
                 End Try
@@ -92,7 +95,8 @@ Public Class Working
             intLabels.Add(CType(strId, Integer))
         Next
         Try
-            _lightController.Play(LightCmdType.ALL_OFF_BEFORE_ON, intLabels)
+            ' _lightController.Play(LightCmdType.ALL_OFF_BEFORE_ON, intLabels)
+            _lightHelper.Play(LightCmdType.ALL_OFF_BEFORE_ON, StaffSession.GetInstance.StationID, _currentRoutine.routineId)
         Catch ex As Exception
 
         End Try
@@ -200,7 +204,9 @@ Public Class Working
 
         ' 在 InitializeComponent() 调用之后添加任何初始化。
         Try
-            _lightController = New RamLightController(My.Settings.com)
+            ' _lightController = New RamLightController(My.Settings.com)
+            _lightHelper = New LightHelper
+
         Catch ex As Exception
 
         End Try
@@ -236,8 +242,10 @@ Public Class Working
         End If
 
         Try
-            _lightController.Play(LightCmdType.ALL_OFF)
-            _lightController.Close()
+            '_lightController.Play(LightCmdType.ALL_OFF)
+            '_lightController.Close()
+            _lightHelper.Play(LightCmdType.ALL_OFF, StaffSession.GetInstance.StationID)
+            _lightHelper.Close()
         Catch ex As Exception
 
         End Try

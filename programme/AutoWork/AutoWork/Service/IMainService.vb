@@ -11,4 +11,6 @@
 
     Function GetLabelAddressForRoutineOnWorkStation(routineId As String, workstationId As String) As List(Of String)
 
+    Function GetLabelsForRoutineOnWorkStation(routineId As String, workstationId As String) As List(Of ELabelOnForPartOnWorkstation)
+
 End Interface

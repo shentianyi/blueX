@@ -225,6 +225,9 @@
       <LastGenOutput>AutoWork.designer.vb</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
+    <None Include="log4.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

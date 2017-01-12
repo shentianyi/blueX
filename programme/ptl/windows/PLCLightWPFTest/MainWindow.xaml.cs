@@ -16,6 +16,8 @@ using PLCLightCL.Light;
 using PLCLightCL.Enum;
 using System.Threading;
 using Brilliantech.Framwork.Utils.LogUtil;
+using PLCLightWPFTest.Data;
+using PLCLightWPFTest.Properties;
 
 namespace PLCLightWPFTest
 {
@@ -192,6 +194,7 @@ namespace PLCLightWPFTest
                 if (next != -1)
                 {
                     indexTB.Text = next.ToString();
+                    lightIdTB.Text = next.ToString();
 
                     if (!keepCB.IsChecked.Value)
                     {
@@ -264,7 +267,118 @@ namespace PLCLightWPFTest
 
         private void binglightBtn_Click(object sender, RoutedEventArgs e)
         {
-            new BindLightWindow((this.controllerCB.SelectedItem.ToString()).Split(':')[1].Trim()).Show();
+            this.Bind();
+            // new BindLightWindow((this.controllerCB.SelectedItem.ToString()).Split(':')[1].Trim()).Show();
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        private void partTB_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                TextBox t = sender as TextBox;
+                if (!string.IsNullOrEmpty(t.Text))
+                {
+                    switch (t.Name)
+                    {
+                        case "partTB":
+                            lightIdTB.Focus();
+                            break;
+                        case "lightIdTB":
+                            this.Bind();
+                            partTB.Focus();
+                            break;
+                        default:
+                            partTB.Focus();
+                            break;
+                    }
+                    if (t.Name == "partTB") { }
+                }
+            }
+        }
+
+        private void Bind()
+        {
+            try
+            {
+                if (Validate())
+                {
+                    var c = new AutoWorkDbDataContext(Settings.Default.awDb);
+                    var b = c.ELabelOnForPartOnWorkstation.FirstOrDefault(s => s.workstationId == workpalceTB.Text && s.partNr == partTB.Text);
+                    if (b == null)
+                    {
+                        b = new ELabelOnForPartOnWorkstation()
+                        {
+                            workstationId = workpalceTB.Text,
+                            partNr = partTB.Text,
+                            controlType = (this.controllerCB.SelectedItem.ToString()).Split(':')[1].Trim(),//controllTypeLab.Content.ToString(),
+                            labelAddr = lightIdTB.Text
+                        };
+                        c.ELabelOnForPartOnWorkstation.InsertOnSubmit(b);
+                        c.SubmitChanges();
+                        this.ClearInput();
+                    }
+                    else
+                    {
+                        b.controlType = (this.controllerCB.SelectedItem.ToString()).Split(':')[1].Trim();//controllTypeLab.Content.ToString();
+                        b.labelAddr = lightIdTB.Text;
+                        c.SubmitChanges();
+                        this.ClearInput();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private bool Validate()
+        {
+            if (string.IsNullOrWhiteSpace(workpalceTB.Text))
+            {
+                MessageBox.Show("input workplace");
+                return false;
+            }
+
+
+            if (string.IsNullOrWhiteSpace(partTB.Text))
+            {
+                MessageBox.Show("input part");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(lightIdTB.Text))
+            {
+                MessageBox.Show("input lightId");
+                return false;
+            }
+            return true;
+        }
+
+        private void ClearInput()
+        {
+            this.partTB.Text = string.Empty;
+            this.lightIdTB.Text = string.Empty;
+            this.partTB.Focus();
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Bind();
+        }
+
     }
 }

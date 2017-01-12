@@ -204,6 +204,53 @@ Partial Friend NotInheritable Class MySettings
             Me("SameWIMsgWindowColor") = value
         End Set
     End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("Data Source=SVCNSKSK06;Initial Catalog=AutoWork;Persist Security Info=True;User I"& _ 
+        "D=sa;Password=Leoni2000")>  _
+    Public ReadOnly Property AutoWorkConnectionString3() As String
+        Get
+            Return CType(Me("AutoWorkConnectionString3"),String)
+        End Get
+    End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+    Public Property CanId() As Integer
+        Get
+            Return CType(Me("CanId"),Integer)
+        End Get
+        Set
+            Me("CanId") = value
+        End Set
+    End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("10.180.168.5")>  _
+    Public Property CanServerIP() As String
+        Get
+            Return CType(Me("CanServerIP"),String)
+        End Get
+        Set
+            Me("CanServerIP") = value
+        End Set
+    End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("6001")>  _
+    Public Property CanServerPort() As Integer
+        Get
+            Return CType(Me("CanServerPort"),Integer)
+        End Get
+        Set
+            Me("CanServerPort") = value
+        End Set
+    End Property
 End Class
 
 Namespace My
