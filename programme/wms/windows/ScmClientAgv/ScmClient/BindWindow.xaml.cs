@@ -49,7 +49,8 @@ namespace ScmClient
         {
              //lc = new RamLightController(ServerConfig.ptlComPort);
             SetNotBindOff();
-            boxIdTB.Focus();
+            //boxIdTB.Focus();
+            lightIdTB.Focus();
             var cs = this.LightButtonGrid.Children;
             int i = 0;
             foreach (var c in cs)
@@ -225,6 +226,8 @@ namespace ScmClient
                                 MessageBox.Show("已经完成绑定！");
                             }
                             boxIdTB.Clear();
+                            boxIdTB.SelectAll();
+                            lightIdTB.Focus();
                         }
                         catch (Exception ex)
                         {
