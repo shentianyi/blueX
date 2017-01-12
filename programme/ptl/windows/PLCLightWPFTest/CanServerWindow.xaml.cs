@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Brilliantech.Framwork.Utils.LogUtil;
 using CanLightServiceLib;
+using CanLightServiceLib.Config;
 
 namespace PLCLightWPFTest
 {
@@ -29,10 +30,11 @@ namespace PLCLightWPFTest
         {
             try
             {
-                Dictionary<string, string> canClients = new Dictionary<string, string>();
-                canClients.Add("1", "192.168.1.179");
-                server = new CanLightTcpServer("192.168.1.100", "6001", canClients);
-                    server.Start();
+                //Dictionary<string, string> canClients = new Dictionary<string, string>();
+                //canClients.Add("1", "192.168.1.179");
+                //server = new CanLightTcpServer("192.168.1.100", "6001", CanConfig.CanModels);
+                server = new CanLightTcpServer("169.254.163.50", "6001", CanConfig.CanModels);
+                server.Start();
             }
             catch (Exception ex)
             {

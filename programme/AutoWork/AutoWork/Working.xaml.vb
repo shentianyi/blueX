@@ -89,11 +89,11 @@ Public Class Working
     End Sub
 
     Private Sub BindData()
-        Dim labels As List(Of String) = _svc.GetLabelAddressForRoutineOnWorkStation(_currentRoutine.routineId, StaffSession.GetInstance.StationID)
-        Dim intLabels As List(Of Integer) = New List(Of Integer)
-        For Each strId As String In labels
-            intLabels.Add(CType(strId, Integer))
-        Next
+        ' Dim labels As List(Of String) = _svc.GetLabelAddressForRoutineOnWorkStation(_currentRoutine.routineId, StaffSession.GetInstance.StationID)
+        ' Dim intLabels As List(Of Integer) = New List(Of Integer)
+        'For Each strId As String In labels
+        'intLabels.Add(CType(strId, Integer))
+        'Next
         Try
             ' _lightController.Play(LightCmdType.ALL_OFF_BEFORE_ON, intLabels)
             _lightHelper.Play(LightCmdType.ALL_OFF_BEFORE_ON, StaffSession.GetInstance.StationID, _currentRoutine.routineId)

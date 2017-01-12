@@ -31,8 +31,8 @@ namespace CanLightServiceLib
         /// <summary>
         /// can转换器连接，ID和IP
         /// </summary>
-        Dictionary<string, string> canClients = new Dictionary<string, string>();
-
+        //   Dictionary<string, string> canClients = new Dictionary<string, string>();
+        List<CanModel> canClients = new List<CanModel>();
         Dictionary<string, Socket> clients = new Dictionary<string, Socket>();
         Dictionary<string, Thread> clientThreads = new Dictionary<string, Thread>();
 
@@ -43,7 +43,7 @@ namespace CanLightServiceLib
         private ManualResetEvent receivedEvent = new ManualResetEvent(false);
 
         //
-        public CanLightTcpServer(string ip, string port, Dictionary<string, string> canClients)
+        public CanLightTcpServer(string ip, string port, List<CanModel> canClients)
         {
             this.ip = ip;
             this.port = port;
@@ -90,19 +90,21 @@ namespace CanLightServiceLib
             while (isRun)
             {
                 Socket client = server.Accept();
-
+                
                 try
                 {
                     string tempIp = GetSocketIP(client);
+                    RemoveClient(tempIp);
                     if (this.IsCanClient(tempIp))
                     {
+                       // client.ReceiveTimeout = 10000;
+                        FindCanClientByIp(tempIp).OnLine = true;
                         LogUtil.Logger.Info("请求连接的【CAN】控制器IP：" + tempIp);
                     }
                     else
                     {
                         LogUtil.Logger.Info("请求连接的客户端IP：" + tempIp);
                     }
-                    RemoveClient(tempIp);
                     //  LogUtil.Logger.Info("移除字典item成功！");
                     //}
 
@@ -206,6 +208,7 @@ namespace CanLightServiceLib
                         }
                         else
                         {
+                            FindCanClientByIp(clientIP).OnLine = true;
                             LogUtil.Logger.InfoFormat("【接收到 CAN:{0} 信息】{1}", clientIP, ScaleConvertor.HexBytesToString(message));
                             // 暂时不处理
                         }
@@ -216,18 +219,21 @@ namespace CanLightServiceLib
                 catch (ObjectDisposedException exx)
                 {
                     RemoveClient(clientIP);
+                   
                     LogUtil.Logger.Error(exx.Message, exx);
                     break;
                 }
                 catch (SocketException exxx)
                 {
                     RemoveClient(clientIP);
+                  
                     LogUtil.Logger.Error(exxx.Message, exxx);
                     break;
                 }
                 catch (Exception ee)
                 {
                     RemoveClient(clientIP);
+                   
                     LogUtil.Logger.Error(ee.Message, ee);
                     // RemoveClient(client);
                 }
@@ -258,6 +264,10 @@ namespace CanLightServiceLib
                 this.clients.Remove(key);
             }
 
+            if (IsCanClient(key))
+            {
+                FindCanClientByIp(key).OnLine = false;
+            }
             if (this.clientThreads.Keys.Contains(key))
             {
 
@@ -278,30 +288,13 @@ namespace CanLightServiceLib
         }
 
 
-        /// <summary>
-        /// 由socket实例获得字典中对应的key值
-        /// </summary>
-        /// <param name="client"></param>
-        /// <returns></returns>
-        private string GetClientKey(Socket client)
-        {
-            string key = string.Empty;
-            foreach (var item in clients)
-            {
-                if (item.Value == client)
-                {
-                    key = item.Key;
-                    break;
-                }
-            }
-            return key;
-        }
+      
 
-        private Socket GetClientByKey(string key)
+        private Socket GetClientByIp(string ip)
         {
-            if (this.clients.Keys.Contains(key))
+            if (this.clients.Keys.Contains(ip))
             {
-                return this.clients[key];
+                return this.clients[ip];
             }
             return null;
         }
@@ -313,13 +306,35 @@ namespace CanLightServiceLib
 
         public bool IsCanClient(string ip)
         {
-            return this.canClients.Values.Contains(ip);
+            return this.canClients.FirstOrDefault(s=>s.IP==ip)!=null;
+        }
+
+
+        public CanModel FindCanClient(string canId)
+        {
+            return this.canClients.Where(s => s.Id == canId).FirstOrDefault();
+        }
+
+
+
+        public CanModel FindCanClientByIp(string ip)
+        {
+            return this.canClients.Where(s => s.IP == ip).FirstOrDefault();
         }
 
 
         public bool IsCanClientAlive(string canId)
         {
-            return this.clients.Keys.Contains(this.canClients[canId]);
+            CanModel can = FindCanClient(canId);
+            if(can==null)
+            {
+                throw new ArgumentException("CanId:"+canId+" 错误，不在配置中！");
+            }
+            else
+            {
+                return can.OnLine;
+            }
+           // return this.clients.Keys.Contains(this.canClients[canId]);
         }
 
         /// <summary>
@@ -339,7 +354,8 @@ namespace CanLightServiceLib
                         {
                             try
                             {
-                                Socket canClient = this.GetClientByKey(this.canClients[canId]);
+                                CanModel can = FindCanClient(canId);
+                                Socket canClient = this.GetClientByIp(can.IP);
 
                                 if (canClient != null)
                                 {
@@ -347,7 +363,7 @@ namespace CanLightServiceLib
                                     int lightNum = ScaleConvertor.HexByteToDecimal(cmdData.ClientCmd[3]);
                                     string cmdTypeStr = cmdType == 0x01 ? "亮灯" : "灭灯";
 
-                                    LogUtil.Logger.InfoFormat("【请求CAN ID:{0} - IP:{1}】【{2}】{3}数：{4}", canId, this.canClients[canId], cmdData.ClientIP, cmdTypeStr, lightNum);
+                                    LogUtil.Logger.InfoFormat("【请求CAN ID:{0} - IP:{1}】【{2}】{3}数：{4}", canId, can.IP, cmdData.ClientIP, cmdTypeStr, lightNum);
 
                                     for (int i = 0; i < lightNum; i++)
                                     {
@@ -358,7 +374,7 @@ namespace CanLightServiceLib
 
                                         lightMsg[4] = id;
                                      //   Thread.Sleep(500);
-                                      this.SendMsgToClient(this.canClients[canId], lightMsg);
+                                      this.SendMsgToClient(can.IP, lightMsg);
 
                                     }
                                     this.SendMsgToClient(cmdData.ClientIP, new byte[] { 0xAB, 0x02, 0x00, 0xFF });
@@ -400,7 +416,7 @@ namespace CanLightServiceLib
         {
             try
             {
-                Socket client = this.GetClientByKey(ip);
+                Socket client = this.GetClientByIp(ip);
                 if (client != null)
                 {
                     try {
@@ -418,7 +434,7 @@ namespace CanLightServiceLib
                 { 
                     this.RemoveClient(ip);
                     if (this.IsCanClient(ip))
-                    {
+                    { 
                         LogUtil.Logger.Error("【【CAN】控制器发送消息时未连接】");
                     }
                     else

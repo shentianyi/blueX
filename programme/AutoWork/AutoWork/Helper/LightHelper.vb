@@ -69,37 +69,37 @@ Public Class LightHelper
             If cmdType = LightCmdType.ON Then
                 If String.IsNullOrEmpty(routeId) = False Then
 
-                    If routeLightDic.Keys.Contains("Ram") Then
-                        _ramlightController.Play(LightCmdType.ON, StringListToInt(routeLightDic("Ram").Select(Function(c) c.labelAddr).ToList()))
+                    If routeLightDic.Keys.Contains("RAM") Then
+                        _ramlightController.Play(LightCmdType.ON, StringListToInt(routeLightDic("RAM").Select(Function(c) c.labelAddr).ToList()))
                     End If
 
-                    If routeLightDic.Keys.Contains("Can") Then
-                        _canlightController.Play(LightCmdType.ON, StringListToInt(routeLightDic("Can").Select(Function(c) c.labelAddr).ToList()))
+                    If routeLightDic.Keys.Contains("CAN") Then
+                        _canlightController.Play(LightCmdType.ON, StringListToInt(routeLightDic("CAN").Select(Function(c) c.labelAddr).ToList()))
                     End If
 
                 End If
             ElseIf cmdType = LightCmdType.ALL_OFF Then
                 _ramlightController.Play(LightCmdType.ALL_OFF)
 
-                If allLightDic.Keys.Contains("Can") Then
-                    _canlightController.Play(LightCmdType.OFF, StringListToInt(allLightDic("Can").Select(Function(c) c.labelAddr).ToList()))
+                If allLightDic.Keys.Contains("CAN") Then
+                    _canlightController.Play(LightCmdType.OFF, StringListToInt(allLightDic("CAN").Select(Function(c) c.labelAddr).ToList()))
                 End If
 
             ElseIf cmdType = LightCmdType.ALL_OFF_BEFORE_ON Then
                 _ramlightController.Play(LightCmdType.ALL_OFF)
-                If allLightDic.Keys.Contains("Can") Then
-                    _canlightController.Play(LightCmdType.OFF, StringListToInt(allLightDic("Can").Select(Function(c) c.labelAddr).ToList()))
+                If allLightDic.Keys.Contains("CAN") Then
+                    _canlightController.Play(LightCmdType.OFF, StringListToInt(allLightDic("CAN").Select(Function(c) c.labelAddr).ToList()))
                 End If
 
 
                 If String.IsNullOrEmpty(routeId) = False Then
 
-                    If routeLightDic.Keys.Contains("Ram") Then
-                        _ramlightController.Play(LightCmdType.ON, StringListToInt(routeLightDic("Ram").Select(Function(c) c.labelAddr).ToList()))
+                    If routeLightDic.Keys.Contains("RAM") Then
+                        _ramlightController.Play(LightCmdType.ON, StringListToInt(routeLightDic("RAM").Select(Function(c) c.labelAddr).ToList()))
                     End If
 
-                    If routeLightDic.Keys.Contains("Can") Then
-                        _canlightController.Play(LightCmdType.ON, StringListToInt(routeLightDic("Can").Select(Function(c) c.labelAddr).ToList()))
+                    If routeLightDic.Keys.Contains("CAN") Then
+                        _canlightController.Play(LightCmdType.ON, StringListToInt(routeLightDic("CAN").Select(Function(c) c.labelAddr).ToList()))
                     End If
 
                 End If
