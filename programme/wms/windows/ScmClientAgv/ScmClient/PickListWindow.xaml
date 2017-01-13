@@ -89,7 +89,7 @@
                         </StackPanel>
                         <StackPanel HorizontalAlignment="Left">
                             <DataGrid  Name="PreviewDG" AutoGenerateColumns="False" 
-                               IsReadOnly="True" Height="350" 
+                               IsReadOnly="True" Height="313" 
                        Width="590" VerticalScrollBarVisibility="Auto"
                                        HorizontalScrollBarVisibility="Auto" MouseDoubleClick="PreviewDG_MouseDoubleClick">
                                 <DataGrid.ColumnHeaderStyle>

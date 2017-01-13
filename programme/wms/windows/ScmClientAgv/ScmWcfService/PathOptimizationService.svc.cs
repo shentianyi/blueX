@@ -49,6 +49,9 @@ namespace ScmWcfService
                     else if (calcStationCount(5, source, 20, destination) < calcStationCount(source, 1, destination, 16))
                     {
                         direction = 0x01;
+                    }else
+                    {
+                        direction = 0x01;
                     }
                 }
                 else if (destination >= 21 && destination <= 30)
@@ -63,6 +66,10 @@ namespace ScmWcfService
                         direction = 0x02;
                     }
                     else if (calcStationCount(5, source, 35, destination) < calcStationCount(source, 1, destination, 30))
+                    {
+                        direction = 0x01;
+                    }
+                    else
                     {
                         direction = 0x01;
                     }
@@ -112,6 +119,10 @@ namespace ScmWcfService
                     {
                         direction = 0x01;
                     }
+                    else
+                    {
+                        direction = 0x01;
+                    }
                 }
                 else if (destination >= 31 && destination <= 35)
                 {
@@ -140,6 +151,10 @@ namespace ScmWcfService
                         direction = 0x02;
                     }
                     else if (calcStationCount(20, source, 5, destination) < calcStationCount(source, 16, destination, 1))
+                    {
+                        direction = 0x01;
+                    }
+                    else
                     {
                         direction = 0x01;
                     }
@@ -174,6 +189,10 @@ namespace ScmWcfService
                     {
                         direction = 0x01;
                     }
+                    else
+                    {
+                        direction = 0x01;
+                    }
                 }
                 else if (destination == 50)//待机点
                 {
@@ -202,6 +221,10 @@ namespace ScmWcfService
                         direction = 0x02;
                     }
                     else if (calcStationCount(30, source, 15, destination) < calcStationCount(source, 21, destination, 6))
+                    {
+                        direction = 0x01;
+                    }
+                    else
                     {
                         direction = 0x01;
                     }
@@ -251,6 +274,10 @@ namespace ScmWcfService
                     {
                         direction = 0x01;
                     }
+                    else
+                    {
+                        direction = 0x01;
+                    }
                 }
                 else if (destination >= 6 && destination <= 15)
                 {
@@ -267,6 +294,10 @@ namespace ScmWcfService
                     {
                         direction = 0x01;
                     }
+                    else
+                    {
+                        direction = 0x01;
+                    }
                 }
                 else if (destination >= 21 && destination <= 30)
                 {
@@ -276,11 +307,11 @@ namespace ScmWcfService
                 {
                     if (destination > source)
                     {
-                        direction = 0x01;
+                        direction = 0x02;
                     }
                     else if (destination < source)
                     {
-                        direction = 0x02;
+                        direction = 0x01;
                     }
                 }
                 else if (destination == 50)//待机点
@@ -293,7 +324,7 @@ namespace ScmWcfService
                 }
                 else if (destination == 42)//卸货点
                 {
-                    direction = 0x01;
+                    direction = 0x02;
                 }
             }
             else if (source == 50)//待机点
