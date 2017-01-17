@@ -224,6 +224,7 @@ namespace ScmClient
             {
                 ptlMsg[0] = (byte)(int.Parse(item.order_box.position_leds[0].led.modem.nr));
                 ptlMsg[4] = (byte)(int.Parse(item.order_box.position_leds[0].led.nr));
+                ptlMsg[7] = 0x00;
                 ptlMsg[8] = 0x00;
                 ptlMsg[9] = 0x00;
                 //ptlMsg[9] = (byte)(int.Parse(item.order_box.position_leds[0].led.nr));
@@ -267,7 +268,7 @@ namespace ScmClient
             }
             else
             {
-                MessageBox.Show("未找到料盒LED灯信息,请联系管理员...");
+                //MessageBox.Show("未找到料盒LED灯信息,请联系管理员...");
                 //return null;
             }
 

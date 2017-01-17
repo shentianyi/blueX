@@ -392,7 +392,7 @@ namespace ScmClient
             }
             else
             {
-                MessageBox.Show("未找到料盒LED灯信息,请联系管理员...");
+                //MessageBox.Show("未找到料盒LED灯信息,请联系管理员...");
             }
 
             return;
