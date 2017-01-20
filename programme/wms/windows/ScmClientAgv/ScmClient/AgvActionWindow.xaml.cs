@@ -187,5 +187,27 @@ namespace ScmClient
 
             sendDesStation(msg);
         }
+
+        private void stopBtn_Click(object sender, RoutedEventArgs e)
+        {
+            byte[] msg = station_msg;
+            //cmd
+            msg[05] = 0x02;
+            msg[8] = 0x00;
+            msg[7] = 0x00;
+
+            sendDesStation(msg);
+        }
+
+        private void resetBtn_Click(object sender, RoutedEventArgs e)
+        {
+            byte[] msg = station_msg;
+            //cmd
+            msg[05] = 0x01;
+            msg[8] = 0x00;
+            msg[7] = 0x00;
+
+            sendDesStation(msg);
+        }
     }
 }
