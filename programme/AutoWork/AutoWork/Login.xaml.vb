@@ -1,6 +1,10 @@
 ﻿
 Imports AutoWork.MsgLevel
 Imports AutoWork.MsgDialog
+Imports Brilliantech.Framwork.Utils
+Imports PLCLightCL.Light
+Imports PLCLightCL.Enum
+'Imports System.Threading
 
 Partial Public Class Login
     Inherits Window
@@ -15,7 +19,7 @@ Partial Public Class Login
     Private Sub confirm()
         If String.IsNullOrEmpty(textBox_operator.Text) = False And String.IsNullOrEmpty(textBox_station.Text) = False Then
             '验证StaffID和work station 是否存在
-            Dim db As AutoWorkDataContext = New AutoWorkDataContext
+            Dim db As AutoWorkDataContext = New AutoWorkDataContext(My.Settings.database)
             Dim workstation As WorkStation = db.WorkStations.SingleOrDefault(Function(c) String.Compare(c.workstationId, textBox_station.Text, True) = 0)
             If workstation Is Nothing Then
                 MsgBox("扫描入的操作台" & textBox_station.Text & "不存在")
@@ -84,7 +88,63 @@ Partial Public Class Login
     End Sub
 
     Private Sub button1_Click(sender As Object, e As RoutedEventArgs) Handles button1.Click
-        Dim msg As String = "上一次作业指导书为:123" & ", 本次为：" & "456"
-        CMsgDlg(MsgLevel.Warning, msg, True, Nothing, My.Settings.SameWIColseTime).ShowDialog()
+        'Dim msg As String = "上一次作业指导书为:123" & ", 本次为：" & "456"
+        'CMsgDlg(MsgLevel.Warning, msg, True, Nothing, My.Settings.SameWIColseTime).ShowDialog()
+
+        'beginInvokeThread = New Threading.Thread(AddressOf Dow)
+        'beginInvokeThread.Start()
+
+    End Sub
+    Dim beginInvokeThread As Threading.Thread
+    Private Sub Window_Loaded(sender As Object, e As RoutedEventArgs)
+        'Dispatcher.BeginInvoke(Sub()
+        '                           textBox_operator.Text = "dddd"
+        '                           Dim i As Integer = 0
+        '                           Do While i < 100000
+        '                               LogUtil.LogUtil.Logger.Error(i)
+
+        '                               Console.WriteLine(i)
+        '                               i += 1
+        '                           Loop
+
+        '                       End Sub)
+
+
+
+
+
+    End Sub
+
+    Private _ramlightController As ILightController
+    Public Sub Dow()
+        Dispatcher.Invoke(Sub()
+                              textBox_operator.Text = "dddd"
+                          End Sub)
+
+        '_ramlightController = New RamLightController(My.Settings.com)
+        '_ramlightController.Play(LightCmdType.ALL_OFF)
+
+
+        Dim i As Integer = 0
+        Do While i < 10000
+            LogUtil.LogUtil.Logger.Error(i)
+
+            Console.WriteLine(i)
+            i += 1
+        Loop
+
+        beginInvokeThread.Abort()
+        beginInvokeThread = Nothing
+
+    End Sub
+
+    Private Sub Window_Closing(sender As Object, e As ComponentModel.CancelEventArgs)
+        'Try
+        '    beginInvokeThread.Abort()
+        '    _ramlightController.Close()
+        'Catch ex As Exception
+        '    LogUtil.LogUtil.Logger.Error(ex.Message, ex)
+
+        'End Try
     End Sub
 End Class

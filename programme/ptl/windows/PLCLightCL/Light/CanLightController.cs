@@ -43,6 +43,8 @@ namespace PLCLightCL.Light
 
         public override void Play(LightCmdType cmdType, List<int> indexes = null)
         {
+            //try
+            //{
             indexes = this.ValidateIndexes(cmdType, indexes);
 
             byte cmdT = 0x00;
@@ -99,6 +101,11 @@ namespace PLCLightCL.Light
             }
 
             tcpClient.Send(msg, msg.Length, SocketFlags.None);
+            //}
+            //catch (Exception ex)
+            //{
+            //    LogUtil.Logger.Error(ex.Message, ex);
+            //}
         }
 
 

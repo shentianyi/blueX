@@ -82,16 +82,6 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("Data Source=SVCNSKSK06;Initial Catalog=AutoWork;Persist Security Info=True;User I"& _ 
-        "D=sa;Password=Leoni2000")>  _
-    Public ReadOnly Property database() As String
-        Get
-            Return CType(Me("database"),String)
-        End Get
-    End Property
-    
-    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Configuration.DefaultSettingValueAttribute("Data Source=svp37001.p37.leoni.local;Initial Catalog=LEPS;Persist Security Info=T"& _ 
         "rue;User ID=ASS_user;Password=ass_user")>  _
     Public ReadOnly Property lepsdb() As String
@@ -108,15 +98,6 @@ Partial Friend NotInheritable Class MySettings
     Public ReadOnly Property AutoWorkConnectionString() As String
         Get
             Return CType(Me("AutoWorkConnectionString"),String)
-        End Get
-    End Property
-    
-    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("COM1")>  _
-    Public ReadOnly Property com() As String
-        Get
-            Return CType(Me("com"),String)
         End Get
     End Property
     
@@ -230,18 +211,6 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("10.180.168.5")>  _
-    Public Property CanServerIP() As String
-        Get
-            Return CType(Me("CanServerIP"),String)
-        End Get
-        Set
-            Me("CanServerIP") = value
-        End Set
-    End Property
-    
-    <Global.System.Configuration.UserScopedSettingAttribute(),  _
-     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Configuration.DefaultSettingValueAttribute("6001")>  _
     Public Property CanServerPort() As Integer
         Get
@@ -249,6 +218,49 @@ Partial Friend NotInheritable Class MySettings
         End Get
         Set
             Me("CanServerPort") = value
+        End Set
+    End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+    Public Property IsShowSameWI() As Boolean
+        Get
+            Return CType(Me("IsShowSameWI"),Boolean)
+        End Get
+        Set
+            Me("IsShowSameWI") = value
+        End Set
+    End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("Data Source=Charlot-PC\MSSQLSERVER20082;Initial Catalog=AutoWork;Persist Security"& _ 
+        " Info=True;User ID=sa;Password=123456@")>  _
+    Public ReadOnly Property database() As String
+        Get
+            Return CType(Me("database"),String)
+        End Get
+    End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("COM3")>  _
+    Public ReadOnly Property com() As String
+        Get
+            Return CType(Me("com"),String)
+        End Get
+    End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("127.0.0.1")>  _
+    Public Property CanServerIP() As String
+        Get
+            Return CType(Me("CanServerIP"),String)
+        End Get
+        Set
+            Me("CanServerIP") = value
         End Set
     End Property
 End Class

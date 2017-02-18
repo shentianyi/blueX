@@ -380,5 +380,9 @@ namespace PLCLightWPFTest
             this.Bind();
         }
 
+        private void button7_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            new CanServerWindow().Show();
+        }
     }
 }

@@ -60,7 +60,7 @@ Partial Public Class WaitOrder
                     If order Is Nothing Then
                         db.Orders.InsertOnSubmit(New Order With {.status = OrderStatus.Open, .orderId = headMsg.KSK, .workstationId = StaffSession.GetInstance.StationID})
                     Else
-                        Dim db1 As AutoWorkDataContext = New AutoWorkDataContext(GlobalConfigs.DbConnStr)
+                        Dim db1 As AutoWorkDataContext = New AutoWorkDataContext(My.Settings.database)
                         Dim neworder As Order = db1.Orders.SingleOrDefault(Function(c) String.Compare(c.orderId, Me.textBox_ksknr.Text) = 0)
 
                         neworder.workstationId = StaffSession.GetInstance.WorkStation.workstationId
@@ -80,7 +80,10 @@ Partial Public Class WaitOrder
                             Dim msg As String = "上一次作业指导书为:" & My.Settings.LastLeps + ", 本次为：" & wis(0)
                             ' MessageBox.Show("上一次", MsgBoxStyle.Information)
                             My.Settings.LastLeps = wis(0)
-                            CMsgDlg(MsgLevel.Warning, msg, True, Nothing).ShowDialog()
+                            If My.Settings.IsShowSameWI = True Then
+                                CMsgDlg(MsgLevel.Warning, msg, True, Nothing).ShowDialog()
+                            End If
+
                         End If
 
                     End If
@@ -97,6 +100,15 @@ Partial Public Class WaitOrder
         Catch ex As Exception
             MsgBox("出现未知错误: " & ex.Message, MsgBoxStyle.Critical)
         End Try
+
+        'Dim headMsg As Model.HeadMessage = New Model.HeadMessage
+        'headMsg.Board = "a"
+        'headMsg.KSK = "ffff"
+
+        'Dim working As Working = New Working(headMsg, "WI-0101")
+        'goLogin = False
+        'Me.Close()
+        'working.Show()
     End Sub
 
 

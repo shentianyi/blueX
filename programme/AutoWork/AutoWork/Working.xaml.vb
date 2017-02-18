@@ -40,7 +40,7 @@ Public Class Working
         Try
             _orderNr = headMsg.KSK
             _lepsWiId = workInstructionId
-            Dim dc As DataContext = New DataContext(GlobalConfigs.DbConnStr)
+            Dim dc As DataContext = New DataContext(My.Settings.database)
             Dim awWI As LepsWorkInstructionOnAW = dc.Context.GetTable(Of LepsWorkInstructionOnAW).Where(Function(l) l.workstationId.Equals(StaffSession.GetInstance.WorkStation.workstationId) And l.lepsWI.Equals(_lepsWiId)).FirstOrDefault
             If awWI IsNot Nothing Then
                 _wi = _svc.GetWIforOrderOnWorkStation(awWI.awWI)
@@ -245,7 +245,7 @@ Public Class Working
             '_lightController.Play(LightCmdType.ALL_OFF)
             '_lightController.Close()
             _lightHelper.Play(LightCmdType.ALL_OFF, StaffSession.GetInstance.StationID)
-            _lightHelper.Close()
+            ' _lightHelper.Close()
         Catch ex As Exception
 
         End Try

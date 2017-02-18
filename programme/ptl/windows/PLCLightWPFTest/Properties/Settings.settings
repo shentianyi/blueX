@@ -29,7 +29,13 @@
       <Value Profile="(Default)">Data Source=Charlot-PC\MSSQLSERVER20082;Initial Catalog=AutoWork;Persist Security Info=True;User ID=sa;Password=123456@</Value>
     </Setting>
     <Setting Name="awDb" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Data Source=Charlot-PC\MSSQLSERVER20082;Initial Catalog=AutoWork;Persist Security Info=True;User ID=sa;Password=123456@</Value>
+      <Value Profile="(Default)">Data Source=SVCNSKSK06;Initial Catalog=AutoWork;Persist Security Info=True;User ID=sa;Password=Leoni2000</Value>
+    </Setting>
+    <Setting Name="canServerIP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.1.100</Value>
+    </Setting>
+    <Setting Name="canServerPort" Type="System.String" Scope="User">
+      <Value Profile="(Default)">6001</Value>
     </Setting>
   </Settings>
 </SettingsFile>

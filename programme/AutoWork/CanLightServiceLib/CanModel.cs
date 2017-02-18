@@ -12,13 +12,15 @@ namespace CanLightServiceLib
         public string IP { get; set; }
         public int Port { get; set; }
         private bool onLine = false;
+        public string UniqKey { get; set; }
+
         public bool OnLine
         {
             get { return onLine; }
             set
             {
                 onLine = value;
-                CanConfig.Save(this);
+            //    CanConfig.Save(this);
             }
         }
     }

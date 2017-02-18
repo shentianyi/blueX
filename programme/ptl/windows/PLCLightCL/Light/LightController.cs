@@ -36,60 +36,64 @@ namespace PLCLightCL.Light
    
         public virtual  void Play(LightCmdType cmdType, List<int> indexes = null)
         {
-            //throw new NotImplementedException();
-            // init light state from previous light states
-            byte[] lightStates = new byte[lightCount];
-            for (int i = 0; i < lightCount; i++)
-            {
-                lightStates[i] = previousLightStates[i];
-            }
-
-            indexes = ValidateIndexes(cmdType,indexes);
-
-            // switch cmd type
-            switch (cmdType)
-            {
-                case LightCmdType.ON:
-                    foreach (int i in indexes)
-                    {
-                        lightStates[i] = 1;
-                    }
-                    break;
-                case LightCmdType.OFF:
-                    foreach (int i in indexes)
-                    {
-                        lightStates[i] = 0;
-                    }
-                    break;
-                case LightCmdType.ALL_OFF_BEFORE_ON:
-                    this.Play(LightCmdType.ALL_OFF);
-                    Thread.Sleep(100);
-                    this.Play(LightCmdType.ON, indexes);
-                    return;
-                case LightCmdType.ALL_ON:
-                    for (int i = 0; i < lightCount; i++)
-                    {
-                        lightStates[i] = 1;
-                    }
-                    break;
-                case LightCmdType.ALL_OFF:
-                    for (int i = 0; i < lightCount; i++)
-                    {
-                        lightStates[i] = 0;
-                    }
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
-
-            this.SendCmd(lightStates);
-            for (int i = 0; i < lightCount; i++)
-            {
-                if (previousLightStates[i] != lightStates[i])
+            //try {
+                //throw new NotImplementedException();
+                // init light state from previous light states
+                byte[] lightStates = new byte[lightCount];
+                for (int i = 0; i < lightCount; i++)
                 {
-                    previousLightStates[i] = lightStates[i];
+                    lightStates[i] = previousLightStates[i];
                 }
-            }
+
+                indexes = ValidateIndexes(cmdType, indexes);
+
+                // switch cmd type
+                switch (cmdType)
+                {
+                    case LightCmdType.ON:
+                        foreach (int i in indexes)
+                        {
+                            lightStates[i] = 1;
+                        }
+                        break;
+                    case LightCmdType.OFF:
+                        foreach (int i in indexes)
+                        {
+                            lightStates[i] = 0;
+                        }
+                        break;
+                    case LightCmdType.ALL_OFF_BEFORE_ON:
+                        this.Play(LightCmdType.ALL_OFF);
+                        Thread.Sleep(100);
+                        this.Play(LightCmdType.ON, indexes);
+                        return;
+                    case LightCmdType.ALL_ON:
+                        for (int i = 0; i < lightCount; i++)
+                        {
+                            lightStates[i] = 1;
+                        }
+                        break;
+                    case LightCmdType.ALL_OFF:
+                        for (int i = 0; i < lightCount; i++)
+                        {
+                            lightStates[i] = 0;
+                        }
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+
+                this.SendCmd(lightStates);
+                for (int i = 0; i < lightCount; i++)
+                {
+                    if (previousLightStates[i] != lightStates[i])
+                    {
+                        previousLightStates[i] = lightStates[i];
+                    }
+                }
+        //}catch(Exception ex){
+        //        LogUtil.Logger.Error(ex.Message, ex);
+        //    }
         }
 
         protected virtual void SendCmd(byte[] lightStates) {
@@ -234,10 +238,10 @@ namespace PLCLightCL.Light
                 {
                     if (i < 0 || i >= lightCount)
                     {
-                        throw new IndexOutOfRangeException("light index out of range, should between 0 and 127");
+                       // throw new IndexOutOfRangeException("light index out of range, should between 0 and 127");
                     }
                 }
-                indexes = indexes.Distinct().ToList();
+                indexes = indexes.Where(s=>s<lightCount).Distinct().ToList();
             }
             return indexes;
         }

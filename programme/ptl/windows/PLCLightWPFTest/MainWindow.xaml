@@ -14,7 +14,7 @@
         <Label Content="COM" Height="28" HorizontalAlignment="Left" Margin="29,18,0,0" Name="label2" VerticalAlignment="Top" />
         <ComboBox Height="34" HorizontalAlignment="Right" Margin="0,12,608,0" Name="comboBox1" VerticalAlignment="Top" Width="110" />
         <Button Content="OPEN" Height="36" HorizontalAlignment="Left" Margin="307,12,0,0" Name="button6" VerticalAlignment="Top" Width="78" Click="button6_Click" />
-        <Button Content="LEPS" Height="34" HorizontalAlignment="Left" Margin="152,452,0,0" Name="button7" VerticalAlignment="Top" Width="75" Click="button7_Click" />
+        <Button Content="LEPS" Height="37" HorizontalAlignment="Left" Margin="152,452,0,0" Name="button7" VerticalAlignment="Top" Width="91" Click="button7_Click" />
         <ComboBox Height="36" HorizontalAlignment="Left" Margin="187,12,0,0" Name="controllerCB" VerticalAlignment="Top" Width="114" SelectedIndex="0">
             <ComboBoxItem >RAM</ComboBoxItem>
             <ComboBoxItem >CAN</ComboBoxItem>
@@ -36,7 +36,7 @@
         <Button x:Name="button9" Content="Menu" HorizontalAlignment="Left" Margin="59,451,0,0" VerticalAlignment="Top" Width="72" Height="38" Click="button9_Click" RenderTransformOrigin="0.778,0.711"/>
         <Label x:Name="label" Content="TCPServer" HorizontalAlignment="Left" Margin="29,46,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="tcpServer" HorizontalAlignment="Left" Height="19" Margin="102,51,0,0"
-                 TextWrapping="Wrap" Text="192.168.1.100:6001:1" VerticalAlignment="Top" Width="180" ToolTip="格式为：TCP服务器IP:TCP服务器端口:CANID"/>
+                 TextWrapping="Wrap" Text="10.180.168.5:6001:1" VerticalAlignment="Top" Width="180" ToolTip="格式为：TCP服务器IP:TCP服务器端口:CANID"/>
         <Label x:Name="countLab" Content="切换次数" HorizontalAlignment="Left" Margin="495,408,0,0" VerticalAlignment="Top" Width="64"/>
         <Button x:Name="autoOFFONBtn" Content="自动全部亮灭切换" HorizontalAlignment="Left" Margin="564,402,0,0" VerticalAlignment="Top" Width="121" Height="38" Click="autoOFFONBtn_Click"/>
         <Label x:Name="label8" Content="间隔(毫秒)" HorizontalAlignment="Left" Margin="365,408,0,0" VerticalAlignment="Top"/>
@@ -48,5 +48,6 @@
         <TextBox x:Name="workpalceTB" HorizontalAlignment="Left" Height="23" Margin="609,171,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164"/>
         <Label x:Name="label10" Content="lightId:" HorizontalAlignment="Left" Margin="537,233,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.26,0.462"/>
         <TextBox x:Name="lightIdTB" HorizontalAlignment="Left" Height="23" Margin="607,236,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="162"  KeyUp="partTB_KeyUp"/>
+        <Button Content="CAN 服务器" Height="37" HorizontalAlignment="Left" Margin="271,451,0,0" x:Name="button7_Copy" VerticalAlignment="Top" Width="91" Click="button7_Copy_Click" Background="#FF8F9CDA" FontWeight="Bold" />
     </Grid>
 </Window>

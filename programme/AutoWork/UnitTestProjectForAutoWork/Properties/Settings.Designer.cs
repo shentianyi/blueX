@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PLCLightWPFTest.Properties {
+namespace UnitTestProjectForAutoWork.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -25,110 +25,123 @@ namespace PLCLightWPFTest.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Board {
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public string Setting {
             get {
-                return ((string)(this["Board"]));
+                return ((string)(this["Setting"]));
             }
             set {
-                this["Board"] = value;
+                this["Setting"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Workplace {
+        [global::System.Configuration.DefaultSettingValueAttribute("7")]
+        public string retryTimes {
             get {
-                return ((string)(this["Workplace"]));
+                return ((string)(this["retryTimes"]));
             }
             set {
-                this["Workplace"] = value;
+                this["retryTimes"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Line {
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public string retryInterval {
             get {
-                return ((string)(this["Line"]));
+                return ((string)(this["retryInterval"]));
             }
             set {
-                this["Line"] = value;
+                this["retryInterval"] = value;
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IsLocalImage {
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        public string prepareTime {
             get {
-                return ((bool)(this["IsLocalImage"]));
+                return ((string)(this["prepareTime"]));
+            }
+            set {
+                this["prepareTime"] = value;
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://127.0.0.1:9001/aw/images/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=Charlot-PC\\MSSQLSERVER20082;Initial Catalog=AutoWork;Persist Security" +
+            " Info=True;User ID=sa;Password=123456@")]
+        public string database {
+            get {
+                return ((string)(this["database"]));
+            }
+            set {
+                this["database"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=svp37001.p37.leoni.local;Initial Catalog=LEPS;Persist Security Info=T" +
+            "rue;User ID=ASS_user;Password=ass_user")]
+        public string lepsdb {
+            get {
+                return ((string)(this["lepsdb"]));
+            }
+            set {
+                this["lepsdb"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM3")]
+        public string com {
+            get {
+                return ((string)(this["com"]));
+            }
+            set {
+                this["com"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public string SingleWorkPlace {
+            get {
+                return ((string)(this["SingleWorkPlace"]));
+            }
+            set {
+                this["SingleWorkPlace"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public string RemoteImage {
+            get {
+                return ((string)(this["RemoteImage"]));
+            }
+            set {
+                this["RemoteImage"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://10.180.168.5:9000/aw/images/")]
         public string FTPServer {
             get {
                 return ((string)(this["FTPServer"]));
             }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=svp37001.p37.leoni.local;Initial Catalog=LEPS;Persist Security Info=T" +
-            "rue;User ID=ASS_user;Password=ass_user;")]
-        public string lepsDb {
-            get {
-                return ((string)(this["lepsDb"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=Charlot-PC\\MSSQLSERVER20082;Initial Catalog=AutoWork;Persist Security" +
-            " Info=True;User ID=sa;Password=123456@")]
-        public string AutoWorkConnectionString {
-            get {
-                return ((string)(this["AutoWorkConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SVCNSKSK06;Initial Catalog=AutoWork;Persist Security Info=True;User I" +
-            "D=sa;Password=Leoni2000")]
-        public string awDb {
-            get {
-                return ((string)(this["awDb"]));
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.100")]
-        public string canServerIP {
-            get {
-                return ((string)(this["canServerIP"]));
-            }
             set {
-                this["canServerIP"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("6001")]
-        public string canServerPort {
-            get {
-                return ((string)(this["canServerPort"]));
-            }
-            set {
-                this["canServerPort"] = value;
+                this["FTPServer"] = value;
             }
         }
     }

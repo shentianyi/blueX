@@ -26,6 +26,7 @@ namespace CanLightServiceLib.Config
                         Id = canConfig.Get("Id", id),
                         IP = canConfig.Get("IP", id),
                         Port = int.Parse(canConfig.Get("Port", id)),
+                        UniqKey = canConfig.Get("IP", id) + ":" + canConfig.Get("Port", id),
                         OnLine = false
                     });
                 }
