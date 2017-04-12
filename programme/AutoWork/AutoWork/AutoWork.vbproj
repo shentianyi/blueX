@@ -103,6 +103,7 @@
     <Compile Include="Data\OrderStatus.vb" />
     <Compile Include="Data\DataContext.vb" />
     <Compile Include="Data\StaffSession.vb" />
+    <Compile Include="Helper\LightHelper - 复制.vb" />
     <Compile Include="Helper\LightHelper.vb" />
     <Compile Include="ImageFullWindow.xaml.vb">
       <DependentUpon>ImageFullWindow.xaml</DependentUpon>

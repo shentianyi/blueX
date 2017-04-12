@@ -185,11 +185,11 @@ Public Class LightHelper
                 End If
                 LogUtil.LogUtil.Logger.Info("Play End")
 
-                Me.Close()
+            ' Me.Close()
 
-                ' beginInvokeThread.Abort()
-                '  beginInvokeThread = Nothing
-            Catch ex As Exception
+            ' beginInvokeThread.Abort()
+            '  beginInvokeThread = Nothing
+        Catch ex As Exception
                 LogUtil.LogUtil.Logger.Error(ex.Message, ex)
             Finally
                 'beginInvokeThread.Abort()
