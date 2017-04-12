@@ -3,6 +3,7 @@ Imports KskPlugInSharedObject
 Imports System.ComponentModel
 Imports AutoWork.MsgLevel
 Imports AutoWork.MsgDialog
+Imports System.Text.RegularExpressions
 
 Partial Public Class WaitOrder
     Inherits Window
@@ -23,6 +24,7 @@ Partial Public Class WaitOrder
     Public Sub CheckStatus()
         Dim lepsIntef As LEPSController = New LEPSController(GlobalConfigs.LepsDb)
         Dim db As AutoWorkDataContext = New AutoWorkDataContext(My.Settings.database)
+
         Dim order As Order = db.Orders.SingleOrDefault(Function(c) String.Compare(c.orderId, Me.textBox_ksknr.Text, True) = 0)
         If order Is Nothing Then
             If StaffSession.GetInstance.WorkStation.seq <> 1 Then
@@ -53,6 +55,11 @@ Partial Public Class WaitOrder
             If headMsg Is Nothing Or headMsg.ProcessStatus <> 64 Then
                 MsgBox("与LEPS交互错误")
             Else
+                If textBox_ksknr.Text.Equals(headMsg.KSK) = False Then
+                    MsgBox("扫描KSK号与LEPS订单号不一致！请重新扫描！")
+                    Return
+                End If
+
                 Dim wis As List(Of String) = lepsIntef.GetBasicModule(StaffSession.GetInstance.WorkStation.lepsWorkstation, headMsg.KSK)
                 If wis Is Nothing Or wis.Count = 0 Then
                     MsgBox("找不到作业指导书")
@@ -130,11 +137,20 @@ Partial Public Class WaitOrder
 
         If e.Key = Key.Enter Then
             If String.IsNullOrEmpty(textBox_ordernr.Text) = True Or String.IsNullOrEmpty(textBox_ksknr.Text) = True Then
-                MsgBox("请扫描入KSK号和小车号")
+                MsgBox("请扫描入小车号和小车号")
                 init()
             Else
-                CheckStatus()
-                init()
+                Dim tr As Regex = New Regex("^TC\w+")
+                Dim kr As Regex = New Regex("^4([a-zA-Z0-9]{9})(PR|EN)$")
+                If tr.IsMatch(textBox_ordernr.Text) And kr.IsMatch(textBox_ksknr.Text) Then
+                    CheckStatus()
+                    init()
+                Else
+                    CMsgDlg(MsgLevel.Mistake, "请扫描正确的小车号和KSK号", True, Nothing).ShowDialog()
+
+                    ' MsgBox("请扫描正确的小车号和KSK号")
+                    init()
+                End If
             End If
         End If
 

@@ -12,15 +12,15 @@ Public Class LightHelper
         'LogUtil.LogUtil.Logger.Info("Play Start")
         '_ramlightController = New RamLightController(My.Settings.com)
         '_canlightController = New CanLightController(My.Settings.CanServerIP, My.Settings.CanServerPort, My.Settings.CanId)
-        ' Me.Open()
+        Me.Open()
         'LogUtil.LogUtil.Logger.Info("Play End")
 
     End Sub
 
-    Private locker As Object = New Object
+    ' Private locker As Object = New Object
     Public Sub Open()
-        SyncLock locker
-            Try
+        '   SyncLock locker
+        Try
                 If _ramlightController Is Nothing Then
                     _ramlightController = New RamLightController(My.Settings.com)
                 End If
@@ -38,7 +38,7 @@ Public Class LightHelper
                 LogUtil.LogUtil.Logger.Error(ex.Message, ex)
             End Try
 
-        End SyncLock
+        ' End SyncLock
 
     End Sub
 
@@ -46,26 +46,26 @@ Public Class LightHelper
     Private workStaionId As String
     Private routeId As String = Nothing
 
-    Dim beginInvokeThreads As List(Of Threading.Thread) = New List(Of System.Threading.Thread)
+    '  Dim beginInvokeThreads As List(Of Threading.Thread) = New List(Of System.Threading.Thread)
 
     Public Sub Play(cmdType As LightCmdType, workStaionId As String, Optional ByVal routeId As String = Nothing)
         Me.cmdType = cmdType
         Me.workStaionId = workStaionId
         Me.routeId = routeId
 
-        Dim beginInvokeThread = New System.Threading.Thread(AddressOf DoPlay)
-        beginInvokeThreads.Add(beginInvokeThread)
-        beginInvokeThread.IsBackground = True
-        beginInvokeThread.Start()
-        'Me.DoPlay()
+        'Dim beginInvokeThread = New System.Threading.Thread(AddressOf DoPlay)
+        'beginInvokeThreads.Add(beginInvokeThread)
+        'beginInvokeThread.IsBackground = True
+        'beginInvokeThread.Start()
+        Me.DoPlay()
     End Sub
 
 
     Public Sub DoPlay()
-        SyncLock locker
-            Try
+        '  SyncLock locker
+        Try
                 LogUtil.LogUtil.Logger.Info("Play Start")
-                Me.Open()
+                ' Me.Open()
                 Dim db As AutoWorkDataContext = New AutoWorkDataContext(My.Settings.database)
                 Dim allLights = db.ELabelOnForPartOnWorkstation.Where(Function(c) c.workstationId = workStaionId).ToList
                 Dim allLightDic As Dictionary(Of String, List(Of ELabelOnForPartOnWorkstation)) = New Dictionary(Of String, List(Of ELabelOnForPartOnWorkstation))
@@ -195,7 +195,7 @@ Public Class LightHelper
                 'beginInvokeThread.Abort()
                 'beginInvokeThread = Nothing
             End Try
-        End SyncLock
+     '   End SyncLock
     End Sub
 
 

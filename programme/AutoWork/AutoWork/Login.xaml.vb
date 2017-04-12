@@ -95,7 +95,7 @@ Partial Public Class Login
         'beginInvokeThread.Start()
 
     End Sub
-    Dim beginInvokeThread As Threading.Thread
+    ' Dim beginInvokeThread As Threading.Thread
     Private Sub Window_Loaded(sender As Object, e As RoutedEventArgs)
         'Dispatcher.BeginInvoke(Sub()
         '                           textBox_operator.Text = "dddd"
@@ -115,28 +115,28 @@ Partial Public Class Login
 
     End Sub
 
-    Private _ramlightController As ILightController
-    Public Sub Dow()
-        Dispatcher.Invoke(Sub()
-                              textBox_operator.Text = "dddd"
-                          End Sub)
+    'Private _ramlightController As ILightController
+    'Public Sub Dow()
+    '    Dispatcher.Invoke(Sub()
+    '                          textBox_operator.Text = "dddd"
+    '                      End Sub)
 
-        '_ramlightController = New RamLightController(My.Settings.com)
-        '_ramlightController.Play(LightCmdType.ALL_OFF)
+    '    '_ramlightController = New RamLightController(My.Settings.com)
+    '    '_ramlightController.Play(LightCmdType.ALL_OFF)
 
 
-        Dim i As Integer = 0
-        Do While i < 10000
-            LogUtil.LogUtil.Logger.Error(i)
+    '    Dim i As Integer = 0
+    '    Do While i < 10000
+    '        LogUtil.LogUtil.Logger.Error(i)
 
-            Console.WriteLine(i)
-            i += 1
-        Loop
+    '        Console.WriteLine(i)
+    '        i += 1
+    '    Loop
 
-        beginInvokeThread.Abort()
-        beginInvokeThread = Nothing
+    '    beginInvokeThread.Abort()
+    '    beginInvokeThread = Nothing
 
-    End Sub
+    'End Sub
 
     Private Sub Window_Closing(sender As Object, e As ComponentModel.CancelEventArgs)
         'Try
