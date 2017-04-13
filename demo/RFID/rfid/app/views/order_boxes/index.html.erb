@@ -110,9 +110,6 @@
           <td><%= order_box.position.blank? ? '' : order_box.position.nr %></td>
           <td>
             <%= link_to '[详情]', order_box %>
-            <% if current_user.can_edit %>
-                <%= link_to '[编辑]', edit_order_box_path(order_box) %>
-            <% end %>
             <% if current_user.can_delete %>
                 <%= link_to '[删除]', order_box, method: :delete, data: {confirm: '确定删除?'} %>
             <% end %>
