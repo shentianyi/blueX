@@ -1,5 +1,38 @@
 class WarehouseService
 
+  def self.move_by_pick user, params
+    begin
+      Storage.transaction do
+        pick = Pick.find_by_id(params[:pick_id])
+        if pick
+          pick.pick_items.each_with_index do |item, index|
+            puts '***************************************************************************************************************'
+            p item.can_move_store?
+            puts '***************************************************************************************************************'
+            if item.can_move_store? && (order_box=item.order_box)
+              qty=item.status==PickItemStatus::PICKED ? item.weight_qty : item.order_box.quantity
+              puts '---------------------------------------------------------------------------------------------------------------'
+              p item
+              puts "-------------------------------------------#{index}--------------------------------------------------------------------"
+              self.move({
+                            user_id: user.id,
+                            part_id: item.part_id,
+                            quantity: qty,
+                            from_warehouse_id: order_box.source_warehouse_id,
+                            to_warehouse_id: order_box.warehouse_id,
+                            to_position_id: order_box.position_id,
+                            remarks: "RFID MOVE:#{order_box.nr}"
+                        })
+              order_box.update_attributes(status: OrderBoxStatus::INIT)
+            end
+          end
+        end
+      end
+    rescue => e
+      puts e
+    end
+  end
+
   def self.move_by_car user, params
     begin
       Storage.transaction do
@@ -16,9 +49,11 @@ class WarehouseService
                               from_warehouse_id: order_box.source_warehouse_id,
                               to_warehouse_id: order_box.warehouse_id,
                               to_position_id: order_box.position_id,
-                              remarks: "RFID MOVE:#{order_box.nr}"
+                              remarks: "RFID MOVE:#{order_box.nr}; By Box"
                           })
                 order_box.update_attributes(status: OrderBoxStatus::INIT)
+              else
+
               end
             end
           else
@@ -33,9 +68,11 @@ class WarehouseService
                                 from_warehouse_id: order_box.source_warehouse_id,
                                 to_warehouse_id: order_box.warehouse_id,
                                 to_position_id: order_box.position_id,
-                                remarks: "RFID MOVE:#{order_box.nr}"
+                                remarks: "RFID MOVE:#{order_box.nr}; By Pick Item"
                             })
                   order_box.update_attributes(status: OrderBoxStatus::INIT)
+                else
+                  item.update_attributes(remarks: 'Lose By Pick Item')
                 end
               end
             end

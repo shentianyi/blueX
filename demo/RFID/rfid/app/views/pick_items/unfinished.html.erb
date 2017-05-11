@@ -1,0 +1,90 @@
+<div class="panel panel-warning">
+  <div class="panel-heading" style="display: flex;">
+    <h3>漏移库择货项列表</h3>
+    <h5 style="margin-top: 25px;margin-left: 20px;">漏移库择货项列表.</h5>
+  </div>
+</div>
+
+<form method="get" path="<%= unfinished_pick_items_path %>">
+  <div class="panel-body">
+    <div class="col-sm-12" style="border-bottom: 1px dashed #000;margin-top: -20px;height: 40px;">
+      <div class="col-sm-2">
+        零件号：
+        <input type="text" name="part_id" value="<%= @part_id %>"/>
+      </div>
+      <div class="col-sm-6">
+        <span class="label label-info">择货时间:</span>
+        <input id="date-start" type="text" name="date_start" class="datepicker" value="<%= @date_start %>"/>
+        ~ <input id="date-end" type="text" name="date_end" class="datepicker" value="<%= @date_end %>"/>
+      </div>
+
+      <div class="col-sm-2">
+        <span class="label label-info">显示方式:</span>
+        <%= select_tag :format, options_for_select([["Web", "html"], ["Excel File(MS 07 or later)", "xlsx"]], "html") %>
+      </div>
+      <div class="col-sm-1">
+        <input type="submit" value="查找" class="btn btn-warning" name="commit" style="width: 150px;"/>
+      </div>
+    </div>
+
+  </div>
+</form>
+
+<div class="table-show" style="overflow: auto;">
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th></th>
+      <th>料盒号</th>
+      <th>源仓库</th>
+      <th>目的仓库</th>
+      <th>目的库位</th>
+      <th>零件号</th>
+      <th>需求数量</th>
+      <th>重量</th>
+      <th>称重数量</th>
+      <th>重量合规</th>
+      <th>创建时间</th>
+      <th>称重时间</th>
+      <th>状态</th>
+      <th>备注</th>
+      <th>择货单编号</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @pick_items.each_with_index do |pick_item, i| %>
+        <tr>
+          <td><%= i+1 %></td>
+          <td><%= pick_item[:order_box_nr] %></td>
+          <td><%= pick_item[:order_box_from_wh] %></td>
+          <td><%= pick_item[:order_box_to_wh] %></td>
+          <td><%= pick_item[:order_box_to_po] %></td>
+          <td><%= pick_item[:part_nr] %></td>
+          <td><%= pick_item[:order_qty] %></td>
+          <td><%= pick_item[:weight] %></td>
+          <td><%= pick_item[:weight_qty] %></td>
+          <td><%= pick_item[:weight_valid] %></td>
+          <td><%= pick_item[:created_at] %></td>
+          <td><%= pick_item[:weigh_time] %></td>
+          <td><%= pick_item[:status] %></td>
+          <td><%= pick_item[:remarks] %></td>
+          <td><%= pick_item[:pick_nr] %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".datepicker").datetimepicker({
+            lang: 'ch',
+            format: 'Y-m-d H:i'
+        });
+
+        $('.selectpicker').selectpicker();
+        $('.selectpicker').selectpicker('val', 'Mustard');
+        $('.selectpicker').selectpicker('render');
+    });
+</script>

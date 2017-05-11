@@ -11,8 +11,13 @@ Rails.application.routes.draw do
 
   resources :pick_items do
     collection do
+      get :unfinished
       get :search
       match :import, action: :import, via: [:get, :post]
+    end
+
+    member do
+
     end
   end
 

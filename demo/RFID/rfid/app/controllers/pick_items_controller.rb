@@ -61,6 +61,58 @@ class PickItemsController < ApplicationController
     end
   end
 
+  def unfinished
+    puts '--------------------------------------------------------------------------'
+    @part_id = params[:part_id]
+    @date_start = params[:date_start].nil? ? 1.day.ago.strftime("%Y-%m-%d 7:00") : params[:date_start]
+    @date_end = params[:date_end].nil? ? Time.now.strftime("%Y-%m-%d 7:00") : params[:date_end]
+
+    if @date_end.to_time - @date_start.to_time > 3.days
+      raise "查询时间跨度不要大于3天, 该查询过程耗时比较长, 请耐心等待!"
+    end
+
+    part=Part.find_by_nr(params[:part_id])
+
+    @pick_items = PickItem.generate_unfinished_data(@date_start, @date_end, part)
+    respond_to do |format|
+      format.xlsx do
+        send_data(entry_with_xlsx(@pick_items),
+                  :type => "application/vnd.openxmlformates-officedocument.spreadsheetml.sheet",
+                  :filename => "择货完成未移库-#{Time.now.localtime}.xlsx")
+      end
+      format.html
+    end
+  end
+
+  def entry_with_xlsx items
+    p = Axlsx::Package.new
+    wb = p.workbook
+    wb.add_worksheet(:name => "Basic Sheet") do |sheet|
+
+      sheet.add_row ['NO.', '料盒号', '源仓库', '目的仓库', '目的库位', '零件号', '需求数量', '重量', '称重数量', '重量合规', '创建时间', '称重时间', '状态', '备注', '择货单编号']
+      items.each_with_index { |pick_item, index|
+        sheet.add_row [
+                          index+1 ,
+                          pick_item[:order_box_nr],
+                          pick_item[:order_box_from_wh] ,
+                          pick_item[:order_box_to_wh] ,
+                          pick_item[:order_box_to_po] ,
+                          pick_item[:part_nr] ,
+                          pick_item[:order_qty] ,
+                          pick_item[:weight] ,
+                          pick_item[:weight_qty] ,
+                          pick_item[:weight_valid] ,
+                          pick_item[:created_at] ,
+                          pick_item[:weigh_time] ,
+                          pick_item[:status] ,
+                          pick_item[:remarks] ,
+                          pick_item[:pick_nr] ,
+                      ], :types => [:string, :string, :string, :string, :string, :string, :string, :string, :string, :string, :string, :string, :string,:string]
+      }
+    end
+    p.to_stream.read
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_pick_item
