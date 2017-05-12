@@ -35,7 +35,7 @@ class WarehouseService
 
   def self.move_by_car user, params
     begin
-      Storage.transaction do
+      # Storage.transaction do
         PickService.validable_car_and_box(params) do |car, boxes|
           if boxes.present?
             boxes.each do |order_box|
@@ -82,7 +82,7 @@ class WarehouseService
           end
           car.update_attributes(status: OrderCarStatus::INIT)
         end
-      end
+      # end
     rescue => e
 
     end
