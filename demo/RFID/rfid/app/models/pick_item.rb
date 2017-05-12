@@ -36,7 +36,7 @@ class PickItem < ActiveRecord::Base
         #condition[:to_position_id] = order_box.warehouse_id
         #condition[:to_warehouse_id] = order_box.position_id
         condition[:quantity] = [pick_item.weight_qty, order_box.quantity]
-        condition[:remarks] = "RFID MOVE:#{order_box.nr}"
+        condition[:remarks] = "RFID MOVE:#{order_box.nr}; By Pick Item"
       else
         condition[:quantity] = pick_item.weight_qty
       end
