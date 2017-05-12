@@ -20,12 +20,12 @@
       </div>
 
       <div class="col-sm-2">
-        <span class="label label-info">显示方式:</span>
-        <%= select_tag :format, options_for_select([["Web", "html"], ["Excel File(MS 07 or later)", "xlsx"]], "html") %>
+        <input style="margin: -10px 20px 10px 0;width: 150px;" class="btn btn-warning" type="submit" value="查 找" name="search" />
       </div>
-      <div class="col-sm-1">
-        <input type="submit" value="查找" class="btn btn-warning" name="commit" style="width: 150px;"/>
+      <div class="col-sm-2">
+        <input style="margin: -10px 20px 10px 0;width: 150px;" class="btn btn-warning" type="submit" value="导 出" name="download"/>
       </div>
+
     </div>
 
   </div>

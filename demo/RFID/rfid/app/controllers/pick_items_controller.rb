@@ -63,6 +63,7 @@ class PickItemsController < ApplicationController
 
   def unfinished
     puts '--------------------------------------------------------------------------'
+    p params
     @part_id = params[:part_id]
     @date_start = params[:date_start].nil? ? Time.now.strftime("%Y-%m-%d 7:00") : params[:date_start]
     @date_end = params[:date_end].nil? ? Time.now.strftime("%Y-%m-%d 7:00") : params[:date_end]
@@ -72,15 +73,12 @@ class PickItemsController < ApplicationController
     end
 
     part=Part.find_by_nr(params[:part_id])
-
     @pick_items = PickItem.generate_unfinished_data(@date_start, @date_end, part)
-    respond_to do |format|
-      format.xlsx do
-        send_data(entry_with_xlsx(@pick_items),
-                  :type => "application/vnd.openxmlformates-officedocument.spreadsheetml.sheet",
-                  :filename => "择货完成未移库-#{Time.now.localtime}.xlsx")
-      end
-      format.html
+    if params.has_key? "download"
+      send_data(entry_with_xlsx(@pick_items),
+                :type => "application/vnd.openxmlformates-officedocument.spreadsheetml.sheet",
+                :filename => "择货完成未移库-#{Time.now.localtime}.xlsx")
+    else
     end
   end
 
