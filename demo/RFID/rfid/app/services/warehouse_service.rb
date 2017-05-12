@@ -61,7 +61,7 @@ class WarehouseService
               pick.pick_items.each do |item|
                 if item.can_move_store? && (order_box=item.order_box) && order_box.can_move_store?
                   qty=item.status==PickItemStatus::PICKED ? item.weight_qty : item.order_box.quantity
-                  self.move({
+                  msg = self.move({
                                 user_id: user.id,
                                 part_id: item.part_id,
                                 quantity: qty,
@@ -70,6 +70,9 @@ class WarehouseService
                                 to_position_id: order_box.position_id,
                                 remarks: "RFID MOVE:#{order_box.nr}; By Pick Item"
                             })
+                  unless msg.result
+                    item.update_attributes(remarks: msg.content)
+                  end
                   order_box.update_attributes(status: OrderBoxStatus::INIT)
                 else
                   item.update_attributes(remarks: 'Lose By Pick Item')
@@ -145,21 +148,24 @@ class WarehouseService
 
 
   def self.move(params)
+    msg = Message.new(contents: [])
     type = MoveType.find_by_nr('MOVE')
 
     to_warehouse = Warehouse.find_by_id(params[:to_warehouse_id])
-    raise "仓库#{params[:to_warehouse]}未找到" unless to_warehouse
+    # raise "仓库#{params[:to_warehouse]}未找到" unless to_warehouse
+    msg.contents<<"仓库#{params[:to_warehouse]}未找到" unless to_warehouse
 
     move_data = {to_warehouse_id: to_warehouse.id, to_position_id: params[:to_position_id], move_type_id: type.id}
     move_data[:user_id] = params[:user_id] if params[:user_id].present?
     move_data[:remarks] = params[:remarks] if params[:remarks].present?
 
-
     if params[:uniq_nr].present?
       #Move(uniq_nr,toWh,to_position_id,type)
       # find from wh
       storage = Storage.find_by(uniq_nr: params[:uniq_nr])
-      raise '包装未入库！' unless storage.blank?
+      # raise '包装未入库！' unless storage.blank?
+      msg.contents<<'包装未入库！' unless storage.blank?
+
 
       # update parameters of movement creation
       move_data.update({from_warehouse_id: storage.warehouse_id, from_position_id: storage.position_id,
@@ -173,7 +179,8 @@ class WarehouseService
       # Move(package_nr,part_id, quantity,toWh, to_position_id,type)
       # find from wh
       if params[:to_position_id].blank?
-        raise "目标库位不可空"
+        # raise "目标库位不可空"
+        msg.contents<<"目标库位不可空"
       end
 
       storage = nil
@@ -195,16 +202,19 @@ class WarehouseService
       end
 
       puts "############{storage.to_json}"
-      raise "源仓库不存在该唯一码:#{params[:package_nr]}！" if storage.nil? || storage.quantity < 0
+      # raise "源仓库不存在该唯一码:#{params[:package_nr]}！" if storage.nil? || storage.quantity < 0
+      msg.contents<<"源仓库不存在该唯一码:#{params[:package_nr]}！" if storage.nil? || storage.quantity < 0
       if params[:quantity].blank?
         params[:quantity]=storage.quantity
       end
-      raise '移库数量为 0 ！' if params[:quantity].to_i <= 0
+      # raise '移库数量为 0 ！' if params[:quantity].to_i <= 0
+      msg.contents<<"源仓库不存在该唯一码:#{params[:package_nr]}！" if params[:quantity].to_i <= 0
 
-      puts "#{storage.quantity}:#{params[:quantity]}"
+          puts "#{storage.quantity}:#{params[:quantity]}"
 
       if params[:quantity].to_f > storage.quantity
-        raise "移库量大于剩余量,唯一码:#{params[:package_nr]}"
+        # raise "移库量大于剩余量,唯一码:#{params[:package_nr]}"
+        msg.contents<<"移库量大于剩余量,唯一码:#{params[:package_nr]}"
       elsif params[:quantity].to_f == storage.quantity
         storage.update!(warehouse_id: to_warehouse.id, position_id: params[:to_position_id], created_at: Time.now)
         move_data[:quantity] = storage.quantity
@@ -242,11 +252,13 @@ class WarehouseService
     elsif [:part_id, :quantity].reduce(true) { |seed, i| seed and params.include? i }
 
       if params[:to_position_id].blank?
-        raise "目标库位不可空"
+        # raise "目标库位不可空"
+        msg.contents<<"目标库位不可空"
       end
 
       from_warehouse_id = Warehouse.find_by_id(params[:from_warehouse_id])
-      raise "源仓库未找到" unless from_warehouse_id
+      # raise "源仓库未找到" unless from_warehouse_id
+      msg.contents<< "源仓库未找到" unless from_warehouse_id
 
       #raise "移库数量必须大于零" if  params[:quantity].to_f < 0
       #validate_position(from_warehouse_id, params[:from_position_id])
@@ -380,10 +392,14 @@ class WarehouseService
         #movement
         move_data.update({from_warehouse_id: params[:from_warehouse_id], from_position_id: params[:from_position_id], part_id: params[:part_id], quantity: lastquantity})
         Movement.create!(move_data)
-
       end
 
     end
+
+    unless msg.result=(msg.contents.size==0)
+      msg.content=msg.contents.join('/')
+    end
+    msg
   end
 
 end

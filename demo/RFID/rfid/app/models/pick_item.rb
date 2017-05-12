@@ -51,7 +51,7 @@ class PickItem < ActiveRecord::Base
             part_nr: pick_item.part.blank? ? '' : pick_item.part.nr,
             order_qty: pick_item.quantity,
             weight: pick_item.weight,
-            weight_qty: pick_item.weight,
+            weight_qty: pick_item.weight_qty,
             weight_valid: pick_item.weight_valid ? '是' : '否',
             created_at: pick_item.created_at.localtime,
             weigh_time: pick_item.updated_at.localtime,
