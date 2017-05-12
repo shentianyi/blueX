@@ -64,7 +64,7 @@ class PickItemsController < ApplicationController
   def unfinished
     puts '--------------------------------------------------------------------------'
     @part_id = params[:part_id]
-    @date_start = params[:date_start].nil? ? 1.day.ago.strftime("%Y-%m-%d 7:00") : params[:date_start]
+    @date_start = params[:date_start].nil? ? Time.now.strftime("%Y-%m-%d 7:00") : params[:date_start]
     @date_end = params[:date_end].nil? ? Time.now.strftime("%Y-%m-%d 7:00") : params[:date_end]
 
     if @date_end.to_time - @date_start.to_time > 3.days
