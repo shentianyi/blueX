@@ -22,9 +22,9 @@ class PickItem < ActiveRecord::Base
   def self.generate_unfinished_data date_start, date_end, part
     data=[]
     if part
-      pick_items = PickItem.where(status: PickItemStatus::PICKED, created_at: date_start..date_end, part_id: part.id)
+      pick_items = PickItem.where(status: PickItemStatus::PICKED, created_at: date_start.to_time.utc..date_end.to_time.utc, part_id: part.id)
     else
-      pick_items = PickItem.where(status: PickItemStatus::PICKED, created_at: date_start..date_end)
+      pick_items = PickItem.where(status: PickItemStatus::PICKED, created_at: date_start.to_time.utc..date_end.to_time.utc)
     end
 
     pick_items.each_with_index do |pick_item, index|
@@ -40,7 +40,7 @@ class PickItem < ActiveRecord::Base
       else
         condition[:quantity] = pick_item.weight_qty
       end
-      condition[:created_at] = [pick_item.created_at..pick_item.created_at+3.days]
+      condition[:created_at] = [pick_item.created_at.utc..(pick_item.created_at+3.days).utc]
 
       if Movement.where(condition).count ==0
         data<<{
