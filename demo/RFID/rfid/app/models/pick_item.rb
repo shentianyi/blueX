@@ -30,19 +30,17 @@ class PickItem < ActiveRecord::Base
     pick_items.each_with_index do |pick_item, index|
       condition={}
       condition[:part_id] = pick_item.part_id
+      condition[:quantity] = pick_item.weight_qty
+      condition[:created_at] = [pick_item.created_at.utc..(pick_item.created_at+3.days).utc]
+      count =0
       order_box=pick_item.order_item.orderable
       if order_box
-        #condition[:from_warehouse_id] = order_box.source_warehouse_id
-        #condition[:to_position_id] = order_box.warehouse_id
-        #condition[:to_warehouse_id] = order_box.position_id
-        condition[:quantity] = [pick_item.weight_qty, order_box.quantity]
-        condition[:remarks] = "RFID MOVE:#{order_box.nr}; By Pick Item"
+        count = Movement.where(condition).where("remarks like ?", "%#{order_box.nr}%").count
       else
-        condition[:quantity] = pick_item.weight_qty
+        count = Movement.where(condition).count
       end
-      condition[:created_at] = [pick_item.created_at.utc..(pick_item.created_at+3.days).utc]
 
-      if Movement.where(condition).count ==0
+      if count == 0
         data<<{
             order_box_nr: pick_item.orderable_nr,
             order_box_from_wh: order_box.blank? ? '' : (order_box.source_warehouse.blank? ? '' : order_box.source_warehouse.nr),
