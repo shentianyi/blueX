@@ -22,9 +22,9 @@ class PickItem < ActiveRecord::Base
   def self.generate_unfinished_data date_start, date_end, part
     data=[]
     if part
-      pick_items = PickItem.where(status: PickItemStatus::PICKED, created_at: date_start.to_time.utc..date_end.to_time.utc, part_id: part.id)
+      pick_items = PickItem.joins(:pick).where(picks: {status: PickStatus::PICKED}).where(status: PickItemStatus::PICKED, created_at: date_start.to_time.utc..date_end.to_time.utc, part_id: part.id)
     else
-      pick_items = PickItem.where(status: PickItemStatus::PICKED, created_at: date_start.to_time.utc..date_end.to_time.utc)
+      pick_items = PickItem.joins(:pick).where(picks: {status: PickStatus::PICKED}).where(status: PickItemStatus::PICKED, created_at: date_start.to_time.utc..date_end.to_time.utc)
     end
 
     pick_items.each_with_index do |pick_item, index|
