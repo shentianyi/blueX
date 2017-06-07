@@ -121,6 +121,8 @@ class PicksController < ApplicationController
         end
       end
 
+      query = query.order(created_at: :desc)
+
       query
     }
   end
