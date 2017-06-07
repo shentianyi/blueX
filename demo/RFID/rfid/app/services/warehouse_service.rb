@@ -78,6 +78,7 @@ class WarehouseService
                   item.update_attributes(remarks: 'Lose By Pick Item')
                 end
               end
+              pick.update_attributes(status: PickStatus::PICKED)
             end
           end
           car.update_attributes(status: OrderCarStatus::INIT)
