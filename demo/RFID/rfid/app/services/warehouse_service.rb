@@ -59,7 +59,11 @@ class WarehouseService
           else
             if pick=Pick.by_order_car(car)
               pick.pick_items.each do |item|
-                if item.can_move_store? && (order_box=item.order_box) && order_box.can_move_store?
+                order_box=item.order_box
+                item_check = item.can_move_store?
+                box_check = order_box.can_move_store?
+                if item_check && order_box && box_check
+                # if item.can_move_store? && (order_box=item.order_box) && order_box.can_move_store?
                   qty=item.status==PickItemStatus::PICKED ? item.weight_qty : item.order_box.quantity
                   msg = self.move({
                                 user_id: user.id,
@@ -75,7 +79,7 @@ class WarehouseService
                   end
                   order_box.update_attributes(status: OrderBoxStatus::INIT)
                 else
-                  item.update_attributes(remarks: 'Lose By Pick Item')
+                  item.update_attributes(remarks: "择货项:#{item_check ? '正常' : '验证不通过'}--料盒:#{order_box.blank? ? '没找到' : (box_check ? '正常' : '验证不通过')}")
                 end
               end
               pick.update_attributes(status: PickStatus::PICKED)
