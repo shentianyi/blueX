@@ -235,16 +235,6 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("Data Source=Charlot-PC\MSSQLSERVER20082;Initial Catalog=AutoWork;Persist Security"& _ 
-        " Info=True;User ID=sa;Password=123456@")>  _
-    Public ReadOnly Property database() As String
-        Get
-            Return CType(Me("database"),String)
-        End Get
-    End Property
-    
-    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Configuration.DefaultSettingValueAttribute("COM3")>  _
     Public ReadOnly Property com() As String
         Get
@@ -254,13 +244,58 @@ Partial Friend NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Configuration.DefaultSettingValueAttribute("127.0.0.1")>  _
+     Global.System.Configuration.DefaultSettingValueAttribute("10.180.168.5")>  _
     Public Property CanServerIP() As String
         Get
             Return CType(Me("CanServerIP"),String)
         End Get
         Set
             Me("CanServerIP") = value
+        End Set
+    End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("AW9")>  _
+    Public Property WorkstationType() As String
+        Get
+            Return CType(Me("WorkstationType"),String)
+        End Get
+        Set
+            Me("WorkstationType") = value
+        End Set
+    End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("Data Source=CHARLOT-PC\MSSQLSERVER2008R;Initial Catalog=AutoWork;Persist Security"& _ 
+        " Info=True;User ID=sa;Password=123456@")>  _
+    Public ReadOnly Property database() As String
+        Get
+            Return CType(Me("database"),String)
+        End Get
+    End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("Data Source=SVCNSKSK06;Initial Catalog=AutoWork;Persist Security Info=True;User I"& _ 
+        "D=sa;Password=Leoni2000")>  _
+    Public ReadOnly Property AutoworkConnectionString4() As String
+        Get
+            Return CType(Me("AutoworkConnectionString4"),String)
+        End Get
+    End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("^(WI)\w+")>  _
+    Public Property aw9TestLabelRegex() As String
+        Get
+            Return CType(Me("aw9TestLabelRegex"),String)
+        End Get
+        Set
+            Me("aw9TestLabelRegex") = value
         End Set
     End Property
 End Class

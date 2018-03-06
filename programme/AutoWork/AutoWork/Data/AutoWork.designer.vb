@@ -23,7 +23,7 @@ Imports System.Reflection
 Imports System.Runtime.Serialization
 
 
-<Global.System.Data.Linq.Mapping.DatabaseAttribute(Name:="AutoWork")>  _
+<Global.System.Data.Linq.Mapping.DatabaseAttribute(Name:="Autowork")>  _
 Partial Public Class AutoWorkDataContext
 	Inherits System.Data.Linq.DataContext
 	
@@ -92,10 +92,16 @@ Partial Public Class AutoWorkDataContext
     End Sub
   Partial Private Sub DeleteELabelOnForPartOnWorkstation(instance As ELabelOnForPartOnWorkstation)
     End Sub
+  Partial Private Sub InsertAW9Record(instance As AW9Record)
+    End Sub
+  Partial Private Sub UpdateAW9Record(instance As AW9Record)
+    End Sub
+  Partial Private Sub DeleteAW9Record(instance As AW9Record)
+    End Sub
   #End Region
 	
 	Public Sub New()
-		MyBase.New(Global.AutoWork.MySettings.Default.AutoWorkConnectionString3, mappingSource)
+		MyBase.New(Global.AutoWork.MySettings.Default.AutoworkConnectionString4, mappingSource)
 		OnCreated
 	End Sub
 	
@@ -194,6 +200,12 @@ Partial Public Class AutoWorkDataContext
 	Public ReadOnly Property ELabelOnForPartOnWorkstation() As System.Data.Linq.Table(Of ELabelOnForPartOnWorkstation)
 		Get
 			Return Me.GetTable(Of ELabelOnForPartOnWorkstation)
+		End Get
+	End Property
+	
+	Public ReadOnly Property AW9Record() As System.Data.Linq.Table(Of AW9Record)
+		Get
+			Return Me.GetTable(Of AW9Record)
 		End Get
 	End Property
 End Class
@@ -2556,6 +2568,241 @@ Partial Public Class ELabelOnForPartOnWorkstation
 	Private Sub Initialize()
 		Me._Part = CType(Nothing, EntityRef(Of Part))
 		Me._WorkStation = CType(Nothing, EntityRef(Of WorkStation))
+		OnCreated
+	End Sub
+	
+	<Global.System.Runtime.Serialization.OnDeserializingAttribute(),  _
+	 Global.System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)>  _
+	Public Sub OnDeserializing(ByVal context As StreamingContext)
+		Me.Initialize
+	End Sub
+End Class
+
+<Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.AW9Record"),  _
+ Global.System.Runtime.Serialization.DataContractAttribute()>  _
+Partial Public Class AW9Record
+	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	
+	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+	
+	Private _id As Integer
+	
+	Private _labelContent As String
+	
+	Private _staffNr As String
+	
+	Private _orderNr As String
+	
+	Private _workstationNr As String
+	
+	Private _carNr As String
+	
+	Private _createdAt As System.Nullable(Of Date)
+	
+	Private _updatedAt As System.Nullable(Of Date)
+	
+    #Region "可扩展性方法定义"
+    Partial Private Sub OnLoaded()
+    End Sub
+    Partial Private Sub OnValidate(action As System.Data.Linq.ChangeAction)
+    End Sub
+    Partial Private Sub OnCreated()
+    End Sub
+    Partial Private Sub OnidChanging(value As Integer)
+    End Sub
+    Partial Private Sub OnidChanged()
+    End Sub
+    Partial Private Sub OnlabelContentChanging(value As String)
+    End Sub
+    Partial Private Sub OnlabelContentChanged()
+    End Sub
+    Partial Private Sub OnstaffNrChanging(value As String)
+    End Sub
+    Partial Private Sub OnstaffNrChanged()
+    End Sub
+    Partial Private Sub OnorderNrChanging(value As String)
+    End Sub
+    Partial Private Sub OnorderNrChanged()
+    End Sub
+    Partial Private Sub OnworkstationNrChanging(value As String)
+    End Sub
+    Partial Private Sub OnworkstationNrChanged()
+    End Sub
+    Partial Private Sub OncarNrChanging(value As String)
+    End Sub
+    Partial Private Sub OncarNrChanged()
+    End Sub
+    Partial Private Sub OncreatedAtChanging(value As System.Nullable(Of Date))
+    End Sub
+    Partial Private Sub OncreatedAtChanged()
+    End Sub
+    Partial Private Sub OnupdatedAtChanging(value As System.Nullable(Of Date))
+    End Sub
+    Partial Private Sub OnupdatedAtChanged()
+    End Sub
+    #End Region
+	
+	Public Sub New()
+		MyBase.New
+		Me.Initialize
+	End Sub
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_id", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=true, IsDbGenerated:=true),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=1)>  _
+	Public Property id() As Integer
+		Get
+			Return Me._id
+		End Get
+		Set
+			If ((Me._id = value)  _
+						= false) Then
+				Me.OnidChanging(value)
+				Me.SendPropertyChanging
+				Me._id = value
+				Me.SendPropertyChanged("id")
+				Me.OnidChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_labelContent", DbType:="Text", UpdateCheck:=UpdateCheck.Never),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=2)>  _
+	Public Property labelContent() As String
+		Get
+			Return Me._labelContent
+		End Get
+		Set
+			If (String.Equals(Me._labelContent, value) = false) Then
+				Me.OnlabelContentChanging(value)
+				Me.SendPropertyChanging
+				Me._labelContent = value
+				Me.SendPropertyChanged("labelContent")
+				Me.OnlabelContentChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_staffNr", DbType:="NVarChar(200)"),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=3)>  _
+	Public Property staffNr() As String
+		Get
+			Return Me._staffNr
+		End Get
+		Set
+			If (String.Equals(Me._staffNr, value) = false) Then
+				Me.OnstaffNrChanging(value)
+				Me.SendPropertyChanging
+				Me._staffNr = value
+				Me.SendPropertyChanged("staffNr")
+				Me.OnstaffNrChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_orderNr", DbType:="NVarChar(200)"),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=4)>  _
+	Public Property orderNr() As String
+		Get
+			Return Me._orderNr
+		End Get
+		Set
+			If (String.Equals(Me._orderNr, value) = false) Then
+				Me.OnorderNrChanging(value)
+				Me.SendPropertyChanging
+				Me._orderNr = value
+				Me.SendPropertyChanged("orderNr")
+				Me.OnorderNrChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_workstationNr", DbType:="NVarChar(200)"),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=5)>  _
+	Public Property workstationNr() As String
+		Get
+			Return Me._workstationNr
+		End Get
+		Set
+			If (String.Equals(Me._workstationNr, value) = false) Then
+				Me.OnworkstationNrChanging(value)
+				Me.SendPropertyChanging
+				Me._workstationNr = value
+				Me.SendPropertyChanged("workstationNr")
+				Me.OnworkstationNrChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_carNr", DbType:="NVarChar(200)"),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=6)>  _
+	Public Property carNr() As String
+		Get
+			Return Me._carNr
+		End Get
+		Set
+			If (String.Equals(Me._carNr, value) = false) Then
+				Me.OncarNrChanging(value)
+				Me.SendPropertyChanging
+				Me._carNr = value
+				Me.SendPropertyChanged("carNr")
+				Me.OncarNrChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_createdAt", DbType:="DateTime"),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=7)>  _
+	Public Property createdAt() As System.Nullable(Of Date)
+		Get
+			Return Me._createdAt
+		End Get
+		Set
+			If (Me._createdAt.Equals(value) = false) Then
+				Me.OncreatedAtChanging(value)
+				Me.SendPropertyChanging
+				Me._createdAt = value
+				Me.SendPropertyChanged("createdAt")
+				Me.OncreatedAtChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_updatedAt", DbType:="DateTime"),  _
+	 Global.System.Runtime.Serialization.DataMemberAttribute(Order:=8)>  _
+	Public Property updatedAt() As System.Nullable(Of Date)
+		Get
+			Return Me._updatedAt
+		End Get
+		Set
+			If (Me._updatedAt.Equals(value) = false) Then
+				Me.OnupdatedAtChanging(value)
+				Me.SendPropertyChanging
+				Me._updatedAt = value
+				Me.SendPropertyChanged("updatedAt")
+				Me.OnupdatedAtChanged
+			End If
+		End Set
+	End Property
+	
+	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+	
+	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+	
+	Protected Overridable Sub SendPropertyChanging()
+		If ((Me.PropertyChangingEvent Is Nothing)  _
+					= false) Then
+			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+		End If
+	End Sub
+	
+	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+		If ((Me.PropertyChangedEvent Is Nothing)  _
+					= false) Then
+			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+		End If
+	End Sub
+	
+	Private Sub Initialize()
 		OnCreated
 	End Sub
 	

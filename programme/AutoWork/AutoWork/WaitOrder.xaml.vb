@@ -22,6 +22,9 @@ Partial Public Class WaitOrder
 
 
     Public Sub CheckStatus()
+        'Me.checkPlug(1)
+
+
         Dim lepsIntef As LEPSController = New LEPSController(GlobalConfigs.LepsDb)
         Dim db As AutoWorkDataContext = New AutoWorkDataContext(My.Settings.database)
 
@@ -98,6 +101,9 @@ Partial Public Class WaitOrder
 
                     Dim working As Working = New Working(headMsg, wis(0))
                     goLogin = False
+
+                    '2018-03-06 Charlot
+                    Me.checkPlug(1)
                     Me.Close()
                     working.Show()
 
@@ -119,12 +125,20 @@ Partial Public Class WaitOrder
     End Sub
 
 
+
     Private Sub init()
         Me.textBox_ordernr.Text = ""
         Me.textBox_ksknr.Text = ""
         Me.textBox_ordernr.Focus()
 
+
+        '2018-03-6 Charlot
+        Me.checkPlug(0)
     End Sub
+
+
+
+
     Private Sub textBox_ordernr_TextChanged(sender As Object, e As TextChangedEventArgs) Handles textBox_ordernr.TextChanged
 
     End Sub
@@ -136,25 +150,51 @@ Partial Public Class WaitOrder
     Private Sub textBox_ksknr_PreviewKeyUp(sender As Object, e As KeyEventArgs) Handles textBox_ksknr.PreviewKeyUp
 
         If e.Key = Key.Enter Then
+
+            '2018-03-06 Charlot
+            If My.Settings.WorkstationType.Equals("AW9") Then
+                If String.IsNullOrEmpty(textBox_testLabelNr.Text) = True Then
+                    MsgBox("请扫描入电测标签号")
+                    init()
+                    Return
+                Else
+
+                    If Me.isAw9Match(textBox_testLabelNr.Text) = False Then
+                        'Me.checkPlug(1)
+
+                        CMsgDlg(MsgLevel.Mistake, "电测标签号格式错误，请确认", True, Nothing).ShowDialog()
+                        init()
+                        Return
+
+                    End If
+                End If
+            End If
+
             If String.IsNullOrEmpty(textBox_ordernr.Text) = True Or String.IsNullOrEmpty(textBox_ksknr.Text) = True Then
-                MsgBox("请扫描入小车号和小车号")
+                MsgBox("请扫描入小车号和KSK号")
                 init()
             Else
-                Dim tr As Regex = New Regex("^TC\w+")
-                Dim kr As Regex = New Regex("^4([a-zA-Z0-9]{9})(PR|EN)$")
-                If tr.IsMatch(textBox_ordernr.Text) And kr.IsMatch(textBox_ksknr.Text) Then
-                    CheckStatus()
-                    init()
-                Else
-                    CMsgDlg(MsgLevel.Mistake, "请扫描正确的小车号和KSK号", True, Nothing).ShowDialog()
-
-                    ' MsgBox("请扫描正确的小车号和KSK号")
-                    init()
-                End If
+                Me.orderCheck()
             End If
         End If
 
     End Sub
+
+
+    Private Sub orderCheck()
+        Dim tr As Regex = New Regex("^(TC|TM)\w+")
+        Dim kr As Regex = New Regex("^4([a-zA-Z0-9]{9})(PR|EN)$")
+        If tr.IsMatch(textBox_ordernr.Text) And kr.IsMatch(textBox_ksknr.Text) Then
+            CheckStatus()
+            init()
+        Else
+            CMsgDlg(MsgLevel.Mistake, "请扫描正确的小车号和KSK号", True, Nothing).ShowDialog()
+
+            ' MsgBox("请扫描正确的小车号和KSK号")
+            init()
+        End If
+    End Sub
+
 
     Private Sub WaitOrder_Closing(sender As Object, e As CancelEventArgs)
         If goLogin Then
@@ -170,4 +210,62 @@ Partial Public Class WaitOrder
     End Sub
 
 
+
+
+
+    '2018-03-06 Charlot
+    '' 开始
+    Private Sub checkPlug(stage As Integer)
+        ''stage 为0是开始
+        ''stage 为1是扫描完
+
+        If My.Settings.WorkstationType.Equals("AW9") Then
+            If stage = 0 Then
+                ' 电测标签验证
+                Me.aw9TestSP.Visibility = Visibility.Visible
+                aw9TestSP.Margin = New Thickness(10, 16, 0, 0)
+                carSP.Margin = New Thickness(10, 36, 0, 0)
+                kskSP.Margin = New Thickness(10, 36, 0, 0)
+
+                Me.textBox_testLabelNr.Focus()
+                Me.textBox_testLabelNr.Text = String.Empty
+            ElseIf stage = 1 Then
+                Try
+                    ' 写入电测扫描记录
+                    Dim db As AutoWorkDataContext = New AutoWorkDataContext(My.Settings.database)
+                    Dim record As AW9Record = New AW9Record
+                    record.labelContent = textBox_testLabelNr.Text
+                    record.staffNr = StaffSession.GetInstance.StaffId
+                    record.orderNr = textBox_ksknr.Text
+                    record.workstationNr = StaffSession.GetInstance.StationID
+                    record.carNr = textBox_ordernr.Text
+
+                    record.createdAt = Date.Now
+                    record.updatedAt = Date.Now
+
+                    db.AW9Record.InsertOnSubmit(record)
+                    db.SubmitChanges()
+                Catch e As Exception
+                    CMsgDlg(MsgLevel.Mistake, "电测保存错误:" & e.Message, True, Nothing).ShowDialog()
+                End Try
+            End If
+        Else
+                Me.aw9TestSP.Visibility = Visibility.Collapsed
+        End If
+
+
+    End Sub
+
+
+    Private Function isAw9Match(str As String) As Boolean
+        Dim tr As Regex = New Regex(My.Settings.aw9TestLabelRegex)
+        Return tr.IsMatch(str)
+    End Function
+
+    Private Sub textBox_testLabelNr_PreviewKeyUp(sender As Object, e As KeyEventArgs) Handles textBox_testLabelNr.PreviewKeyUp
+        If e.Key = Key.Enter Then
+            Me.textBox_ordernr.Focus()
+        End If
+    End Sub
+    '' 结束
 End Class
