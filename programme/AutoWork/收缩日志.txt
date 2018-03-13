@@ -1,0 +1,18 @@
+USE master
+GO
+ALTER DATABASE Leoni_Packaging_prod SET RECOVERY SIMPLE WITH NO_WAIT
+GO
+ALTER DATABASE Leoni_Packaging_prod SET RECOVERY SIMPLE   
+GO
+USE Leoni_Packaging_prod
+GO
+--- Leoni_Packaing_prod_log is log file
+--- shrink to 2MB
+DBCC SHRINKFILE (N'Leoni_Packaging_prod_log' , 2, TRUNCATEONLY)
+GO
+USE master
+GO
+ALTER DATABASE Leoni_Packaging_prod SET RECOVERY FULL WITH NO_WAIT
+GO
+ALTER DATABASE Leoni_Packaging_prod SET RECOVERY FULL   
+GO
