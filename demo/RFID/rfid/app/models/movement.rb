@@ -25,7 +25,7 @@ class Movement < ActiveRecord::Base
                             movement.quantity,
                             movement.package_nr,
                             # movement.from_position.blank? ? '' : movement.from_position.nr,
-                            cswz.blank? ? '' : cswz.position.nr[0, 8],
+                            cswz.blank? ? '' : (cswz.position.blank? ? '' : cswz.position.nr[0, 8]),
                             movement.from_warehouse.blank? ? '' : movement.from_warehouse.nr,
                             movement.to_position.blank? ? '' : movement.to_position.nr,
                             movement.to_warehouse.blank? ? '' : movement.to_warehouse.nr,
